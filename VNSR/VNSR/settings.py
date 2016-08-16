@@ -88,6 +88,13 @@ DATABASES = {
 		'PASSWORD': 'server881130',
 		'HOST':     'localhost',
 	},
+	'auth_db': {
+		'ENGINE':   'django.db.backends.mysql',
+		'NAME':     'auth',
+		'USER':     'pingvin',
+		'PASSWORD': 'server881130',
+		'HOST':     'localhost',
+	},
 }
 
 DATABASE_ROUTERS = [
