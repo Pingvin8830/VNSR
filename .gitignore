@@ -2,4 +2,5 @@ __pycache__
 .pyc
 .swp
 settings.py
+VNSR/calend_app/models.py
 models.py
