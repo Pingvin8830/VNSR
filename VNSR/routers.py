@@ -1,3 +1,11 @@
+MY_APPS = [
+	'calend_app',
+]
+
+MY_DB = [
+	'calend_db',
+]
+
 class CalendRouter (object):
 	'''
 		Перенаправление в БД calend
@@ -24,29 +32,22 @@ class CalendRouter (object):
 			return db == 'calend_db'
 		return None
 
-class AuthRouter (object):
+class DefaultRouter (object):
 	'''
-		Перенаправление в БД auth
+		Перенаправление в БД default
 	'''
-
+	
 	def db_for_read (self, model, **hints):
-		if model._meta.app_label == 'auth':
-			return 'auth_db'
-		return None
+		return 'default'
 
 	def db_for_write (self, model, **hints):
-		if model._meta.app_label == 'auth':
-			return 'auth_db'
-		return None
+		return 'default'
 
 	def allow_relation (self, obj1, obj2, **hints):
-		if	obj1._meta.app_label == 'auth' or \
-				obj2._meta.app_label == 'auth':
-					return True
-		return None
+		return True
 
 	def allow_migrate (self, db, app_label, model = None, **hints):
-		if app_label == 'auth':
-			return db == 'auth_db'
-		return None
-
+		if	app_label not in MY_APPS and \
+				db        not in MY_DB: 
+			return True
+		return False
