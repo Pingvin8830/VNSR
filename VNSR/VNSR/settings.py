@@ -102,8 +102,8 @@ DATABASES = {
 }
 
 DATABASE_ROUTERS = [
-	'routers.AuthRouter',
 	'routers.CalendRouter',
+	'routers.DefaultRouter',
 ]
 
 # Password validation
