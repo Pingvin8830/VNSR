@@ -3,7 +3,7 @@ from .models          import Signs
 from datetime         import date,   timedelta
 
 # Create your views here.
-def display_calend (request, year, month):
+def display_calend (request, year = date (1, 1, 1).today ().year, month = date (1, 1, 1).today ().month):
 	'''
 		Отображение календаря
 	'''
