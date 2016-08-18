@@ -63,6 +63,7 @@ def display_calend (request, year = date (1, 1, 1).today ().year, month = date (
 	context ['prev_year']  = prev_year
 	context ['next_year']  = next_year
 	context ['table']      = "<tr>"
+	context ['now']        = "Сегодня: " + str (date (1, 1, 1).today ())
 
 	data  = date (year, month, 1)
 	entry = data.weekday ()
