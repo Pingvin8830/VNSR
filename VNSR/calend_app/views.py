@@ -14,6 +14,16 @@ def get_td_class (signs):
 	elif signs.short:   return 'short'
 	else:               return None
 
+def create_cell_calend (data):
+	'''
+		Формирует корректную ячейку календаря
+	'''
+	signs = Signs.objects.get (data = data)
+	cell  = "<td class='%s'>" % get_td_class (signs)
+	cell += str (data.day)
+	cell += "</td>"
+	return cell
+
 def display_calend (request, year = date (1, 1, 1).today ().year, month = date (1, 1, 1).today ().month):
 	'''
 		Отображение календаря
@@ -52,36 +62,26 @@ def display_calend (request, year = date (1, 1, 1).today ().year, month = date (
 	context ['next_month'] = next_month
 	context ['prev_year']  = prev_year
 	context ['next_year']  = next_year
-
 	context ['table']      = "<tr>"
+
 	data  = date (year, month, 1)
 	entry = data.weekday ()
 	for i in range (entry):
 		context ['table'] += "<td></td>"
 
 	while data.weekday () != 0:
-		signs = Signs.objects.get (data = data)
-		context ['table'] += "<td class='%s'>" % get_td_class (signs)
-		context ['table'] += str (data.day)
-		context ['table'] += "</td>"
+		context ['table'] += create_cell_calend (data)
 		data              += timedelta (days = 1)
 
 	context ['table'] += "</tr>"
 
 	while data.month == month:
-		context ['table'] += "<tr>"
-		signs = Signs.objects.get (data = data)
-		context ['table'] += "<td class='%s'>" % get_td_class (signs)
-		context ['table'] += str (data.day)
-		context ['table'] += "</td>"
+		context ['table'] += "<tr>" + create_cell_calend (data)
 		data += timedelta (days = 1)
 		while data.weekday () != 0:
 			if data.month == month:
-				signs = Signs.objects.get (data = data)
-				context ['table'] += "<td class='%s'>" % get_td_class (signs)
-				context ['table'] += str (data.day)
-				context ['table'] += "</td>"
-
+				context ['table'] += create_cell_calend (data)
+				
 			else:
 				context ['table'] += "<td></td>"
 
