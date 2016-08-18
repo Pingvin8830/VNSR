@@ -7,7 +7,9 @@
 				<a href="{% url 'calend_app:index' prev_year prev_month %}">
 					<--
 				</a>
-				{{ month_text }} {{ year }}
+				<a href="{% url 'calend_app:display_signs' year month %}">
+					{{ month_text }} {{ year }}
+				</a>
 				<a href="{% url 'calend_app:index' next_year next_month %}">
 					-->
 				</a>
