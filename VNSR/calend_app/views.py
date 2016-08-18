@@ -54,7 +54,7 @@ def display_calend (request, year = date (1, 1, 1).today ().year, month = date (
 		'Ноябрь',
 		'Декабрь',
 	]
-	page    = 'main.html'
+	page    = 'calend/index.html'
 	context = {}
 	context ['month_text'] = MONTH [month - 1]
 	context ['year']       = year
