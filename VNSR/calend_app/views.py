@@ -3,6 +3,17 @@ from .models          import Signs
 from datetime         import date,   timedelta
 
 # Create your views here.
+
+def get_td_class (signs):
+	'''
+		Получает признаки дня и возвращает класс для шаблона
+	'''
+	if   signs.work:    return 'work'
+	elif signs.week:    return 'week'
+	elif signs.holiday: return 'holiday'
+	elif signs.short:   return 'short'
+	else:               return None
+
 def display_calend (request, year = date (1, 1, 1).today ().year, month = date (1, 1, 1).today ().month):
 	'''
 		Отображение календаря
@@ -46,57 +57,33 @@ def display_calend (request, year = date (1, 1, 1).today ().year, month = date (
 	data  = date (year, month, 1)
 	entry = data.weekday ()
 	for i in range (entry):
-		context ['table'] += "<td align='right'></td>"
+		context ['table'] += "<td></td>"
 
 	while data.weekday () != 0:
-		context ['table'] += "<td align='right'><font color='"
 		signs = Signs.objects.get (data = data)
-		if signs.week:
-			context ['table'] += "red'>"
-		elif signs.holiday:
-			context ['table'] += "green'>"
-		elif signs.short:
-			context ['table'] += "yellow'>"
-		else:
-			context ['table'] += "black'>"
+		context ['table'] += "<td class='%s'>" % get_td_class (signs)
 		context ['table'] += str (data.day)
-		context ['table'] += "</font></td>"
+		context ['table'] += "</td>"
 		data              += timedelta (days = 1)
 
 	context ['table'] += "</tr>"
 
 	while data.month == month:
 		context ['table'] += "<tr>"
-		context ['table'] += "<td align='right'><font color='"
 		signs = Signs.objects.get (data = data)
-		if signs.week:
-			context ['table'] += "red'>"
-		elif signs.holiday:
-			context ['table'] += "green'>"
-		elif signs.short:
-			context ['table'] += "yellow'>"
-		else:
-			context ['table'] += "black'>"
+		context ['table'] += "<td class='%s'>" % get_td_class (signs)
 		context ['table'] += str (data.day)
-		context ['table'] += "</font></td>"
+		context ['table'] += "</td>"
 		data += timedelta (days = 1)
 		while data.weekday () != 0:
 			if data.month == month:
-				context ['table'] += "<td align='right'><font color='"
 				signs = Signs.objects.get (data = data)
-				if signs.week:
-					context ['table'] += "red'>"
-				elif signs.holiday:
-					context ['table'] += "green'>"
-				elif signs.short:
-					context ['table'] += "yellow'>"
-				else:
-					context ['table'] += "black'>"
+				context ['table'] += "<td class='%s'>" % get_td_class (signs)
 				context ['table'] += str (data.day)
-				context ['table'] += "</font></td>"
+				context ['table'] += "</td>"
 
 			else:
-				context ['table'] += "<td align='right'></td>"
+				context ['table'] += "<td></td>"
 
 			data += timedelta (days = 1)
 
