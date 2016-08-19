@@ -107,6 +107,28 @@ def display_calend (request, year = NOW.year, month = NOW.month):
 		
 	return render (request, page, context)
 
+def create_line_radio (year, month, text, value):
+	'''
+		Создаёт в форме линию радиокнопок
+	'''
+	context = "<tr><td>%s</td>" % text
+	data    = date (year, month, 1)
+	while data.month == month:
+		context += "<td><input type='radio' name='%s' value='%s' " % (str (data), value)
+		try:
+			signs = Signs.objects.get (data = data)
+		except:
+			signs = Signs (data = data, work = True, week = False, holiday = False, short = False)
+		if   signs.work    and value == 'work':    context += "checked"
+		elif signs.week    and value == 'week':    context += "checked"
+		elif signs.holiday and value == 'holiday': context += "checked"
+		elif signs.short   and value == 'short':   context += "checked"
+		else:                                      context += ""
+		context += "></td>"
+		data += timedelta (days = 1)
+	context += "</tr>"	
+	return context
+
 def display_signs (request, year = date (1, 1, 1).today ().year, month = date (1, 1, 1).today ().month):
 	'''
 		Настройка календаря
@@ -125,54 +147,11 @@ def display_signs (request, year = date (1, 1, 1).today ().year, month = date (1
 			context ['table'] += "<td>%s</td>" % data.day
 		data += timedelta (days = 1)
 
-	context ['table'] += "</tr><tr><td>Рабочий</td>"
-	data = date (year, month, 1)
-	while data.month == month:
-		context ['table'] += "<td><input type='radio' name='%s' value='work'" % str (data)
-		try:
-			if Signs.objects.get (data = data).work:
-				context ['table'] += "checked"
-		except:
-			context ['table'] += "checked"
-		context ['table'] += "></td>"
-		data += timedelta (days = 1)
-
-	context ['table'] += "</tr><tr><td>Выходной</td>"
-	data = date (year, month, 1)
-	while data.month == month:
-		context ['table'] += "<td><input type='radio' name='%s' value='week'" % str (data)
-		try:
-			if Signs.objects.get (data = data).week:
-				context ['table'] += "checked"
-		except:
-			context ['table'] += ""
-		context ['table'] += "></td>"
-		data += timedelta (days = 1)
-
-	context ['table'] += "</tr><tr><td>Праздничный</td>"
-	data = date (year, month, 1)
-	while data.month == month:
-		context ['table'] += "<td><input type='radio' name='%s' value='holiday'" % str (data)
-		try:
-			if Signs.objects.get (data = data).holiday:
-				context ['table'] += "checked"
-		except:
-			context ['table'] += ""
-		context ['table'] += "></td>"
-		data += timedelta (days = 1)
-
-	context ['table'] += "</tr><tr><td>Сокращённый</td>"
-	data = date (year, month, 1)
-	while data.month == month:
-		context ['table'] += "<td><input type='radio' name='%s' value='short'" % str (data)
-		try:
-			if Signs.objects.get (data = data).short:
-				context ['table'] += "checked"
-		except:
-			context ['table'] += ""
-		context ['table'] += "></td>"
-		data += timedelta (days = 1)
 	context ['table'] += "</tr>"
+	context ['table'] += create_line_radio (year, month, 'Рабочий',     'work')
+	context ['table'] += create_line_radio (year, month, 'Выходной',    'week')
+	context ['table'] += create_line_radio (year, month, 'Праздничный', 'holiday')
+	context ['table'] += create_line_radio (year, month, 'Сокращённый', 'short')
 
 	return render (request, page, context)
 
@@ -185,11 +164,7 @@ def set_signs (request, year, month):
 
 	data = date (year, month, 1)
 	while data.month == month:
-		signs = Signs (data = data)
-		signs.work    = False
-		signs.week    = False
-		signs.holiday = False
-		signs.short   = False
+		signs = Signs (data = data, work = False, week = False, holiday = False, short = False)
 		if   request.POST [str (data)] == 'work':    signs.work    = True
 		elif request.POST [str (data)] == 'week':    signs.week    = True
 		elif request.POST [str (data)] == 'holiday': signs.holiday = True
