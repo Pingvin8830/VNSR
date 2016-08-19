@@ -11,6 +11,9 @@
 
 		{% block header %}
 			Здесь шапка
+			<a href="{% url 'auth_app:logout' %}">
+				{{ username }}
+			</a>
 		{% endblock %}
 		<br>
 
