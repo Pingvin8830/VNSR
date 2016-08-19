@@ -12,10 +12,6 @@ def case_page (request):
 	'''
 		Выбор стартовой страницы
 	'''
-	print ()
-	print ("'" + str (auth.get_user (request).username) + "'")
-	print ()
-
 	if is_user (request):
 		return redirect ('/calend/')
 	else:
