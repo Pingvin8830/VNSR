@@ -8,7 +8,26 @@
 		</title>
 	</head>
 	<body>
-		Это главная страница<br>
-		{% include "calend/index.html" %}
+
+		{% block header %}
+			Здесь шапка
+		{% endblock %}
+		<br>
+
+		{% block menu %}
+			Здесь меню
+		{% endblock %}
+		<br>
+
+		{% block content %}
+			Здесь контент
+		{% endblock %}
+		<br>
+
+		{% block footer %}
+			Здесь низ
+		{% endblock %}
+		<br>
+
 	</body>
 </html>
