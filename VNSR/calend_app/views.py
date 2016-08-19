@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models          import Signs
 from datetime         import date,   timedelta
+from django.contrib   import auth
 
 MONTH = [
 	'Январь',
@@ -77,6 +78,7 @@ def display_calend (request, year = NOW.year, month = NOW.month):
 	month   = int (month)
 	page    = 'calend/index.html'
 	context = default_context (year, month)
+	context ['username']   = auth.get_user (request).username
 	context ['table']      = "<tr>"
 	context ['now']        = "Сегодня: " + str (NOW)
 
