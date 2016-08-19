@@ -1,30 +1,33 @@
+{% extends 'main.html' %}
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'calend/display_signs.css' %}">
-Страница настройки календаря
-<form action="{% url 'calend_app:set_signs' year month %}" method="post">
-	{% csrf_token %}
-	<table border="1">
-		<caption>
-			<a href="{% url 'calend_app:display_signs' prev_year prev_month %}">
-				<--
-			</a>
-			{{ month_text}} {{ year }}
-			<a href="{% url 'calend_app:display_signs' next_year next_month %}">
-				-->
-			</a>
-		</caption>
-		{% autoescape off %}
-			{{ table }}
-		{% endautoescape %}
-	</table>
-	<table>
-		<tr>
-			<td>
-				<input type="submit" value="Записать">
-			</td>
-			<td>
-				<input type="reset" value="Сброс">
-			</td>
-		</tr>
-	</table>
-</form>
+
+{% block content %}
+	<link rel="stylesheet" type="text/css" href="{% static 'calend/display_signs.css' %}">
+	<form action="{% url 'calend_app:set_signs' year month %}" method="post">
+		{% csrf_token %}
+		<table border="1">
+			<caption>
+				<a href="{% url 'calend_app:display_signs' prev_year prev_month %}">
+					<--
+				</a>
+				{{ month_text}} {{ year }}
+				<a href="{% url 'calend_app:display_signs' next_year next_month %}">
+					-->
+				</a>
+			</caption>
+			{% autoescape off %}
+				{{ table }}
+			{% endautoescape %}
+		</table>
+		<table>
+			<tr>
+				<td>
+					<input type="submit" value="Записать">
+				</td>
+				<td>
+					<input type="reset" value="Сброс">
+				</td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}
