@@ -159,17 +159,18 @@ def set_signs (request, year, month):
 	'''
 		Записывает изменения в БД
 	'''
-	year  = int (year)
-	month = int (month)
+	if request.POST:
+		year  = int (year)
+		month = int (month)
 
-	data = date (year, month, 1)
-	while data.month == month:
-		signs = Signs (data = data, work = False, week = False, holiday = False, short = False)
-		if   request.POST [str (data)] == 'work':    signs.work    = True
-		elif request.POST [str (data)] == 'week':    signs.week    = True
-		elif request.POST [str (data)] == 'holiday': signs.holiday = True
-		elif request.POST [str (data)] == 'short':   signs.short   = True
-		signs.save () 
-		data += timedelta (days = 1)
+		data = date (year, month, 1)
+		while data.month == month:
+			signs = Signs (data = data, work = False, week = False, holiday = False, short = False)
+			if   request.POST [str (data)] == 'work':    signs.work    = True
+			elif request.POST [str (data)] == 'week':    signs.week    = True
+			elif request.POST [str (data)] == 'holiday': signs.holiday = True
+			elif request.POST [str (data)] == 'short':   signs.short   = True
+			signs.save () 
+			data += timedelta (days = 1)
 
 	return display_calend (request, year, month)
