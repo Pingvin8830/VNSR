@@ -1,7 +1,9 @@
+{% extends 'main.html' %}
 {% load staticfiles %}
-<link rel='stylesheet' type='text/css' href='{% static "calend/main.css" %}'>
-<center>
-	<table border='1' align='center'>
+
+{% block content %}
+	<link rel='stylesheet' type='text/css' href='{% static "calend/main.css" %}'>
+	<table border='1'>
 		<caption>
 			<font size='2'>
 				<a href="{% url 'calend_app:index' prev_year prev_month %}">
@@ -36,4 +38,4 @@
 	<font size='2'>
 		{{ now }}
 	</font>
-</center>
+{% endblock %}
