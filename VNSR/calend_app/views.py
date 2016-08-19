@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
 from .models          import Signs
 from datetime         import date,   timedelta
 from django.contrib   import auth
+from VNSR.views       import is_user
 
 MONTH = [
 	'Январь',
@@ -74,6 +75,7 @@ def display_calend (request, year = NOW.year, month = NOW.month):
 	'''
 		Отображение календаря
 	'''
+	if not is_user (request): return redirect ('/')
 	year    = int (year)
 	month   = int (month)
 	page    = 'calend/index.html'
@@ -135,6 +137,7 @@ def display_signs (request, year = date (1, 1, 1).today ().year, month = date (1
 	'''
 		Настройка календаря
 	'''
+	if not is_user (request): return redirect ('/')
 	year    = int (year)
 	month   = int (month)
 	page    = 'calend/display_signs.html'
@@ -161,6 +164,7 @@ def set_signs (request, year, month):
 	'''
 		Записывает изменения в БД
 	'''
+	if not is_user (request): return redirect ('/')
 	if request.POST:
 		year  = int (year)
 		month = int (month)
