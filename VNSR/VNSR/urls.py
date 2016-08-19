@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url,   include
 from django.contrib   import admin
+from .                import views
 
 urlpatterns = [
 	url (r'^admin/',  admin.site.urls),
 	url (r'^calend/', include ('calend_app.urls')),
 	url (r'^auth/',   include ('auth_app.urls')),
-	url (r'^',        include ('calend_app.urls')),
+	url (r'^',        views.case_page),
 ]
