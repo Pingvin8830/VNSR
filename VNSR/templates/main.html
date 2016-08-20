@@ -1,36 +1,75 @@
 {% load staticfiles %}
 
 <html>
+
 	<head>
+
 		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+		
 		<title>
 			Мой сайт
 		</title>
+
 	</head>
+
 	<body>
 
-		{% block header %}
-			Здесь шапка
-			<a href="{% url 'auth_app:logout' %}">
-				{{ username }}
-			</a>
-		{% endblock %}
-		<br>
+		<div id="main">
 
-		{% block menu %}
-			Здесь меню
+			{% block header %}
+				<div id="header">	
+					<a href="/">
+						VlasovNetwork.sknt.ru
+					</a>
+					<a href="{% url 'auth_app:logout' %}">
+						Выход ({{ username }})
+					</a>
+				</div>
+			{% endblock %}
+
+			{% block menu %}
+				<div id="staff">
+					<div id="menu">
+						{% for href in hrefs %}
+							<a href="{{ href.link }}">
+								{{ href.text }}
+							</a>
+						{% endfor %}
+					</div>
+					<div id="calend">
+						<table align="center" border="1">
+							<caption>{{ month_text }}</caption>
+							<tr>
+								<td>Пн</td>
+								<td>Вт</td>
+								<td>Ср</td>
+								<td>Чт</td>
+								<td>Пт</td>
+								<td class="week">Сб</td>
+								<td class="week">Вс</td>
+							</tr>
+							{{ calend }}
+						</table>
+						<center>
+							Сегодня: {{ now }}
+						</center>
+					</div>
+				</div>
 		{% endblock %}
-		<br>
 
 		{% block content %}
-			Здесь контент
+			<div id="content">
+				Добро пожаловать на сайт VlasovNetwork.sknt.ru
+			</div>
 		{% endblock %}
-		<br>
 
 		{% block footer %}
-			Здесь низ
+			<div id="footer">
+				Vlasov Anton &copy; 2016 <br>
+			</div>
 		{% endblock %}
-		<br>
 
 	</body>
+
 </html>
