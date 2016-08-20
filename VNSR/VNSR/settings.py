@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 	'django.contrib.staticfiles',
 	'calend_app.apps.CalendAppConfig',
 	'auth_app.apps.AuthAppConfig',
+	'baltbank_app.apps.BaltbankAppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
