@@ -6,7 +6,7 @@
 
 		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
-		
+
 		<title>
 			Мой сайт
 		</title>
@@ -17,58 +17,63 @@
 
 		<div id="main">
 
-			{% block header %}
-				<div id="header">	
+			<div id="header">	
+				{% block header %}
 					<a href="/">
 						VlasovNetwork.sknt.ru
 					</a>
+					<br><br><br>
 					<a href="{% url 'auth_app:logout' %}">
 						Выход ({{ username }})
 					</a>
-				</div>
-			{% endblock %}
+				{% endblock %}
+			</div>
 
-			{% block menu %}
-				<div id="staff">
-					<div id="menu">
+			<div id="staff">
+				<div id="menu">
+					{% block menu %}
 						{% for href in hrefs %}
 							<a href="{{ href.link }}">
 								{{ href.text }}
 							</a>
 						{% endfor %}
-					</div>
-					<div id="calend">
-						<table align="center" border="1">
-							<caption>{{ month_text }}</caption>
-							<tr>
-								<td>Пн</td>
-								<td>Вт</td>
-								<td>Ср</td>
-								<td>Чт</td>
-								<td>Пт</td>
-								<td class="week">Сб</td>
-								<td class="week">Вс</td>
-							</tr>
-							{{ calend }}
-						</table>
-						<center>
-							Сегодня: {{ now }}
-						</center>
-					</div>
+					{% endblock %}
 				</div>
-		{% endblock %}
 
-		{% block content %}
+				<div id="calend">
+					<table align="center" border="1">
+						<caption>{{ month_text }}</caption>
+						<tr>
+							<td>Пн</td>
+							<td>Вт</td>
+							<td>Ср</td>
+							<td>Чт</td>
+							<td>Пт</td>
+							<td class="week">Сб</td>
+							<td class="week">Вс</td>
+						</tr>
+						{{ calend }}
+					</table>
+					<center>
+						Сегодня: {{ now }}
+					</center>
+				</div>
+
+			</div>
+
 			<div id="content">
-				Добро пожаловать на сайт VlasovNetwork.sknt.ru
+				{% block content %}
+					Добро пожаловать на сайт VlasovNetwork.sknt.ru
+				{% endblock %}
 			</div>
-		{% endblock %}
 
-		{% block footer %}
 			<div id="footer">
-				Vlasov Anton &copy; 2016 <br>
+				{% block footer %}
+					Vlasov Anton &copy; 2016 <br>
+				{% endblock %}
 			</div>
-		{% endblock %}
+
+		</div>
 
 	</body>
 
