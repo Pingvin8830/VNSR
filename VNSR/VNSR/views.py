@@ -8,10 +8,19 @@ def is_user (request):
 	'''
 	return auth.get_user (request).username != ''
 
+def default_context (request):
+	'''
+		Возвращает контекст по умолчанию
+	'''
+	context = {
+		'username': auth.get_user (request).username,
+	}
+	return context
+
 def index (request):
 	'''
 	'''
 	if not is_user (request): return redirect ('/auth/login/')
 	page = 'main.html'
-	context = {}
+	context = default_context (request)
 	return render (request, page, context)
