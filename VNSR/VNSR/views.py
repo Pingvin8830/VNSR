@@ -8,11 +8,10 @@ def is_user (request):
 	'''
 	return auth.get_user (request).username != ''
 
-def case_page (request):
+def index (request):
 	'''
-		Выбор стартовой страницы
 	'''
-	if is_user (request):
-		return redirect ('/calend/')
-	else:
-		return redirect ('/auth/login/')
+	if not is_user (request): return redirect ('/auth/login/')
+	page = 'main.html'
+	context = {}
+	return render (request, page, context)
