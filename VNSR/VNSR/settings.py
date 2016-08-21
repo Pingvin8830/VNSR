@@ -38,6 +38,8 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	'calend_app.apps.CalendAppConfig',
+	'auth_app.apps.AuthAppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -57,6 +59,7 @@ TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
 		'DIRS': [
+			os.path.join (BASE_DIR, 'templates')
 		],
 		'APP_DIRS': True,
 		'OPTIONS': {
@@ -78,8 +81,11 @@ WSGI_APPLICATION = 'VNSR.wsgi.application'
 
 DATABASES = {
 	'default': {
-		'ENGINE': 'django.db.backends.sqlite3',
-		'NAME':   os.path.join (BASE_DIR, 'db.sqlite3'),
+		'ENGINE':   'django.db.backends.mysql',
+		'NAME':     'vnsr_default',
+		'USER':     'pingvin',
+		'PASSWORD': 'server881130',
+		'HOST':     'localhost',
 	},
 	'calend_db': {
 		'ENGINE':   'django.db.backends.mysql',
@@ -88,8 +94,19 @@ DATABASES = {
 		'PASSWORD': 'server881130',
 		'HOST':     'localhost',
 	},
+	'auth_db': {
+		'ENGINE':   'django.db.backends.mysql',
+		'NAME':     'auth',
+		'USER':     'pingvin',
+		'PASSWORD': 'server881130',
+		'HOST':     'localhost',
+	},
 }
 
+DATABASE_ROUTERS = [
+	'routers.CalendRouter',
+	'routers.DefaultRouter',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -128,3 +145,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+	'static',
+]

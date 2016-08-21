@@ -1,0 +1,14 @@
+body {
+	background:				blue;
+}
+
+table {
+	background:				white;
+	border:						1px solid red;
+	margin-top:				150;
+}
+
+caption {
+	color:						white;
+	text-decoration:	underline;
+}

@@ -1,0 +1,18 @@
+a {
+	color:							blue;
+	text-decoration:		none;
+}
+
+a:hover {
+	color:							red;
+}
+
+td {
+	font-size:					0.8em;
+	text-align:					right;
+}
+
+td.work			{	color:	black;	}
+td.week			{	color:	red;		}
+td.holiday	{	color:	green;	}
+td.short		{	color:	yellow;	}
