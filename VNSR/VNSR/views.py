@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib   import auth
+from menu_app         import models as menu
 
 # Create your views here.
 def is_user (request):
@@ -14,6 +15,7 @@ def default_context (request):
 	'''
 	context = {
 		'username': auth.get_user (request).username,
+		'items':    menu.Items.objects.raw ('SELECT * FROM items i, items_users u WHERE u.user="%s" AND i.id = u.item_id' % auth.get_user (request).username)
 	}
 	return context
 
