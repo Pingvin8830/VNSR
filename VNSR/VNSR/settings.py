@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 	'django.contrib.staticfiles',
 	'calend_app.apps.CalendAppConfig',
 	'auth_app.apps.AuthAppConfig',
+	'baltbank_app.apps.BaltbankAppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -94,9 +95,9 @@ DATABASES = {
 		'PASSWORD': 'server881130',
 		'HOST':     'localhost',
 	},
-	'auth_db': {
+	'baltbank_db': {
 		'ENGINE':   'django.db.backends.mysql',
-		'NAME':     'auth',
+		'NAME':     'baltbank',
 		'USER':     'pingvin',
 		'PASSWORD': 'server881130',
 		'HOST':     'localhost',
@@ -105,6 +106,7 @@ DATABASES = {
 
 DATABASE_ROUTERS = [
 	'routers.CalendRouter',
+	'routers.BaltbankRouter',
 	'routers.DefaultRouter',
 ]
 
