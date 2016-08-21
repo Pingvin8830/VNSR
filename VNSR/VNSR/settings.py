@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 	'auth_app.apps.AuthAppConfig',
 	'baltbank_app.apps.BaltbankAppConfig',
 	'menu_app.apps.MenuAppConfig',
+	'main_app.apps.MainAppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
