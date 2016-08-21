@@ -1,9 +1,11 @@
 MY_APPS = [
 	'calend_app',
+	'baltbank_app',
 ]
 
 MY_DB = [
 	'calend_db',
+	'baltbank_db',
 ]
 
 class CalendRouter (object):
