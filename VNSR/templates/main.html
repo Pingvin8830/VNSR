@@ -32,9 +32,9 @@
 			<div id="staff">
 				<div id="menu">
 					{% block menu %}
-						{% for href in hrefs %}
-							<a href="{{ href.link }}">
-								{{ href.text }}
+						{% for item in items %}
+							<a href="{{ item.href }}">
+								{{ item.text }}
 							</a>
 						{% endfor %}
 					{% endblock %}
