@@ -1,0 +1,22 @@
+#menu {
+	width:						180;
+	height:						230;
+	margin:						0;
+	padding:					10;
+	background-color:	#0a33a9;
+	color:						yellow;
+}
+
+#menu a {
+	display:					block;
+	color:						yellow;
+	text-decoration:	none;
+}
+
+#menu a:hover {
+	display:					block;
+	color:						blue;
+	background-color:	yellow;
+	text-decoration:	underline;
+}
+

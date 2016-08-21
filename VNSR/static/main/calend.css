@@ -1,0 +1,12 @@
+#calend {
+	border-left:			1px solid blue;
+	border-right:			1px solid blue;
+	width:						178;
+	height:						180;
+	margin:						0;
+	padding:					10;
+}
+
+#calend .week			{color:	red;}
+#calend .holiday	{color:	green;}
+#calend .short		{color:	yellow;}
