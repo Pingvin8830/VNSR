@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Items (models.Model):
@@ -19,4 +20,4 @@ class ItemsUsers (models.Model):
 		db_table = 'items_users'
 	id   = models.IntegerField (primary_key = True)
 	item = models.ForeignKey   (Items)
-	user = models.ForeignKey   ('auth.User', to_field = 'username')
+	user = models.CharField    (max_length = 30)
