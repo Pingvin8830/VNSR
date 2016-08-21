@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from .models          import Signs
 from datetime         import date,   timedelta
 from django.contrib   import auth
-from VNSR.views       import is_user
 
 MONTH = [
 	'Январь',
