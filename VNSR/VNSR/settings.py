@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 	'calend_app.apps.CalendAppConfig',
 	'auth_app.apps.AuthAppConfig',
 	'baltbank_app.apps.BaltbankAppConfig',
+	'menu_app.apps.MenuAppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -102,11 +103,19 @@ DATABASES = {
 		'PASSWORD': 'server881130',
 		'HOST':     'localhost',
 	},
+	'menu_db': {
+		'ENGINE':   'django.db.backends.mysql',
+		'NAME':     'menu',
+		'USER':     'pingvin',
+		'PASSWORD': 'server881130',
+		'HOST':     'localhost',
+	},
 }
 
 DATABASE_ROUTERS = [
 	'routers.CalendRouter',
 	'routers.BaltbankRouter',
+	'routers.MenuRouter',
 	'routers.DefaultRouter',
 ]
 
