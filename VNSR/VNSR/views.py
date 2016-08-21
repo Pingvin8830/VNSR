@@ -8,11 +8,19 @@ def is_user (request):
 	'''
 	return auth.get_user (request).username != ''
 
-def case_page (request):
+def default_context (request):
 	'''
-		Выбор стартовой страницы
+		Возвращает контекст по умолчанию
 	'''
-	if is_user (request):
-		return redirect ('/calend/')
-	else:
-		return redirect ('/auth/login/')
+	context = {
+		'username': auth.get_user (request).username,
+	}
+	return context
+
+def index (request):
+	'''
+	'''
+	if not is_user (request): return redirect ('/auth/login/')
+	page = 'main.html'
+	context = default_context (request)
+	return render (request, page, context)

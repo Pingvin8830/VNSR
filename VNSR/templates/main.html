@@ -52,7 +52,9 @@
 							<td class="week">Сб</td>
 							<td class="week">Вс</td>
 						</tr>
-						{{ calend }}
+						{% autoescape off %}
+							{{ calend }}
+						{% endautoescape %}
 					</table>
 					<center>
 						Сегодня: {{ now }}
