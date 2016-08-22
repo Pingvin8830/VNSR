@@ -21,3 +21,13 @@ class ItemsUsers (models.Model):
 	id   = models.IntegerField (primary_key = True)
 	item = models.ForeignKey   (Items)
 	user = models.CharField    (max_length = 30)
+
+class ItemsApps (models.Model):
+	'''
+		Сопоставление пунктов меню с приложением
+	'''
+	class Meta ():
+		db_table = 'items_apps'
+	id   = models.IntegerField (primary_key = True)
+	item = models.ForeignKey   (Items)
+	app  = models.CharField    (max_length = 30)
