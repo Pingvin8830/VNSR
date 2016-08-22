@@ -80,3 +80,51 @@ def create_calend_month (year = get_now ().year, month = get_now ().month):
 		calend += '</tr>'
 	return calend
 
+def create_month_signs_form (year, month, part):
+	'''
+		Создаёт одну часть формы настройки дней месяца
+	'''
+	form = '<tr><td></td>'
+	if part == 1:
+		start = 1
+		end   = 17
+	elif part == 2:
+		start = 17
+		end   = 32
+		form += '</tr><tr height="20"></tr><tr><td></td>'
+	for day in range (start, end):
+		try:
+			name = date (year, month, day)
+		except:
+			break
+		form += '<td>%s</td>' % str (day)
+	form += '</tr><tr><td>Рабочий</td>'
+	for day in range (start, end):
+		try:
+			name = date (year, month, day)
+		except:
+			break
+		form += '<td><input type="radio" name="%s" value="work"></td>' % str (name)
+	form += '</tr><tr><td>Выходной</td>'
+	for day in range (start, end):
+		try:
+			name = date (year, month, day)
+		except:
+			break
+		form += '<td><input type="radio" name="%s" value="week"></td>' % str (name)
+	form += '</tr><tr><td>Праздничный</td>'
+	for day in range (start, end):
+		try:
+			name = date (year, month, day)
+		except:
+			break
+		form += '<td><input type="radio" name="%s" value="holiday"></td>' % str (name)
+	form += '</tr><tr><td>Сокращённый</td>'
+	for day in range (start, end):
+		try:
+			name = date (year, month, day)
+		except:
+			break
+		form += '<td><input type="radio" name="%s" value="short"></td>' % str (name)
+	form += '</tr>'
+	return form
