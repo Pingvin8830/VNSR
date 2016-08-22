@@ -1,14 +1,15 @@
 #calend {
-	border-left:			1px solid blue;
-	border-right:			1px solid blue;
-	width:						178;
-	height:						180;
-	margin:						0;
-	padding:					10;
+	border-left:	1px solid blue;
+	border-right:	1px solid blue;
+	width:				178;
+	height:				180;
+	margin:				0;
+	padding:			10;
 }
 
 #calend table {
-	font-size:				0.8em;
+	font-size:		0.8em;
+	text-align:		right;
 }
 
 #calend .week			{color:	red;}
