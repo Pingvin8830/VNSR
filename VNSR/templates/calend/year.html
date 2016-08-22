@@ -3,7 +3,7 @@
 
 {% block menu%}
 	{% for item in items %}
-		<a href="{{ item.href }}{{ calend_year }}/{{ forloop.counter }}/">
+		<a href="{{ item.href }}{{ calend_year }}/{{ forloop.counter }}">
 			{{ item.text }}
 		</a>
 	{% endfor%}

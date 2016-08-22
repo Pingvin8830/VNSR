@@ -1,0 +1,12 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+	<a href="{% url 'calend_app:display_month' calend_year calend_month %}">
+		Назад
+	</a>
+{% endblock %}
+
+{% block content %}
+	Здесь будет форма настройки признаков дней месяца
+{% endblock %}

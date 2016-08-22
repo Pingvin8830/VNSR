@@ -18,3 +18,14 @@ def display_calend_year (request, year = get_now ().year):
 		context ['calend_month_%s' % str (month)] = create_calend_month (year, month)
 	return render (request, page, context)
 	
+def display_signs_month (request, year, month):
+	'''
+		Отображает настройку дней месяца
+	'''
+	year  = int (year)
+	month = int (month)
+	page  = 'calend/month.html'
+	context = default_context (request, 'app', 'calend_app')
+	context ['calend_year'] = year
+	context ['calend_month'] = month
+	return render (request, page, context)
