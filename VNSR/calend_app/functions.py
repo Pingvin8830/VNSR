@@ -95,7 +95,7 @@ def create_line_radio (year, month, start, end, type_line):
 		try:
 			signs = Signs.objects.get (data = data)
 		except:
-			signs = Signs (data = data, work = False)
+			signs = Signs (data = data, work = True)
 		if   signs.work    and type_line == 'work':    line += 'checked'
 		elif signs.week    and type_line == 'week':    line += 'checked'
 		elif signs.holiday and type_line == 'holiday': line += 'checked'
