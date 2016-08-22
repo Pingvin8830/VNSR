@@ -53,7 +53,7 @@ def create_cell_calend (data):
 	cell += '</td>'
 	return cell
 
-def calend_month (year = get_now ().year, month = get_now ().month):
+def create_calend_month (year = get_now ().year, month = get_now ().month):
 	'''
 		Составляет календарь на месяц
 	'''
