@@ -80,6 +80,30 @@ def create_calend_month (year = get_now ().year, month = get_now ().month):
 		calend += '</tr>'
 	return calend
 
+def create_line_radio (year, month, start, end, type_line):
+	'''
+		Создаёт линию радиокнопок
+	'''
+	line = '<tr><td>'
+	if   type_line == 'work':    line += 'Рабочий</td>'
+	elif type_line == 'week':    line += 'Выходной</td>'
+	elif type_line == 'holiday': line += 'Праздничный</td>'
+	elif type_line == 'short':   line += 'Сокращённый</td>'
+	for day in range (start, end):
+		data = date (year, month, day)
+		line += '<td><input type="radio" name="%s" value="%s"' % (str (data), type_line)
+		try:
+			signs = Signs.objects.get (data = data)
+		except:
+			signs = Signs (data = data, work = True)
+		if   signs.work    and type_line == 'work':    line += 'checked'
+		elif signs.week    and type_line == 'week':    line += 'checked'
+		elif signs.holiday and type_line == 'holiday': line += 'checked'
+		elif signs.short   and type_line == 'short':   line += 'checked'
+		line += '></td>'
+	line += '</tr>'
+	return line
+
 def create_month_signs_form (year, month, part):
 	'''
 		Создаёт одну часть формы настройки дней месяца
@@ -91,6 +115,12 @@ def create_month_signs_form (year, month, part):
 	elif part == 2:
 		start = 17
 		end   = 32
+		while True:
+			try:
+				control = date (year, month, end - 1)
+				break
+			except:
+				end -= 1
 		form += '</tr><tr height="20"></tr><tr><td></td>'
 	for day in range (start, end):
 		try:
@@ -98,33 +128,8 @@ def create_month_signs_form (year, month, part):
 		except:
 			break
 		form += '<td>%s</td>' % str (day)
-	form += '</tr><tr><td>Рабочий</td>'
-	for day in range (start, end):
-		try:
-			name = date (year, month, day)
-		except:
-			break
-		form += '<td><input type="radio" name="%s" value="work"></td>' % str (name)
-	form += '</tr><tr><td>Выходной</td>'
-	for day in range (start, end):
-		try:
-			name = date (year, month, day)
-		except:
-			break
-		form += '<td><input type="radio" name="%s" value="week"></td>' % str (name)
-	form += '</tr><tr><td>Праздничный</td>'
-	for day in range (start, end):
-		try:
-			name = date (year, month, day)
-		except:
-			break
-		form += '<td><input type="radio" name="%s" value="holiday"></td>' % str (name)
-	form += '</tr><tr><td>Сокращённый</td>'
-	for day in range (start, end):
-		try:
-			name = date (year, month, day)
-		except:
-			break
-		form += '<td><input type="radio" name="%s" value="short"></td>' % str (name)
-	form += '</tr>'
+	form += create_line_radio (year, month, start, end, 'work')
+	form += create_line_radio (year, month, start, end, 'week')
+	form += create_line_radio (year, month, start, end, 'holiday')
+	form += create_line_radio (year, month, start, end, 'short')
 	return form
