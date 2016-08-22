@@ -1,0 +1,36 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block content %}
+	<link rel="stylesheet" type="text/css" href="{% static 'calend/main.css' %}">
+	{% autoescape off %}
+		<table class="calend_year">
+			<caption>
+				<a href="{% url 'calend_app:display_year' calend_prev_year %}">
+					<--
+				</a>
+				{{ calend_year }}
+				<a href="{% url 'calend_app:display_year' calend_next_year %}">
+					-->
+				</a></caption>
+			<tr>
+				<td><table class="calend_month"><caption>Январь </caption>{{ calend_month_1 }}</table></td>
+				<td><table class="calend_month"><caption>Февраль</caption>{{ calend_month_2 }}</table></td>
+				<td><table class="calend_month"><caption>Март   </caption>{{ calend_month_3 }}</table></td>
+				<td><table class="calend_month"><caption>Апрель </caption>{{ calend_month_4 }}</table></td>
+			</tr>
+			<tr>
+				<td><table class="calend_month"><caption>Май   </caption>{{ calend_month_5 }}</table></td>
+				<td><table class="calend_month"><caption>Июнь  </caption>{{ calend_month_6 }}</table></td>
+				<td><table class="calend_month"><caption>Июль  </caption>{{ calend_month_7 }}</table></td>
+				<td><table class="calend_month"><caption>Август</caption>{{ calend_month_8 }}</table></td>
+			</tr>
+			<tr>
+				<td><table class="calend_month"><caption>Сентябрь</caption>{{ calend_month_9 }} </table></td>
+				<td><table class="calend_month"><caption>Октябрь </caption>{{ calend_month_10 }}</table></td>
+				<td><table class="calend_month"><caption>Ноябрь  </caption>{{ calend_month_11 }}</table></td>
+				<td><table class="calend_month"><caption>Декабрь </caption>{{ calend_month_12 }}</table></td>
+			</tr>
+		</table>
+	{% endautoescape %}
+{% endblock %}

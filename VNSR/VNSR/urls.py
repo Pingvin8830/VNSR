@@ -19,6 +19,7 @@ from django.contrib   import admin
 urlpatterns = [
 	url (r'^admin/',  admin.site.urls),
 	url (r'^auth/',   include ('auth_app.urls')),
+	url (r'^calend/', include ('calend_app.urls')),
 	url (r'^main/',   include ('main_app.urls')),
 	url (r'^',        include ('main_app.urls')),
 ]
