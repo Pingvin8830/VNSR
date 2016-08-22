@@ -7,6 +7,10 @@
 	padding:					10;
 }
 
+#calend table {
+	font-size:				0.8em;
+}
+
 #calend .week			{color:	red;}
 #calend .holiday	{color:	green;}
 #calend .short		{color:	yellow;}
