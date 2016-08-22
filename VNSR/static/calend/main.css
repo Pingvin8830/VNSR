@@ -4,6 +4,7 @@
 
 #content .calend_year table {
 	border:						1px solid;
+	text-align:				right;
 }
 
 #content .calend_year a {
