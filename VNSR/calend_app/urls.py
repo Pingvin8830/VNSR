@@ -18,8 +18,6 @@ from .                import views
 
 app_name    = 'calend_app' 
 urlpatterns = [
-	url (r'^(?P<year>[0-9]{4,4})/(?P<month>[0-9]{1,2})/$',         views.display_calend, name = 'index'),
-	url (r'^(?P<year>[0-9]{4,4})/(?P<month>[0-9]{1,2})/display/$', views.display_signs,  name = 'display_signs'),
-	url (r'^(?P<year>[0-9]{4,4})/(?P<month>[0-9]{1,2})/set/$',     views.set_signs,      name = 'set_signs'),
-	url (r'^$',                                                    views.display_calend, {'year': 2016, 'month': 8}),
+	url (r'^(?P<year>[0-9]{4,4})$', views.display_calend_year, name='display_year'),
+	url (r'^$',                     views.display_calend_year),
 ]
