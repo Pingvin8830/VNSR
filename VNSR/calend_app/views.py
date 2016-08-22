@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .functions       import create_calend_month, get_now, get_month_text, create_month_signs_form
 from main_app.views   import is_user, default_context
+from datetime         import date
+from .models          import Signs
 
 # Create your views here.
 def display_calend_year (request, year = get_now ().year):
@@ -39,4 +41,29 @@ def set_signs_month (request, year, month):
 		Сохраняет выбранные признаки дней месяца в БД
 	'''
 	if not is_user: return redirect ('/')
-	return redirect ('/calend/%s' % (year))
+	year  = int (year)
+	month = int (month)
+	print ()
+	print (year)
+	print (month)
+	print ()
+	if request.POST:
+		for day in range (1, 32):
+			print ()
+			print (day)
+			try:
+				data = date (year, month, day)
+			except:
+				print ('Bad data')
+				break
+			print (data)
+			try:
+				signs = Signs.objects.get (data = data)
+			except:
+				signs = Signs (data = data)
+			signs.work    = (request.POST [str(data)] == 'work')
+			signs.week    = (request.POST [str(data)] == 'week')
+			signs.holiday = (request.POST [str(data)] == 'holiday')
+			signs.short   = (request.POST [str(data)] == 'short')
+			signs.save ()
+	return redirect ('/calend/%s' % year)
