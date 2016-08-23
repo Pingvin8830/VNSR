@@ -30,15 +30,6 @@ def get_month_text (year = get_now ().year, month = get_now ().month):
 	month_text += ' %s г.' % year
 	return month_text
 
-def get_td_class (signs):
-	'''
-		Возвращает класс ячейки календаря
-	'''
-	if   signs.work:    return 'work'
-	elif signs.week:    return 'week'
-	elif signs.holiday: return 'holiday'
-	elif signs.short:   return 'short'
-	else:               return None
 
 def create_cell_calend (data):
 	'''
@@ -48,7 +39,7 @@ def create_cell_calend (data):
 		signs = Signs.objects.get (data = data)
 	except:
 		signs = Signs (data = data)
-	cell  = '<td class="%s">' % get_td_class (signs)
+	cell  = '<td class="%s">' % signs.get_class ()
 	cell += str (data.day)
 	cell += '</td>'
 	return cell
@@ -96,10 +87,8 @@ def create_line_radio (year, month, start, end, type_line):
 			signs = Signs.objects.get (data = data)
 		except:
 			signs = Signs (data = data, work = True)
-		if   signs.work    and type_line == 'work':    line += 'checked'
-		elif signs.week    and type_line == 'week':    line += 'checked'
-		elif signs.holiday and type_line == 'holiday': line += 'checked'
-		elif signs.short   and type_line == 'short':   line += 'checked'
+		if signs.get_class () == type_line:
+			line += 'checked'
 		line += '></td>'
 	line += '</tr>'
 	return line
@@ -133,3 +122,4 @@ def create_month_signs_form (year, month, part):
 	form += create_line_radio (year, month, start, end, 'holiday')
 	form += create_line_radio (year, month, start, end, 'short')
 	return form
+
