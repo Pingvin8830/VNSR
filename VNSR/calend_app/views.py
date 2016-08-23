@@ -16,6 +16,7 @@ def display_calend_year (request, year = get_now ().year):
 	context ['calend_year']      = year
 	context ['calend_prev_year'] = year - 1
 	context ['calend_next_year'] = year + 1
+	context ['calend_comments']  = Signs.objects.raw ('SELECT * FROM signs WHERE data BETWEEN "%s-01-01" AND "%s-12-31" AND comment != ""' % (str (year), str (year)))
 	for month in range (1, 13):
 		context ['calend_month_%s' % str (month)] = create_calend_month (year, month)
 	return render (request, page, context)
