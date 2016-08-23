@@ -12,7 +12,7 @@ def display_calend_year (request, year = get_now ().year):
 	if not is_user: return redirect ('/')
 	year    = int (year)
 	page    = 'calend/year.html'
-	context = default_context (request, 'app', 'calend_app')
+	context = default_context (request, 'calend')
 	context ['calend_year']      = year
 	context ['calend_prev_year'] = year - 1
 	context ['calend_next_year'] = year + 1
@@ -29,7 +29,7 @@ def display_signs_month (request, year, month):
 	year    = int (year)
 	month   = int (month)
 	page    = 'calend/month.html'
-	context = default_context (request, 'app', 'calend_app')
+	context = default_context (request, 'calend')
 	context ['form_signs']        = create_month_signs_form (year, month, 1)
 	context ['form_signs']       += create_month_signs_form (year, month, 2)
 	context ['calend_year']       = year
@@ -44,20 +44,12 @@ def set_signs_month (request, year, month):
 	if not is_user: return redirect ('/')
 	year  = int (year)
 	month = int (month)
-	print ()
-	print (year)
-	print (month)
-	print ()
 	if request.POST:
 		for day in range (1, 32):
-			print ()
-			print (day)
 			try:
 				data = date (year, month, day)
 			except:
-				print ('Bad data')
 				break
-			print (data)
 			try:
 				signs = Signs.objects.get (data = data)
 			except:
