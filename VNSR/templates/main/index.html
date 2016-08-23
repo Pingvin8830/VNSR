@@ -20,10 +20,11 @@
 			<link rel="stylesheet" type="text/css" href="{% static 'main/header.css' %}">
 			<div id="header">	
 				{% block header %}
+					<br>
 					<a href="/">
 						VlasovNetwork.sknt.ru
 					</a>
-					<br><br><br>
+					<br>
 					<a href="{% url 'auth_app:logout' %}">
 						Выход ({{ username }})
 					</a>
@@ -46,6 +47,7 @@
 
 				<link rel="stylesheet" type="text/css" href="{% static 'main/calend.css' %}">
 				<div id="calend">
+					<br>
 					<table align="center" border="1">
 						<caption>{{ month_text }}</caption>
 						<tr>
