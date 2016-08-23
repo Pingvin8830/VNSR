@@ -15,3 +15,10 @@ class Signs (models.Model):
 	holiday = models.BooleanField (default     = False)
 	short   = models.BooleanField (default     = False)
 	comment = models.CharField    (max_length  = 100)
+
+	def get_class (self):
+		if   self.work:    return 'work'
+		elif self.week:    return 'week'
+		elif self.holiday: return 'holiday'
+		elif self.short:   return 'short'
+		else:              return 'work'
