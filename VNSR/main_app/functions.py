@@ -1,8 +1,8 @@
 from django.contrib       import auth
-from menu_app.models      import Items, ItemsApps
 from calend_app.functions import get_month_text, create_calend_month, get_now
+from menu_app.functions   import create_menu_user, create_menu_app
 
-def default_context (request, type_menu, app_name = None):
+def default_context (request, app = None):
 	'''
 		Создаёт контекст для шаблона сайта по умолчанию
 	'''
@@ -13,31 +13,8 @@ def default_context (request, type_menu, app_name = None):
 		'calend':     create_calend_month (),
 		'now':        get_now (),
 	}
-	if type_menu == 'user':
-		menu = create_menu_user (username)
-	elif type_menu == 'app':
-		menu = create_menu_app (app_name)
-	context ['items'] = menu
+	if app:
+		context ['items'] = create_menu_app (app)
+	else:
+		context ['items'] = create_menu_user (username)
 	return context
-
-def create_menu_user (username):
-	'''
-		Создаёт меня для пользователя
-	'''
-	sql = '                             \
-		SELECT *                          \
-		FROM   items i, items_users u     \
-		WHERE  i.id   = u.item_id         \
-			AND  u.user = "%s"' % username
-	return Items.objects.raw (sql)
-
-def create_menu_app (app):
-	'''
-		Создаёт меню для приложения
-	'''
-	sql = '                        \
-		SELECT *                     \
-		FROM   items i, items_apps a \
-		WHERE  i.id = a.item_id      \
-			AND  a.app = "%s"' % app
-	return Items.objects.raw (sql)
