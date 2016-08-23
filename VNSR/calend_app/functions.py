@@ -30,15 +30,6 @@ def get_month_text (year = get_now ().year, month = get_now ().month):
 	month_text += ' %s г.' % year
 	return month_text
 
-def get_td_class (signs):
-	'''
-		Возвращает класс ячейки календаря
-	'''
-	if   signs.work:    return 'work'
-	elif signs.week:    return 'week'
-	elif signs.holiday: return 'holiday'
-	elif signs.short:   return 'short'
-	else:               return None
 
 def create_cell_calend (data):
 	'''
@@ -48,7 +39,7 @@ def create_cell_calend (data):
 		signs = Signs.objects.get (data = data)
 	except:
 		signs = Signs (data = data)
-	cell  = '<td class="%s">' % get_td_class (signs)
+	cell  = '<td class="%s">' % signs.get_class ()
 	cell += str (data.day)
 	cell += '</td>'
 	return cell
@@ -79,4 +70,56 @@ def create_calend_month (year = get_now ().year, month = get_now ().month):
 			data += timedelta (days = 1)
 		calend += '</tr>'
 	return calend
+
+def create_line_radio (year, month, start, end, type_line):
+	'''
+		Создаёт линию радиокнопок
+	'''
+	line = '<tr><td>'
+	if   type_line == 'work':    line += 'Рабочий</td>'
+	elif type_line == 'week':    line += 'Выходной</td>'
+	elif type_line == 'holiday': line += 'Праздничный</td>'
+	elif type_line == 'short':   line += 'Сокращённый</td>'
+	for day in range (start, end):
+		data = date (year, month, day)
+		line += '<td><input type="radio" name="%s" value="%s"' % (str (data), type_line)
+		try:
+			signs = Signs.objects.get (data = data)
+		except:
+			signs = Signs (data = data, work = True)
+		if signs.get_class () == type_line:
+			line += 'checked'
+		line += '></td>'
+	line += '</tr>'
+	return line
+
+def create_month_signs_form (year, month, part):
+	'''
+		Создаёт одну часть формы настройки дней месяца
+	'''
+	form = '<tr><td></td>'
+	if part == 1:
+		start = 1
+		end   = 17
+	elif part == 2:
+		start = 17
+		end   = 32
+		while True:
+			try:
+				control = date (year, month, end - 1)
+				break
+			except:
+				end -= 1
+		form += '</tr><tr height="20"></tr><tr><td></td>'
+	for day in range (start, end):
+		try:
+			name = date (year, month, day)
+		except:
+			break
+		form += '<td>%s</td>' % str (day)
+	form += create_line_radio (year, month, start, end, 'work')
+	form += create_line_radio (year, month, start, end, 'week')
+	form += create_line_radio (year, month, start, end, 'holiday')
+	form += create_line_radio (year, month, start, end, 'short')
+	return form
 

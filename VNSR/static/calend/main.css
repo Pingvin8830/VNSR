@@ -1,9 +1,6 @@
-#content .calend_year {
-	font-size:				0.8em;
-}
-
 #content .calend_year table {
 	border:						1px solid;
+	text-align:				right;
 }
 
 #content .calend_year a {
@@ -16,11 +13,7 @@
 	text-decoration:	none
 }
 
-#content .calend_month {
-	font-size:				1.0em;
-}
-
 #content .week		{color:	red;}
 #content .holiday	{color:	green;}
-#content .short		{color:	yellow;}
+#content .short		{color:	blue;}
 

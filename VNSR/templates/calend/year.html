@@ -3,7 +3,7 @@
 
 {% block menu%}
 	{% for item in items %}
-		<a href="{{ item.href }}{{ calend_year }}/{{ forloop.counter }}/">
+		<a href="{{ item.href }}{{ calend_year }}/{{ forloop.counter }}">
 			{{ item.text }}
 		</a>
 	{% endfor%}
@@ -12,32 +12,68 @@
 {% block content %}
 	<link rel="stylesheet" type="text/css" href="{% static 'calend/main.css' %}">
 	{% autoescape off %}
-		<table class="calend_year">
-			<caption>
-				<a href="{% url 'calend_app:display_year' calend_prev_year %}">
-					<--
-				</a>
-				{{ calend_year }}
-				<a href="{% url 'calend_app:display_year' calend_next_year %}">
-					-->
-				</a></caption>
+		<table border="1">
 			<tr>
-				<td><table class="calend_month"><caption>Январь </caption>{{ calend_month_1 }}</table></td>
-				<td><table class="calend_month"><caption>Февраль</caption>{{ calend_month_2 }}</table></td>
-				<td><table class="calend_month"><caption>Март   </caption>{{ calend_month_3 }}</table></td>
-				<td><table class="calend_month"><caption>Апрель </caption>{{ calend_month_4 }}</table></td>
+				<td class="calend_year" align="center">
+					<a href="{% url 'calend_app:display_year' calend_prev_year %}">
+						<--
+					</a>
+					{{ calend_year }}
+					<a href="{% url 'calend_app:display_year' calend_next_year %}">
+						-->
+					</a>
+				</td>
+				<td>
+					Комментарии
+				</td>
 			</tr>
 			<tr>
-				<td><table class="calend_month"><caption>Май   </caption>{{ calend_month_5 }}</table></td>
-				<td><table class="calend_month"><caption>Июнь  </caption>{{ calend_month_6 }}</table></td>
-				<td><table class="calend_month"><caption>Июль  </caption>{{ calend_month_7 }}</table></td>
-				<td><table class="calend_month"><caption>Август</caption>{{ calend_month_8 }}</table></td>
-			</tr>
-			<tr>
-				<td><table class="calend_month"><caption>Сентябрь</caption>{{ calend_month_9 }} </table></td>
-				<td><table class="calend_month"><caption>Октябрь </caption>{{ calend_month_10 }}</table></td>
-				<td><table class="calend_month"><caption>Ноябрь  </caption>{{ calend_month_11 }}</table></td>
-				<td><table class="calend_month"><caption>Декабрь </caption>{{ calend_month_12 }}</table></td>
+				<td>
+					<table class="calend_year">
+						<tr>
+							<td><table class="calend_month"><caption>Январь </caption>{{ calend_month_1 }}</table></td>
+							<td><table class="calend_month"><caption>Февраль</caption>{{ calend_month_2 }}</table></td>
+							<td><table class="calend_month"><caption>Март   </caption>{{ calend_month_3 }}</table></td>
+							<td><table class="calend_month"><caption>Апрель </caption>{{ calend_month_4 }}</table></td>
+						</tr>
+						<tr>
+							<td><table class="calend_month"><caption>Май   </caption>{{ calend_month_5 }}</table></td>
+							<td><table class="calend_month"><caption>Июнь  </caption>{{ calend_month_6 }}</table></td>
+							<td><table class="calend_month"><caption>Июль  </caption>{{ calend_month_7 }}</table></td>
+							<td><table class="calend_month"><caption>Август</caption>{{ calend_month_8 }}</table></td>
+						</tr>
+						<tr>
+							<td><table class="calend_month"><caption>Сентябрь</caption>{{ calend_month_9 }} </table></td>
+							<td><table class="calend_month"><caption>Октябрь </caption>{{ calend_month_10 }}</table></td>
+							<td><table class="calend_month"><caption>Ноябрь  </caption>{{ calend_month_11 }}</table></td>
+							<td><table class="calend_month"><caption>Декабрь </caption>{{ calend_month_12 }}</table></td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table class="comment">
+						{% for comment in calend_comments %}
+							<tr>
+								<td class="{{ comment.get_class }}">
+									{{ comment.data.day }} 
+									{% if   comment.data.month == 1 %}янв
+									{% elif comment.data.month == 2 %}фев
+									{% elif comment.data.month == 3 %}мар
+									{% elif comment.data.month == 4 %}апр
+									{% elif comment.data.month == 5 %}мая
+									{% elif comment.data.month == 6 %}июн
+									{% elif comment.data.month == 7 %}июл
+									{% elif comment.data.month == 8 %}авг
+									{% elif comment.data.month == 9 %}сен
+									{% elif comment.data.month == 10 %}окт
+									{% elif comment.data.month == 11 %}ноя
+									{% elif comment.data.month == 12 %}дек
+									{% endif %}
+								</td>
+								<td>{{ comment.comment }}</td>
+						{% endfor %}
+					</table>
+				</td>
 			</tr>
 		</table>
 	{% endautoescape %}
