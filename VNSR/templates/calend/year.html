@@ -3,7 +3,7 @@
 
 {% block menu %}
 	{% for item in items %}
-		<a href="{{ item.href }}/{{ calend_year }}">{{ item.text }}</a>
+		<a href="/{{ item.app }}/{{ calend_year }}/{{ item.href }}">{{ item.text }}</a>
 	{% endfor %}
 {% endblock %}
 
