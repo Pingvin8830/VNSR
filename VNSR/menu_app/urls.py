@@ -18,9 +18,9 @@ from .                import views
 
 app_name    = 'menu_app' 
 urlpatterns = [
-	url (r'^case_user/',                views.case_user,   name = 'case_user'),
-	url (r'^case_app/',                 views.case_app,    name = 'case_app'),
-	url (r'^display_app/',              views.display_app, name = 'display_app'),
+	url (r'^case_user',                 views.case_user,   name = 'case_user'),
+	url (r'^case_app',                  views.case_app,    name = 'case_app'),
+	url (r'^display_app',               views.display_app, name = 'display_app'),
 	url (r'^set_app/(?P<menu_app>\w+)', views.set_app,     name = 'set_app'),
 	url (r'^$',                         views.index,       name = 'index'),
 ]
