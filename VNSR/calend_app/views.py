@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
-from .functions       import create_calend_month, get_now, get_month_text, create_month_signs_form
-from main_app.views   import is_user, default_context
-from datetime         import date
-from .models          import Signs
+from django.shortcuts   import render, redirect
+from .functions         import create_calend_month, get_now, get_month_text, create_month_signs_form
+from main_app.views     import is_user, default_context
+from datetime           import date
+from .models            import Signs
+from menu_app.functions import create_menu_app
 
 # Create your views here.
 def display_calend_year (request, year = get_now ().year):
@@ -13,6 +14,7 @@ def display_calend_year (request, year = get_now ().year):
 	year    = int (year)
 	page    = 'calend/year.html'
 	context = default_context (request, 'calend')
+	context ['items'] = create_menu_app ('calend')
 	context ['calend_year']      = year
 	context ['calend_prev_year'] = year - 1
 	context ['calend_next_year'] = year + 1
