@@ -7,9 +7,9 @@ class ItemsMenu (models.Model):
 	'''
 	class Meta ():
 		db_table = 'items_menu'
-	id   = models.IntegerField (primary_key = True)
-	href = models.CharField    (max_length  = 100, verbose_name = 'Ссылка')
-	text = models.CharField    (max_length  = 100, verbose_name = 'Подпись')
+	id   = models.AutoField (primary_key = True)
+	app  = models.CharField (max_length  = 100, verbose_name = 'Ссылка')
+	text = models.CharField (max_length  = 100, verbose_name = 'Подпись')
 
 class Users (models.Model):
 	'''
@@ -17,8 +17,8 @@ class Users (models.Model):
 	'''
 	class Meta ():
 		db_table = 'users'
-	id   = models.IntegerField (primary_key = True)
-	name = models.CharField    (max_length  = 10,   verbose_name = 'Логин')
+	id   = models.AutoField (primary_key = True)
+	name = models.CharField (max_length  = 10,   verbose_name = 'Логин')
 
 class UserMenu (models.Model):
 	'''
@@ -26,9 +26,9 @@ class UserMenu (models.Model):
 	'''
 	class Meta ():
 		db_table = 'user_menu'
-	id   = models.IntegerField (primary_key = True)
-	user = models.ForeignKey   (Users)
-	item = models.ForeignKey   (ItemsMenu)
+	id   = models.AutoField  (primary_key = True)
+	user = models.ForeignKey (Users)
+	item = models.ForeignKey (ItemsMenu)
 
 class ItemsApp (models.Model):
 	'''
@@ -36,9 +36,9 @@ class ItemsApp (models.Model):
 	'''
 	class Meta ():
 		db_table = 'items_app'
-	id     = models.IntegerField (primary_key = True)
-	text   = models.CharField    (max_length = 20, verbose_name = 'Название подпункта')
-	href   = models.CharField    (max_length = 20, verbose_name = 'Вторая часть url')
+	id     = models.AutoField (primary_key = True)
+	text   = models.CharField (max_length = 20, verbose_name = 'Название подпункта')
+	href   = models.CharField (max_length = 20, verbose_name = 'Вторая часть url')
 
 class AppMenu (models.Model):
 	'''
@@ -46,7 +46,7 @@ class AppMenu (models.Model):
 	'''
 	class Meta ():
 		db_table = 'app_menu'
-	id   = models.IntegerField (primary_key = True)
-	app  = models.ForeignKey   (ItemsMenu)
-	item = models.ForeignKey   (ItemsApp)
+	id   = models.AutoField  (primary_key = True)
+	app  = models.ForeignKey (ItemsMenu)
+	item = models.ForeignKey (ItemsApp)
 
