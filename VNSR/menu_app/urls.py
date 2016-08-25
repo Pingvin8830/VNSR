@@ -18,6 +18,7 @@ from .                import views
 
 app_name    = 'menu_app' 
 urlpatterns = [
-	url (r'^case_user/', views.case_user, name = 'case_user'),
-	url (r'^$',          views.case_user),
+	url (r'^case_user/',  views.case_user,  name = 'case_user'),
+	url (r'^case_app/',   views.case_app,   name = 'case_app'),
+	url (r'^$',           views.index),
 ]
