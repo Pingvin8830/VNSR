@@ -22,7 +22,7 @@ def create_menu_app (app):
 		FROM   items_app ia, app_menu am, items_menu im \
 		WHERE  am.app_id  = im.id                       \
 			AND  am.item_id = ia.id                       \
-			AND  im.href LIKE "/%s/"                      \
+			AND  im.app     = "%s"                        \
 	' % app
 	return ItemsApp.objects.raw (sql)
 
