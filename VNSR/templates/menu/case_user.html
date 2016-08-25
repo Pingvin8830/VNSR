@@ -1,6 +1,10 @@
 {% extends 'main/index.html' %}
 {% load staticfiles %}
 
+{% block menu %}
+	<a href="/menu">Назад</a>
+{% endblock %}
+
 {% block content %}
 	<form action="{% url 'menu_app:case_user' %}" method="post">
 		{% csrf_token %}
