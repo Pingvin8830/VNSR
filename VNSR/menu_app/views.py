@@ -9,7 +9,7 @@ def set_app (request, menu_app):
 	'''
 		Сохраняет настройку меню приложения
 	'''
-	if not is_user: return redirect ('/')
+	if not is_user (request): return redirect ('/')
 	app = ItemsMenu.objects.get (app = menu_app)
 	print ()
 	if request.POST:
@@ -26,7 +26,7 @@ def display_app (request):
 	'''
 		Отображает меню приложения
 	'''
-	if not is_user: return redirect ('/')
+	if not is_user (request): return redirect ('/')
 	if 'app' in request.POST:
 		app = ItemsMenu.objects.get (app = request.POST ['app'])
 		page    = 'menu/display_app.html'
@@ -45,7 +45,7 @@ def index (request):
 	'''
 		Стартовая страница приложения
 	'''
-	if not is_user: redirect ('/')
+	if not is_user (request): redirect ('/')
 	page                 = 'menu/index.html'
 	context              = default_context (request)
 	context ['items']    = create_menu_app ('menu')
@@ -56,7 +56,7 @@ def case_user (request):
 	'''
 		Выбор пользователя
 	'''
-	if not is_user: return redirect ('/')
+	if not is_user (request): return redirect ('/')
 	page                   = 'menu/case_user.html'
 	context                = default_context (request)
 	context ['menu_users'] = Users.objects.all ()
@@ -66,7 +66,7 @@ def case_app (request):
 	'''
 		Выбор приложения
 	'''
-	if not is_user: return redirect ('/')
+	if not is_user (request): return redirect ('/')
 	page                  = 'menu/case_app.html'
 	context               = default_context (request)
 	context ['menu_apps'] = ItemsMenu.objects.all ()
