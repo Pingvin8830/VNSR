@@ -13,8 +13,5 @@ def default_context (request, app = None):
 		'calend':     create_calend_month (),
 		'now':        get_now (),
 	}
-	if app:
-		context ['items'] = create_menu_app (app)
-	else:
-		context ['items'] = create_menu_user (username)
+	context ['items'] = create_menu_user (username)
 	return context
