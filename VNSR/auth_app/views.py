@@ -20,6 +20,9 @@ def login (request):
 		return render (request, 'auth/login.html', {})
 
 def logout (request):
+	'''
+		Выход
+	'''
 	auth.logout (request)
 	return redirect ('/')
 

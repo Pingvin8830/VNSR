@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from .                import views
 
-app_name    = 'calend_app' 
+app_name    = 'menu_app' 
 urlpatterns = [
-	url (r'^(?P<year>[0-9]{4,4})/(?P<month>[0-9]{0,2})/set$', views.set_signs_month,     name = 'set_signs'),
-	url (r'^(?P<year>[0-9]{4,4})/(?P<month>[0-9]{0,2})$',     views.display_signs_month, name = 'display_month'),
-	url (r'^(?P<year>[0-9]{4,4})$',                           views.display_calend_year, name = 'display_year'),
-	url (r'^$',                                               views.display_calend_year),
+	url (r'^case_user/',                views.case_user,   name = 'case_user'),
+	url (r'^case_app/',                 views.case_app,    name = 'case_app'),
+	url (r'^display_app/',              views.display_app, name = 'display_app'),
+	url (r'^set_app/(?P<menu_app>\w+)', views.set_app,     name = 'set_app'),
+	url (r'^$',                         views.index,       name = 'index'),
 ]
