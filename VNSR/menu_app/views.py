@@ -1,15 +1,14 @@
 from django.shortcuts import render, redirect
 from main_app.views   import default_context, is_user
 from django.contrib   import auth
+from .models          import Users
 
 # Create your views here.
-def display_menu (request, menu_username = None):
+def case_user (request):
 	'''
-		Отображение меню пользователя
+		Выбор пользователя
 	'''
-	if not is_user: redirect ('/')
-	if not menu_username:
-		menu_username = auth.get_user (request).username
-	page    = 'menu/index.html'
-	context = default_context (request)
+	page                   = 'menu/case_user.html'
+	context                = default_context (request)
+	context ['menu_users'] = Users.objects.all ()
 	return render (request, page, context)
