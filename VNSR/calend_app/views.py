@@ -10,7 +10,7 @@ def display_calend_year (request, year = get_now ().year):
 	'''
 		Отображает календарь на год
 	'''
-	if not is_user: return redirect ('/')
+	if not is_user (request): return redirect ('/')
 	year    = int (year)
 	page    = 'calend/year.html'
 	context = default_context (request, 'calend')
@@ -27,7 +27,7 @@ def display_signs_month (request, year, month):
 	'''
 		Отображает настройку дней месяца
 	'''
-	if not is_user: return redirect ('/')
+	if not is_user (request): return redirect ('/')
 	year    = int (year)
 	month   = int (month)
 	page    = 'calend/month.html'
@@ -43,7 +43,7 @@ def set_signs_month (request, year, month):
 	'''
 		Сохраняет выбранные признаки дней месяца в БД
 	'''
-	if not is_user: return redirect ('/')
+	if not is_user (request): return redirect ('/')
 	year  = int (year)
 	month = int (month)
 	if request.POST:
