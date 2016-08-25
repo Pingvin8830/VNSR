@@ -1,6 +1,12 @@
 {% extends 'main/index.html' %}
 {% load staticfiles %}
 
+{% block menu %}
+	{% for item in items %}
+		<a href="/{{ item.app }}/{{ item.href }}">{{ item.text }}</a>
+	{% endfor %}
+{% endblock %}
+
 {% block content %}
 	Выбери действие
 {% endblock %}
