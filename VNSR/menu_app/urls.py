@@ -22,7 +22,9 @@ urlpatterns = [
 	url (r'^case_app',    views.case_app,    name = 'case_app'),
 	url (r'^set_app',     views.set_app,     name = 'set_app'),
 	url (r'^add_app',     views.add_app,     name = 'add_app'),
-	url (r'^set_items',   views.set_items,   name = 'set_items'),
+	url (r'^set_item',    views.set_item,    name = 'set_item'),
 	url (r'^add_item',    views.add_item,    name = 'add_item'),
+	url (r'^set_user',    views.set_user,    name = 'set_user'),
+	url (r'^add_user',    views.add_user,    name = 'add_user'),
 	url (r'^$',           views.index,       name = 'index'),
 ]
