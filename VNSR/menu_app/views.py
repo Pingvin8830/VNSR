@@ -5,24 +5,36 @@ from .models          import Users, ItemsMenu, AppMenu, ItemsApp
 from .functions       import create_menu_app
 
 # Create your views here.
-def set_app (request, menu_app):
+def set_app (request):
 	'''
-		Сохраняет настройку меню приложения
+		Сохраняет приложения
 	'''
 	if not is_user (request): return redirect ('/')
-	app = ItemsMenu.objects.get (app = menu_app)
 	print ()
 	if request.POST:
-		for menu in AppMenu.objects.filter (app_id = app.id):
-			menu.delete ()
-		for item in ItemsApp.objects.all ():
-			print (item.id, request.POST, str (item.id) in request.POST)
-			if str (item.id) in request.POST:
-				menu = AppMenu (item_id = item.id, app_id = app.id)
-				menu.save ()
-	return redirect ('/')
+		for app in ItemsMenu.objects.all ():
+			if 'delete_%s' % str (app.id) in request.POST:
+				app.delete ()
+				continue
+			app.app  = request.POST ['app_%s'  % str (app.id)]
+			app.text = request.POST ['text_%s' % str (app.id)]
+			app.save ()
+		return redirect ('/')
+	else:
+		return display_app (request)
 
 def display_app (request):
+	'''
+		Отображает приложения
+	'''
+	if not is_user (request): return redirect ('/')
+	menu_apps = ItemsMenu.objects.all ()
+	page      = 'menu/display_app.html'
+	context   = default_context (request)
+	context   ['menu_apps'] = menu_apps
+	return render (request, page, context)
+
+def display_app_menu (request):
 	'''
 		Отображает меню приложения
 	'''
@@ -34,8 +46,7 @@ def display_app (request):
 		context ['menu_items'] = ItemsApp.objects.all ()
 		context ['installed'] = []
 		for item in AppMenu.objects.filter (app_id = app.id):
-			if item.app_id == app.id:
-				context ['installed'].append (item.item_id)
+			context ['installed'].append (item.item_id)
 		context ['menu_app']   = request.POST ['app']
 		return render (request, page, context)
 	else:
