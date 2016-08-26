@@ -5,6 +5,48 @@ from .models          import Users, ItemsMenu, AppMenu, ItemsApp
 from .functions       import create_menu_app
 
 # Create your views here.
+def add_item (request):
+	'''
+		Добавляет новой действие приложения
+	'''
+	if is_user (request): redirect ('/')
+	if request.POST:
+		item = ItemsApp (text = request.POST ['text'], href = request.POST ['href'])
+		item.save ()
+		return redirect ('/')
+	else:
+		page = 'menu/add_item.html'
+		context = default_context (request)
+		return render (request, page, context)
+
+def set_items (request):
+	'''
+		Сохраняет действия приложений
+	'''
+	print ()
+	if not is_user (request): return redirect ('/')
+	if request.POST:
+		for item in ItemsApp.objects.all ():
+			if 'delete_%s' % str (item.id) in request.POST:
+				item.delete ()
+				continue
+			item.text = request.POST ['text_%s' % str (item.id)]
+			item.href = request.POST ['href_%s' % str (item.id)]
+			item.save ()
+		return redirect ('/menu')
+	else:
+		return display_items (request)
+
+def display_items (request):
+	'''
+		Отображает действия приложений
+	'''
+	if not is_user (request): return redirect ('/')
+	page    = 'menu/display_items.html'
+	context = default_context (request)
+	context ['menu_items'] = ItemsApp.objects.all ()
+	return render (request, page, context)
+
 def add_app (request):
 	'''
 		Добавление приложения
