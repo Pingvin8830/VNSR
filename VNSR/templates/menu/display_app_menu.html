@@ -1,0 +1,30 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block content %}
+	<form action="{% url 'menu_app:set_app' menu_app %}" method="post">
+		{% csrf_token %}
+		<table>
+			{% for item in menu_items %}
+				<tr>
+					<td>{{ item.text }}</td>
+					<td>
+						<input type="checkbox" name="{{ item.id }}" value="{{ item.id }}" 
+						{% if item.id in installed %}
+							checked
+						{% endif %}
+						>
+					</td>
+				</tr>
+			{% endfor %}
+			<tr>
+				<td>
+					<input type="submit" value="Сохранить">
+				</td>
+				<td>
+					<input type="reset" value="Отменить">
+				</td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}
