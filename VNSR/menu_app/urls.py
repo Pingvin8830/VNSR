@@ -22,5 +22,7 @@ urlpatterns = [
 	url (r'^case_app',    views.case_app,    name = 'case_app'),
 	url (r'^set_app',     views.set_app,     name = 'set_app'),
 	url (r'^add_app',     views.add_app,     name = 'add_app'),
+	url (r'^set_items',   views.set_items,   name = 'set_items'),
+	url (r'^add_item',    views.add_item,    name = 'add_item'),
 	url (r'^$',           views.index,       name = 'index'),
 ]
