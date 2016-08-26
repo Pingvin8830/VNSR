@@ -5,6 +5,45 @@ from .models          import Users, ItemsMenu, AppMenu, ItemsApp
 from .functions       import create_menu_app
 
 # Create your views here.
+def set_user (request):
+	'''
+		Сохраняет пользователей
+	'''
+	if not is_user (request): return redirect ('/')
+	if request.POST:
+		for user in Users.objects.all ():
+			if 'delete_%s' % str (user.id) in request.POST:
+				user.delete ()
+				continue
+			user.name = request.POST ['name_%s' % str (user.id)]
+			user.save ()
+		return redirect ('/menu')
+	else:
+		return display_user (request)
+
+def display_user (request):
+	'''
+		Отображает пользователей
+	'''
+	page = 'menu/display_user.html'
+	context = default_context (request)
+	context ['menu_users'] = Users.objects.all ()
+	return render (request, page, context)
+
+def add_user (request):
+	'''
+		Добавляет пользователя
+	'''
+	if not is_user (request): return redirect ('/')
+	if request.POST:
+		user = Users (name = request.POST ['name'])
+		user.save ()
+		return redirect ('/menu')
+	else:
+		page = 'menu/add_user.html'
+		context = default_context (request)
+		return render (request, page, context)
+
 def add_item (request):
 	'''
 		Добавляет новой действие приложения
@@ -13,17 +52,16 @@ def add_item (request):
 	if request.POST:
 		item = ItemsApp (text = request.POST ['text'], href = request.POST ['href'])
 		item.save ()
-		return redirect ('/')
+		return redirect ('/menu')
 	else:
 		page = 'menu/add_item.html'
 		context = default_context (request)
 		return render (request, page, context)
 
-def set_items (request):
+def set_item (request):
 	'''
 		Сохраняет действия приложений
 	'''
-	print ()
 	if not is_user (request): return redirect ('/')
 	if request.POST:
 		for item in ItemsApp.objects.all ():
@@ -35,14 +73,14 @@ def set_items (request):
 			item.save ()
 		return redirect ('/menu')
 	else:
-		return display_items (request)
+		return display_item (request)
 
-def display_items (request):
+def display_item (request):
 	'''
 		Отображает действия приложений
 	'''
 	if not is_user (request): return redirect ('/')
-	page    = 'menu/display_items.html'
+	page    = 'menu/display_item.html'
 	context = default_context (request)
 	context ['menu_items'] = ItemsApp.objects.all ()
 	return render (request, page, context)
@@ -74,7 +112,7 @@ def set_app (request):
 			app.app  = request.POST ['app_%s'  % str (app.id)]
 			app.text = request.POST ['text_%s' % str (app.id)]
 			app.save ()
-		return redirect ('/')
+		return redirect ('/menu')
 	else:
 		return display_app (request)
 
