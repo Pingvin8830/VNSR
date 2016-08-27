@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 	'baltbank_app.apps.BaltbankAppConfig',
 	'menu_app.apps.MenuAppConfig',
 	'main_app.apps.MainAppConfig',
+	'metro_app.apps.MetroAppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
