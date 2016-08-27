@@ -111,9 +111,17 @@ DATABASES = {
 		'PASSWORD': 'server881130',
 		'HOST':     'localhost',
 	},
+	'metro_db': {
+		'ENGINE':   'django.db.backends.mysql',
+		'NAME':     'metro',
+		'USER':     'pingvin',
+		'PASSWORD': 'server881130',
+		'HOST':     'localhost',
+	},
 }
 
 DATABASE_ROUTERS = [
+	'routers.MetroRouter',
 	'routers.CalendRouter',
 	'routers.BaltbankRouter',
 	'routers.MenuRouter',
