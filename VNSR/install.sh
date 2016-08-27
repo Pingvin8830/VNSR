@@ -1,20 +1,16 @@
 #!/bin/bash
 
-pwd
-
-exit
-
 mysql << SQL
 
-	DROP DATABASE IF EXISTS baltbank;
-	DROP DATABASE IF EXISTS calend;
-	DROP DATABASE IF EXISTS menu;
-	DROP DATABASE IF EXISTS vnsr_default;
+	DROP DATABASE IF EXISTS test_baltbank;
+	DROP DATABASE IF EXISTS test_calend;
+	DROP DATABASE IF EXISTS test_menu;
+	DROP DATABASE IF EXISTS test_vnsr_default;
 
-	CREATE DATABASE baltbank;
-	CREATE DATABASE calend;
-	CREATE DATABASE menu;
-	CREATE DATABASE vnsr_default;
+	CREATE DATABASE test_baltbank;
+	CREATE DATABASE test_calend;
+	CREATE DATABASE test_menu;
+	CREATE DATABASE test_vnsr_default;
 
 SQL
 
@@ -22,11 +18,12 @@ rm -r ./baltbank_app/migrations/*
 rm -r ./calend_app/migrations/*
 rm -r ./menu_app/migrations/*
 
+python manage.py migrate --database default
 python manage.py createsuperuser
 
-python manage.py createmigrations baltbank_app
-python manage.py createmigrations calend_app
-python manage.py createmigrations menu_app
+python manage.py makemigrations baltbank_app
+python manage.py makemigrations calend_app
+python manage.py makemigrations menu_app
 
 python manage.py migrate --database default
 python manage.py migrate --database baltbank_db
@@ -46,7 +43,8 @@ mysql << SQL
 
 		INSERT INTO items_app
 			(text, href) VALUES
-			('Действия', 'set_item');
+			('Действия',        'set_item');
+			('Меню приложений', 'set_app_menu')
 
 		INSERT INTO user_menu
 			(item_id, user_id) VALUES
@@ -54,6 +52,7 @@ mysql << SQL
 
 		INSERT INTO app_menu
 			(app_id, item_id) VALUES
-			(1, 1);
+			(1, 1),
+			(1, 2);
 
 SQL
