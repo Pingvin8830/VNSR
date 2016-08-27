@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 	'baltbank_app.apps.BaltbankAppConfig',
 	'menu_app.apps.MenuAppConfig',
 	'main_app.apps.MainAppConfig',
+	'metro_app.apps.MetroAppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -111,9 +112,17 @@ DATABASES = {
 		'PASSWORD': 'server881130',
 		'HOST':     'localhost',
 	},
+	'metro_db': {
+		'ENGINE':   'django.db.backends.mysql',
+		'NAME':     'metro',
+		'USER':     'pingvin',
+		'PASSWORD': 'server881130',
+		'HOST':     'localhost',
+	},
 }
 
 DATABASE_ROUTERS = [
+	'routers.MetroRouter',
 	'routers.CalendRouter',
 	'routers.BaltbankRouter',
 	'routers.MenuRouter',
