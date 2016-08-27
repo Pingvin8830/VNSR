@@ -22,5 +22,6 @@ urlpatterns = [
 	url (r'^calend/', include ('calend_app.urls')),
 	url (r'^main/',   include ('main_app.urls')),
 	url (r'^menu/',   include ('menu_app.urls')),
+	url (r'^metro/',  include ('metro_app.urls')),
 	url (r'^',        include ('main_app.urls')),
 ]
