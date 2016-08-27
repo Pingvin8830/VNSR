@@ -2,15 +2,15 @@
 
 mysql << SQL
 
-	DROP DATABASE IF EXISTS test_baltbank;
-	DROP DATABASE IF EXISTS test_calend;
-	DROP DATABASE IF EXISTS test_menu;
-	DROP DATABASE IF EXISTS test_vnsr_default;
+	DROP DATABASE IF EXISTS baltbank;
+	DROP DATABASE IF EXISTS calend;
+	DROP DATABASE IF EXISTS menu;
+	DROP DATABASE IF EXISTS vnsr_default;
 
-	CREATE DATABASE test_baltbank;
-	CREATE DATABASE test_calend;
-	CREATE DATABASE test_menu;
-	CREATE DATABASE test_vnsr_default;
+	CREATE DATABASE baltbank;
+	CREATE DATABASE calend;
+	CREATE DATABASE menu;
+	CREATE DATABASE vnsr_default;
 
 SQL
 
@@ -32,7 +32,7 @@ python manage.py migrate --database menu_db
 
 mysql << SQL
 
-	USE test_menu;
+	USE menu;
 		INSERT INTO users
 			(name) VALUES
 			('anton');

@@ -85,28 +85,28 @@ WSGI_APPLICATION = 'VNSR.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE':   'django.db.backends.mysql',
-		'NAME':     'test_vnsr_default',
+		'NAME':     'vnsr_default',
 		'USER':     'pingvin',
 		'PASSWORD': 'server881130',
 		'HOST':     'localhost',
 	},
 	'calend_db': {
 		'ENGINE':   'django.db.backends.mysql',
-		'NAME':     'test_calend',
+		'NAME':     'calend',
 		'USER':     'pingvin',
 		'PASSWORD': 'server881130',
 		'HOST':     'localhost',
 	},
 	'baltbank_db': {
 		'ENGINE':   'django.db.backends.mysql',
-		'NAME':     'test_baltbank',
+		'NAME':     'baltbank',
 		'USER':     'pingvin',
 		'PASSWORD': 'server881130',
 		'HOST':     'localhost',
 	},
 	'menu_db': {
 		'ENGINE':   'django.db.backends.mysql',
-		'NAME':     'test_menu',
+		'NAME':     'menu',
 		'USER':     'pingvin',
 		'PASSWORD': 'server881130',
 		'HOST':     'localhost',
