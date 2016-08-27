@@ -1,10 +1,48 @@
 from django.shortcuts import render, redirect
 from main_app.views   import default_context, is_user
 from django.contrib   import auth
-from .models          import Users, ItemsMenu, AppMenu, ItemsApp
+from .models          import Users, ItemsMenu, AppMenu, ItemsApp, UserMenu
 from .functions       import create_menu_app
 
 # Create your views here.
+def display_user_menu (request):
+	'''
+		Отображает меню пользователя
+	'''
+	if not is_user (request): return redirect ('/')
+	if request.POST:
+		user = Users.objects.get (id = request.POST ['user_id'])
+		page = 'menu/display_user_menu.html'
+		context = default_context (request)
+		context ['menu_items'] = ItemsMenu.objects.all ()
+		context ['installed']  = []
+		context ['user_id']    = user.id
+		for install in UserMenu.objects.filter (user_id = user.id):
+			context ['installed'].append (install.item_id)
+		return render (request, page, context)
+	else:
+		return case_user (request)
+
+def set_user_menu (request, user_id):
+	'''
+		Сохраняет меню пользователей
+	'''
+	if not is_user (request): return redirect ('/')
+	if request.POST:
+		user = Users.objects.get (id = user_id)
+		list_install = UserMenu.objects.filter (user_id = user.id)
+		for menu in list_install:
+			menu.delete ()
+		for item in ItemsMenu.objects.all ():
+			if 'install_%s' % item.id in request.POST:
+				menu = UserMenu (user_id = user.id, item_id = item.id)
+				menu.save ()
+		return redirect ('/menu')
+	else:
+		page = 'menu/display_user_menu.html'
+		context = default_context (request)
+		return render (request, page, context)
+
 def set_user (request):
 	'''
 		Сохраняет пользователей
