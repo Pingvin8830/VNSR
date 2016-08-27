@@ -18,13 +18,15 @@ from .                import views
 
 app_name    = 'menu_app' 
 urlpatterns = [
-	url (r'^case_user',   views.case_user,   name = 'case_user'),
-	url (r'^case_app',    views.case_app,    name = 'case_app'),
-	url (r'^set_app',     views.set_app,     name = 'set_app'),
-	url (r'^add_app',     views.add_app,     name = 'add_app'),
-	url (r'^set_item',    views.set_item,    name = 'set_item'),
-	url (r'^add_item',    views.add_item,    name = 'add_item'),
-	url (r'^set_user',    views.set_user,    name = 'set_user'),
-	url (r'^add_user',    views.add_user,    name = 'add_user'),
-	url (r'^$',           views.index,       name = 'index'),
+	url (r'^case_user$',                         views.case_user,         name = 'case_user'),
+	url (r'^case_app$',                          views.case_app,          name = 'case_app'),
+	url (r'^set_app$',                           views.set_app,           name = 'set_app'),
+	url (r'^add_app$',                           views.add_app,           name = 'add_app'),
+	url (r'^set_item$',                          views.set_item,          name = 'set_item'),
+	url (r'^add_item$',                          views.add_item,          name = 'add_item'),
+	url (r'^set_user$',                          views.set_user,          name = 'set_user'),
+	url (r'^add_user$',                          views.add_user,          name = 'add_user'),
+	url (r'^set_user_menu/(?P<user_id>[0-9]+)$', views.set_user_menu,     name = 'set_user_menu'),
+	url (r'^display_user_menu$',                 views.display_user_menu, name = 'display_user_menu'),
+	url (r'^$',                                  views.index,             name = 'index'),
 ]
