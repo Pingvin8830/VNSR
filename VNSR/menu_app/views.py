@@ -14,7 +14,7 @@ def display_app_menu (request):
 		app = ItemsMenu.objects.get (id = request.POST ['app_id'])
 		page = 'menu/display_app_menu.html'
 		context = default_context (request)
-		context ['menu_items'] = ItemsApp.objects.all ()
+		context ['menu_items'] = ItemsApp.objects.all ().order_by ('text')
 		context ['installed'] = []
 		context ['app_id'] = app.id
 		for install in AppMenu.objects.filter (app_id = app.id):
@@ -32,7 +32,7 @@ def display_user_menu (request):
 		user = Users.objects.get (id = request.POST ['user_id'])
 		page = 'menu/display_user_menu.html'
 		context = default_context (request)
-		context ['menu_items'] = ItemsMenu.objects.all ()
+		context ['menu_items'] = ItemsMenu.objects.all ().order_by ('text')
 		context ['installed']  = []
 		context ['user_id']    = user.id
 		for install in UserMenu.objects.filter (user_id = user.id):
@@ -101,7 +101,7 @@ def display_user (request):
 	'''
 	page = 'menu/display_user.html'
 	context = default_context (request)
-	context ['menu_users'] = Users.objects.all ()
+	context ['menu_users'] = Users.objects.all ().order_by ('name')
 	return render (request, page, context)
 
 def add_user (request):
@@ -156,7 +156,7 @@ def display_item (request):
 	if not is_user (request): return redirect ('/')
 	page    = 'menu/display_item.html'
 	context = default_context (request)
-	context ['menu_items'] = ItemsApp.objects.all ()
+	context ['menu_items'] = ItemsApp.objects.all ().order_by ('text')
 	return render (request, page, context)
 
 def add_app (request):
@@ -195,7 +195,7 @@ def display_app (request):
 		Отображает приложения
 	'''
 	if not is_user (request): return redirect ('/')
-	menu_apps = ItemsMenu.objects.all ()
+	menu_apps = ItemsMenu.objects.all ().order_by ('text')
 	page      = 'menu/display_app.html'
 	context   = default_context (request)
 	context   ['menu_apps'] = menu_apps
@@ -219,7 +219,7 @@ def case_user (request):
 	if not is_user (request): return redirect ('/')
 	page                   = 'menu/case_user.html'
 	context                = default_context (request)
-	context ['menu_users'] = Users.objects.all ()
+	context ['menu_users'] = Users.objects.all ().order_by ('name')
 	return render (request, page, context)
 
 def case_app (request):
@@ -229,5 +229,5 @@ def case_app (request):
 	if not is_user (request): return redirect ('/')
 	page                  = 'menu/case_app.html'
 	context               = default_context (request)
-	context ['menu_apps'] = ItemsMenu.objects.all ()
+	context ['menu_apps'] = ItemsMenu.objects.all ().order_by ('text')
 	return render (request, page, context)
