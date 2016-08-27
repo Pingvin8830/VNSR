@@ -32,7 +32,7 @@ python manage.py migrate --database menu_db
 
 mysql << SQL
 
-	USE menu;
+	USE test_menu;
 		INSERT INTO users
 			(name) VALUES
 			('anton');
