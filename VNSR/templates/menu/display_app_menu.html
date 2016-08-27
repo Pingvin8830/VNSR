@@ -1,25 +1,40 @@
 {% extends 'main/index.html' %}
 {% load staticfiles %}
 
+{% block menu %}
+	<a href="{% url 'menu_app:case_app' %}">Назад</a>
+{% endblock %}
+
 {% block content %}
-	<form action="{% url 'menu_app:set_app' menu_app %}" method="post">
+	<link rel="stylesheet" type="text/css" href="{% static 'menu/display_item.css' %}">
+	<center>
+	<form action="{% url 'menu_app:set_app_menu' app_id %}" method="post">
 		{% csrf_token %}
+		<div id="items">
 		<table>
 			{% for item in menu_items %}
 				<tr>
-					<td>{{ item.text }}</td>
 					<td>
-						<input type="checkbox" name="{{ item.id }}" value="{{ item.id }}" 
-						{% if item.id in installed %}
-							checked
-						{% endif %}
+						<input type="text" name="step_{{ item.id}}" size="2">
+					</td>
+					<td>
+						{{ item.text }}
+					</td>
+					<td>
+						<input type="checkbox" name="install_{{ item.id }}" value="install" 
+							{% if item.id in installed %}
+								checked
+							{% endif %}
 						>
 					</td>
 				</tr>
 			{% endfor %}
+		</table>
+		</div>
+		<table>
 			<tr>
 				<td>
-					<input type="submit" value="Сохранить">
+					<input type="submit" value="Принять">
 				</td>
 				<td>
 					<input type="reset" value="Отменить">
@@ -27,4 +42,5 @@
 			</tr>
 		</table>
 	</form>
+	</center>
 {% endblock %}
