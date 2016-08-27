@@ -43,8 +43,8 @@ mysql << SQL
 
 		INSERT INTO items_app
 			(text, href) VALUES
-			('Действия',        'set_item');
-			('Меню приложений', 'set_app_menu')
+			('Действия',        'set_item'),
+			('Меню приложений', 'set_app_menu');
 
 		INSERT INTO user_menu
 			(item_id, user_id) VALUES
