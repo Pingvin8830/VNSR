@@ -1,0 +1,53 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+	<a href="{% url 'menu_app:add_item'%}">Добавить действие</a>
+	<a href="{% url 'menu_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+	<link rel="stylesheet" type="text/css" href="{% static 'menu/display_item.css' %}">
+	<center>
+		<form action="{% url 'menu_app:set_item' %}" method="post">
+			{% csrf_token %}
+			<div id="items">
+				<table>
+					<caption>Дествия приложений</caption>
+					<tr align="center">
+						<td>ID</td>
+						<td>Подпись меню</td>
+						<td>Ссылка</td>
+						<td>Удалить</td>
+					</tr>
+					{% for item in menu_items %}
+						<tr>
+							<td>
+								<input type="text" name="id_{{ item.id }}" value="{{ item.id }}" size="2" disabled>
+							</td>
+							<td>
+								<input type="text" name="text_{{ item.id }}" value="{{ item.text }}">
+							</td>
+							<td>
+								<input type="text" name="href_{{ item.id }}" value="{{ item.href }}">
+							</td>
+							<td>
+								<input type="checkbox" name="delete_{{ item.id }}" value="delete">
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+				<table>
+					<tr>
+						<td>
+							<input type="submit" value="Принять">
+						</td>
+						<td>
+							<input type="reset" value="Очистить">
+						</td>
+					</tr>
+				</table>
+		</form>
+	</center>
+{% endblock %}

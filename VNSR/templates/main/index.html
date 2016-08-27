@@ -38,7 +38,7 @@
 				<div id="menu">
 					{% block menu %}
 						{% for item in items %}
-							<a href="{{ item.href }}">
+							<a href="/{{ item.app }}/">
 								{{ item.text }}
 							</a>
 						{% endfor %}
