@@ -44,7 +44,7 @@ mysql << SQL
 		INSERT INTO items_app
 			(text, href) VALUES
 			('Действия',        'set_item'),
-			('Меню приложений', 'set_app_menu');
+			('Меню приложений', 'case_app');
 
 		INSERT INTO user_menu
 			(item_id, user_id) VALUES
