@@ -1,33 +1,52 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 # Create your models here.
-class Items (models.Model):
+class ItemsMenu (models.Model):
 	'''
-		Пункты меню
+		Пункты меню для пользователей - приложения
 	'''
 	class Meta ():
-		db_table = 'items'
-	id   = models.IntegerField (primary_key = True)
-	href = models.CharField    (max_length  = 100, verbose_name = 'Ссылка')
-	text = models.CharField    (max_length  = 100, verbose_name = 'Подпись')
+		db_table = 'items_menu'
+	id   = models.AutoField (primary_key = True)
+	app  = models.CharField (max_length  = 100, verbose_name = 'Ссылка')
+	text = models.CharField (max_length  = 100, verbose_name = 'Подпись')
 
-class ItemsUsers (models.Model):
+class Users (models.Model):
 	'''
-		Сопоставление пунктов меню с пользователями
+		Пользователи
 	'''
 	class Meta ():
-		db_table = 'items_users'
-	id   = models.IntegerField (primary_key = True)
-	item = models.ForeignKey   (Items)
-	user = models.CharField    (max_length = 30)
+		db_table = 'users'
+	id   = models.AutoField (primary_key = True)
+	name = models.CharField (max_length  = 10,   verbose_name = 'Логин')
 
-class ItemsApps (models.Model):
+class UserMenu (models.Model):
 	'''
-		Сопоставление пунктов меню с приложением
+		Сопоставление пользователям пунктов меню - приложений
 	'''
 	class Meta ():
-		db_table = 'items_apps'
-	id   = models.IntegerField (primary_key = True)
-	item = models.ForeignKey   (Items)
-	app  = models.CharField    (max_length = 30)
+		db_table = 'user_menu'
+	id   = models.AutoField  (primary_key = True)
+	user = models.ForeignKey (Users)
+	item = models.ForeignKey (ItemsMenu)
+
+class ItemsApp (models.Model):
+	'''
+		Пункты меню для приложений - действия
+	'''
+	class Meta ():
+		db_table = 'items_app'
+	id     = models.AutoField (primary_key = True)
+	text   = models.CharField (max_length = 20, verbose_name = 'Название подпункта')
+	href   = models.CharField (max_length = 20, verbose_name = 'Вторая часть url')
+
+class AppMenu (models.Model):
+	'''
+		Сопоставление приложениям пунктов меню - действий
+	'''
+	class Meta ():
+		db_table = 'app_menu'
+	id   = models.AutoField  (primary_key = True)
+	app  = models.ForeignKey (ItemsMenu)
+	item = models.ForeignKey (ItemsApp)
+

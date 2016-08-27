@@ -1,13 +1,11 @@
 {% extends 'main/index.html' %}
 {% load staticfiles %}
 
-{% block menu%}
+{% block menu %}
 	{% for item in items %}
-		<a href="{{ item.href }}{{ calend_year }}/{{ forloop.counter }}">
-			{{ item.text }}
-		</a>
-	{% endfor%}
-{%endblock%}
+		<a href="/{{ item.app }}/{{ calend_year }}/{{ item.href }}">{{ item.text }}</a>
+	{% endfor %}
+{% endblock %}
 
 {% block content %}
 	<link rel="stylesheet" type="text/css" href="{% static 'calend/main.css' %}">

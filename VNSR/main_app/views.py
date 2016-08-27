@@ -9,5 +9,5 @@ def index (request):
 	'''
 	if not is_user (request):	return redirect ('/auth/login/')
 	page    = 'main/index.html'
-	context = default_context (request, 'user')
+	context = default_context (request)
 	return render (request, page, context)
