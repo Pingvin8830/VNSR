@@ -3,7 +3,7 @@ from main_app.views       import is_user, default_context
 from menu_app.functions   import create_menu_app
 from django               import forms
 from calend_app.functions import get_now
-from datetime             import date, time
+from datetime             import date, time, timedelta
 from .models              import WorkPlane
 
 # Create your views here.
@@ -13,8 +13,11 @@ def set_work_plane (request):
 	'''
 	if not is_user (request): return redirect ('/')
 	if request.POST:
-		date_start = date (int (request.POST ['start_year']), int (request.POST ['start_month']), int (request.POST ['start_day']))
-		date_end   = date (int (request.POST ['end_year']),   int (request.POST ['end_month']),   int (request.POST ['end_day']))
+		date_start = date (int (request.POST ['start_year']), int (request.POST ['start_month']), 1)
+		date_end = date_start
+		while date_end.month == date_start.month:
+			date_end += timedelta (days = 1)
+		date_end -= timedelta (days = 1)
 		for i in range (1, 9):
 			if request.POST ['code_%s' % str (i)] != '':
 				plane = WorkPlane (
