@@ -9,8 +9,9 @@ class Signs (models.Model):
 	class Meta ():
 		db_table = 'signs'
 
-	data    = models.DateField    (primary_key = True )
-	work    = models.BooleanField (default     = True )
+	id      = models.AutoField    (primary_key = True)
+	data    = models.DateField    (unique      = True)
+	work    = models.BooleanField (default     = True)
 	week    = models.BooleanField (default     = False)
 	holiday = models.BooleanField (default     = False)
 	short   = models.BooleanField (default     = False)
