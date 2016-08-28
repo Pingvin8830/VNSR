@@ -4,9 +4,51 @@ from menu_app.functions   import create_menu_app
 from django               import forms
 from calend_app.functions import get_now, get_month_text
 from datetime             import date, time, timedelta
-from .models              import WorkPlane, ShedulePlane
+from .models              import WorkPlane, ShedulePlane, SheduleReal
 
 # Create your views here.
+def set_shift (request):
+	'''
+		Устанавливает смену
+	'''
+	if not is_user (request): return redirect ('/')
+	print ()
+	if request.POST:
+		data  = date (
+			int (request.POST ['year']),
+			int (request.POST ['month']),
+			int (request.POST ['day'])
+		)
+		try:
+			shift = SheduleReal.objects.get (data = data)
+		except:
+			shift = SheduleReal (
+				data = data,
+				start = time (
+					int (request.POST ['start_hour']),
+					int (request.POST ['start_minute'])
+				),
+				end = time (
+					int (request.POST ['end_hour']),
+					int (request.POST ['end_minute'])
+				),
+				delay = time (
+					int (request.POST ['delay_hour']),
+					int (request.POST ['delay_minute'])
+				),
+				break_day   = int (request.POST ['break_day']),
+				break_night = int (request.POST ['break_night']),
+				vacation    = False,
+				sick        = False
+			)
+		shift.save ()
+		return redirect ('/metro')
+
+	else:
+		page    = 'metro/add_shift.html'
+		context = default_context (request)
+		return render (request, page, context)
+
 def set_shedule (request, data):
 	'''
 		Устанавливает новый график
