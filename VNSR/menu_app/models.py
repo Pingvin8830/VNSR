@@ -18,7 +18,7 @@ class Users (models.Model):
 	class Meta ():
 		db_table = 'users'
 	id   = models.AutoField (primary_key = True)
-	name = models.CharField (max_length  = 10,   verbose_name = 'Логин')
+	name = models.CharField (max_length  = 10, verbose_name = 'Логин')
 
 class UserMenu (models.Model):
 	'''
@@ -36,9 +36,9 @@ class ItemsApp (models.Model):
 	'''
 	class Meta ():
 		db_table = 'items_app'
-	id     = models.AutoField (primary_key = True)
-	text   = models.CharField (max_length = 20, verbose_name = 'Название подпункта')
-	href   = models.CharField (max_length = 20, verbose_name = 'Вторая часть url')
+	id   = models.AutoField (primary_key = True)
+	text = models.CharField (max_length = 20, verbose_name = 'Название подпункта')
+	href = models.CharField (max_length = 20, verbose_name = 'Вторая часть url')
 
 class AppMenu (models.Model):
 	'''

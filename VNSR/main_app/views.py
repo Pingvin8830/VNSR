@@ -1,6 +1,6 @@
 from django.shortcuts   import render, redirect
-from .functions         import default_context
 from auth_app.functions import is_user
+from .functions         import default_context
 
 # Create your views here.
 def index (request):

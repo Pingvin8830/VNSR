@@ -7,23 +7,23 @@
 
 {% block content %}
 	<center>
-	<form action="{% url 'menu_app:display_user_menu' %}" method="post">
-		{% csrf_token %}
-		<table cellpadding="5">
-			<caption>Выбери пользователя<br></caption>
-			{% for user in menu_users %}
-				<tr>
-					<td>
-						<input type="radio" name="user_id" value="{{ user.id }}">{{ user.name }}
+		<form action="{% url 'menu_app:display_user_menu' %}" method="post">
+			{% csrf_token %}
+			<table cellpadding="5">
+				<caption>Выбери пользователя<br></caption>
+				{% for user in menu_users %}
+					<tr>
+						<td>
+							<input type="radio" name="user_id" value="{{ user.id }}">{{ user.name }}
+						</td>
+					</tr>
+				{% endfor %}
+				<tr align="center">
+					<td colspan="2">
+						<input type="submit" value="Далее">
 					</td>
 				</tr>
-			{% endfor %}
-			<tr align="center">
-				<td colspan="2">
-					<input type="submit" value="Далее">
-				</td>
-			</tr>
-		</table>
-	</form>
+			</table>
+		</form>
 	</center>
 {% endblock %}

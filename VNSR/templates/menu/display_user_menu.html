@@ -12,9 +12,7 @@
 			<table>
 				{% for item in menu_items %}
 					<tr>
-						<td>
-							{{ item.text }}
-						</td>
+						<td>{{ item.text }}</td>
 						<td>
 							<input type="checkbox" name="install_{{ item.id }}" value="install"
 								{% if item.id in installed %}

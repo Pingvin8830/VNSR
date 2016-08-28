@@ -26,11 +26,14 @@ def set_work_plane (request):
 					break_day   = request.POST ['break_day_%s'   % str (i)],
 					break_night = request.POST ['break_night_%s' % str (i)]
 				)
+
 				plane.save ()
+
 		return redirect ('/metro')
+
 	else:
-		page = 'metro/add_work_plane.html'
-		context = default_context (request)
+		page            = 'metro/add_work_plane.html'
+		context         = default_context (request)
 		context ['now'] = get_now ()
 		return render (request, page, context)
 
@@ -39,7 +42,7 @@ def index (request):
 		Стартовая страница приложения
 	'''
 	if not is_user (request): return redirect ('/')
-	page = 'metro/index.html'
-	context = default_context (request)
+	page              = 'metro/index.html'
+	context           = default_context (request)
 	context ['items'] = create_menu_app ('metro')
 	return render (request, page, context)

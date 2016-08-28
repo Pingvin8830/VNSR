@@ -7,7 +7,7 @@ def default_context (request, app = None):
 		Создаёт контекст для шаблона сайта по умолчанию
 	'''
 	username = auth.get_user (request).username
-	context = {
+	context  = {
 		'username':   username,
 		'month_text': get_month_text (),
 		'calend':     create_calend_month (),

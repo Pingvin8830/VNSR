@@ -1,8 +1,8 @@
+from django.contrib   import auth
 from django.shortcuts import render, redirect
 from main_app.views   import default_context, is_user
-from django.contrib   import auth
-from .models          import Users, ItemsMenu, AppMenu, ItemsApp, UserMenu
 from .functions       import create_menu_app
+from .models          import Users, ItemsMenu, AppMenu, ItemsApp, UserMenu
 
 # Create your views here.
 def display_app_menu (request):
@@ -11,15 +11,18 @@ def display_app_menu (request):
 	'''
 	if not is_user (request): return redirect ('/')
 	if request.POST:
-		app = ItemsMenu.objects.get (id = request.POST ['app_id'])
-		page = 'menu/display_app_menu.html'
-		context = default_context (request)
+		app                    = ItemsMenu.objects.get (id = request.POST ['app_id'])
+		page                   = 'menu/display_app_menu.html'
+		context                = default_context (request)
 		context ['menu_items'] = ItemsApp.objects.all ().order_by ('text')
-		context ['installed'] = []
-		context ['app_id'] = app.id
+		context ['installed']  = []
+		context ['app_id']     = app.id
+
 		for install in AppMenu.objects.filter (app_id = app.id):
 			context ['installed'].append (install.item_id)
+
 		return render (request, page, context)
+
 	else:
 		return case_app (request)
 
@@ -29,15 +32,18 @@ def display_user_menu (request):
 	'''
 	if not is_user (request): return redirect ('/')
 	if request.POST:
-		user = Users.objects.get (id = request.POST ['user_id'])
-		page = 'menu/display_user_menu.html'
-		context = default_context (request)
+		user                   = Users.objects.get (id = request.POST ['user_id'])
+		page                   = 'menu/display_user_menu.html'
+		context                = default_context (request)
 		context ['menu_items'] = ItemsMenu.objects.all ().order_by ('text')
 		context ['installed']  = []
 		context ['user_id']    = user.id
+
 		for install in UserMenu.objects.filter (user_id = user.id):
 			context ['installed'].append (install.item_id)
+
 		return render (request, page, context)
+
 	else:
 		return case_user (request)
 
@@ -48,15 +54,19 @@ def set_user_menu (request, user_id):
 	if not is_user (request): return redirect ('/')
 	if request.POST:
 		list_install = UserMenu.objects.filter (user_id = user_id)
+
 		for menu in list_install:
 			menu.delete ()
+
 		for item in ItemsMenu.objects.all ():
 			if 'install_%s' % item.id in request.POST:
 				menu = UserMenu (user_id = user_id, item_id = item.id)
 				menu.save ()
+
 		return redirect ('/menu')
+
 	else:
-		page = 'menu/display_user_menu.html'
+		page    = 'menu/display_user_menu.html'
 		context = default_context (request)
 		return render (request, page, context)
 
@@ -67,15 +77,19 @@ def set_app_menu (request, app_id):
 	if not is_user (request): return redirect ('/')
 	if request.POST:
 		list_install = AppMenu.objects.filter (app_id = app_id)
+
 		for menu in list_install:
 			menu.delete ()
+
 		for item in ItemsApp.objects.all ():
 			if 'install_%s' % str (item.id) in request.POST:
 				menu = AppMenu (app_id = app_id, item_id = item.id)
 				menu.save ()
+
 		return redirect ('/menu')
+
 	else:
-		page = 'menu/display_app_menu.html'
+		page    = 'menu/display_app_menu.html'
 		context = default_context (request)
 		return render (request, page, context)
 
@@ -91,7 +105,9 @@ def set_user (request):
 				continue
 			user.name = request.POST ['name_%s' % str (user.id)]
 			user.save ()
+
 		return redirect ('/menu')
+
 	else:
 		return display_user (request)
 
@@ -99,8 +115,8 @@ def display_user (request):
 	'''
 		Отображает пользователей
 	'''
-	page = 'menu/display_user.html'
-	context = default_context (request)
+	page                   = 'menu/display_user.html'
+	context                = default_context (request)
 	context ['menu_users'] = Users.objects.all ().order_by ('name')
 	return render (request, page, context)
 
@@ -113,8 +129,9 @@ def add_user (request):
 		user = Users (name = request.POST ['name'])
 		user.save ()
 		return redirect ('/menu')
+
 	else:
-		page = 'menu/add_user.html'
+		page    = 'menu/add_user.html'
 		context = default_context (request)
 		return render (request, page, context)
 
@@ -127,8 +144,9 @@ def add_item (request):
 		item = ItemsApp (text = request.POST ['text'], href = request.POST ['href'])
 		item.save ()
 		return redirect ('/menu')
+
 	else:
-		page = 'menu/add_item.html'
+		page    = 'menu/add_item.html'
 		context = default_context (request)
 		return render (request, page, context)
 
@@ -142,10 +160,13 @@ def set_item (request):
 			if 'delete_%s' % str (item.id) in request.POST:
 				item.delete ()
 				continue
+
 			item.text = request.POST ['text_%s' % str (item.id)]
 			item.href = request.POST ['href_%s' % str (item.id)]
 			item.save ()
+
 		return redirect ('/menu')
+
 	else:
 		return display_item (request)
 
@@ -154,8 +175,8 @@ def display_item (request):
 		Отображает действия приложений
 	'''
 	if not is_user (request): return redirect ('/')
-	page    = 'menu/display_item.html'
-	context = default_context (request)
+	page                   = 'menu/display_item.html'
+	context                = default_context (request)
 	context ['menu_items'] = ItemsApp.objects.all ().order_by ('text')
 	return render (request, page, context)
 
@@ -168,8 +189,9 @@ def add_app (request):
 		app = ItemsMenu (app = request.POST ['app'], text = request.POST ['text'])
 		app.save ()
 		return redirect ('/menu')
+
 	else:
-		page = 'menu/add_app.html'
+		page    = 'menu/add_app.html'
 		context = default_context (request)
 		return render (request, page, context)
 
@@ -183,10 +205,13 @@ def set_app (request):
 			if 'delete_%s' % str (app.id) in request.POST:
 				app.delete ()
 				continue
+
 			app.app  = request.POST ['app_%s'  % str (app.id)]
 			app.text = request.POST ['text_%s' % str (app.id)]
 			app.save ()
+
 		return redirect ('/menu')
+
 	else:
 		return display_app (request)
 
@@ -195,10 +220,10 @@ def display_app (request):
 		Отображает приложения
 	'''
 	if not is_user (request): return redirect ('/')
-	menu_apps = ItemsMenu.objects.all ().order_by ('text')
-	page      = 'menu/display_app.html'
-	context   = default_context (request)
-	context   ['menu_apps'] = menu_apps
+	menu_apps             = ItemsMenu.objects.all ().order_by ('text')
+	page                  = 'menu/display_app.html'
+	context               = default_context (request)
+	context ['menu_apps'] = menu_apps
 	return render (request, page, context)
 
 def index (request):

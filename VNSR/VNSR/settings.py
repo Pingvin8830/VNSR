@@ -122,10 +122,10 @@ DATABASES = {
 }
 
 DATABASE_ROUTERS = [
-	'routers.MetroRouter',
-	'routers.CalendRouter',
 	'routers.BaltbankRouter',
+	'routers.CalendRouter',
 	'routers.MenuRouter',
+	'routers.MetroRouter',
 	'routers.DefaultRouter',
 ]
 

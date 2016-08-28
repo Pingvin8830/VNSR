@@ -30,7 +30,6 @@ def get_month_text (year = get_now ().year, month = get_now ().month):
 	month_text += ' %s г.' % year
 	return month_text
 
-
 def create_cell_calend (data):
 	'''
 		Формирует ячейку календаря
@@ -51,17 +50,26 @@ def create_calend_month (year = get_now ().year, month = get_now ().month):
 	year   = int (year)
 	month  = int (month)
 	data   = date (year, month, 1)
+
+	# Смещение начала месяца
 	entry  = data.weekday ()
 	calend = '<tr>'
 	for i in range (entry):
 		calend += '<td></td>'
+
+	# Остаток первой недели месяца
 	while data.weekday () != 0:
 		calend += create_cell_calend (data)
 		data   += timedelta (days = 1)
 	calend += '</tr>'
+
+	# Остальной месяц
 	while data.month == month:
+		# Понедельник
 		calend += '<tr>' + create_cell_calend (data)
 		data   += timedelta (days = 1)
+
+		# Остальная неделя
 		while data.weekday () != 0:
 			if data.month == month:
 				calend += create_cell_calend (data)
@@ -81,7 +89,7 @@ def create_line_radio (year, month, start, end, type_line):
 	elif type_line == 'holiday': line += 'Праздничный</td>'
 	elif type_line == 'short':   line += 'Сокращённый</td>'
 	for day in range (start, end):
-		data = date (year, month, day)
+		data  = date (year, month, day)
 		line += '<td><input type="radio" name="%s" value="%s"' % (str (data), type_line)
 		try:
 			signs = Signs.objects.get (data = data)
