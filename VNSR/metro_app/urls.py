@@ -19,6 +19,7 @@ from .                import views
 app_name    = 'metro_app' 
 urlpatterns = [
 	url (r'^set_shedule/(?P<data>[0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2})', views.set_shedule,    name = 'set_shedule'),
+	url (r'^set_shift',                                              views.set_shift,      name = 'set_shift'),
 	url (r'^set_work_plane',                                         views.set_work_plane, name = 'set_work_plane'),
 	url (r'^',                                                       views.index,          name = 'index'),
 ]
