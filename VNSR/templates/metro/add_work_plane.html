@@ -10,96 +10,80 @@
 	<center>
 		<form action="{% url 'metro_app:set_work_plane' %}" method="post">
 			{% csrf_token %}
-			<table>
+			<table border="1">
 				<caption>Новый план смен</caption>
 				<tr class="text">
-					<td colspan="3">Дата начала действия</td>
-					<td colspan="3">Дата окончания действия</td>
+					<td colspan="3">Месяц действия</td>
 				</tr>
 				<tr class="text">
 					<td>Год</td>
 					<td>Месяц</td>
-					<td>День</td>
-					<td>Год</td>
-					<td>Месяц</td>
-					<td>День</td>
 				</tr>
 				<tr>
 					<td><input type="number" name="start_year"                   value="{{ now.year }}"></td>
 					<td><input type="number" name="start_month" min="1" max="12" value="{{ now.month }}"></td>
-					<td><input type="number" name="start_day"   min="1" max="31" value="1"></td>
-					<td><input type="number" name="end_year"                     value="{{ now.year }}"></td>
-					<td><input type="number" name="end_month"   min="1" max="12" value="{{ now.month }}"></td>
-					<td><input type="number" name="end_day"     min="1" max="31" value="31"></td>
 				</tr>
 			</table>
-			<br><br>
-			<table>
+			<br>
+			<table border="1">
 				<tr class="text">
-					<td>Код</td>
+					<td rowspan="2">Код</td>
 					<td colspan="2">Начало смены</td>
 					<td colspan="2">Окончание смены</td>
 					<td colspan="2">Перерывы</td>
 				</tr>
 				<tr class="text">
-					<td></td>
 					<td>Часы</td>
 					<td>Минуты</td>
 					<td>Часы</td>
 					<td>Минуты</td>
 					<td>День</td>
 					<td>Ночь</td>
-					<td>+</td>
 				</tr>
 				<tr>
-					<td><input type="text"     name="code_1" size="5" maxlength="5"   value="1"></td>
-					<td><input type="number"   name="start_hour_1"   min="0" max="23" value="5"></td>
-					<td><input type="number"   name="start_minute_1" min="0" max="59" value="0"></td>
-					<td><input type="number"   name="end_hour_1"     min="0" max="23" value="14"></td>
-					<td><input type="number"   name="end_minute_1"   min="0" max="59" value="0"></td>
-					<td><input type="number"   name="break_day_1"    min="0" max="36" value="2"></td>
-					<td><input type="number"   name="break_night_1"  min="0" max="16" value="0"></td>
-					<td><input type="checkbox" name="add_1"                           value="add"></td>
+					<td><input type="text"     name="code_1" size="5" maxlength="5"></td>
+					<td><input type="number"   name="start_hour_1"   min="0" max="23"></td>
+					<td><input type="number"   name="start_minute_1" min="0" max="59"></td>
+					<td><input type="number"   name="end_hour_1"     min="0" max="23"></td>
+					<td><input type="number"   name="end_minute_1"   min="0" max="59"></td>
+					<td><input type="number"   name="break_day_1"    min="0" max="36"></td>
+					<td><input type="number"   name="break_night_1"  min="0" max="16"></td>
 				</tr>
 				<tr>
-					<td><input type="text"     name="code_2" size="5" maxlength="5"   value="2"></td>
-					<td><input type="number"   name="start_hour_2"   min="0" max="23" value="7"></td>
-					<td><input type="number"   name="start_minute_2" min="0" max="59" value="0"></td>
-					<td><input type="number"   name="end_hour_2"     min="0" max="23" value="16"></td>
-					<td><input type="number"   name="end_minute_2"   min="0" max="59" value="0"></td>
-					<td><input type="number"   name="break_day_2"    min="0" max="36" value="2"></td>
-					<td><input type="number"   name="break_night_2"  min="0" max="16" value="0"></td>
-					<td><input type="checkbox" name="add_2"                           value="add"></td>
+					<td><input type="text"     name="code_2" size="5" maxlength="5"></td>
+					<td><input type="number"   name="start_hour_2"   min="0" max="23"></td>
+					<td><input type="number"   name="start_minute_2" min="0" max="59"></td>
+					<td><input type="number"   name="end_hour_2"     min="0" max="23"></td>
+					<td><input type="number"   name="end_minute_2"   min="0" max="59"></td>
+					<td><input type="number"   name="break_day_2"    min="0" max="36"></td>
+					<td><input type="number"   name="break_night_2"  min="0" max="16"></td>
 				</tr>
 				<tr>
-					<td><input type="text"     name="code_3" size="5" maxlength="5"   value="3"></td>
-					<td><input type="number"   name="start_hour_3"   min="0" max="23" value="9"></td>
-					<td><input type="number"   name="start_minute_3" min="0" max="59" value="0"></td>
-					<td><input type="number"   name="end_hour_3"     min="0" max="23" value="18"></td>
-					<td><input type="number"   name="end_minute_3"   min="0" max="59" value="0"></td>
-					<td><input type="number"   name="break_day_3"    min="0" max="36" value="2"></td>
-					<td><input type="number"   name="break_night_3"  min="0" max="16" value="0"></td>
-					<td><input type="checkbox" name="add_3"                           value="add"></td>
+					<td><input type="text"     name="code_3" size="5" maxlength="5"></td>
+					<td><input type="number"   name="start_hour_3"   min="0" max="23"></td>
+					<td><input type="number"   name="start_minute_3" min="0" max="59"></td>
+					<td><input type="number"   name="end_hour_3"     min="0" max="23"></td>
+					<td><input type="number"   name="end_minute_3"   min="0" max="59"></td>
+					<td><input type="number"   name="break_day_3"    min="0" max="36"></td>
+					<td><input type="number"   name="break_night_3"  min="0" max="16"></td>
 				</tr>
 				<tr>
-					<td><input type="text"     name="code_4" size="5" maxlength="5"   value="4"></td>
-					<td><input type="number"   name="start_hour_4"   min="0" max="23" value="13"></td>
-					<td><input type="number"   name="start_minute_4" min="0" max="59" value="0"></td>
-					<td><input type="number"   name="end_hour_4"     min="0" max="23" value="22"></td>
-					<td><input type="number"   name="end_minute_4"   min="0" max="59" value="0"></td>
-					<td><input type="number"   name="break_day_4"    min="0" max="36" value="2"></td>
-					<td><input type="number"   name="break_night_4"  min="0" max="16" value="0"></td>
-					<td><input type="checkbox" name="add_4"                           value="add"></td>
+					<td><input type="text"     name="code_4" size="5" maxlength="5"></td>
+					<td><input type="number"   name="start_hour_4"   min="0" max="23"></td>
+					<td><input type="number"   name="start_minute_4" min="0" max="59"></td>
+					<td><input type="number"   name="end_hour_4"     min="0" max="23"></td>
+					<td><input type="number"   name="end_minute_4"   min="0" max="59"></td>
+					<td><input type="number"   name="break_day_4"    min="0" max="36"></td>
+					<td><input type="number"   name="break_night_4"  min="0" max="16"></td>
 				</tr>
 				<tr>
-					<td><input type="text"     name="code_5" size="5" maxlength="5"   value="н"></td>
-					<td><input type="number"   name="start_hour_5"   min="0" max="23" value="22"></td>
-					<td><input type="number"   name="start_minute_5" min="0" max="59" value="0"></td>
-					<td><input type="number"   name="end_hour_5"     min="0" max="23" value="6"></td>
-					<td><input type="number"   name="end_minute_5"   min="0" max="59" value="0"></td>
-					<td><input type="number"   name="break_day_5"    min="0" max="36" value="0"></td>
-					<td><input type="number"   name="break_night_5"  min="0" max="16" value="2"></td>
-					<td><input type="checkbox" name="add_5"                           value="add"></td>
+					<td><input type="text"     name="code_5" size="5" maxlength="5"></td>
+					<td><input type="number"   name="start_hour_5"   min="0" max="23"></td>
+					<td><input type="number"   name="start_minute_5" min="0" max="59"></td>
+					<td><input type="number"   name="end_hour_5"     min="0" max="23"></td>
+					<td><input type="number"   name="end_minute_5"   min="0" max="59"></td>
+					<td><input type="number"   name="break_day_5"    min="0" max="36"></td>
+					<td><input type="number"   name="break_night_5"  min="0" max="16"></td>
 				</tr>
 				<tr>
 					<td><input type="text"     name="code_6" size="5" maxlength="5"></td>
@@ -109,7 +93,6 @@
 					<td><input type="number"   name="end_minute_6"   min="0" max="59"></td>
 					<td><input type="number"   name="break_day_6"    min="0" max="36"></td>
 					<td><input type="number"   name="break_night_6"  min="0" max="16"></td>
-					<td><input type="checkbox" name="add_6"                           value="add"></td>
 				</tr>
 				<tr>
 					<td><input type="text"     name="code_7" size="5" maxlength="5"></td>
@@ -119,7 +102,6 @@
 					<td><input type="number"   name="end_minute_7"   min="0" max="59"></td>
 					<td><input type="number"   name="break_day_7"    min="0" max="36"></td>
 					<td><input type="number"   name="break_night_7"  min="0" max="16"></td>
-					<td><input type="checkbox" name="add_7"                           value="add"></td>
 				</tr>
 				<tr>
 					<td><input type="text"     name="code_8" size="5" maxlength="5"></td>
@@ -129,7 +111,6 @@
 					<td><input type="number"   name="end_minute_8"   min="0" max="59"></td>
 					<td><input type="number"   name="break_day_8"    min="0" max="36"></td>
 					<td><input type="number"   name="break_night_8"  min="0" max="16"></td>
-					<td><input type="checkbox" name="add_8"                           value="add"></td>
 				</tr>
 			</table>
 			<table>
