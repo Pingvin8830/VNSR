@@ -10,6 +10,7 @@ def create_menu_user (username):
 		WHERE  um.user_id = u.id                    \
 			AND  um.item_id = im.id                   \
 			AND  u.name     = "%s"                    \
+		ORDER BY im.text                            \
 	' % username
 	return ItemsMenu.objects.raw (sql)
 
@@ -23,6 +24,7 @@ def create_menu_app (app):
 		WHERE  am.app_id  = im.id                       \
 			AND  am.item_id = ia.id                       \
 			AND  im.app     = "%s"                        \
+		ORDER BY ia.text                                \
 	' % app
 	return ItemsApp.objects.raw (sql)
 
