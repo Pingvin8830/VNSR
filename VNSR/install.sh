@@ -1,9 +1,5 @@
 #!/bin/bash
 
-pwd
-
-exit
-
 mysql << SQL
 
 	DROP DATABASE IF EXISTS baltbank;
@@ -22,11 +18,12 @@ rm -r ./baltbank_app/migrations/*
 rm -r ./calend_app/migrations/*
 rm -r ./menu_app/migrations/*
 
+python manage.py migrate --database default
 python manage.py createsuperuser
 
-python manage.py createmigrations baltbank_app
-python manage.py createmigrations calend_app
-python manage.py createmigrations menu_app
+python manage.py makemigrations baltbank_app
+python manage.py makemigrations calend_app
+python manage.py makemigrations menu_app
 
 python manage.py migrate --database default
 python manage.py migrate --database baltbank_db
@@ -46,7 +43,8 @@ mysql << SQL
 
 		INSERT INTO items_app
 			(text, href) VALUES
-			('Действия', 'set_item');
+			('Действия',        'set_item'),
+			('Меню приложений', 'case_app');
 
 		INSERT INTO user_menu
 			(item_id, user_id) VALUES
@@ -54,6 +52,7 @@ mysql << SQL
 
 		INSERT INTO app_menu
 			(app_id, item_id) VALUES
-			(1, 1);
+			(1, 1),
+			(1, 2);
 
 SQL
