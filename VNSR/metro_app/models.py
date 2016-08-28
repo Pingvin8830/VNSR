@@ -22,3 +22,18 @@ class ShedulePlane (models.Model):
 		db_table = 'shedule_plane'
 	data  = models.DateField (primary_key = True)
 	shift = models.CharField (max_length  = 5)
+
+class SheduleReal (models.Model):
+	'''
+		Реальный график
+	'''
+	class Meta ():
+		db_table = 'shedule_real'
+	data        = models.DateField         (primary_key = True)
+	start       = models.TimeField         ()
+	end         = models.TimeField         ()
+	break_day   = models.SmallIntegerField (default = 2)
+	break_night = models.SmallIntegerField (default = 0)
+	delay       = models.TimeField         (default = '00:00')
+	vacation    = models.BooleanField      (default = False)
+	sick        = models.BooleanField      (default = False)
