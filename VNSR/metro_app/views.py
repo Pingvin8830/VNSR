@@ -2,11 +2,50 @@ from django.shortcuts     import render, redirect
 from main_app.views       import is_user, default_context
 from menu_app.functions   import create_menu_app
 from django               import forms
-from calend_app.functions import get_now
+from calend_app.functions import get_now, get_month_text
 from datetime             import date, time, timedelta
-from .models              import WorkPlane
+from .models              import WorkPlane, ShedulePlane
 
 # Create your views here.
+def set_shedule (request, data):
+	'''
+		Устанавливает новый график
+	'''
+	if not is_user (request): return redirect ('/')
+	data = date (int (data [0:4]), int (data [5:7]), int (data [8:10]))
+	if request.POST:
+		month = data.month
+		while data.month == month:
+			if 'shift_%s' % str (data.day) in request.POST:
+				shedule = ShedulePlane (data = data, shift = request.POST ['shift_%s' % str (data.day)])
+				shedule.save ()
+			data += timedelta (days = 1)
+		return redirect ('/metro')
+	else:
+		return redirect ('/')
+
+def add_shedule (request, data):
+	'''
+		Запрашивает новый график
+	'''
+	if not is_user (request): return redirect ('/')
+	page = 'metro/add_shedule.html'
+	context = default_context (request)
+	context ['metro_month'] = get_month_text (data.year, data.month)
+	context ['metro_dates'] = []
+	date_end = data
+	while data.month == date_end.month:
+		context ['metro_dates'].append (date_end)
+		date_end += timedelta (days = 1)
+	sql = '                                             \
+		SELECT *                                          \
+		FROM   work_plane                                 \
+		WHERE  "%s-%s-15" BETWEEN date_start AND date_end \
+	' % (str (data.year), str (data.month))
+	context ['metro_work_plane'] = WorkPlane.objects.raw (sql)
+	context ['metro_data'] = data
+	return render (request, page, context)
+
 def set_work_plane (request):
 	'''
 		Устанавливает новый план смен
@@ -30,7 +69,7 @@ def set_work_plane (request):
 					break_night = request.POST ['break_night_%s' % str (i)]
 				)
 				plane.save ()
-		return redirect ('/metro')
+		return add_shedule (request, date_start)
 	else:
 		page = 'metro/add_work_plane.html'
 		context = default_context (request)
