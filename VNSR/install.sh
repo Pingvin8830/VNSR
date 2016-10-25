@@ -1,18 +1,18 @@
 #!/bin/bash
 
-mysql << SQL
+mysql -u pingvin -pserver881130 << SQL
 
-	DROP DATABASE IF EXISTS baltbank;
-	DROP DATABASE IF EXISTS calend;
-	DROP DATABASE IF EXISTS menu;
-	DROP DATABASE IF EXISTS vnsr_default;
-	DROP DATABASE IF EXISTS metro;
+	DROP DATABASE IF EXISTS test_baltbank;
+	DROP DATABASE IF EXISTS test_calend;
+	DROP DATABASE IF EXISTS test_menu;
+	DROP DATABASE IF EXISTS test_vnsr_default;
+	DROP DATABASE IF EXISTS test_metro;
 
-	CREATE DATABASE baltbank;
-	CREATE DATABASE calend;
-	CREATE DATABASE menu;
-	CREATE DATABASE vnsr_default;
-	CREATE DATABASE metro;
+	CREATE DATABASE test_baltbank;
+	CREATE DATABASE test_calend;
+	CREATE DATABASE test_menu;
+	CREATE DATABASE test_vnsr_default;
+	CREATE DATABASE test_metro;
 
 SQL
 
@@ -43,9 +43,9 @@ python manage.py migrate --database calend_db
 python manage.py migrate --database menu_db
 python manage.py migrate --database metro_db
 
-mysql << SQL
+mysql -u pingvin -pserver881130 << SQL
 
-	USE menu;
+	USE test_menu;
 		INSERT INTO users
 			(name) VALUES
 			('test_admin');
@@ -123,10 +123,12 @@ echo '
 '
 read
 
-{
-	sleep 10
-	firefox 127.0.0.1:8000/admin 
-	firefox 127.0.0.1:8000
-} &
+#{
+#	sleep 10
+#	firefox 127.0.0.1:8000/admin 
+#	firefox 127.0.0.1:8000
+#} &
 
-python manage.py runserver
+sudo systemctl stop httpd
+sudo python manage.py runserver 192.168.1.51:80
+sudo systemctl start httpd
