@@ -6,6 +6,48 @@ from .models            import Signs
 from menu_app.functions import create_menu_app
 
 # Create your views here.
+def add_comment (request):
+	'''
+		Добавляет комментарий к дню
+	'''
+	if not is_user (request): return redirect ('/')
+	if request.POST:
+		data = date (
+			int (request.POST ['year']),
+			int (request.POST ['month']),
+			int (request.POST ['day'])
+		)
+		try:
+			signs = Signs.objects.get (data = data)
+		except:
+			signs = Signs (data = data)
+		signs.comment = request.POST ['comment']
+		signs.save ()
+		return redirect ('/calend/%s/set_comment' % str (request.POST ['year']))
+	else:
+		page    = 'calend/add_comment.html'
+		context = default_context (request)
+		return render (request, page, context)
+
+def set_comment (request, year):
+	'''
+		Сохраняет комментарии
+	'''
+	if not is_user (request): return redirect ('/')
+	print ()
+	year = int (year)
+	if request.POST:
+		for key in request.POST:
+			print (key)
+		print ()
+		return redirect ('/calend')
+	else:
+		page                     = 'calend/display_comment.html'
+		context                  = default_context (request)
+		context ['calend_year']  = year
+		context ['calend_dates'] = Signs.objects.raw ('SELECT * FROM signs WHERE year(data) = "%s" AND comment != ""' % str (year))
+		return render (request, page, context)
+
 def display_calend_year (request, year = get_now ().year):
 	'''
 		Отображает календарь на год
@@ -18,7 +60,7 @@ def display_calend_year (request, year = get_now ().year):
 	context ['calend_year']      = year
 	context ['calend_prev_year'] = year - 1
 	context ['calend_next_year'] = year + 1
-	context ['calend_comments']  = Signs.objects.raw ('SELECT * FROM signs WHERE data BETWEEN "%s-01-01" AND "%s-12-31" AND comment != ""' % (str (year), str (year)))
+	context ['calend_comments']  = Signs.objects.raw ('SELECT * FROM signs WHERE year(data) = "%s" AND comment != ""' % str (year))
 	for month in range (1, 13):
 		context ['calend_month_%s' % str (month)] = create_calend_month (year, month)
 	return render (request, page, context)
