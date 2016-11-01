@@ -14,6 +14,7 @@ class WorkPlane (models.Model):
 	code        = models.CharField (max_length = 5)
 	start       = models.TimeField ()
 	end         = models.TimeField ()
+  lanch       = models.BooleanField      (default = True)
 	break_day   = models.SmallIntegerField (default = 2)
 	break_night = models.SmallIntegerField (default = 0)
 
@@ -33,6 +34,7 @@ class SheduleReal (models.Model):
 	data        = models.DateField         (unique      = True      )
 	start       = models.TimeField         (                   null = True)
 	end         = models.TimeField         (                   null = True)
+  lanch       = models.BooleanField      (default = True)
 	break_day   = models.SmallIntegerField (default = 2,       null = True)
 	break_night = models.SmallIntegerField (default = 0,       null = True)
 	delay       = models.TimeField         (default = '00:00', null = True)
