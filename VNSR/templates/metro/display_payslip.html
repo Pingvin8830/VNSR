@@ -1,0 +1,327 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+	<a href="{% url 'metro_app:case_month' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <link rel='stylesheet' type='text/css' href="{% static 'metro/display_payslip.css' %}"> 
+    <table cellpadding=0 cellspacing=0 class='payslip'>
+      <tr>
+        <td colspan=2 class='t-c_b-ltr'>
+          Р А С Ч Е Т Н Ы Й &nbsp; Л И С Т О К
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class='b-lr'>
+         Предприятие  МЕТРО Кэш энд Керри ООО
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class='t-c_b-lr'>
+          За &nbsp; {{ payslip.period }}
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class='b-lr'>
+          Г─жа Власова Аксения Ивановна
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class='b-lr'>
+          ТН:33076132
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class='b-lr'>
+          <table align='center' cellpadding=0 cellspacing=0>
+            <tr>
+              <td class='t-r'>
+                Подразделение:
+              </td>
+              <td>
+                {{ payslip.division }}
+              </td>
+            </tr>
+            <tr>
+              <td class='t-r'>
+                Должность:
+              </td>
+              <td>
+                {{ payslip.post }}
+              </td>
+            </tr>
+            <tr>
+              <td class='t-r'>
+                Оклад/Тариф:
+              </td>
+              <td>
+                {{ payslip.rate }}
+              </td>
+            </tr>
+          </table>
+          <br>
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class='b-lrb'>
+          <table cellpadding=0 cellspacing=0>
+            <tr>
+              <td>
+                Долг за работником на начало месяца
+              </td>
+              <td>
+                ─
+              </td>
+              <td class='t-r'>
+                {{ payslip.begin_dolg }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Выплачено в течение месяца
+              </td>
+              <td>
+                ─
+              </td>
+								{{ payslip.rotate_dolg }}
+              <td class='t-r'>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Долг за работником на конец месяца
+              </td>
+              <td>
+                ─
+              </td>
+              <td class='t-r'>
+                {{ payslip.end_dolg }}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class='b-lrb'>
+          <table cellpadding=0 cellspacing=0>
+            <tr>
+              <td colspan=4 class='t-c_b-b'>
+                Начисления
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lrb'>
+                Вид начисления
+              </td>
+              <td class='b-rb'>
+                Период
+              </td>
+              <td class='b-rb'>
+                Сумма
+              </td>
+              <td class='b-rb'>
+                Ед.
+              </td>
+            </tr>
+            <tr>
+              <td colspan=2 class='b-lrb'>
+                Начислено
+              </td>
+              <td class='t-r_b-rb'>
+                {{ payslip.income }}
+              </td>
+              <td class='t-r_b-rb'>
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lr'>
+                /853 Факт─дни
+              </td>
+              <td class='t-r_b-r'>
+                08/16
+              </td>
+              <td class='t-r_b-r'>
+              </td>
+              <td class='t-r_b-r'>
+                12.00
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lr'>
+                /853 Факт─дни
+              </td>
+              <td class='t-r_b-r'>
+                09/16
+              </td>
+              <td class='t-r_b-r'>
+              </td>
+              <td class='t-r_b-r'>
+                11.00
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lr'>
+                1329 ОплатаПочасовая
+              </td>
+              <td class='t-r_b-r'>
+                08/16
+              </td>
+              <td class='t-r_b-r'>
+                18,432.00
+              </td>
+              <td class='t-r_b-r'>
+                96.00
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lr'>
+                1329 ОплатаПочасовая
+              </td>
+              <td class='t-r_b-r'>
+                09/16
+              </td>
+              <td class='t-r_b-r'>
+                16,896.00
+              </td>
+              <td class='t-r_b-r'>
+                88.00
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lrb'>
+                3007 НочныеПочасовик
+              </td>
+              <td class='t-r_b-rb'>
+                08/16
+              </td>
+              <td class='t-r_b-rb'>
+                230.40
+              </td>
+              <td class='t-r_b-rb'>
+                3.00
+              </td>
+            </tr>
+            <tr>
+              <td colspan=4 class='t-c'>
+                Прочие доходы
+              </td>
+            </tr>
+            <tr>
+              <td class='b-ltr'>
+                2720 ДопДоходПитание
+              </td>
+              <td class='t-r_b-tr'>
+                08/16
+              </td>
+              <td class='t-r_b-tr'>
+                1,256.40
+              </td>
+              <td>
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lrb'>
+                2720 ДопДоходПитание
+              </td>
+              <td class='t-r_b-rb'>
+                09/16
+              </td>
+              <td class='t-r_b-rb'>
+                1,179.00
+              </td>
+              <td>
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lrb'>
+                Пересылка в банк
+              </td>
+              <td class='t-r_b-rb'>
+                {{ payslip.period }}
+              </td>
+              <td class='t-r_b-rb'>
+                {{ payslip.paying }}
+              </td>
+              <td class='t-r'>
+              </td>
+            </tr>
+          </table>
+          <br>
+        </td>
+        <td valign='top' class='b-rb'>
+          <table cellpadding=0 cellspacing=0>
+            <tr>
+              <td colspan=3 class='t-c_b-b'>
+                Удержания
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lrb'>
+                Вид удержания
+              </td>
+              <td class='b-rb'>
+                Период
+              </td>
+              <td class='b-rb'>
+                Сумма
+              </td>
+            </tr>
+            <tr>
+              <td colspan=2 class='b-lrb'>
+                Удержано
+              </td>
+              <td class='t-r_b-rb'>
+                {{ payslip.consumption }}
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lr'>
+                6101 Ежемесячный Аванс
+              </td>
+              <td class='t-r_b-r'>
+                09/16
+              </td>
+              <td class='t-r_b-r'>
+                16,200.00
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lr'>
+                6200 Удержание за питание
+              </td>
+              <td class='t-r_b-r'>
+                08/16
+              </td>
+              <td class='t-r_b-r'>
+                139.60
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lr'>
+                6200 Удержание за питание
+              </td>
+              <td class='t-r_b-r'>
+                09/16
+              </td>
+              <td class='t-r_b-r'>
+                131.00
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lrb'>
+                /322 НалогДох13Общий
+              </td>
+              <td class='t-r_b-rb'>
+                09/16
+              </td>
+              <td class='t-r_b-rb'>
+                4,939.00
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+{% endblock %}
