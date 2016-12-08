@@ -8,22 +8,37 @@
 			{% csrf_token %}
 			<table>
 				<caption>Новая смена</caption>
-				<tr class="text">
-					<td></td>
-					<td>Год</td>
-					<td>Месяц</td>
-					<td>День</td>
-				</tr>
 				<tr>
 					<td>Дата смены</td>
 					<td>
-						<input type="number" name="year"  value="{{ now.year }}">
+						<select name='day' size=1>
+							{% for i in days %}
+									{% if i == now.day %}
+										<option value='{{ i }}' selected>{{ i }}
+									{% else %}
+										<option value='{{ i }}'>{{ i }}
+									{% endif %}
+							{% endfor %}
+						</select>
 					</td>
 					<td>
-						<input type="number" name="month" value="{{ now.month }}">
+						<select name='month'>
+							{% if 1 == now.month %} <option value='1'  selected>Января  {% else %}<option value='1' >Января  {% endif %}
+							{% if 2 == now.month %} <option value='2'  selected>Февраля {% else %}<option value='2' >Февраля {% endif %}
+							{% if 3 == now.month %} <option value='3'  selected>Марта		{% else %}<option value='3' >Марта	 {% endif %}
+							{% if 4 == now.month %} <option value='4'  selected>Апреля	{% else %}<option value='4' >Апреля	 {% endif %}
+							{% if 5 == now.month %} <option value='5'  selected>Мая		  {% else %}<option value='5' >Мая		 {% endif %}
+							{% if 6 == now.month %} <option value='6'  selected>Июня		{% else %}<option value='6' >Июня		 {% endif %}
+							{% if 7 == now.month %} <option value='7'  selected>Июля		{% else %}<option value='7' >Июля		 {% endif %}
+							{% if 8 == now.month %} <option value='8'  selected>Августа	{% else %}<option value='8' >Августа {% endif %}
+							{% if 9 == now.month %} <option value='9'  selected>Сентября{% else %}<option value='9' >Сентября{% endif %}
+							{% if 10 == now.month %}<option value='10' selected>Октября	{% else %}<option value='10'>Октября {% endif %}
+							{% if 11 == now.month %}<option value='11' selected>Ноября	{% else %}<option value='11'>Ноября  {% endif %}
+							{% if 12 == now.month %}<option value='12' selected>Декабря	{% else %}<option value='12'>Декабря {% endif %}
+						</select>
 					</td>
 					<td>
-						<input type="number" name="day"   value="{{ now.day }}">
+						<input type="number" name="year" value="{{ now.year }}">
 					</td>
 				</tr>
 			</table>
