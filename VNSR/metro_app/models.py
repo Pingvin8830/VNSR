@@ -1,4 +1,6 @@
-from django.db import models
+from django.db            import models
+from .functions           import decimal_to_money
+from calend_app.functions import get_month_text
 
 # Create your models here.
 
@@ -86,11 +88,42 @@ class Payslip (models.Model):
   period      = models.DateField    (unique      = True)
   division    = models.CharField    (default = 'Оптовая продажа алкоголя', max_length  = 50)
   post        = models.CharField    (default = 'Кассир-оператор ПК',       max_length  = 50)
-  rate        = models.DecimalField (             max_digits = 9, decimal_places = 2)
-  begin_dolg  = models.DecimalField (default = 0, max_digits = 9, decimal_places = 2)
-  rotate_dolg = models.DecimalField (null = True, max_digits = 9, decimal_places = 2)
-  end_dolg    = models.DecimalField (default = 0, max_digits = 9, decimal_places = 2)
-  income      = models.DecimalField (             max_digits = 9, decimal_places = 2)
-  consumption = models.DecimalField (             max_digits = 9, decimal_places = 2)
-  paying      = models.DecimalField (             max_digits = 9, decimal_places = 2)
-  
+  rate        = models.DecimalField (             max_digits = 9, decimal_places = 4)
+  begin_dolg  = models.DecimalField (default = 0, max_digits = 9, decimal_places = 4)
+  rotate_dolg = models.DecimalField (null = True, max_digits = 9, decimal_places = 4)
+  end_dolg    = models.DecimalField (default = 0, max_digits = 9, decimal_places = 4)
+  income      = models.DecimalField (             max_digits = 9, decimal_places = 4)
+  consumption = models.DecimalField (             max_digits = 9, decimal_places = 4)
+  paying      = models.DecimalField (             max_digits = 9, decimal_places = 4)
+
+  def print_edit (self):
+    self.rate        = decimal_to_money (self.rate)
+    self.begin_dolg  = decimal_to_money (self.begin_dolg)
+    self.rotate_dolg = decimal_to_money (self.rotate_dolg)
+    self.end_dolg    = decimal_to_money (self.end_dolg)
+    self.income      = decimal_to_money (self.income)
+    self.consumption = decimal_to_money (self.consumption)
+    self.paying      = decimal_to_money (self.paying)
+    self.text_period = get_month_text (self.period.year, self.period.month)
+    self.period      = str (self.period.month) + '/' + str (self.period.year) [2:4]
+    if len (self.period) == 4: self.period = '0' + self.period
+
+class PayslipDetails (models.Model):
+  '''Детализация расчетного листка'''
+  class Meta ():
+    db_table        = 'payslip_details'
+    unique_together = (('payslip', 'code', 'period'))
+  id      = models.AutoField    (primary_key = True)
+  payslip = models.ForeignKey   ('Payslip',      null = True, on_delete = models.SET_NULL, db_column = 'payslip')
+  code    = models.ForeignKey   ('CodesPayslip', null = True, on_delete = models.SET_NULL, db_column = 'code')
+  period  = models.DateField    ()
+  summa   = models.DecimalField (null = True, max_digits = 9, decimal_places = 4)
+  count   = models.DecimalField (null = True, max_digits = 9, decimal_places = 4)
+
+  def print_edit (self):
+    self.type       = self.code.type
+    self.code_print = self.code.code + ' ' + self.code.name
+    self.period     = str (self.period.month) + '/' + str (self.period.year) [2:4]
+    if len (self.period) == 4: self.period = '0' + self.period
+    self.summa      = decimal_to_money (self.summa)
+    self.count      = decimal_to_money (self.count)
