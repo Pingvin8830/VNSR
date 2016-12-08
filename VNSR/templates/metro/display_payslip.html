@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block menu %}
+	<a href="{% url 'metro_app:add_details' payslip.id %}">Добавить запись</a>
 	<a href="{% url 'metro_app:case_month' %}">Назад</a>
 {% endblock %}
 
@@ -20,7 +21,7 @@
       </tr>
       <tr>
         <td colspan=2 class='t-c_b-lr'>
-          За &nbsp; {{ payslip.period }}
+          За &nbsp; {{ payslip.text_period }}
         </td>
       </tr>
       <tr>
@@ -71,7 +72,7 @@
               <td>
                 Долг за работником на начало месяца
               </td>
-              <td>
+              <td class='t-r'>
                 ─
               </td>
               <td class='t-r'>
@@ -82,9 +83,10 @@
               <td>
                 Выплачено в течение месяца
               </td>
-              <td>
+              <td class='t-r'>
                 ─
               </td>
+							<td class='t-r'>
 								{{ payslip.rotate_dolg }}
               <td class='t-r'>
               </td>
@@ -93,7 +95,7 @@
               <td>
                 Долг за работником на конец месяца
               </td>
-              <td>
+              <td class='t-r'>
                 ─
               </td>
               <td class='t-r'>
@@ -125,128 +127,78 @@
                 Ед.
               </td>
             </tr>
+						<tr>
+							<td colspan=2 class='b-lrb'>
+								Начислено
+							</td>
+							<td class='t-r_b-rb'>
+								{{ payslip.income }}
+							</td>
+							<td class='b-rb'>
+							</td>
+						</tr>
             <tr>
-              <td colspan=2 class='b-lrb'>
-                Начислено
-              </td>
-              <td class='t-r_b-rb'>
-                {{ payslip.income }}
-              </td>
-              <td class='t-r_b-rb'>
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lr'>
-                /853 Факт─дни
-              </td>
-              <td class='t-r_b-r'>
-                08/16
-              </td>
-              <td class='t-r_b-r'>
-              </td>
-              <td class='t-r_b-r'>
-                12.00
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lr'>
-                /853 Факт─дни
-              </td>
-              <td class='t-r_b-r'>
-                09/16
-              </td>
-              <td class='t-r_b-r'>
-              </td>
-              <td class='t-r_b-r'>
-                11.00
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lr'>
-                1329 ОплатаПочасовая
-              </td>
-              <td class='t-r_b-r'>
-                08/16
-              </td>
-              <td class='t-r_b-r'>
-                18,432.00
-              </td>
-              <td class='t-r_b-r'>
-                96.00
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lr'>
-                1329 ОплатаПочасовая
-              </td>
-              <td class='t-r_b-r'>
-                09/16
-              </td>
-              <td class='t-r_b-r'>
-                16,896.00
-              </td>
-              <td class='t-r_b-r'>
-                88.00
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lrb'>
-                3007 НочныеПочасовик
-              </td>
-              <td class='t-r_b-rb'>
-                08/16
-              </td>
-              <td class='t-r_b-rb'>
-                230.40
-              </td>
-              <td class='t-r_b-rb'>
-                3.00
-              </td>
-            </tr>
+							{% for income in incomes %}
+	              <td class='b-lr'>
+  	              {{ income.code_print }}
+    	          </td>
+	              <td class='t-r_b-r'>
+  								{{ income.period }}
+	              </td>
+  	            <td class='t-r_b-r'>
+									{{ income.summa }}
+    	          </td>
+	              <td class='t-r_b-r'>
+  	              {{ income.count }}
+    	          </td>
+	            </tr>
+						{% endfor %}
+						<tr>
+							<td colspan=4 class='b-t'>
+							</td>
+						</tr>
             <tr>
               <td colspan=4 class='t-c'>
                 Прочие доходы
               </td>
             </tr>
-            <tr>
-              <td class='b-ltr'>
-                2720 ДопДоходПитание
-              </td>
-              <td class='t-r_b-tr'>
-                08/16
-              </td>
-              <td class='t-r_b-tr'>
-                1,256.40
-              </td>
-              <td>
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lrb'>
-                2720 ДопДоходПитание
-              </td>
-              <td class='t-r_b-rb'>
-                09/16
-              </td>
-              <td class='t-r_b-rb'>
-                1,179.00
-              </td>
-              <td>
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lrb'>
-                Пересылка в банк
-              </td>
-              <td class='t-r_b-rb'>
-                {{ payslip.period }}
-              </td>
-              <td class='t-r_b-rb'>
-                {{ payslip.paying }}
-              </td>
-              <td class='t-r'>
-              </td>
-            </tr>
+						<tr>
+							<td colspan=3 class='b-b'>
+							</td>
+						</tr>
+						{% for other in others %}
+							<tr>
+	              <td class='b-lr'>
+                	{{ other.code_print }}
+	              </td>
+  	            <td class='t-r_b-r'>
+    	            {{ other.period }}
+	              </td>
+  	            <td class='t-r_b-r'>
+    	            {{ other.summa }}
+	              </td>
+  	            <td>
+    	          </td>
+      	      </tr>
+						{% endfor %}
+						<tr>
+							<td colspan=3 class='b-t'>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<br>
+								Пересылка в банк
+							</td>
+							<td class='t-r'>
+								<br>
+								{{ payslip.period }}
+							</td>
+							<td class='t-r'>
+								<br>
+								{{ payslip.paying }}
+							</td>
+						</tr>
           </table>
           <br>
         </td>
@@ -268,58 +220,31 @@
                 Сумма
               </td>
             </tr>
-            <tr>
-              <td colspan=2 class='b-lrb'>
-                Удержано
-              </td>
-              <td class='t-r_b-rb'>
-                {{ payslip.consumption }}
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lr'>
-                6101 Ежемесячный Аванс
-              </td>
-              <td class='t-r_b-r'>
-                09/16
-              </td>
-              <td class='t-r_b-r'>
-                16,200.00
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lr'>
-                6200 Удержание за питание
-              </td>
-              <td class='t-r_b-r'>
-                08/16
-              </td>
-              <td class='t-r_b-r'>
-                139.60
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lr'>
-                6200 Удержание за питание
-              </td>
-              <td class='t-r_b-r'>
-                09/16
-              </td>
-              <td class='t-r_b-r'>
-                131.00
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lrb'>
-                /322 НалогДох13Общий
-              </td>
-              <td class='t-r_b-rb'>
-                09/16
-              </td>
-              <td class='t-r_b-rb'>
-                4,939.00
-              </td>
-            </tr>
+						<tr>
+							<td colspan=2 class='b-lrb'>
+								Удержано
+							</td>
+							<td class='b-rb'>
+								{{ payslip.consumption }}
+							</td>
+						</tr>
+						{% for consumption in consumptions %}
+	            <tr>
+  	            <td class='b-lr'>
+    	            {{ consumption.code_print }}
+	              </td>
+  	            <td class='t-r_b-r'>
+    	            {{ consumption.period }}
+	              </td>
+  	            <td class='t-r_b-r'>
+    	            {{ consumption.summa }}
+	              </td>
+  	          </tr>
+						{% endfor %}
+						<tr>
+							<td colspan=3 class='b-t'>
+							</td>
+						</tr>
           </table>
         </td>
       </tr>
