@@ -4,21 +4,63 @@ from menu_app.functions   import create_menu_app
 from django               import forms
 from calend_app.functions import get_now, get_month_text
 from datetime             import date, time, timedelta
-from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip
+from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails
 
 # Create your views here.
 
-def display_payslip (request):
+def add_details (request, id):
+  '''Добавляет строку в расчетный листок'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    payslip = Payslip.objects.get (id = id)
+    details = PayslipDetails (payslip = payslip, code = CodesPayslip.objects.get (id = request.POST ['code']), period = request.POST ['year'] + '-' + request.POST ['month'] + '-01', summa = request.POST ['summa'], count = request.POST ['count'])
+    details.save ()
+    return display_payslip (request, payslip)
+  else:
+    page = 'metro/add_details.html'
+    context = default_context (request)
+    context ['codes'] = CodesPayslip.objects.all ().order_by ('code')
+    context ['id']    = id
+    return render (request, page, context)
+  return redirect ('/')
+
+def add_payslip (request):
+  '''Добавляет расчетный листок в БД'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    if not request.POST ['rotate_dolg']: request.POST.rotate_dolg = None
+    payslip = Payslip (period = request.POST ['year'] + '-' + request.POST ['month'] + '-01', division = request.POST ['division'], post = request.POST ['post'], rate = request.POST ['rate'].replace (',', '.'), begin_dolg = request.POST ['begin_dolg'].replace (',', '.'), rotate_dolg = request.POST ['rotate_dolg'].replace (',', '.'), end_dolg = request.POST ['end_dolg'].replace (',', '.'), income = request.POST ['income'].replace (',', '.'), consumption = request.POST ['consumption'].replace (',', '.'), paying = request.POST ['paying'].replace (',', '.'))
+    payslip.save ()
+    context = default_context (request)
+    return redirect ('/metro/display_payslip_details/%d' % payslip.id)
+  return redirect ('/metro')
+
+def display_payslip (request, payslip = None):
   '''Отображает расчетный листок'''
   if not is_user (request): return redirect ('/')
   if request.POST:
-    try:
-      payslip = Payslip.objects.get (period = '%s-%s-01' % (str (request.POST ['year']), str (request.POST ['month'])))
-    except:
-      payslip = Payslip ()
-    page = 'metro/display_payslip.html'
+    if not payslip:
+      try:
+        payslip = Payslip.objects.get (period = '%s-%s-01' % (str (request.POST ['year']), str (request.POST ['month'])))
+        page    = 'metro/display_payslip.html'
+        payslip.print_edit ()
+      except:
+        payslip = Payslip ()
+        page    = 'metro/add_payslip.html'
+    else:
+        page    = 'metro/display_payslip.html'
+        payslip.print_edit ()
     context = default_context (request)
-    context ['payslip'] = payslip
+    context ['payslip']     = payslip
+    details = PayslipDetails.objects.filter (payslip = payslip.id)
+    context ['incomes']      = []
+    context ['consumptions'] = []
+    context ['others']       = []
+    for i in details:
+      i.print_edit ()
+      if   i.type == 'i': context ['incomes'].append      (i)
+      elif i.type == 'c': context ['consumptions'].append (i)
+      elif i.type == 'o': context ['others'].append       (i)
     return render (request, page, context)
   else:
     return case_month (request)
@@ -103,6 +145,7 @@ def set_shift (request):
   else:
     page    = 'metro/add_shift.html'
     context = default_context (request)
+    context ['days'] = range (1, 32)
     return render (request, page, context)
 
 def set_shedule (request, data):
