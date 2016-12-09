@@ -1,0 +1,71 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block content %}
+	<style type='text/css'>
+		td {border: 1px solid red;}
+	</style>
+	<table>
+		<tr>
+			<td>
+				{% if is_error %}
+					<table>
+						<caption>Ошибки</caption>
+						<tr>
+							<th>Цель</th>
+							<th>Название</th>
+							<th>Период</th>
+							<th>Ошибка</th>
+						</tr>
+						{% for type, error in control_payslip.items %}
+							{% for text in error %}
+								<tr>
+									<td colspan = 3>{{ type }}</td>
+									<td>{{ text }}</td>
+								</tr>
+							{% endfor %}
+						{% endfor %}
+						{% for type, error in control_details.items %}
+							{% for text in error %}
+								<tr>
+									<td>{{ type.code.code }}</td>
+									<td>{{ type.code.name }}</td>
+									<td>{{ type.period.month }}/{{ type.period.year }}</td>
+									<td>{{ text }}</td>
+								</tr>
+							{% endfor %}
+						{% endfor %}
+					</table>
+				{% else %}
+					Ошибок нет
+				{% endif %}
+			</td>
+			<td>
+				{% if is_difference %}
+					<table>
+						<caption>Расхождения</caption>
+						<tr>
+							<th>Цель</th>
+							<th>Ошибка</th>
+							<th>Расчет</th>
+							<th>Факт</th>
+							<th>Разность</th>
+						</tr>
+						{% for type, diff in differences_payslip.items %}
+							{% for context in diff %}
+								<tr>
+									<td>{{ type }}</td>
+									{% for data in context %}
+										<td>{{ data }}</td>
+									{% endfor %}
+								</tr>
+							{% endfor %}
+						{% endfor %}
+					</table>
+				{% else %}
+					Расхождений нет
+				{% endif %}
+			</td>
+		</tr>
+	</table>
+{% endblock%}
