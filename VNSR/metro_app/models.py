@@ -1,6 +1,6 @@
 from django.db            import models
-from .functions           import decimal_to_money
-from calend_app.functions import get_month_text
+from .functions           import decimal_to_money, control_period
+from calend_app.functions import get_month_text, get_now
 
 # Create your models here.
 
@@ -97,6 +97,7 @@ class Payslip (models.Model):
   paying      = models.DecimalField (             max_digits = 9, decimal_places = 4)
 
   def print_edit (self):
+    '''Приводит данные из БД к печатному виду'''
     self.rate        = decimal_to_money (self.rate)
     self.begin_dolg  = decimal_to_money (self.begin_dolg)
     self.rotate_dolg = decimal_to_money (self.rotate_dolg)
@@ -108,6 +109,77 @@ class Payslip (models.Model):
     self.period      = str (self.period.month) + '/' + str (self.period.year) [2:4]
     if len (self.period) == 4: self.period = '0' + self.period
 
+  def differences (self):
+    '''Проверка соответствия данных'''
+    res = {
+      'rate': self.dif_rate (),
+    }
+    return res
+
+  def dif_rate (self):
+    '''Проверка расхождения почасовой ставки'''
+    print ()
+    res = []
+    control_rate = Rate.objects.filter (start__lte = get_now()).get (end__gte = get_now ()).value
+    if control_rate != self.rate: res.append (('Несоответствие почасовой ставки', control_rate, self.rate, control_rate - self.rate))
+    print ()
+    return res
+  
+  def control (self):
+    '''Проверка расчетного листка'''
+    return {
+      'rate':        self.control_rate (),
+      'dolg':        self.control_dolg (),
+      'income':      self.control_income (),
+      'consumption': self.control_consumption (),
+      'paying':      self.control_paying ()
+    }
+
+  def control_details (self):
+    '''Проверка детализаций'''
+    res = {}
+    details = PayslipDetails.objects.filter (payslip = self.id).order_by ('code').order_by ('period')
+    for detail in details:
+      res [detail] = detail.control ()
+    return res
+  
+  def control_paying (self):
+    '''Проверка перечисления в банк'''
+    res = []
+    if self.paying < 0: res.append ('Отрицательное перечисление')
+    if self.paying != self.income - self.consumption: res.append ('Несоответствие суммы перечисления')
+    return res
+    
+  def control_consumption (self):
+    '''Проверка удержания'''
+    res = []
+    if self.consumption < 0: res.append ('Отрицательное удержание')
+    control_summa = 0
+    for detail in PayslipDetails.objects.filter (payslip = self).filter (code__type = 'c'): control_summa += detail.summa
+    if control_summa != self.consumption: res.append ('Несоответствие суммы удержания')
+    return res
+  
+  def control_income (self):
+    '''Проверка начисления'''
+    res = []
+    if self.income < 0: res.append ('Отрицательное начисление')
+    control_summa = 0
+    for detail in PayslipDetails.objects.filter (payslip = self).filter (code__type = 'i'): control_summa += detail.summa
+    if control_summa != self.income: res.append ('Несоответствие суммы начисления')
+    return res
+    
+  def control_dolg (self):
+    '''Проверка долгов работника'''
+    res = []
+    if self.begin_dolg - self.rotate_dolg != self.end_dolg: res.append ('Несоответствие Begin - Rotate = End')
+    return res
+  
+  def control_rate (self):
+    '''Проверка оклада/тарифа (почасовой ставки)'''
+    res = []
+    if self.rate <= 0: res.append ('Ставка должна быть положительной')
+    return res
+  
 class PayslipDetails (models.Model):
   '''Детализация расчетного листка'''
   class Meta ():
@@ -121,9 +193,100 @@ class PayslipDetails (models.Model):
   count   = models.DecimalField (null = True, max_digits = 9, decimal_places = 4)
 
   def print_edit (self):
+    '''Приводит данные из БД к печатному виду'''
     self.type       = self.code.type
     self.code_print = self.code.code + ' ' + self.code.name
     self.period     = str (self.period.month) + '/' + str (self.period.year) [2:4]
     if len (self.period) == 4: self.period = '0' + self.period
     self.summa      = decimal_to_money (self.summa)
     self.count      = decimal_to_money (self.count)
+
+  def control (self):
+    '''Проверка детализации'''
+    res = ['%s' % (self.code.code)]
+    res = ['%s %s %s %s %s' % (self.code.code, self.code.name, self.period, self.summa, self.count)]
+    code = self.code.code
+    if   code == '6101': res = self.control_6101 ()
+    elif code == '6200': res = self.control_6200 ()
+    elif code == '/322': res = self.control_0322 ()
+    elif code == '/853': res = self.control_0853 ()
+    elif code == '1329': res = self.control_1329 ()
+    elif code == '2720': res = self.control_2720 ()
+    elif code == '3007': res = self.control_3007 ()
+    elif code == '3009': res = self.control_3009 ()
+    return res
+
+  def control_3009 (self):
+    '''Проверка праздничных'''
+    res = []
+    if not control_period (self.payslip.period, self.period): res.append ('Несоответствие периода')
+    if self.summa <= 0: res.append ('Сумма должна быть положительной')
+    if self.summa != self.count * self.payslip.rate: res.append ('Несоответствие суммы')
+    if self.count <= 0: res.append ('Количество должно быть положительным')
+    return res
+
+  def control_3007 (self):
+    '''Проверка ночных'''
+    res = []
+    if not control_period (self.payslip.period, self.period): res.append ('Несоответствие периода')
+    if self.summa <=0 : res.append ('Сумма должна быть положительной')
+    if float (self.summa) != float (self.count * self.payslip.rate) * 0.4: res.append ('Несоответствие суммы')
+    if self.count <= 0: res.append ('Количество должно быть положительным')
+    return res
+
+  def control_2720 (self):
+    '''Проверка доп дохода питание'''
+    res = []
+    if not control_period (self.payslip.period, self.period): res.append ('Несоответствие периода')
+    if self.summa < 0: res.append ('Отрицательная сумма')
+    if self.count:     res.append ('Присутствие количества')
+    return res
+  
+  def control_1329 (self):
+    '''Проверка почасовой оплаты'''
+    res = []
+    if not control_period (self.payslip.period, self.period): res.append ('Несоответствие периода')
+    if self.summa < 0: res.append ('Отрицательная сумма')
+    if self.count < 0: res.append ('Отрицательное количество')
+    if self.summa != self.count * self.payslip.rate: res.append ('Несоответствие суммы')
+    return res
+  
+  def control_0853 (self):
+    '''Проверка фактических дней'''
+    res = []
+    if not control_period (self.payslip.period, self.period): res.append ('Несоответствие периода')
+    if self.summa:     res.append ('Присутствие суммы')
+    if self.count < 0: res.append ('Отрицательное количество')
+    control_count = PayslipDetails.objects.filter (payslip = self.payslip).filter (code__code = '1329').get (period = self.period)
+    control_count = float (control_count.count)
+    if float (self.count) - (control_count / 8): res.append ('Несоответствие количества')
+    return res
+  
+  def control_0322 (self):
+    '''Проверка подоходного налога'''
+    res = []
+    if not control_period (self.payslip.period, self.period, True): res.append ('Несоответствие периода')
+    if self.summa < 0: res.append ('Отрицательная сумма')
+    control_summa = 0
+    for detail in PayslipDetails.objects.filter (payslip = self.payslip).exclude (code__type = 'c'):
+      control_summa += float (detail.summa)
+    control_summa *= 0.87
+    if self.summa != control_summa: res.append ('Неверная сумма')
+    if self.count:     res.append ('Присутствие количества')
+    return res
+  
+  def control_6200 (self):
+    '''Проверка удержания за питание'''
+    res = []
+    if not control_period (self.payslip.period, self.period): res.append ('Несоответствие периода')
+    if self.summa < 0: res.append ('Отрицательная сумма')
+    if self.count:     res.append ('Присутствие количества')
+    return res
+  
+  def control_6101 (self):
+    '''Проверка аванса'''
+    res = []
+    if not control_period (self.payslip.period, self.period, True): res.append ('Несоответствие периода')
+    if self.summa < 0: res.append ('Отрицательная сумма')
+    if self.count:     res.append ('Присутствие количества')
+    return res

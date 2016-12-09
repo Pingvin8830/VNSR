@@ -8,6 +8,21 @@ from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPays
 
 # Create your views here.
 
+def control_payslip (request, id):
+  '''Проверка расчётного листка'''
+  if not is_user (request): return redirect ('/')
+  payslip                         = Payslip.objects.get (id = id)
+  context                         = default_context (request)
+  context ['control_payslip']     = payslip.control ()
+  context ['control_details']     = payslip.control_details ()
+  context ['differences_payslip'] = payslip.differences ()
+  for key, value in context ['control_payslip'].items ():
+    if value: context ['is_error'] = True
+  for key, value in context ['differences_payslip'].items ():
+    if value: context ['is_difference'] = True
+  page                = 'metro/control_payslip.html'
+  return render (request, page, context)
+
 def add_details (request, id):
   '''Добавляет строку в расчетный листок'''
   if not is_user (request): return redirect ('/')
@@ -52,7 +67,7 @@ def display_payslip (request, payslip = None):
         payslip.print_edit ()
     context = default_context (request)
     context ['payslip']     = payslip
-    details = PayslipDetails.objects.filter (payslip = payslip.id)
+    details = PayslipDetails.objects.filter (payslip = payslip.id).order_by ('code', 'period')
     context ['incomes']      = []
     context ['consumptions'] = []
     context ['others']       = []
