@@ -2,7 +2,8 @@
 {% load staticfiles %}
 
 {% block menu %}
-	<a href="{% url 'metro_app:add_details' payslip.id %}">Добавить запись</a>
+	<a href="{% url 'metro_app:add_details'     payslip.id %}">Добавить запись</a>
+	<a href="{% url 'metro_app:control_payslip' payslip.id %}" target='_blank'>Контроль</a>
 	<a href="{% url 'metro_app:case_month' %}">Назад</a>
 {% endblock %}
 
@@ -224,7 +225,7 @@
 							<td colspan=2 class='b-lrb'>
 								Удержано
 							</td>
-							<td class='b-rb'>
+							<td class='t-r_b-rb'>
 								{{ payslip.consumption }}
 							</td>
 						</tr>
