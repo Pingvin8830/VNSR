@@ -120,8 +120,9 @@ class Payslip (models.Model):
     '''Проверка расхождения почасовой ставки'''
     print ()
     res = []
-    control_rate = Rate.objects.filter (start__lte = get_now()).get (end__gte = get_now ()).value
-    if control_rate != self.rate: res.append (('Несоответствие почасовой ставки', control_rate, self.rate, control_rate - self.rate))
+    control_rate = Rate.objects.filter (start__lte = self.period).get (end__gte = self.period).value
+    print (control_rate)
+    if control_rate != self.rate: res.append (('Несоответствие почасовой ставки', control_rate, self.rate, self.rate - control_rate))
     print ()
     return res
   
