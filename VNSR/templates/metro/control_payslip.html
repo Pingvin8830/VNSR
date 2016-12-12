@@ -46,6 +46,7 @@
 						<caption>Расхождения</caption>
 						<tr>
 							<th>Цель</th>
+              <th>Период</th>
 							<th>Ошибка</th>
 							<th>Расчет</th>
 							<th>Факт</th>
@@ -54,13 +55,24 @@
 						{% for type, diff in differences_payslip.items %}
 							{% for context in diff %}
 								<tr>
-									<td>{{ type }}</td>
+									<td colspan=2>{{ type }}</td>
 									{% for data in context %}
 										<td>{{ data }}</td>
 									{% endfor %}
 								</tr>
 							{% endfor %}
 						{% endfor %}
+            {% for type, diff in differences_details.items %}
+              {% for context in diff %}
+                <tr>
+                  <td>{{ type.code.code }} {{ type.code.name }}     </td>
+                  <td>{{ type.period.month }}/{{ type.period.year }}</td>
+                  {% for data in context %}
+                    <td>{{ data }}</td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            {% endfor %}
 					</table>
 				{% else %}
 					Расхождений нет
