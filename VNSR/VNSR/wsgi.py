@@ -10,14 +10,9 @@ https://docs.djangoproject.com/en/1.9/howto/deployment/wsgi/
 import os, sys
 
 sys.path.append ('/srv/http/VNSR/VNSR')
-#sys.path.append ('/srv/http/VNSR')
-#sys.path.append ('/lib/python3.5/site-packages')
-
-#import django.core.handlers.wsgi
 
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "VNSR.settings")
 
 application = get_wsgi_application()
-#application = django.core.handlers.wsgi.WSGIHandler ()
