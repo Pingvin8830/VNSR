@@ -16,9 +16,14 @@ def control_payslip (request, id):
   context ['control_payslip']     = payslip.control ()
   context ['control_details']     = payslip.control_details ()
   context ['differences_payslip'] = payslip.differences ()
+  context ['differences_details'] = payslip.differences_details ()
   for key, value in context ['control_payslip'].items ():
     if value: context ['is_error'] = True
+  for key, value in context ['control_details'].items ():
+    if value: context ['is_error'] = True
   for key, value in context ['differences_payslip'].items ():
+    if value: context ['is_difference'] = True
+  for key, value in context ['differences_details'].items ():
     if value: context ['is_difference'] = True
   page                = 'metro/control_payslip.html'
   return render (request, page, context)

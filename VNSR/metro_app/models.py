@@ -116,14 +116,19 @@ class Payslip (models.Model):
     }
     return res
 
+  def differences_details (self):
+    '''Проверка соответствия данных детализаций'''
+    res = {}
+    details = PayslipDetails.objects.filter (payslip = self.id).order_by ('code').order_by ('period')
+    for detail in details:
+      res [detail] = detail.differences ()
+    return res
+
   def dif_rate (self):
     '''Проверка расхождения почасовой ставки'''
-    print ()
     res = []
     control_rate = Rate.objects.filter (start__lte = self.period).get (end__gte = self.period).value
-    print (control_rate)
-    if control_rate != self.rate: res.append (('Несоответствие почасовой ставки', control_rate, self.rate, self.rate - control_rate))
-    print ()
+    if control_rate != self.rate: res.append (('Несоответствие почасовой ставки', decimal_to_money (control_rate), decimal_to_money (self.rate), decimal_to_money (self.rate - control_rate)))
     return res
   
   def control (self):
@@ -217,6 +222,54 @@ class PayslipDetails (models.Model):
     elif code == '3009': res = self.control_3009 ()
     return res
 
+  def differences (self):
+    '''Проверка соответствия данных'''
+    res = ['%s' % (self.code.code)]
+    res = ['%s %s %s' % (self.period, self.summa, self.count)]
+    code = self.code.code
+    if   code == '/853': res = self.diff_0853 ()
+    elif code == '1329': res = self.diff_1329 ()
+    return res
+    
+  def diff_1329 (self):
+    '''Проверка расхождения почасовой оплаты'''
+    res = []
+    control_count = 0
+    control_summa = 0
+    control_period = str (self.period) [:7]
+    control_rate   = float (Rate.objects.filter (start__lte = self.period).get (end__gte = self.period).value)
+    if self.period != self.payslip.period:
+      shifts = SheduleReal.objects.filter (data__gte = '%s-16' % control_period).filter (data__lte = '%s-31' % control_period)
+    else:
+      shifts = SheduleReal.objects.filter (data__gte = '%s-01' % control_period).filter (data__lte = '%s-15' % control_period)
+    for shift in shifts:
+      start = shift.start.hour + shift.start.minute / 60.0 + shift.start.second / 60.0 / 60.0
+      end   = shift.end.hour   + shift.end.minute   / 60.0 + shift.end.second   / 60.0 / 60.0
+      brk   = (shift.break_day + shift.break_night) / 2.0
+      control_count += end - start - brk
+    control_summa = control_rate * control_count
+    if control_count != self.count: res.append (('Несоответствие количества', decimal_to_money (control_count), decimal_to_money (self.count), decimal_to_money (float (self.count) - control_count)))
+    if control_summa != self.summa: res.append (('Несоответствие суммы',      decimal_to_money (control_summa), decimal_to_money (self.summa), decimal_to_money (float (self.summa) - control_summa)))
+    return res
+
+  def diff_0853 (self):
+    '''Проверка расхождения факт-дней'''
+    res = []
+    control_count = 0
+    control_period = str (self.period) [:7]
+    if self.period != self.payslip.period:
+      shifts = SheduleReal.objects.filter (data__gte = '%s-16' % control_period).filter (data__lte = '%s-31' % control_period)
+    else:
+      shifts = SheduleReal.objects.filter (data__gte = '%s-01' % control_period).filter (data__lte = '%s-15' % control_period)
+    for shift in shifts:
+      start = shift.start.hour + shift.start.minute / 60.0 + shift.start.second / 60.0 / 60.0 
+      end   = shift.end.hour   + shift.end.minute   / 60.0 + shift.end.second   / 60.0 / 60.0
+      brk   = (shift.break_day + shift.break_night) / 2.0
+      control_count += end - start - brk
+    control_count = control_count / 8.0
+    if control_count != self.count: res.append (('Несоответствие количества', decimal_to_money (control_count), decimal_to_money (self.count), decimal_to_money (float (self.count) - control_count)))
+    return res
+
   def control_3009 (self):
     '''Проверка праздничных'''
     res = []
@@ -271,7 +324,7 @@ class PayslipDetails (models.Model):
     control_summa = 0
     for detail in PayslipDetails.objects.filter (payslip = self.payslip).exclude (code__type = 'c'):
       control_summa += float (detail.summa)
-    control_summa *= 0.87
+    control_summa *= 0.13
     if self.summa != control_summa: res.append ('Неверная сумма')
     if self.count:     res.append ('Присутствие количества')
     return res
