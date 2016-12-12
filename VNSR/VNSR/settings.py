@@ -26,6 +26,7 @@ SECRET_KEY = 'f)vth&a@bweifn-0$&8vqp6f!z^*d$u$ie#qz)v&ufl3wu6rfx'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+  'vlasovnetwork.sknt.ru',
 ]
 
 
@@ -85,44 +86,44 @@ WSGI_APPLICATION = 'VNSR.wsgi.application'
 
 DATABASES = {
   'default': {
-    'ENGINE':   'django.db.backends.sqlite3',
-#    'ENGINE':   'django.db.backends.mysql',
+#    'ENGINE':   'django.db.backends.sqlite3',
+    'ENGINE':   'django.db.backends.mysql',
     'NAME':     'test_vnsr_default',
-#    'USER':     'pingvin',
-#    'PASSWORD': 'server881130',
-#    'HOST':     'localhost',
+    'USER':     'pingvin',
+    'PASSWORD': 'server881130',
+    'HOST':     'localhost',
   },
   'calend_db': {
-    'ENGINE':   'django.db.backends.sqlite3',
-#    'ENGINE':   'django.db.backends.mysql',
+#    'ENGINE':   'django.db.backends.sqlite3',
+    'ENGINE':   'django.db.backends.mysql',
     'NAME':     'test_calend',
-#    'USER':     'pingvin',
-#    'PASSWORD': 'server881130',
-#    'HOST':     'localhost',
+    'USER':     'pingvin',
+    'PASSWORD': 'server881130',
+    'HOST':     'localhost',
   },
   'baltbank_db': {
-    'ENGINE':   'django.db.backends.sqlite3',
-#    'ENGINE':   'django.db.backends.mysql',
+#    'ENGINE':   'django.db.backends.sqlite3',
+    'ENGINE':   'django.db.backends.mysql',
     'NAME':     'test_baltbank',
-#    'USER':     'pingvin',
-#    'PASSWORD': 'server881130',
-#    'HOST':     'localhost',
+    'USER':     'pingvin',
+    'PASSWORD': 'server881130',
+    'HOST':     'localhost',
   },
   'menu_db': {
-    'ENGINE':   'django.db.backends.sqlite3',
-#    'ENGINE':   'django.db.backends.mysql',
+#    'ENGINE':   'django.db.backends.sqlite3',
+    'ENGINE':   'django.db.backends.mysql',
     'NAME':     'test_menu',
-#    'USER':     'pingvin',
-#    'PASSWORD': 'server881130',
-#    'HOST':     'localhost',
+    'USER':     'pingvin',
+    'PASSWORD': 'server881130',
+    'HOST':     'localhost',
   },
   'metro_db': {
-    'ENGINE':   'django.db.backends.sqlite3',
-#    'ENGINE':   'django.db.backends.mysql',
-    'NAME':     'test_metro',
-#    'USER':     'pingvin',
-#    'PASSWORD': 'server881130',
-#    'HOST':     'localhost',
+#    'ENGINE':   'django.db.backends.sqlite3',
+    'ENGINE':   'django.db.backends.mysql',
+    'NAME':     'metro',
+    'USER':     'pingvin',
+    'PASSWORD': 'server881130',
+    'HOST':     'localhost',
   },
 }
 
