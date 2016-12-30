@@ -3,6 +3,7 @@ MY_APPS = [
 	'baltbank_app',
 	'menu_app',
 	'metro_app',
+  'budget_app',
 ]
 
 MY_DB = [
@@ -10,6 +11,7 @@ MY_DB = [
 	'baltbank_db',
 	'menu_db',
 	'metro_db',
+  'budget_db',
 ]
 
 class MetroRouter (object):
