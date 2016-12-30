@@ -80,6 +80,22 @@ class MenuRouter (object):
 		if app_label == 'menu_app': return db == 'menu_db'
 		return None
 
+class BudgetRouter (object):
+  '''Перенаправление в БД budget'''
+  def db_for_read (self, model, **hints):
+    if model._meta.app_label == 'budget_app': return 'budget_db'
+    return None
+  def db_for_write (self, model, **hints):
+    if model._meta.app_label == 'budget_app': return 'budget_db'
+  def allow_relation (self, obj1, obj2, **hints):
+    if  obj1._meta.app_label == 'budget_app' or \
+        obj2._meta.app_label == 'budget_app':
+          return True
+    return None
+  def allow_migrate (self, db, app_label, model = None, **hints):
+    if app_label == 'budget_app': return db == 'budget_db'
+    return None
+
 class DefaultRouter (object):
 	'''Перенаправление в БД default'''
 	def db_for_read (self, model, **hints):
