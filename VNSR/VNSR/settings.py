@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
   'vlasovnetwork.sknt.ru',
+  '192.168.1.51',
 ]
 
 
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
   'menu_app.apps.MenuAppConfig',
   'main_app.apps.MainAppConfig',
   'metro_app.apps.MetroAppConfig',
+  'budget_app.apps.BudgetAppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -125,6 +127,14 @@ DATABASES = {
     'PASSWORD': 'server881130',
     'HOST':     'localhost',
   },
+  'budget_db': {
+    'ENGINE':   'django.db.backends.sqlite3',
+#    'ENGINE':   'django.db.backends.mysql',
+    'NAME':     'budget',
+#    'USER':     'pingvin',
+#    'PASSWORD': 'server881130',
+#    'HOST':     'localhost',
+  },
 }
 
 DATABASE_ROUTERS = [
@@ -132,6 +142,7 @@ DATABASE_ROUTERS = [
   'routers.CalendRouter',
   'routers.BaltbankRouter',
   'routers.MenuRouter',
+  'routers.BudgetRouter',
   'routers.DefaultRouter',
 ]
 
