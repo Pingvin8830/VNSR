@@ -5,6 +5,7 @@ MY_APPS = [
   'metro_app',
   'budget_app',
   'car_app',
+  'computers_app',
 ]
 
 MY_DB = [
@@ -14,6 +15,7 @@ MY_DB = [
   'metro_db',
   'budget_db',
   'car_db',
+  'computers_db',
 ]
 
 class MetroRouter (object):
@@ -116,6 +118,23 @@ class CarRouter (object):
     return None
   def allow_migrate (self, db, app_label, model = None, **hints):
     if app_label == 'car_app': return db == 'car_db'
+    return None
+
+class ComputersRouter (object):
+  '''Перенаправление в БД computers'''
+  def db_for_read (self, model, **hints):
+    if model._meta.app_label == 'computers_app': return 'computers_db'
+    return None
+  def db_for_write (self, model, **hints):
+    if model._meta.app_label == 'computers_app': return 'computers_db'
+    return None
+  def allow_relation (self, obj1, obj2, **hints):
+    if  obj1._meta.app_label == 'computers_app' or \
+        obj2._meta.app_label == 'computers_app':
+          return True
+    return None
+  def allow_migrate (self, db, app_label, model = None, **hints):
+    if app_label == 'computers_app': return db == 'computers_db'
     return None
 
 class DefaultRouter (object):
