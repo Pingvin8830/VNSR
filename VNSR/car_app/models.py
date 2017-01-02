@@ -42,7 +42,7 @@ class Refuels (models.Model):
   azs          = models.ForeignKey                ('Azs',       on_delete = models.SET (1), null = False, default = 1, db_column = 'azs')
   check_number = models.CharField                 (max_length = 5)
   dispencer    = models.SmallIntegerField         ()
-  fuel_type    = models.ForeignKey                ('FuelTypes', on_delete = models.SET (1), null = False)
+  fuel_type    = models.ForeignKey                ('FuelTypes', on_delete = models.SET (1), null = False, db_column = 'fuel_type')
   fuel_count   = models.DecimalField              (max_digits = 6, decimal_places = 3, null = False)
   price        = models.DecimalField              (max_digits = 5, decimal_places = 2)
   cost         = models.DecimalField              (max_digits = 7, decimal_places = 2)
