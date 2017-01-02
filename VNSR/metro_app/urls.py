@@ -18,8 +18,15 @@ from .                import views
 
 app_name    = 'metro_app' 
 urlpatterns = [
-	url (r'^set_shedule/(?P<data>[0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2})', views.set_shedule,    name = 'set_shedule'),
-	url (r'^set_shift',                                              views.set_shift,      name = 'set_shift'),
-	url (r'^set_work_plane',                                         views.set_work_plane, name = 'set_work_plane'),
-	url (r'^',                                                       views.index,          name = 'index'),
+  url (r'^add_codes_payslip',                                      views.add_codes_payslip, name = 'add_codes_payslip'),
+  url (r'^add_details/(?P<id>[0-9]+)',                             views.add_details,       name = 'add_details'),
+  url (r'^add_payslip',                                            views.add_payslip,       name = 'add_payslip'),
+  url (r'^case_month',                                             views.case_month,        name = 'case_month'),
+  url (r'^control_payslip/(?P<id>[0-9]+)',                         views.control_payslip,   name = 'control_payslip'),
+  url (r'^display_payslip',                                        views.display_payslip,   name = 'display_payslip'),
+  url (r'^set_codes_payslip',                                      views.set_codes_payslip, name = 'set_codes_payslip'),
+  url (r'^set_shedule/(?P<data>[0-9]{4,4}-[0-9]{1,2}-[0-9]{1,2})', views.set_shedule,       name = 'set_shedule'),
+  url (r'^set_shift',                                              views.set_shift,         name = 'set_shift'),
+  url (r'^set_work_plane',                                         views.set_work_plane,    name = 'set_work_plane'),
+  url (r'^',                                                       views.index,             name = 'index'),
 ]

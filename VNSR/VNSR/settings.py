@@ -26,55 +26,60 @@ SECRET_KEY = 'f)vth&a@bweifn-0$&8vqp6f!z^*d$u$ie#qz)v&ufl3wu6rfx'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+  'vlasovnetwork.sknt.ru',
+  '192.168.1.51',
 ]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-	'django.contrib.admin',
-	'django.contrib.auth',
-	'django.contrib.contenttypes',
-	'django.contrib.sessions',
-	'django.contrib.messages',
-	'django.contrib.staticfiles',
-	'calend_app.apps.CalendAppConfig',
-	'auth_app.apps.AuthAppConfig',
-	'baltbank_app.apps.BaltbankAppConfig',
-	'menu_app.apps.MenuAppConfig',
-	'main_app.apps.MainAppConfig',
-	'metro_app.apps.MetroAppConfig',
+  'django.contrib.admin',
+  'django.contrib.auth',
+  'django.contrib.contenttypes',
+  'django.contrib.sessions',
+  'django.contrib.messages',
+  'django.contrib.staticfiles',
+  'calend_app.apps.CalendAppConfig',
+  'auth_app.apps.AuthAppConfig',
+  'baltbank_app.apps.BaltbankAppConfig',
+  'menu_app.apps.MenuAppConfig',
+  'main_app.apps.MainAppConfig',
+  'metro_app.apps.MetroAppConfig',
+  'budget_app.apps.BudgetAppConfig',
+  'car_app.apps.CarAppConfig',
+  'computers_app.apps.ComputersAppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
-	'django.middleware.security.SecurityMiddleware',
-	'django.contrib.sessions.middleware.SessionMiddleware',
-	'django.middleware.common.CommonMiddleware',
-	'django.middleware.csrf.CsrfViewMiddleware',
-	'django.contrib.auth.middleware.AuthenticationMiddleware',
-	'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-	'django.contrib.messages.middleware.MessageMiddleware',
-	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+  'django.middleware.security.SecurityMiddleware',
+  'django.contrib.sessions.middleware.SessionMiddleware',
+  'django.middleware.common.CommonMiddleware',
+  'django.middleware.csrf.CsrfViewMiddleware',
+  'django.contrib.auth.middleware.AuthenticationMiddleware',
+  'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+  'django.contrib.messages.middleware.MessageMiddleware',
+  'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'VNSR.urls'
 
 TEMPLATES = [
-	{
-		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [
-			os.path.join (BASE_DIR, 'templates')
-		],
-		'APP_DIRS': True,
-		'OPTIONS': {
-			'context_processors': [
-				'django.template.context_processors.debug',
-				'django.template.context_processors.request',
-				'django.contrib.auth.context_processors.auth',
-				'django.contrib.messages.context_processors.messages',
-			],
-		},
-	},
+  {
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [
+      os.path.join (BASE_DIR, 'templates')
+    ],
+    'APP_DIRS': True,
+    'OPTIONS': {
+      'context_processors': [
+        'django.template.context_processors.debug',
+        'django.template.context_processors.request',
+        'django.contrib.auth.context_processors.auth',
+        'django.contrib.messages.context_processors.messages',
+      ],
+    },
+  },
 ]
 
 WSGI_APPLICATION = 'VNSR.wsgi.application'
@@ -84,67 +89,107 @@ WSGI_APPLICATION = 'VNSR.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-	'default': {
-		'ENGINE':   'django.db.backends.mysql',
-		'NAME':     'test_vnsr_default',
-		'USER':     'pingvin',
-		'PASSWORD': 'server881130',
-		'HOST':     'localhost',
-	},
-	'calend_db': {
-		'ENGINE':   'django.db.backends.mysql',
-		'NAME':     'test_calend',
-		'USER':     'pingvin',
-		'PASSWORD': 'server881130',
-		'HOST':     'localhost',
-	},
-	'baltbank_db': {
-		'ENGINE':   'django.db.backends.mysql',
-		'NAME':     'test_baltbank',
-		'USER':     'pingvin',
-		'PASSWORD': 'server881130',
-		'HOST':     'localhost',
-	},
-	'menu_db': {
-		'ENGINE':   'django.db.backends.mysql',
-		'NAME':     'test_menu',
-		'USER':     'pingvin',
-		'PASSWORD': 'server881130',
-		'HOST':     'localhost',
-	},
-	'metro_db': {
-		'ENGINE':   'django.db.backends.mysql',
-		'NAME':     'test_metro',
-		'USER':     'pingvin',
-		'PASSWORD': 'server881130',
-		'HOST':     'localhost',
-	},
+  'default': {
+    'ENGINE':   'django.db.backends.sqlite3',
+    'NAME':     'test_vnsr_default',
+#    'ENGINE':   'django.db.backends.mysql',
+#    'NAME':     'vnsr_default',
+#    'USER':     'pingvin',
+#    'PASSWORD': 'server881130',
+#    'HOST':     'localhost',
+  },
+  'calend_db': {
+    'ENGINE':   'django.db.backends.sqlite3',
+    'NAME':     'test_calend',
+#    'ENGINE':   'django.db.backends.mysql',
+#    'NAME':     'calend',
+#    'USER':     'pingvin',
+#    'PASSWORD': 'server881130',
+#    'HOST':     'localhost',
+  },
+  'baltbank_db': {
+    'ENGINE':   'django.db.backends.sqlite3',
+    'NAME':     'test_baltbank',
+#    'ENGINE':   'django.db.backends.mysql',
+#    'NAME':     'baltbank',
+#    'USER':     'pingvin',
+#    'PASSWORD': 'server881130',
+#    'HOST':     'localhost',
+  },
+  'menu_db': {
+    'ENGINE':   'django.db.backends.sqlite3',
+    'NAME':     'test_menu',
+#    'ENGINE':   'django.db.backends.mysql',
+#    'NAME':     'menu',
+#    'USER':     'pingvin',
+#    'PASSWORD': 'server881130',
+#    'HOST':     'localhost',
+  },
+  'metro_db': {
+    'ENGINE':   'django.db.backends.sqlite3',
+    'NAME':     'test_metro',
+#    'ENGINE':   'django.db.backends.mysql',
+#    'NAME':     'metro',
+#    'USER':     'pingvin',
+#    'PASSWORD': 'server881130',
+#    'HOST':     'localhost',
+  },
+  'budget_db': {
+    'ENGINE':   'django.db.backends.sqlite3',
+    'NAME':     'test_budget',
+#    'ENGINE':   'django.db.backends.mysql',
+#    'NAME':     'budget',
+#    'USER':     'pingvin',
+#    'PASSWORD': 'server881130',
+#    'HOST':     'localhost',
+  },
+  'car_db': {
+    'ENGINE':   'django.db.backends.sqlite3',
+    'NAME':     'test_car',
+#    'ENGINE':   'django.db.backends.mysql',
+#    'NAME':     'car',
+#    'USER':     'pingvin',
+#    'PASSWORD': 'server881130',
+#    'HOST':     'localhost',
+  },
+  'computers_db': {
+    'ENGINE':   'django.db.backends.sqlite3',
+    'NAME':     'test_computers',
+#    'ENGINE':   'django.db.backends.mysql',
+#    'NAME':     'computers',
+#    'USER':     'pingvin',
+#    'PASSWORD': 'server881130',
+#    'HOST':     'localhost',
+  },
 }
 
 DATABASE_ROUTERS = [
-	'routers.MetroRouter',
-	'routers.CalendRouter',
-	'routers.BaltbankRouter',
-	'routers.MenuRouter',
-	'routers.DefaultRouter',
+  'routers.MetroRouter',
+  'routers.CalendRouter',
+  'routers.BaltbankRouter',
+  'routers.MenuRouter',
+  'routers.BudgetRouter',
+  'routers.CarRouter',
+  'routers.ComputersRouter',
+  'routers.DefaultRouter',
 ]
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-	{
-		'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-	},
-	{
-		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-	},
-	{
-		'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-	},
-	{
-		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-	},
+  {
+    'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+  },
+  {
+    'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+  },
+  {
+    'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+  },
+  {
+    'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+  },
 ]
 
 
@@ -167,5 +212,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-	'static',
+  'static',
 ]
