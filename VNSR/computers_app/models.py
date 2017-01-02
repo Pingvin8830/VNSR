@@ -22,7 +22,7 @@ class CPUs (models.Model):
   temp_max            = models.DecimalField              (max_digits = 5, decimal_places = 2, null = True, verbose_name = 'Максимальная рабочая температура')
   comment             = models.CharField                 (max_length = 100,                   null = True, verbose_name = 'Комментарий')
 
-class HDDs (models.MODEL):
+class HDDs (models.Model):
   '''Винчестеры'''
   class Meta (object):
     db_table = 'hdds'
@@ -125,14 +125,14 @@ class Hosts (models.Model):
   id      = models.AutoField  (primary_key = True,                                                         verbose_name = 'Код')
   cpu     = models.ForeignKey ('CPUs',     on_delete = models.SET_NULL, null = True, db_column = 'cpu',    verbose_name = 'Процессор')
   mother  = models.ForeignKey ('Mothers',  on_delete = models.SET_NULL, null = True, db_column = 'mother', verbose_name = 'Материнская плата')
-  ram1    = models.ForeignKey ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram1',   verbose_name = 'ОП1')
-  ram2    = models.ForeignKey ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram2',   verbose_name = 'ОП2')
-  ram3    = models.ForeignKey ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram3',   verbose_name = 'ОП3')
-  ram4    = models.ForeignKey ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram4',   verbose_name = 'ОП4')
-  hdd1    = models.ForeignKey ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd1',   verbose_name = 'Винчестер1')
-  hdd2    = models.ForeignKey ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd2',   verbose_name = 'Винчестер2')
-  hdd3    = models.ForeignKey ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd3',   verbose_name = 'Винчестер3')
-  hdd4    = models.ForeignKey ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd4',   verbose_name = 'Винчестер4')
+  ram1    = models.ForeignKey ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram1',   verbose_name = 'ОП1',        related_name = 'ram1')
+  ram2    = models.ForeignKey ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram2',   verbose_name = 'ОП2',        related_name = 'ram2')
+  ram3    = models.ForeignKey ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram3',   verbose_name = 'ОП3',        related_name = 'ram3')
+  ram4    = models.ForeignKey ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram4',   verbose_name = 'ОП4',        related_name = 'ram4')
+  hdd1    = models.ForeignKey ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd1',   verbose_name = 'Винчестер1', related_name = 'hdd1')
+  hdd2    = models.ForeignKey ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd2',   verbose_name = 'Винчестер2', related_name = 'hdd2')
+  hdd3    = models.ForeignKey ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd3',   verbose_name = 'Винчестер3', related_name = 'hdd3')
+  hdd4    = models.ForeignKey ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd4',   verbose_name = 'Винчестер4', related_name = 'hdd4')
   net     = models.ForeignKey ('Networks', on_delete = models.SET_NULL, null = True, db_column = 'net',    verbose_name = 'Сетевая карта')
   video   = models.ForeignKey ('Videos',   on_delete = models.SET_NULL, null = True, db_column = 'video',  verbose_name = 'Видеокарта')
   name    = models.CharField  (max_length = 30,                                                            verbose_name = 'Сетевое имя')
