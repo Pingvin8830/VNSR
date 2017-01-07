@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'VNSR.wsgi.application'
 DATABASES = {
   'default': {
     'ENGINE':   'django.db.backends.sqlite3',
-    'NAME':     'test_vnsr_default',
+    'NAME':     'databases/vnsr_default',
 #    'ENGINE':   'django.db.backends.mysql',
 #    'NAME':     'vnsr_default',
 #    'USER':     'pingvin',
@@ -100,7 +100,7 @@ DATABASES = {
   },
   'calend_db': {
     'ENGINE':   'django.db.backends.sqlite3',
-    'NAME':     'test_calend',
+    'NAME':     'databases/calend',
 #    'ENGINE':   'django.db.backends.mysql',
 #    'NAME':     'calend',
 #    'USER':     'pingvin',
@@ -109,7 +109,7 @@ DATABASES = {
   },
   'baltbank_db': {
     'ENGINE':   'django.db.backends.sqlite3',
-    'NAME':     'test_baltbank',
+    'NAME':     'databases/baltbank',
 #    'ENGINE':   'django.db.backends.mysql',
 #    'NAME':     'baltbank',
 #    'USER':     'pingvin',
@@ -118,7 +118,7 @@ DATABASES = {
   },
   'menu_db': {
     'ENGINE':   'django.db.backends.sqlite3',
-    'NAME':     'test_menu',
+    'NAME':     'databases/menu',
 #    'ENGINE':   'django.db.backends.mysql',
 #    'NAME':     'menu',
 #    'USER':     'pingvin',
@@ -127,7 +127,7 @@ DATABASES = {
   },
   'metro_db': {
     'ENGINE':   'django.db.backends.sqlite3',
-    'NAME':     'test_metro',
+    'NAME':     'databases/metro',
 #    'ENGINE':   'django.db.backends.mysql',
 #    'NAME':     'metro',
 #    'USER':     'pingvin',
@@ -136,7 +136,7 @@ DATABASES = {
   },
   'budget_db': {
     'ENGINE':   'django.db.backends.sqlite3',
-    'NAME':     'test_budget',
+    'NAME':     'databases/budget',
 #    'ENGINE':   'django.db.backends.mysql',
 #    'NAME':     'budget',
 #    'USER':     'pingvin',
@@ -145,7 +145,7 @@ DATABASES = {
   },
   'car_db': {
     'ENGINE':   'django.db.backends.sqlite3',
-    'NAME':     'test_car',
+    'NAME':     'databases/car',
 #    'ENGINE':   'django.db.backends.mysql',
 #    'NAME':     'car',
 #    'USER':     'pingvin',
@@ -154,7 +154,7 @@ DATABASES = {
   },
   'computers_db': {
     'ENGINE':   'django.db.backends.sqlite3',
-    'NAME':     'test_computers',
+    'NAME':     'databases/computers',
 #    'ENGINE':   'django.db.backends.mysql',
 #    'NAME':     'computers',
 #    'USER':     'pingvin',
