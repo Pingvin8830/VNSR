@@ -13,3 +13,4 @@ def default_context (request, app = None):
   }
   context ['items'] = create_menu_user (username)
   return context
+

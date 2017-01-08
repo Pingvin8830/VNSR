@@ -2,79 +2,80 @@
 {% load staticfiles %}
 
 {% block menu %}
-	<a href='{% url 'metro_app:index' %}'>Назад</a>
+  <a href='{% url 'metro_app:index' %}'>Назад</a>
 {% endblock %}
 
 {% block content %}
-	<link rel="stylesheet" type="text/css" href="{% static 'metro/add_details.css' %}">
-	<form name='add_details' action="{% url 'metro_app:add_details' id %}" method='post'>
-		{% csrf_token %}
-		<center>
-			<table>
-				<caption>Добавление записи в расчетный лист</caption>
-				<tr>
-					<td>
-						Код НДФЛ
-					</td>
-					<td>
-						<select name='code' size=1>
-							<option value=''>
-							{% for code in codes %}
-								<option value='{{ code.id }}'>{{ code.code }} {{ code.name }}
-							{% endfor %}
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Период
-					</td>
-					<td>
-						<select name='month'>
-							<option value=''>
-							<option value='1' >Янваль
-							<option value='2' >Февраль
-							<option value='3' >Март
-							<option value='4' >Апрель
-							<option value='5' >Май
-							<option value='6' >Июнь
-							<option value='7' >Июль
-							<option value='8' >Август
-							<option value='9' >Сентябрь
-							<option value='10'>Октябрь
-							<option value='11'>Ноябрь
-							<option value='12'>Декабрь
-						</select>
-						<input type='number' name='year' value='2016'>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Сумма
-					</td>
-					<td>
-						<input type='text' name='summa' size=10 maxlength=10 value='0.00'>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Ед.
-					</td>
-					<td>
-						<input type='text' name='count' size=10 maxlength=10 value='0.00'>
-					</td>
-				</tr>
-			</table>
-			<table>
-				<tr>
-					<td>
-						<input type='submit' value='Записать'>
-					</td>
-					<td>
-						<input type='reset' value='Очистить'>
-					</td>
-				</tr>
-			</table>
-		</center>
-	</form>
+  <link rel="stylesheet" type="text/css" href="{% static 'metro/add_details.css' %}">
+  <form name='add_details' action="{% url 'metro_app:add_details' id %}" method='post'>
+    {% csrf_token %}
+    <center>
+      <table>
+        <caption>Добавление записи в расчетный лист</caption>
+        <tr>
+          <td>
+            Код НДФЛ
+          </td>
+          <td>
+            <select name='code' size=1>
+              <option value=''>
+              {% for code in codes %}
+                <option value='{{ code.id }}'>{{ code.code }} {{ code.name }}
+              {% endfor %}
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Период
+          </td>
+          <td>
+            <select name='month'>
+              <option value=''>
+              <option value='1' >Янваль
+              <option value='2' >Февраль
+              <option value='3' >Март
+              <option value='4' >Апрель
+              <option value='5' >Май
+              <option value='6' >Июнь
+              <option value='7' >Июль
+              <option value='8' >Август
+              <option value='9' >Сентябрь
+              <option value='10'>Октябрь
+              <option value='11'>Ноябрь
+              <option value='12'>Декабрь
+            </select>
+            <input type='number' name='year' value='2016'>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Сумма
+          </td>
+          <td>
+            <input type='text' name='summa' size=10 maxlength=10 value='0.00'>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Ед.
+          </td>
+          <td>
+            <input type='text' name='count' size=10 maxlength=10 value='0.00'>
+          </td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>
+            <input type='submit' value='Записать'>
+          </td>
+          <td>
+            <input type='reset' value='Очистить'>
+          </td>
+        </tr>
+      </table>
+    </center>
+  </form>
 {% endblock %}
+

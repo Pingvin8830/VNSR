@@ -26,3 +26,4 @@ urlpatterns = [
   url (r'^metro/',  include ('metro_app.urls')),
   url (r'^',        include ('main_app.urls')),
 ]
+

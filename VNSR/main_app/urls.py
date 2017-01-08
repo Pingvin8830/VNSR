@@ -20,3 +20,4 @@ app_name    = 'main_app'
 urlpatterns = [
   url (r'^$', views.index),
 ]
+

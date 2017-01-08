@@ -11,3 +11,4 @@ def index (request):
   context = default_context (request)
   context ['items'] = create_menu_app ('car')
   return render (request, page, context)
+

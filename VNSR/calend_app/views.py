@@ -6,6 +6,7 @@ from .models            import Signs
 from menu_app.functions import create_menu_app
 
 # Create your views here.
+
 def add_comment (request):
   '''Добавляет комментарий к дню'''
   if not is_user (request): return redirect ('/')
@@ -30,12 +31,8 @@ def add_comment (request):
 def set_comment (request, year):
   '''Сохраняет комментарии'''
   if not is_user (request): return redirect ('/')
-  print ()
   year = int (year)
   if request.POST:
-    for key in request.POST:
-      print (key)
-    print ()
     return redirect ('/calend')
   else:
     page                     = 'calend/display_comment.html'
@@ -58,7 +55,7 @@ def display_calend_year (request, year = get_now ().year):
   for month in range (1, 13):
     context ['calend_month_%s' % str (month)] = create_calend_month (year, month)
   return render (request, page, context)
-	
+
 def display_signs_month (request, year, month):
   '''Отображает настройку дней месяца'''
   if not is_user (request): return redirect ('/')
@@ -94,3 +91,4 @@ def set_signs_month (request, year, month):
       signs.short   = (request.POST [str(data)] == 'short')
       signs.save ()
   return redirect ('/calend/%s' % year)
+

@@ -2,45 +2,46 @@
 {% load staticfiles %}
 
 {% block menu %}
-	<a href="{% url 'menu_app:add_user'%}">Добавить пользователя</a>
-	<a href="{% url 'menu_app:index' %}">Назад</a>
+  <a href="{% url 'menu_app:add_user'%}">Добавить пользователя</a>
+  <a href="{% url 'menu_app:index' %}">Назад</a>
 {% endblock %}
 
 {% block content %}
-	<center>
-		<form action="{% url 'menu_app:set_user' %}" method="post">
-			{% csrf_token %}
-			<table>
-				<caption>Пользователи</caption>
-				<tr align="center">
-					<td>ID</td>
-					<td>Логин</td>
-					<td>Удалить</td>
-				</tr>
-				{% for user in menu_users %}
-					<tr>
-						<td>
-							<input type="text" name="id_{{ user.id }}" value="{{ user.id }}" size="2" disabled>
-						</td>
-						<td>
-							<input type="text" name="name_{{ user.id }}" value="{{ user.name }}">
-						</td>
-						<td>
-							<input type="checkbox" name="delete_{{ user.id }}" value="delete">
-						</td>
-					</tr>
-				{% endfor %}
-			</table>
-			<table>
-				<tr>
-					<td>
-						<input type="submit" value="Принять">
-					</td>
-					<td>
-						<input type="reset" value="Очистить">
-					</td>
-				</tr>
-			</table>
-		</form>
-	</center>
+  <center>
+    <form action="{% url 'menu_app:set_user' %}" method="post">
+      {% csrf_token %}
+      <table>
+        <caption>Пользователи</caption>
+        <tr align="center">
+          <td>ID</td>
+          <td>Логин</td>
+          <td>Удалить</td>
+        </tr>
+        {% for user in menu_users %}
+          <tr>
+            <td>
+              <input type="text" name="id_{{ user.id }}" value="{{ user.id }}" size="2" disabled>
+            </td>
+            <td>
+              <input type="text" name="name_{{ user.id }}" value="{{ user.name }}">
+            </td>
+            <td>
+              <input type="checkbox" name="delete_{{ user.id }}" value="delete">
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+      <table>
+        <tr>
+          <td>
+            <input type="submit" value="Принять">
+          </td>
+          <td>
+            <input type="reset" value="Очистить">
+          </td>
+        </tr>
+      </table>
+    </form>
+  </center>
 {% endblock %}
+

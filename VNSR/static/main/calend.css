@@ -1,14 +1,15 @@
 #calend {
-	width:				240;
-	height:				260;
-	margin:				0;
-	padding:			0;
+  width:      240;
+  height:     260;
+  margin:     0;
+  padding:    0;
 }
 
 #calend table {
-	text-align:		right;
+  text-align: right;
 }
 
-#calend .week			{color:	red;}
-#calend .holiday	{color:	green;}
-#calend .short		{color:	blue;}
+#calend .week    {color:  red;}
+#calend .holiday {color:  green;}
+#calend .short   {color:  blue;}
+

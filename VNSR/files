@@ -1,0 +1,127 @@
+#!/bin/bash
+
+cd ./auth_app
+for f in admin.py apps.py functions.py __init__.py models.py tests.py urls.py views.py; do
+  vim $f
+  done
+cd -
+
+cd ./baltbank_app
+for f in admin.py apps.py __init__.py models.py tests.py views.py; do
+  vim $f
+  done
+cd -
+
+cd ./budget_app
+for f in admin.py apps.py __init__.py models.py tests.py views.py; do
+  vim $f
+  done
+cd -
+
+cd ./calend_app
+for f in admin.py apps.py functions.py __init__.py models.py tests.py urls.py views.py; do
+  vim $f
+  done
+cd -
+
+cd ./car_app
+for f in admin.py apps.py __init__.py models.py tests.py urls.py views.py; do
+  vim $f
+  done
+cd -
+
+cd ./computers_app
+for f in admin.py apps.py __init__.py models.py tests.py views.py; do
+  vim $f
+  done
+cd -
+
+cd ./main_app
+for f in admin.py apps.py functions.py __init__.py models.py tests.py urls.py views.py; do
+  vim $f
+  done
+cd -
+
+cd ./menu_app
+for f in admin.py apps.py forms.py functions.py __init__.py models.py tests.py urls.py views.py; do
+  vim $f
+  done
+cd -
+
+cd ./metro_app
+for f in admin.py apps.py functions.py __init__.py models.py tests.py urls.py views.py; do
+  vim $f
+  done
+cd -
+
+cd ./static/auth_app
+for f in main.css; do
+  vim $f
+  done
+cd -
+
+cd ./static/calend
+for f in add_comment.css display_comment.css display_signs.css main.css; do
+  vim $f
+  done
+cd -
+
+cd ./static/main
+for f in calend.css content.css footer.css header.css main.css menu.css staff.css; do
+  vim $f
+  done
+cd -
+
+cd ./static/menu
+for f in display_item.css; do
+  vim $f
+  done
+cd -
+
+cd ./static/metro
+for f in add_details.css add_shift.css add_work_plane.css display_payslip.css; do
+  vim $f
+  done
+cd -
+
+cd ./templates/auth
+for f in login.html; do
+  vim $f
+  done
+cd -
+
+cd ./templates/calend
+for f in add_comment.html display_comment.html month.html year.html; do
+  vim $f
+  done
+cd -
+
+cd ./templates/car
+for f in index.html; do
+  vim $f
+  done
+cd -
+
+cd ./templates/main
+for f in index.html; do
+  vim $f
+  done
+cd -
+
+cd ./templates/menu
+for f in add_app.html add_item.html add_user.html case_app.html case_user.html display_app.html display_app_menu.html display_item.html display_user.html display_user_menu.html index.html; do
+  vim $f
+  done
+cd -
+
+cd ./templates/metro
+for f in add_codes_payslip.html add_details.html add_payslip.html add_shedule.html add_shift.html add_work_plane.html case_month.html control_payslip.html display_codes_payslip.html display_payslip.html index.html; do
+  vim $f
+  done
+cd -
+
+cd ./VNSR
+for f in __init__.py settings.py urls.py wsgi.py wsgi.py_def; do
+  vim $f
+  done
+cd -
