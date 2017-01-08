@@ -2,17 +2,18 @@
 {% load staticfiles %}
 
 {% block menu %}
-	<a href="{% url 'menu_app:set_user' %}">Назад</a>
+  <a href="{% url 'menu_app:set_user' %}">Назад</a>
 {% endblock %}
 
 {% block content %}
-	<center>
-	  <form action="{% url 'menu_app:add_user' %}" method="post">
-  		{% csrf_token %}
-		  Добавление нового пользователя<br>
+  <center>
+    <form action="{% url 'menu_app:add_user' %}" method="post">
+      {% csrf_token %}
+      Добавление нового пользователя<br>
       {{ form }}<br>
       <input type="submit" value="Добавить">
       <input type="reset"  value="Очистить">
     </form>
-	</center>
+  </center>
 {% endblock %}
+

@@ -2,13 +2,13 @@
 {% load staticfiles %}
 
 {% block menu %}
-	<a href="{% url 'metro_app:case_month' %}">Назад</a>
+  <a href="{% url 'metro_app:case_month' %}">Назад</a>
 {% endblock %}
 
 {% block content %}
   <link rel='stylesheet' type='text/css' href="{% static 'metro/display_payslip.css' %}"> 
-	<form name='payslip' action="{% url 'metro_app:add_payslip' %}" method='post'>
-		{% csrf_token %}
+  <form name='payslip' action="{% url 'metro_app:add_payslip' %}" method='post'>
+    {% csrf_token %}
     <table cellpadding=0 cellspacing=0 class='payslip'>
       <tr>
         <td colspan=2 class='t-c_b-ltr'>
@@ -17,37 +17,37 @@
       </tr>
       <tr>
         <td colspan=2 class='b-lr'>
-         Предприятие  МЕТРО Кэш энд Керри ООО
+          Предприятие  МЕТРО Кэш энд Керри ООО
         </td>
       </tr>
       <tr>
         <td colspan=2 class='b-lr'>
-					<table align='center'>
-						<tr>
-							<td>
-								За &nbsp
-							</td>
-							<td>
-								<select name='month' size=1>
-									<option value='1'>Январь
-									<option value='2'>Февраль
-									<option value='3'>Март
-									<option value='4'>Апрель
-									<option value='5'>Май
-									<option value='6'>Июнь
-									<option value='7'>Июль
-									<option value='8'>Август
-									<option value='9'>Сентябрь
-									<option value='10'>Октябрь
-									<option value='11'>Ноябрь
-									<option value='12'>Декабрь
-								</select>
-							</td>
-							<td>
-								<input type='number' name='year' value='2016'>
-							</td>
-						</tr>
-					</table>
+          <table align='center'>
+            <tr>
+              <td>
+                За &nbsp
+              </td>
+              <td>
+                <select name='month' size=1>
+                  <option value='1'>Январь
+                  <option value='2'>Февраль
+                  <option value='3'>Март
+                  <option value='4'>Апрель
+                  <option value='5'>Май
+                  <option value='6'>Июнь
+                  <option value='7'>Июль
+                  <option value='8'>Август
+                  <option value='9'>Сентябрь
+                  <option value='10'>Октябрь
+                  <option value='11'>Ноябрь
+                  <option value='12'>Декабрь
+                </select>
+              </td>
+              <td>
+                <input type='number' name='year' value='2016'>
+              </td>
+            </tr>
+          </table>
         </td>
       </tr>
       <tr>
@@ -102,7 +102,7 @@
                 ─
               </td>
               <td class='t-r'>
-              	<input type='text' name='begin_dolg' size=10 maxlength=10 value='0.00'>
+                <input type='text' name='begin_dolg' size=10 maxlength=10 value='0.00'>
               </td>
             </tr>
             <tr>
@@ -112,8 +112,8 @@
               <td class='t-r'>
                 ─
               </td>
-							<td class='t-r'>
-								<input type='text' name='rotate_dolg' size=10 maxlength=10 value='0.00'>
+              <td class='t-r'>
+                <input type='text' name='rotate_dolg' size=10 maxlength=10 value='0.00'>
               <td class='t-r'>
               </td>
             </tr>
@@ -178,14 +178,15 @@
           </table>
         </td>
       </tr>
-			<tr align='center'>
-				<td>
-					<input type='submit' value='Далее'>
-				</td>
-				<td>
-					<input type='reset' value='Очистить'>
-				</td>
-			</tr>
+      <tr align='center'>
+        <td>
+          <input type='submit' value='Далее'>
+        </td>
+        <td>
+          <input type='reset' value='Очистить'>
+        </td>
+      </tr>
     </table>
-	</form>
+  </form>
 {% endblock %}
+
