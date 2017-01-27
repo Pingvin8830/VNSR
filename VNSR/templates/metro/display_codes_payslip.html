@@ -1,0 +1,78 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'metro_app:add_codes_payslip'%}">Добавить новый код</a>
+  <a href="{% url 'metro_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'metro/display_codes_payslip.css' %}">
+  <center>
+    <form action="{% url 'metro_app:set_codes_payslip' %}" method="post">
+      {% csrf_token %}
+      <div id="codes_payslip">
+        <table>
+          <caption>Коды НДФЛ</caption>
+          <tr align="center">
+            <td>ID</td>
+            <td>Код</td>
+            <td>Расшифровка кода</td>
+            <td>Тип</td>
+            <td>Удалить</td>
+          </tr>
+          {% for code in codes_payslip %}
+            <tr>
+              <td>
+                <input type="text" name="id_{{ code.id }}" value="{{ code.id }}" size="2" disabled>
+              </td>
+              <td>
+                <input type="text" name="code_{{ code.id }}" value="{{ code.code }}">
+              </td>
+              <td>
+                <input type="text" name="name_{{ code.id }}" value="{{ code.name }}">
+              </td>
+              <td>
+                <select size=1 name='type_{{ code.id }}'>
+                  <option value='' selected>
+                  <option value='i'
+                    {% if code.type == 'i' %}
+                      selected>Доходы
+                    {% else %}
+                      >Доходы
+                    {% endif %}
+                  <option value='c'
+                    {% if code.type == 'c' %}
+                      selected>Расходы
+                    {% else %}
+                      >Расходы
+                    {% endif %}
+                  <option value='o'
+                    {% if code.type == 'o' %}
+                      selected>Прочие доходы
+                    {% else %}
+                      >Прочие доходы
+                    {% endif %}
+                </select>
+              </td>
+              <td>
+                <input type="checkbox" name="delete_{{ code.id }}" value="delete">
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+      <table>
+        <tr>
+          <td>
+            <input type="submit" value="Принять">
+          </td>
+          <td>
+            <input type="reset" value="Очистить">
+          </td>
+        </tr>
+      </table>
+    </form>
+  </center>
+{% endblock %}
+

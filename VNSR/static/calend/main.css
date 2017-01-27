@@ -1,19 +1,19 @@
 #content .calend_year table {
-	border:						1px solid;
-	text-align:				right;
+  border:           1px solid;
+  text-align:       right;
 }
 
 #content .calend_year a {
-	color:						blue;
-	text-decoration:	none;
+  color:           blue;
+  text-decoration: none;
 }
 
 #content .calend_year a:hover {
-	color:						red;
-	text-decoration:	none
+  color:           red;
+  text-decoration: none
 }
 
-#content .week		{color:	red;}
-#content .holiday	{color:	green;}
-#content .short		{color:	blue;}
+#content .week    {color: red;}
+#content .holiday {color: green;}
+#content .short   {color: blue;}
 
