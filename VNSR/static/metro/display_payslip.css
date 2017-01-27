@@ -1,0 +1,44 @@
+.payslip {
+  font-family:         Courier New;
+}
+
+.t-c, .t-c_b-ltr, .t-c_b-lr, .t-c_b-b {
+  text-align:          center;
+  padding-left:        5px;
+  padding-right:       5px;
+}
+
+.t-r, .t-r_b-rb, .t-r_b-r, .t-r_b-tr {
+  text-align:          right;
+  padding-left:        5px;
+  padding-right:       5px;
+}
+
+.b-l, .t-c_b-ltr, .b-lr, .t-c_b-lr, .b-lrb, .b-a, .b-ltr {
+  border-left-style:   solid;
+  border-left-width:   1px;
+  padding-left:        5px;
+  padding-right:       5px;
+}
+
+.b-t, .t-c_b-ltr, .b-a, .b-ltr, .t-r_b-tr {
+  border-top-style:    solid;
+  border-top-width:    1px;
+  padding-left:        5px;
+  padding-right:       5px;
+}
+
+.b-r, .t-c_b-ltr, .b-lr, .t-c_b-lr, .b-lrb, .b-a, .b-rb, .t-r_b-rb, .t-r_b-r, .b-ltr, .t-r_b-tr {
+  border-right-style:  solid;
+  border-right-width:  1px;
+  padding-left:        5px;
+  padding-right:       5px;
+}
+
+.b-b, .b-lrb, .b-a, .b-rb, .t-c_b-b, .t-r_b-rb {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  padding-left:        5px;
+  padding-right:       5px;
+}
+
