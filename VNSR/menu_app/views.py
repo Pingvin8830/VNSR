@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect
-from main_app.views   import default_context, is_user
-from django.contrib   import auth
-from .models          import Users, ItemsMenu, AppMenu, ItemsApp, UserMenu
-from .functions       import create_menu_app
+from django.shortcuts                   import render, redirect
+from main_app.views                     import default_context, is_user
+from django.contrib                     import auth
+from django.template.context_processors import csrf
+from .models                            import Users, ItemsMenu, AppMenu, ItemsApp, UserMenu
+from .functions                         import create_menu_app
+from .forms                             import UsersForm, ItemsAppForm, ItemsMenuForm
 
 # Create your views here.
+
 def display_app_menu (request):
   '''Отображает меню приложения'''
   if not is_user (request): return redirect ('/')
@@ -81,7 +84,7 @@ def set_user (request):
         continue
       user.name = request.POST ['name_%s' % str (user.id)]
       user.save ()
-    return redirect ('/menu')
+    return redirect ('/menu/set_user')
   else:
     return display_user (request)
 
@@ -96,24 +99,28 @@ def add_user (request):
   '''Добавляет пользователя'''
   if not is_user (request): return redirect ('/')
   if request.POST:
-    user = Users (name = request.POST ['name'])
-    user.save ()
-    return redirect ('/menu')
+    form = UsersForm (request.POST)
+    if form.is_valid (): form.save ()
+    return redirect ('/menu/set_user')
   else:
     page = 'menu/add_user.html'
     context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = UsersForm
     return render (request, page, context)
 
 def add_item (request):
   '''Добавляет новой действие приложения'''
   if is_user (request): redirect ('/')
   if request.POST:
-    item = ItemsApp (text = request.POST ['text'], href = request.POST ['href'])
-    item.save ()
-    return redirect ('/menu')
+    form = ItemsAppForm (request.POST)
+    if form.is_valid (): form.save ()
+    return redirect ('/menu/set_item')
   else:
     page = 'menu/add_item.html'
     context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = ItemsAppForm
     return render (request, page, context)
 
 def set_item (request):
@@ -127,7 +134,7 @@ def set_item (request):
       item.text = request.POST ['text_%s' % str (item.id)]
       item.href = request.POST ['href_%s' % str (item.id)]
       item.save ()
-    return redirect ('/menu')
+    return redirect ('/menu/set_item')
   else:
     return display_item (request)
 
@@ -143,12 +150,14 @@ def add_app (request):
   '''Добавление приложения'''
   if not is_user (request): return redirect ('/')
   if request.POST:
-    app = ItemsMenu (app = request.POST ['app'], text = request.POST ['text'])
-    app.save ()
-    return redirect ('/menu')
+    form = ItemsMenuForm (request.POST)
+    if form.is_valid (): form.save ()
+    return redirect ('/menu/set_app')
   else:
     page = 'menu/add_app.html'
     context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = ItemsMenuForm
     return render (request, page, context)
 
 def set_app (request):
@@ -162,7 +171,7 @@ def set_app (request):
       app.app  = request.POST ['app_%s'  % str (app.id)]
       app.text = request.POST ['text_%s' % str (app.id)]
       app.save ()
-    return redirect ('/menu')
+    return redirect ('/menu/set_app')
   else:
     return display_app (request)
 
@@ -199,3 +208,4 @@ def case_app (request):
   context               = default_context (request)
   context ['menu_apps'] = ItemsMenu.objects.all ().order_by ('text')
   return render (request, page, context)
+

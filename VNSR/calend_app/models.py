@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+
 class Signs (models.Model):
   '''Признаки дней'''
   class Meta ():
@@ -20,3 +21,4 @@ class Signs (models.Model):
     elif self.holiday: return 'holiday'
     elif self.short:   return 'short'
     else:              return 'work'
+
