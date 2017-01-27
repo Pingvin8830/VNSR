@@ -1,15 +1,16 @@
 body {
-	background:				blue;
-	background-image:	url('../images/header.jpg');
+  background:       blue;
+  background-image: url('../images/header.jpg');
 }
 
 table {
-	background:				white;
-	border:						1px solid red;
-	margin-top:				150;
+  background:       white;
+  border:           1px solid red;
+  margin-top:       150;
 }
 
 caption {
-	color:						white;
-	text-decoration:	underline;
+  color:           white;
+  text-decoration: underline;
 }
+

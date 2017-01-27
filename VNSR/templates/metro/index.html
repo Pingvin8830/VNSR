@@ -2,11 +2,12 @@
 {% load staticfiles %}
 
 {% block menu %}
-	{% for item in items %}
-		<a href="/{{ item.app }}/{{ item.href }}">{{ item.text }}</a>
-	{% endfor %}
+  {% for item in items %}
+    <a href="/{{ item.app }}/{{ item.href }}">{{ item.text }}</a>
+  {% endfor %}
 {% endblock %}
 
 {% block content %}
-	Стартовая страница приложения metro
+  Стартовая страница приложения metro
 {% endblock %}
+

@@ -1,5 +1,4 @@
 from django.apps import AppConfig
 
-
 class CarAppConfig(AppConfig):
-    name = 'car_app'
+  name = 'car_app'
