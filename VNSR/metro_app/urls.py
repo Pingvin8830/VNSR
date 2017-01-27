@@ -30,3 +30,4 @@ urlpatterns = [
   url (r'^set_work_plane',                                         views.set_work_plane,    name = 'set_work_plane'),
   url (r'^',                                                       views.index,             name = 'index'),
 ]
+

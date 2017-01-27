@@ -30,7 +30,7 @@ def decimal_to_money (count, decimal = 2, comment = '', delimiter = ','):
   return count_new
 
 def control_period (control_period, test_period, uniq = False):
-  '''Проверка периода в детализации расчетного листка'''
+  '''Проверка периода в детализации расчетного листка'''
   res = True
   control_date = control_period.year * 12 + control_period.month
   test_date    = test_period.year    * 12 + test_period.month
@@ -39,3 +39,4 @@ def control_period (control_period, test_period, uniq = False):
   else:
     if (control_date - test_date > 1) or (control_date - test_date < 0): res = False
   return res
+
