@@ -7,6 +7,7 @@ from .functions                         import create_menu_app
 from .forms                             import UsersForm, ItemsAppForm, ItemsMenuForm
 
 # Create your views here.
+
 def display_app_menu (request):
   '''Отображает меню приложения'''
   if not is_user (request): return redirect ('/')
@@ -207,3 +208,4 @@ def case_app (request):
   context               = default_context (request)
   context ['menu_apps'] = ItemsMenu.objects.all ().order_by ('text')
   return render (request, page, context)
+

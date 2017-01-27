@@ -26,7 +26,6 @@ def get_month_text (year = get_now ().year, month = get_now ().month):
   month_text += ' %s г.' % year
   return month_text
 
-
 def create_cell_calend (data):
   '''Формирует ячейку календаря'''
   try:
@@ -110,3 +109,4 @@ def create_month_signs_form (year, month, part):
   form += create_line_radio (year, month, start, end, 'holiday')
   form += create_line_radio (year, month, start, end, 'short')
   return form
+

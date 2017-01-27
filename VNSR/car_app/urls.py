@@ -20,3 +20,4 @@ app_name    = 'car_app'
 urlpatterns = [
   url (r'^', views.index, name = 'index'),
 ]
+

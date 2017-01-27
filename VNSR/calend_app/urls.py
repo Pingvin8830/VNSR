@@ -25,3 +25,4 @@ urlpatterns = [
   url (r'^(?P<year>[0-9]{4,4})$',                           views.display_calend_year, name = 'display_year'),
   url (r'^$',                                               views.display_calend_year),
 ]
+

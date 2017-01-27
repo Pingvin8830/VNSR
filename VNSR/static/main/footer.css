@@ -1,12 +1,12 @@
 #footer {
-	width:						1320;
-	height:						30;
-	margin:						0;
-	padding:					5;
-	clear:						both;
-	text-align:				right;
-	color:						white;
-	background-color:	green;
-	background-image:	url('../images/footer.jpg');
+  width:            1320;
+  height:           30;
+  margin:           0;
+  padding:          5;
+  clear:            both;
+  text-align:       right;
+  color:            white;
+  background-color: green;
+  background-image: url('../images/footer.jpg');
 }
 
