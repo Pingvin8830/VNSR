@@ -84,7 +84,7 @@ def display_payslip (request, payslip = None):
     return render (request, page, context)
   else:
     return case_month (request)
-  
+
 def case_month (request):
   '''Выбор месяца'''
   if not is_user (request): redirect ('/')
@@ -238,3 +238,4 @@ def index (request):
   context = default_context (request)
   context ['items'] = create_menu_app ('metro')
   return render (request, page, context)
+

@@ -32,3 +32,4 @@ urlpatterns = [
   url (r'^set_user',                          views.set_user,          name = 'set_user'),
   url (r'^',                                  views.index,             name = 'index'),
 ]
+

@@ -24,6 +24,7 @@ class ShedulePlane (models.Model):
   '''Планируемый график'''
   class Meta ():
     db_table = 'shedule_plane'
+
   id    = models.AutoField (primary_key = True)
   data  = models.DateField (unique      = True)
   shift = models.CharField (max_length  = 5)
@@ -32,6 +33,7 @@ class SheduleReal (models.Model):
   '''Реальный график'''
   class Meta ():
     db_table = 'shedule_real'
+
   id          = models.AutoField         (primary_key = True      )
   data        = models.DateField         (unique      = True      )
   start       = models.TimeField         (                   null = True)
@@ -48,6 +50,7 @@ class Lanch (models.Model):
   class Meta ():
     db_table        = 'lanch'
     unique_together = (('start', 'end'))
+
   id    = models.AutoField    (primary_key = True)
   start = models.DateField    ()
   end   = models.DateField    (null        = True)
@@ -58,6 +61,7 @@ class Rate (models.Model):
   class Meta ():
     db_table        = 'rate'
     unique_together = (('start', 'end'))
+
   id    = models.AutoField    (primary_key = True)
   start = models.DateField    ()
   end   = models.DateField    (null        = True)
@@ -73,8 +77,10 @@ class CodesPayslip (models.Model):
     (CONSUMPTION, 'Consumption'),
     (OTHERS,      'Others')
   )
+
   class Meta ():
     db_table = 'codes_payslip'
+
   id   = models.AutoField (primary_key = True)
   code = models.CharField (max_length  = 8, unique = True)
   name = models.CharField (max_length  = 50)
@@ -84,6 +90,7 @@ class Payslip (models.Model):
   '''Расчетный листок'''
   class Meta ():
     db_table = 'payslip'
+
   id          = models.AutoField    (primary_key = True)
   period      = models.DateField    (unique      = True)
   division    = models.CharField    (default = 'Оптовая продажа алкоголя', max_length  = 50)
@@ -130,7 +137,7 @@ class Payslip (models.Model):
     control_rate = Rate.objects.filter (start__lte = self.period).get (end__gte = self.period).value
     if control_rate != self.rate: res.append (('Несоответствие почасовой ставки', decimal_to_money (control_rate), decimal_to_money (self.rate), decimal_to_money (self.rate - control_rate)))
     return res
-  
+
   def control (self):
     '''Проверка расчетного листка'''
     return {
@@ -148,14 +155,14 @@ class Payslip (models.Model):
     for detail in details:
       res [detail] = detail.control ()
     return res
-  
+
   def control_paying (self):
     '''Проверка перечисления в банк'''
     res = []
     if self.paying < 0: res.append ('Отрицательное перечисление')
     if self.paying != self.income - self.consumption: res.append ('Несоответствие суммы перечисления')
     return res
-    
+
   def control_consumption (self):
     '''Проверка удержания'''
     res = []
@@ -164,7 +171,7 @@ class Payslip (models.Model):
     for detail in PayslipDetails.objects.filter (payslip = self).filter (code__type = 'c'): control_summa += detail.summa
     if control_summa != self.consumption: res.append ('Несоответствие суммы удержания')
     return res
-  
+
   def control_income (self):
     '''Проверка начисления'''
     res = []
@@ -173,24 +180,25 @@ class Payslip (models.Model):
     for detail in PayslipDetails.objects.filter (payslip = self).filter (code__type = 'i'): control_summa += detail.summa
     if control_summa != self.income: res.append ('Несоответствие суммы начисления')
     return res
-    
+
   def control_dolg (self):
     '''Проверка долгов работника'''
     res = []
     if self.begin_dolg - self.rotate_dolg != self.end_dolg: res.append ('Несоответствие Begin - Rotate = End')
     return res
-  
+
   def control_rate (self):
     '''Проверка оклада/тарифа (почасовой ставки)'''
     res = []
     if self.rate <= 0: res.append ('Ставка должна быть положительной')
     return res
-  
+
 class PayslipDetails (models.Model):
   '''Детализация расчетного листка'''
   class Meta ():
     db_table        = 'payslip_details'
     unique_together = (('payslip', 'code', 'period'))
+
   id      = models.AutoField    (primary_key = True)
   payslip = models.ForeignKey   ('Payslip',      null = True, on_delete = models.SET_NULL, db_column = 'payslip')
   code    = models.ForeignKey   ('CodesPayslip', null = True, on_delete = models.SET_NULL, db_column = 'code')
@@ -230,7 +238,7 @@ class PayslipDetails (models.Model):
     if   code == '/853': res = self.diff_0853 ()
     elif code == '1329': res = self.diff_1329 ()
     return res
-    
+
   def diff_1329 (self):
     '''Проверка расхождения почасовой оплаты'''
     res = []
@@ -295,7 +303,7 @@ class PayslipDetails (models.Model):
     if self.summa < 0: res.append ('Отрицательная сумма')
     if self.count:     res.append ('Присутствие количества')
     return res
-  
+
   def control_1329 (self):
     '''Проверка почасовой оплаты'''
     res = []
@@ -304,7 +312,7 @@ class PayslipDetails (models.Model):
     if self.count < 0: res.append ('Отрицательное количество')
     if self.summa != self.count * self.payslip.rate: res.append ('Несоответствие суммы')
     return res
-  
+
   def control_0853 (self):
     '''Проверка фактических дней'''
     res = []
@@ -315,7 +323,7 @@ class PayslipDetails (models.Model):
     control_count = float (control_count.count)
     if float (self.count) - (control_count / 8): res.append ('Несоответствие количества')
     return res
-  
+
   def control_0322 (self):
     '''Проверка подоходного налога'''
     res = []
@@ -328,7 +336,7 @@ class PayslipDetails (models.Model):
     if self.summa != control_summa: res.append ('Неверная сумма')
     if self.count:     res.append ('Присутствие количества')
     return res
-  
+
   def control_6200 (self):
     '''Проверка удержания за питание'''
     res = []
@@ -336,7 +344,7 @@ class PayslipDetails (models.Model):
     if self.summa < 0: res.append ('Отрицательная сумма')
     if self.count:     res.append ('Присутствие количества')
     return res
-  
+
   def control_6101 (self):
     '''Проверка аванса'''
     res = []
@@ -344,3 +352,4 @@ class PayslipDetails (models.Model):
     if self.summa < 0: res.append ('Отрицательная сумма')
     if self.count:     res.append ('Присутствие количества')
     return res
+

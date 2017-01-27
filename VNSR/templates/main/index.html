@@ -1,91 +1,77 @@
 {% load staticfiles %}
 
+
 <html>
-
-	<head>
-
-		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="{% static 'main/main.css' %}">
-
-		<title>
-			Мой сайт
-		</title>
-
-	</head>
-
-	<body>
-
-		<div id="main">
-
-			<link rel="stylesheet" type="text/css" href="{% static 'main/header.css' %}">
-			<div id="header">	
-				{% block header %}
-					<br>
-					<a href="/">
-						VlasovNetwork.sknt.ru
-					</a>
-					<br>
-					<a href="{% url 'auth_app:logout' %}">
-						Выход ({{ username }})
-					</a>
-				{% endblock %}
-			</div>
-
-			<link rel="stylesheet" type="text/css" href="{% static 'main/staff.css' %}">
-			<div id="staff">
-
-				<link rel="stylesheet" type="text/css" href="{% static 'main/menu.css' %}">
-				<div id="menu">
-					{% block menu %}
-						{% for item in items %}
-							<a href="/{{ item.app }}/">
-								{{ item.text }}
-							</a>
-						{% endfor %}
-					{% endblock %}
-				</div>
-
-				<link rel="stylesheet" type="text/css" href="{% static 'main/calend.css' %}">
-				<div id="calend">
-					<br>
-					<table align="center" border="1">
-						<caption>{{ month_text }}</caption>
-						<tr>
-							<td>Пн</td>
-							<td>Вт</td>
-							<td>Ср</td>
-							<td>Чт</td>
-							<td>Пт</td>
-							<td class="week">Сб</td>
-							<td class="week">Вс</td>
-						</tr>
-						{% autoescape off %}
-							{{ calend }}
-						{% endautoescape %}
-					</table>
-					<center>
-						Сегодня: {{ now }}
-					</center>
-				</div>
-
-			</div>
-
-			<link rel="stylesheet" type="text/css" href="{% static 'main/content.css' %}">
-			<div id="content">
-				{% block content %}
-					Добро пожаловать на сайт VlasovNetwork.sknt.ru
-				{% endblock %}
-			</div>
-
-			<link rel="stylesheet" type="text/css" href="{% static 'main/footer.css' %}">
-			<div id="footer">
-				{% block footer %}
-					Vlasov Anton &copy; 2016 <br>
-				{% endblock %}
-			</div>
-
-		</div>
-
-	</body>
-
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/main.css' %}">
+    <title>
+      Мой сайт
+    </title>
+  </head>
+  <body>
+    <div id="main">
+      <link rel="stylesheet" type="text/css" href="{% static 'main/header.css' %}">
+      <div id="header">
+        {% block header %}
+          <br>
+          <a href="/">
+            VlasovNetwork.sknt.ru
+          </a>
+          <br>
+          <a href="{% url 'auth_app:logout' %}">
+            Выход ({{ username }})
+          </a>
+        {% endblock %}
+      </div>
+      <link rel="stylesheet" type="text/css" href="{% static 'main/staff.css' %}">
+      <div id="staff">
+        <link rel="stylesheet" type="text/css" href="{% static 'main/menu.css' %}">
+        <div id="menu">
+          {% block menu %}
+            {% for item in items %}
+              <a href="/{{ item.app }}/">
+                {{ item.text }}
+              </a>
+            {% endfor %}
+          {% endblock %}
+        </div>
+        <link rel="stylesheet" type="text/css" href="{% static 'main/calend.css' %}">
+        <div id="calend">
+          <br>
+          <table align="center" border="1">
+            <caption>{{ month_text }}</caption>
+            <tr>
+              <td>Пн</td>
+              <td>Вт</td>
+              <td>Ср</td>
+              <td>Чт</td>
+              <td>Пт</td>
+              <td class="week">Сб</td>
+              <td class="week">Вс</td>
+            </tr>
+            {% autoescape off %}
+              {{ calend }}
+            {% endautoescape %}
+          </table>
+          <center>
+            Сегодня: {{ now }}
+          </center>
+        </div>
+      </div>
+      <link rel="stylesheet" type="text/css" href="{% static 'main/content.css' %}">
+      <div id="content">
+        {% block content %}
+          Добро пожаловать на сайт VlasovNetwork.sknt.ru
+        {% endblock %}
+      </div>
+      <link rel="stylesheet" type="text/css" href="{% static 'main/footer.css' %}">
+      <div id="footer">
+        {% block footer %}
+          Vlasov Anton &copy; 2016 <br>
+        {% endblock %}
+      </div>
+    </div>
+  </body>
 </html>
+
