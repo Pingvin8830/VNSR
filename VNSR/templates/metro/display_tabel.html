@@ -1,0 +1,45 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'metro_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'metro/display_tabel.css' %}">
+  <center>
+    <div id="tabel">
+      <table border=1>
+        <caption>Табель за период с {{ start }} по {{ end }}</caption>
+        <tr>
+          <th rowspan=2>Дата</th>
+          <th colspan=2>Смена</th>
+          <th colspan=2>Перерывы</th>
+          <th colspan=3>Часы</th>
+        </tr>
+        <tr>
+          <th>С</th>
+          <th>До</th>
+          <th>День</th>
+          <th>Ночь</th>
+          <th>Всего</th>
+          <th>Ночные</th>
+          <th>Праздничные</th>
+        </tr>
+        {% for shift in shifts %}
+          <tr>
+            <td>{% if shift.data.day   < 10 %}0{% endif %}{{ shift.data.day }}.{%if shift.data.month < 10 %}0{% endif %}{{ shift.data.month }}.{{ shift.data.year }}</td>
+            <td>{% if shift.start.hour < 10 %}0{% endif %}{{ shift.start }}</td>
+            <td>{% if shift.end.hour   < 10 %}0{% endif %}{{ shift.end }}</td>
+            <td>{{ shift.break_day   }}</td>
+            <td>{{ shift.break_night }}</td>
+            <td>{% if shift.hours.hour < 10 %}0{% endif %}{{ shift.hours       }}</td>
+            <td>shift.nights</td>
+            <td>shift.weeks</td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </center>
+{% endblock %}
+
