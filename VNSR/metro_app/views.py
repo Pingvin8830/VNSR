@@ -8,6 +8,40 @@ from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPays
 
 # Create your views here.
 
+def case_period (request):
+  '''Запрашивает период'''
+  if not is_user (request): return redirect ('/')
+  context = default_context (request)
+  page    = 'metro/case_period.html'
+  return render (request, page, context)
+
+def display_tabel (request):
+  '''Отображение табеля'''
+  if not is_user (request): return redirect ('/')
+  context = default_context (request)
+  page    = 'metro/display_tabel.html'
+  if request.POST:
+    start = date (
+      int (request.POST ['start_year']),
+      int (request.POST ['start_month']),
+      int (request.POST ['start_day'])
+    )
+    end = date (
+      int (request.POST ['end_year']),
+      int (request.POST ['end_month']),
+      int (request.POST ['end_day'])
+    )
+    context ['start']  = start
+    context ['end']    = end
+    context ['shifts'] = []
+    shifts = SheduleReal.objects.filter (data__gte = start, data__lte = end)
+    for shift in shifts:
+      shift.hours ()
+      context ['shifts'].append (shift)
+    return render (request, page, context)
+  else:
+    return case_period (request)
+
 def control_payslip (request, id):
   '''Проверка расчётного листка'''
   if not is_user (request): return redirect ('/')
