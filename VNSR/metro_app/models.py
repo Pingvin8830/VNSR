@@ -1,5 +1,6 @@
+from datetime             import datetime, date, time
 from django.db            import models
-from .functions           import decimal_to_money, control_period
+from .functions           import decimal_to_money, control_period, time_to_int, int_to_time
 from calend_app.functions import get_month_text, get_now
 
 # Create your models here.
@@ -44,6 +45,45 @@ class SheduleReal (models.Model):
   delay       = models.TimeField         (default = '00:00', null = True)
   vacation    = models.BooleanField      (default = False)
   sick        = models.BooleanField      (default = False)
+
+  def hours (self):
+    '''Считает количество рабочих часов'''
+    if self.start > self.end: e = datetime.combine (date (1, 1, 2), self.end)
+    else:                     e = datetime.combine (date (1, 1, 1), self.end)
+    s = datetime.combine (date (1, 1, 1), self.start)
+    self.hours = (e - s).seconds - self.break_day * 30 * 60 - self.break_night * 30 * 60
+    self.hours = self.hours / 60 / 60
+
+  def night (self):
+    '''Считает количество ночных часов'''
+    # 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+    #    1          5
+    # 1  ************                                              21
+    # 2  ************************************************************    23
+    # 3  ******************************************************************
+    #                      7                                       21
+    # 4                    ******************************************    23
+    # 5                    ************************************************                 5
+    # 6                    ******************************************************************
+    #                                                                      23
+    # 7                                                                    ***              5
+    # 8                                                                    ******************                                              21
+    # 9                                                                    ******************************************************************    23
+    # 10                                                                   ************************************************************************
+
+    if self.start > self.end: e = datetime.combine (date (1, 1, 2), self.end)
+    else:                     e = datetime.combine (date (1, 1, 1), self.end)
+    s = datetime.combine (date (1, 1, 1), self.start)
+    if   s.hour <   6 and e.hour <   6: t = 1
+    elif s.hour <   6 and e.hour <= 22: t = 2
+    elif s.hour <   6 and e.hour <= 24: t = 3
+    elif s.hour <  22 and e.hour <= 22: t = 4
+    elif s.hour <  22 and e.hour <= 24: t = 5
+    elif s.hour <  22 and e.hour <=  6: t = 6
+    elif s.hour <= 24 and e.hour <= 24: t = 7
+    elif s.hour <= 24 and e.hour <=  6: t = 8
+    elif s.hour <= 24 and e.hour <= 22: t = 9
+    elif s.hour <= 24 and e.hour <= 24 and self.start > self.end: t = 10
 
 class Lanch (models.Model):
   '''Стоимость обеда'''
