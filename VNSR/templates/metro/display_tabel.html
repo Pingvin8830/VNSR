@@ -33,8 +33,8 @@
             <td>{% if shift.end.hour   < 10 %}0{% endif %}{{ shift.end }}</td>
             <td>{{ shift.break_day   }}</td>
             <td>{{ shift.break_night }}</td>
-            <td>{% if shift.hours.hour < 10 %}0{% endif %}{{ shift.hours       }}</td>
-            <td>shift.nights</td>
+            <td>{{ shift.hours }}</td>
+            <td>{{ shift.night }}</td>
             <td>shift.weeks</td>
           </tr>
         {% endfor %}
