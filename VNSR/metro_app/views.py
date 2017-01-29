@@ -37,6 +37,7 @@ def display_tabel (request):
     shifts = SheduleReal.objects.filter (data__gte = start, data__lte = end)
     for shift in shifts:
       shift.hours ()
+      shift.night ()
       context ['shifts'].append (shift)
     return render (request, page, context)
   else:
