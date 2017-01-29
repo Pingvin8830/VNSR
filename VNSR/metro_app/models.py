@@ -56,34 +56,47 @@ class SheduleReal (models.Model):
 
   def night (self):
     '''Считает количество ночных часов'''
-    # 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
-    #    1          5
-    # 1  ************                                              21
-    # 2  ************************************************************    23
-    # 3  ******************************************************************
-    #                      7                                       21
-    # 4                    ******************************************    23
-    # 5                    ************************************************                 5
-    # 6                    ******************************************************************
-    #                                                                      23
-    # 7                                                                    ***              5
-    # 8                                                                    ******************                                              21
-    # 9                                                                    ******************************************************************    23
-    # 10                                                                   ************************************************************************
+    # 00 01 02 03 04 05 06|07 08 09 10 11 12 13 14 15 16 17 18 19 20 21|22 23 24||01 02 03 04 05 06|07 08 09 10 11 12 13 14 15 16 17 18 19 20 21|22 23 24|
+    #                     |                                            |        ||                 |                                            |        |
+    # 1        ------     |                                            |        ||                 |                                            |        |
+    # 2        -----------+------------------------------------------  |        ||                 |                                            |        |
+    # 3        -----------+--------------------------------------------+---     ||                 |                                            |        |
+    # 4        -----------+--------------------------------------------+--------++---              |                                            |        |
 
-    if self.start > self.end: e = datetime.combine (date (1, 1, 2), self.end)
-    else:                     e = datetime.combine (date (1, 1, 1), self.end)
-    s = datetime.combine (date (1, 1, 1), self.start)
-    if   s.hour <   6 and e.hour <   6: t = 1
-    elif s.hour <   6 and e.hour <= 22: t = 2
-    elif s.hour <   6 and e.hour <= 24: t = 3
-    elif s.hour <  22 and e.hour <= 22: t = 4
-    elif s.hour <  22 and e.hour <= 24: t = 5
-    elif s.hour <  22 and e.hour <=  6: t = 6
-    elif s.hour <= 24 and e.hour <= 24: t = 7
-    elif s.hour <= 24 and e.hour <=  6: t = 8
-    elif s.hour <= 24 and e.hour <= 22: t = 9
-    elif s.hour <= 24 and e.hour <= 24 and self.start > self.end: t = 10
+    # 5                   |               ---------------------------  |        ||                 |                                            |        |
+    # 6                   |               -----------------------------+---     ||                 |                                            |        |
+    # 7                   |               -----------------------------+--------++------------     |                                            |        |
+    # 8                   |               -----------------------------+--------++-----------------+------------                                |        |
+
+    # 9                   |                                            |   ---  ||                 |                                            |        |
+    # 10                  |                                            |   -----++------------     |                                            |        |
+    # 11                  |                                            |   -----++-----------------+------------------------------------------  |        |
+    # 12                  |                                            |   -----++-----------------+--------------------------------------------+---     |
+    #                     1                                            2        3                  4                                            5        6
+
+    if self.start > self.end: end = datetime.combine (date (1, 1, 2), self.end)
+    else:                     end = datetime.combine (date (1, 1, 1), self.end)
+    start = datetime.combine (date (1, 1, 1), self.start)
+
+    ctrl_fst_mng = datetime (1, 1, 1, 6)
+    ctrl_fst_evn = datetime (1, 1, 1, 22)
+    ctrl_fst_day = datetime (1, 1, 2)
+    ctrl_scn_mng = datetime (1, 1, 2, 6)
+    ctrl_scn_evn = datetime (1, 1, 2, 22)
+    ctrl_scn_day = datetime (1, 1, 3)
+
+    if   (start < ctrl_fst_mng) and (end <= ctrl_fst_mng): self.night = (end          - start       ).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_mng) and (end <= ctrl_fst_evn): self.night = (ctrl_fst_mng - start       ).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_mng) and (end <= ctrl_fst_day): self.night = (end          - start       ).seconds / 3600 - 16 - self.break_night * 0.5
+    elif (start < ctrl_fst_mng) and (end <= ctrl_scn_mng): self.night = (end          - start       ).seconds / 3600 - 16 - self.break_night * 0.5
+    elif (start < ctrl_fst_evn) and (end <= ctrl_fst_evn): self.night = 0
+    elif (start < ctrl_fst_evn) and (end <= ctrl_fst_day): self.night = (end          - ctrl_fst_evn).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_evn) and (end <= ctrl_scn_mng): self.night = (end          - ctrl_fst_evn).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_evn) and (end <= ctrl_scn_evn): self.night = 8                                                 - self.break_night * 0.5
+    elif (start < ctrl_fst_day) and (end <= ctrl_fst_day): self.night = (end          - start       ).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_day) and (end <= ctrl_scn_mng): self.night = (end          - start       ).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_day) and (end <= ctrl_scn_evn): self.night = (ctrl_scn_mng - start       ).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_day) and (end <= ctrl_scn_day): self.night = (end          - start       ).seconds / 3600 - 16 - self.break_night * 0.5
 
 class Lanch (models.Model):
   '''Стоимость обеда'''
