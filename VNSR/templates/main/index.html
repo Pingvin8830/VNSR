@@ -62,7 +62,34 @@
       <link rel="stylesheet" type="text/css" href="{% static 'main/content.css' %}">
       <div id="content">
         {% block content %}
-          Добро пожаловать на сайт VlasovNetwork.sknt.ru
+          <center>
+            Добро пожаловать на сайт VlasovNetwork.sknt.ru<br><br>
+
+            Сайт создан для личных потребностей.<br><br>
+            <table border=1>
+              <caption>Приложения</caption>
+              <tr>
+                <th>Название</th>
+                <th>Описание</th>
+              </tr>
+              <tr>
+                <td>Metro Cash And Carry</td>
+                <td>Работа с графиком, расчетами аванса, зарплаты, контролем расчетного листка организации Metro CC</td>
+              </tr>
+              <tr>
+                <td>Автомобиль</td>
+                <td>Работа с техническими данными по автомобилю</td>
+              </tr>
+              <tr>
+                <td>Календарь</td>
+                <td>Настройка производственного календаря</td>
+              </tr>
+              <tr>
+                <td>Настройка меню</td>
+                <td>Настройка персональных меню приложений и пользователей</td>
+              </tr>
+            </table>
+          </center>
         {% endblock %}
       </div>
       <link rel="stylesheet" type="text/css" href="{% static 'main/footer.css' %}">
