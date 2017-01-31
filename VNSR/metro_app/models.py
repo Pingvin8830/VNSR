@@ -2,6 +2,7 @@ from datetime             import datetime, date, time
 from django.db            import models
 from .functions           import decimal_to_money, control_period, time_to_int, int_to_time
 from calend_app.functions import get_month_text, get_now
+from calend_app.models    import Signs
 
 # Create your models here.
 
@@ -97,6 +98,18 @@ class SheduleReal (models.Model):
     elif (start < ctrl_fst_day) and (end <= ctrl_scn_mng): self.night = (end          - start       ).seconds / 3600      - self.break_night * 0.5
     elif (start < ctrl_fst_day) and (end <= ctrl_scn_evn): self.night = (ctrl_scn_mng - start       ).seconds / 3600      - self.break_night * 0.5
     elif (start < ctrl_fst_day) and (end <= ctrl_scn_day): self.night = (end          - start       ).seconds / 3600 - 16 - self.break_night * 0.5
+
+  def holiday (self):
+    signs = Signs.objects.get (data = self.data)
+    if signs.holiday:
+      if self.start > self.end:
+        self.week  = (datetime (1, 1, 2) - datetime.combine (date (1, 1, 1), self.start)).seconds / 3600 - self.break_day * 0.5 - self.break_night * 0.5
+        self.night = 0
+      else:
+        self.week  = self.hours
+        self.night = 0
+    else:
+      self.week = 0
 
 class Lanch (models.Model):
   '''Стоимость обеда'''
