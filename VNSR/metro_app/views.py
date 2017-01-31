@@ -1,10 +1,10 @@
-from django.shortcuts     import render, redirect
-from main_app.views       import is_user, default_context
-from menu_app.functions   import create_menu_app
-from django               import forms
-from calend_app.functions import get_now, get_month_text
 from datetime             import date, time, timedelta
+from django               import forms
+from django.shortcuts     import render, redirect
 from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails
+from calend_app.functions import get_now, get_month_text
+from menu_app.functions   import create_menu_app
+from main_app.views       import is_user, default_context
 
 # Create your views here.
 
@@ -36,8 +36,9 @@ def display_tabel (request):
     context ['shifts'] = []
     shifts = SheduleReal.objects.filter (data__gte = start, data__lte = end)
     for shift in shifts:
-      shift.hours ()
-      shift.night ()
+      shift.hours   ()
+      shift.night   ()
+      shift.holiday ()
       context ['shifts'].append (shift)
     return render (request, page, context)
   else:
