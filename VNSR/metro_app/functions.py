@@ -1,3 +1,5 @@
+from datetime import time
+
 def decimal_to_money (count, decimal = 2, comment = '', delimiter = ','):
   '''Переводит значение DECIMAL из БД в печатный вид'''
   if count:
@@ -40,3 +42,21 @@ def control_period (control_period, test_period, uniq = False):
     if (control_date - test_date > 1) or (control_date - test_date < 0): res = False
   return res
 
+def time_to_int (t):
+  '''Переводит время в число'''
+  count = t.hour * 60 * 60 + t.minute * 60 + t.second
+  print ()
+  print (t, count)
+  print ()
+  return count
+
+def int_to_time (count):
+  '''Переводит число во время'''
+  h = count // 60 // 60
+  m = (count - h * 60 * 60) // 60
+  s = count - h * 60 * 60 - m * 60
+  t = time (h, m, s)
+  print ()
+  print (count, t)
+  print ()
+  return t
