@@ -8,6 +8,17 @@ from main_app.views       import is_user, default_context
 
 # Create your views here.
 
+def calculation (request):
+  '''Расчеты за месяц'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    context = default_context (request)
+    page    = 'metro/calculation.html'
+    return render (request, page, context)
+  else:
+    return case_month (request, href = 'calculation')
+  return redirect ('/')
+
 def case_period (request):
   '''Запрашивает период'''
   if not is_user (request): return redirect ('/')
@@ -119,13 +130,14 @@ def display_payslip (request, payslip = None):
       elif i.type == 'o': context ['others'].append       (i)
     return render (request, page, context)
   else:
-    return case_month (request)
+    return case_month (request, href = 'payslip')
 
-def case_month (request):
+def case_month (request, href):
   '''Выбор месяца'''
   if not is_user (request): redirect ('/')
   page = 'metro/case_month.html'
   context = default_context (request)
+  context ['href'] = href
   return render (request, page, context)
 
 def add_codes_payslip (request):
