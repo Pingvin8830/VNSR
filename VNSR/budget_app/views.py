@@ -1,7 +1,7 @@
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
-from .forms                             import AddCardForm, AddDebetTypeForm, AddOrgTypeForm
-from .models                            import Cards, DebetTypes, OrgTypes
+from .forms                             import AddCardForm, AddDebetTypeForm, AddOrgForm, AddOrgTypeForm
+from .models                            import Cards, DebetTypes, Orgs, OrgTypes
 from main_app.views                     import is_user, default_context
 from menu_app.functions                 import create_menu_app
 
@@ -36,6 +36,22 @@ def add_debet_type (request):
     context = default_context (request)
     context.update (csrf (request))
     context ['form'] = AddDebetTypeForm
+    return render (request, page, context)
+
+def add_org (request):
+  '''Добавлят организацию'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddOrgForm (request.POST)
+    if form.is_valid ():
+      print ()
+      print ('save')
+      print ()
+    return redirect ('/')
+  else:
+    page    = 'budget/add_org.html'
+    context = default_context (request)
+    context ['form'] = AddOrgForm
     return render (request, page, context)
 
 def add_org_type (request):
