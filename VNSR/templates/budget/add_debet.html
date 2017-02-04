@@ -2,6 +2,9 @@
 {% load staticfiles %}
 
 {% block menu %}
+  <a href="{% url 'budget_app:add_debet_type' %}">Добавить тип дохода</a>
+  <a href="{% url 'budget_app:add_org' %}">Добавить организацию</a>
+  <a href="{% url 'budget_app:add_card' %}">Добавить счет</a>
   <a href="{% url 'budget_app:index' %}">Назад</a>
 {% endblock %}
 
