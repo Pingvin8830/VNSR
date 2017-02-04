@@ -18,8 +18,11 @@ from .                import views
 
 app_name    = 'budget_app' 
 urlpatterns = [
-  url (r'^add_card',      views.add_card,      name = 'add_card'),
-  url (r'^display_cards', views.display_cards, name = 'display_cards'),
-  url (r'^set_cards',     views.set_cards,     name = 'set_cards'),
-  url (r'^',              views.index,         name = 'index'),
+  url (r'^add_card',          views.add_card,          name = 'add_card'),
+  url (r'^add_org_type',      views.add_org_type,      name = 'add_org_type'),
+  url (r'^display_cards',     views.display_cards,     name = 'display_cards'),
+  url (r'^display_org_types', views.display_org_types, name = 'display_org_types'),
+  url (r'^set_cards',         views.set_cards,         name = 'set_cards'),
+  url (r'^set_org_types',     views.set_org_types,     name = 'set_org_types'),
+  url (r'^',                  views.index,             name = 'index'),
 ]
