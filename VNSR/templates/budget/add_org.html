@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block menu %}
+  <a href="{% url 'budget_app:add_org_type' %}">Добавить тип организации</a>
   <a href="{% url 'budget_app:index' %}">Назад</a>
 {% endblock %}
 
