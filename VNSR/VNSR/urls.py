@@ -19,6 +19,7 @@ from django.contrib   import admin
 urlpatterns = [
   url (r'^admin/',  admin.site.urls),
   url (r'^auth/',   include ('auth_app.urls')),
+  url (r'^budget/', include ('budget_app.urls')),
   url (r'^calend/', include ('calend_app.urls')),
   url (r'^car/',    include ('car_app.urls')),
   url (r'^hrefs/',  include ('hrefs_app.urls')),
