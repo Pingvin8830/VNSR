@@ -16,6 +16,10 @@
           <td>{{ form.name       }}</td>
         </tr>
         <tr>
+          <td>{{ form.type.label }}</td>
+          <td>{{ form.type       }}</td>
+        </tr>
+        <tr>
           <td colspan=2 align="center">Адрес</td>
         </tr>
         <tr>
@@ -41,10 +45,6 @@
         <tr>
           <td>{{ form.phone.label }}</td>
           <td>{{ form.phone       }}</td>
-        </tr>
-        <tr>
-          <td>{{ form.type.label }}</td>
-          <td>{{ form.type       }}</td>
         </tr>
       </table>
       <input type="submit" value="Принять">
