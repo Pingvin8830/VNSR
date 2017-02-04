@@ -20,6 +20,7 @@ app_name    = 'budget_app'
 urlpatterns = [
   url (r'^add_card',            views.add_card,            name = 'add_card'),
   url (r'^add_debet_type',      views.add_debet_type,      name = 'add_debet_type'),
+  url (r'^add_debet',           views.add_debet,           name = 'add_debet'),
   url (r'^add_org_type',        views.add_org_type,        name = 'add_org_type'),
   url (r'^add_org',             views.add_org,             name = 'add_org'),
   url (r'^display_cards',       views.display_cards,       name = 'display_cards'),
