@@ -7,7 +7,9 @@
 
 {% block content %}
   <center>
-    <form action="{% url 'metro_app:display_payslip' %}" method="post">
+    {% if   href == 'payslip' %}    <form action="{% url 'metro_app:display_payslip' %}" method="post">
+    {% elif href == 'calculation' %}<form action="{% url 'metro_app:calculation' %}"     method="post">
+    {% endif %}
       {% csrf_token %}
       <table cellpadding="5">
         <caption>Выбери месяц<br></caption>
@@ -29,7 +31,7 @@
             </select>
           </td>
           <td>
-            <input type="number" name="year" value='2016' max=9999>
+            <input type="number" name="year" value='2017' max=9999>
           </td>
         </tr>
         <tr align="center">
