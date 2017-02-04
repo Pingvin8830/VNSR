@@ -21,6 +21,9 @@ class DebetTypes (models.Model):
   class Meta (object):
     db_table = 'debet_types'
 
+  def __str__ (self):
+    return '%s' % self.name
+
   id      = models.AutoField (primary_key = True)
   name    = models.CharField (null = False, max_length = 50)
   comment = models.CharField (null = True,  max_length = 100)
@@ -29,6 +32,9 @@ class Cards (models.Model):
   '''Счета хранения средств'''
   class Meta (object):
     db_table = 'cards'
+
+  def __str__ (self):
+    return '%s' % self.name
 
   id      = models.AutoField (primary_key = True)
   number  = models.CharField (null = True,  max_length = 50)
@@ -39,6 +45,9 @@ class Orgs (models.Model):
   '''Организации и частные лица'''
   class Meta (object):
     db_table = 'organizations'
+
+  def __str__ (self):
+    return '%s' % self.name
 
   id     = models.AutoField            (primary_key = True)
   name   = models.CharField            (null = False, max_length = 100)
