@@ -1,7 +1,7 @@
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
-from .forms                             import AddCardForm
-from .models                            import Cards
+from .forms                             import AddCardForm, AddOrgTypeForm
+from .models                            import Cards, OrgTypes
 from main_app.views                     import is_user, default_context
 from menu_app.functions                 import create_menu_app
 
@@ -17,10 +17,25 @@ def add_card (request):
       form.save ()
     return display_cards (request)
   else:
-    page = 'budget/add_card.html'
+    page    = 'budget/add_card.html'
     context = default_context (request)
     context.update (csrf (request))
     context ['form'] = AddCardForm
+    return render (request, page, context)
+
+def add_org_type (request):
+  '''Добавляет новый тип организации'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddOrgTypeForm (request.POST)
+    if form.is_valid ():
+      form.save ()
+    return display_org_types (request)
+  else:
+    page    = 'budget/add_org_type.html'
+    context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = AddOrgTypeForm
     return render (request, page, context)
 
 def set_cards (request):
@@ -37,12 +52,33 @@ def set_cards (request):
       card.save ()
   return display_cards (request)
 
+def set_org_types (request):
+  '''Сохранение изменений в типах организаций'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    for org_type in OrgTypes.objects.all ():
+      if 'delete_%d' % org_type.id in request.POST:
+        org_type.delete ()
+        continue
+      org_type.name    = request.POST ['name_%d' % org_type.id]
+      org_type.comment = request.POST ['comment_%d' % org_type.id]
+      org_type.save ()
+  return display_org_types (request)
+
 def display_cards (request):
   '''Вывод мест хранения средств'''
   if not is_user (request): return redirect ('/')
   page    = 'budget/display_cards.html'
   context = default_context (request)
   context ['cards'] = Cards.objects.all ()
+  return render (request, page, context)
+
+def display_org_types (request):
+  '''Вывод типов организаций'''
+  if not is_user (request): return redirect ('/')
+  page = 'budget/display_org_types.html'
+  context = default_context (request)
+  context ['org_types'] = OrgTypes.objects.all ()
   return render (request, page, context)
 
 def index (request):
@@ -52,3 +88,4 @@ def index (request):
   context = default_context (request)
   context ['items'] = create_menu_app ('budget')
   return render (request, page, context)
+
