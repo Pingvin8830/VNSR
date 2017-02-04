@@ -1,7 +1,7 @@
 from datetime             import date, time, timedelta
 from django               import forms
 from django.shortcuts     import render, redirect
-from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails
+from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails, Rate
 from calend_app.functions import get_now, get_month_text
 from menu_app.functions   import create_menu_app
 from main_app.views       import is_user, default_context
@@ -14,6 +14,42 @@ def calculation (request):
   if request.POST:
     context = default_context (request)
     page    = 'metro/calculation.html'
+    month = int (request.POST ['month'])
+    if month == 1:
+      date_start_avans = date (
+        int (request.POST ['year']) - 1,
+        12,
+        16
+      )
+      days = 31
+      while True:
+        try:
+          date_end_avans = date (
+            int (request.POST ['year']) - 1,
+            12,
+            days
+          )
+          break
+        except:
+          days -= 1
+    else:
+      date_start_avans = date (
+        int (request.POST ['year']),
+        int (request.POST ['month']) - 1,
+        16
+      )
+      days = 31
+      while True:
+        try:
+          date_end_avans = date (
+            int (request.POST ['year']),
+            int (request.POST ['month']) - 1,
+            days
+          )
+          break
+        except:
+          days -= 1
+    context ['test'] = '%s %s' % (date_start_avans, date_end_avans)
     return render (request, page, context)
   else:
     return case_month (request, href = 'calculation')
