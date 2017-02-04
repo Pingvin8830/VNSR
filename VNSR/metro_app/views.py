@@ -1,12 +1,95 @@
-from django.shortcuts     import render, redirect
-from main_app.views       import is_user, default_context
-from menu_app.functions   import create_menu_app
-from django               import forms
-from calend_app.functions import get_now, get_month_text
 from datetime             import date, time, timedelta
-from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails
+from django               import forms
+from django.shortcuts     import render, redirect
+from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails, Rate
+from calend_app.functions import get_now, get_month_text
+from menu_app.functions   import create_menu_app
+from main_app.views       import is_user, default_context
 
 # Create your views here.
+
+def calculation (request):
+  '''Расчеты за месяц'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    context = default_context (request)
+    page    = 'metro/calculation.html'
+    month = int (request.POST ['month'])
+    if month == 1:
+      date_start_avans = date (
+        int (request.POST ['year']) - 1,
+        12,
+        16
+      )
+      days = 31
+      while True:
+        try:
+          date_end_avans = date (
+            int (request.POST ['year']) - 1,
+            12,
+            days
+          )
+          break
+        except:
+          days -= 1
+    else:
+      date_start_avans = date (
+        int (request.POST ['year']),
+        int (request.POST ['month']) - 1,
+        16
+      )
+      days = 31
+      while True:
+        try:
+          date_end_avans = date (
+            int (request.POST ['year']),
+            int (request.POST ['month']) - 1,
+            days
+          )
+          break
+        except:
+          days -= 1
+    context ['test'] = '%s %s' % (date_start_avans, date_end_avans)
+    return render (request, page, context)
+  else:
+    return case_month (request, href = 'calculation')
+  return redirect ('/')
+
+def case_period (request):
+  '''Запрашивает период'''
+  if not is_user (request): return redirect ('/')
+  context = default_context (request)
+  page    = 'metro/case_period.html'
+  return render (request, page, context)
+
+def display_tabel (request):
+  '''Отображение табеля'''
+  if not is_user (request): return redirect ('/')
+  context = default_context (request)
+  page    = 'metro/display_tabel.html'
+  if request.POST:
+    start = date (
+      int (request.POST ['start_year']),
+      int (request.POST ['start_month']),
+      int (request.POST ['start_day'])
+    )
+    end = date (
+      int (request.POST ['end_year']),
+      int (request.POST ['end_month']),
+      int (request.POST ['end_day'])
+    )
+    context ['start']  = start
+    context ['end']    = end
+    context ['shifts'] = []
+    shifts = SheduleReal.objects.filter (data__gte = start, data__lte = end)
+    for shift in shifts:
+      shift.hours   ()
+      shift.night   ()
+      shift.holiday ()
+      context ['shifts'].append (shift)
+    return render (request, page, context)
+  else:
+    return case_period (request)
 
 def control_payslip (request, id):
   '''Проверка расчётного листка'''
@@ -83,13 +166,14 @@ def display_payslip (request, payslip = None):
       elif i.type == 'o': context ['others'].append       (i)
     return render (request, page, context)
   else:
-    return case_month (request)
+    return case_month (request, href = 'payslip')
 
-def case_month (request):
+def case_month (request, href):
   '''Выбор месяца'''
   if not is_user (request): redirect ('/')
   page = 'metro/case_month.html'
   context = default_context (request)
+  context ['href'] = href
   return render (request, page, context)
 
 def add_codes_payslip (request):
