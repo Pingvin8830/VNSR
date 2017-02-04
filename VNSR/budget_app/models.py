@@ -40,16 +40,23 @@ class Orgs (models.Model):
   class Meta (object):
     db_table = 'organizations'
 
-  id      = models.AutoField  (primary_key = True)
-  name    = models.CharField  (null = False, max_length = 100)
-  address = models.CharField  (null = True,  max_length = 100)
-  phone   = models.CharField  (null = True,  max_length = 50)
-  type    = models.ForeignKey ('OrgTypes',   db_column = 'type', null = False, on_delete = models.SET_DEFAULT, default = -1)
+  id     = models.AutoField            (primary_key = True)
+  name   = models.CharField            (null = False, max_length = 100)
+  city   = models.CharField            (null = True,  max_length = 50)
+  street = models.CharField            (null = True,  max_length = 50)
+  house  = models.PositiveIntegerField (null = True)
+  build  = models.CharField            (null = True,  max_length = 2)
+  flat   = models.PositiveIntegerField (null = True)
+  phone  = models.CharField            (null = True,  max_length = 50)
+  type   = models.ForeignKey           ('OrgTypes',   db_column = 'type', null = False, on_delete = models.SET_DEFAULT, default = -1)
 
 class OrgTypes (models.Model):
   '''Типы организаций'''
   class Meta (object):
     db_table = 'organization_types'
+
+  def __str__ (self):
+    return '%s' % self.name
 
   id      = models.AutoField (primary_key = True)
   name    = models.CharField (null = False, max_length = 50)
