@@ -1,7 +1,7 @@
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
-from .forms                             import AddCardForm, AddOrgTypeForm
-from .models                            import Cards, OrgTypes
+from .forms                             import AddCardForm, AddDebetTypeForm, AddOrgTypeForm
+from .models                            import Cards, DebetTypes, OrgTypes
 from main_app.views                     import is_user, default_context
 from menu_app.functions                 import create_menu_app
 
@@ -21,6 +21,21 @@ def add_card (request):
     context = default_context (request)
     context.update (csrf (request))
     context ['form'] = AddCardForm
+    return render (request, page, context)
+
+def add_debet_type (request):
+  '''Добавляет новый тип дохода'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddDebetTypeForm (request.POST)
+    if form.is_valid ():
+      form.save ()
+    return display_debet_types (request)
+  else:
+    page = 'budget/add_debet_type.html'
+    context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = AddDebetTypeForm
     return render (request, page, context)
 
 def add_org_type (request):
@@ -52,6 +67,19 @@ def set_cards (request):
       card.save ()
   return display_cards (request)
 
+def set_debet_types (request):
+  '''Сохранение изменений в типах доходов'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    for debet_type in DebetTypes.objects.all ():
+      if 'delete_%d' % debet_type.id in request.POST:
+        debet_type.delete ()
+        continue
+      debet_type.name    = request.POST ['name_%d'    % debet_type.id]
+      debet_type.comment = request.POST ['comment_%d' % debet_type.id]
+      debet_type.save ()
+  return display_debet_types (request)
+
 def set_org_types (request):
   '''Сохранение изменений в типах организаций'''
   if not is_user (request): return redirect ('/')
@@ -73,10 +101,18 @@ def display_cards (request):
   context ['cards'] = Cards.objects.all ()
   return render (request, page, context)
 
+def display_debet_types (request):
+  '''Вывод типов дохода'''
+  if not is_user (request): return redirect ('/')
+  page    = 'budget/display_debet_types.html'
+  context = default_context (request)
+  context ['debet_types'] = DebetTypes.objects.all ()
+  return render (request, page, context)
+
 def display_org_types (request):
   '''Вывод типов организаций'''
   if not is_user (request): return redirect ('/')
-  page = 'budget/display_org_types.html'
+  page    = 'budget/display_org_types.html'
   context = default_context (request)
   context ['org_types'] = OrgTypes.objects.all ()
   return render (request, page, context)
