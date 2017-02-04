@@ -1,5 +1,5 @@
 from django  import forms
-from .models import Cards, DebetTypes, Orgs, OrgTypes
+from .models import Cards, Debets, DebetTypes, Orgs, OrgTypes
 
 # Create your forms here.
 
@@ -12,6 +12,20 @@ class AddCardForm (forms.ModelForm):
   number  = forms.CharField (label = 'Номер карточки', max_length = 20, required = False)
   name    = forms.CharField (label = 'Название',       max_length = 20)
   comment = forms.CharField (label = 'Комментарий',    max_length = 100, required = False)
+
+class AddDebetForm (forms.ModelForm):
+  '''Доходы'''
+  class Meta ():
+    model  = Debets
+    fields = ['date', 'time', 'summa', 'comment', 'type', 'card', 'payer']
+
+  date    = forms.DateField        (label = 'Дата')
+  time    = forms.TimeField        (label = 'Время',                         required   = False)
+  comment = forms.CharField        (label = 'Комментарий', max_length = 100, required   = False)
+  summa   = forms.DecimalField     (label = 'Сумма',       min_value  = 0,   max_digits = 9, decimal_places = 2)
+  type    = forms.ModelChoiceField (label = 'Тип',         queryset   = DebetTypes.objects.all ())
+  card    = forms.ModelChoiceField (label = 'Счет',        queryset   = Cards.objects.all ())
+  payer   = forms.ModelChoiceField (label = 'Источник',    queryset   = Orgs.objects.all ())
 
 class AddDebetTypeForm (forms.ModelForm):
   '''Типы дохода'''
