@@ -1,7 +1,8 @@
+from datetime                           import date
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
-from .forms                             import AddCardForm, AddDebetTypeForm, AddOrgForm, AddOrgTypeForm
-from .models                            import Cards, DebetTypes, Orgs, OrgTypes
+from .forms                             import AddCardForm, AddDebetForm, AddDebetTypeForm, AddOrgForm, AddOrgTypeForm, CasePeriodForm
+from .models                            import Cards, Debets, DebetTypes, Orgs, OrgTypes
 from main_app.views                     import is_user, default_context
 from menu_app.functions                 import create_menu_app
 
@@ -21,6 +22,22 @@ def add_card (request):
     context = default_context (request)
     context.update (csrf (request))
     context ['form'] = AddCardForm
+    return render (request, page, context)
+
+def add_debet (request):
+  '''Добавляет доход'''
+  if not is_user (request): return redirect (request)
+  if request.POST:
+    form = AddDebetForm (request.POST)
+    print ()
+    print (form.cleaned_data ())
+    print ()
+    return redirect ('/')
+  else:
+    page = 'budget/add_debet.html'
+    context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = AddDebetForm
     return render (request, page, context)
 
 def add_debet_type (request):
@@ -69,6 +86,14 @@ def add_org_type (request):
     context ['form'] = AddOrgTypeForm
     return render (request, page, context)
 
+def case_period (request):
+  '''Выбор периода'''
+  page    = 'budget/case_period.html'
+  context = default_context (request)
+  context.update (csrf (request))
+  context ['form'] = CasePeriodForm
+  return render (request, page, context)
+
 def set_cards (request):
   '''Сохранение изменений в счетах хранения средств'''
   if not is_user (request): return redirect ('/')
@@ -116,6 +141,31 @@ def display_cards (request):
   context = default_context (request)
   context ['cards'] = Cards.objects.all ()
   return render (request, page, context)
+
+def display_debets (request):
+  '''Отображение доходов'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = CasePeriodForm (request.POST)
+    if form.is_valid ():
+      form_data = form.cleaned_data
+      page      = 'budget/display_debets.html'
+      context   = default_context (request)
+      context ['date_start'] = date (
+        int (form_data ['year_start']),
+        int (form_data ['month_start']),
+        int (form_data ['day_start'])
+      )
+      context ['date_end'] = date (
+        int (form_data ['year_end']),
+        int (form_data ['month_end']),
+        int (form_data ['day_end'])
+      )
+      return render (request, page, context)
+    else:
+      return case_period (request)
+  else:
+    return case_period (request)
 
 def display_debet_types (request):
   '''Вывод типов дохода'''

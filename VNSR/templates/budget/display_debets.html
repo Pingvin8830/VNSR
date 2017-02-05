@@ -1,0 +1,11 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'budget_app:add_debet' %}">Добавить доход</a>
+  <a href="{% url 'budget_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  Страница отображения доходов с {{ date_start }} по {{ date_end }}
+{% endblock %}

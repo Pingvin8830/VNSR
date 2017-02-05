@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block menu %}
+  <a href="{% url 'budget_app:add_org_type' %}">Добавить тип организации</a>
   <a href="{% url 'budget_app:index' %}">Назад</a>
 {% endblock %}
 
@@ -14,6 +15,10 @@
         <tr>
           <td>{{ form.name.label }}</td>
           <td>{{ form.name       }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.type.label }}</td>
+          <td>{{ form.type       }}</td>
         </tr>
         <tr>
           <td colspan=2 align="center">Адрес</td>
@@ -41,10 +46,6 @@
         <tr>
           <td>{{ form.phone.label }}</td>
           <td>{{ form.phone       }}</td>
-        </tr>
-        <tr>
-          <td>{{ form.type.label }}</td>
-          <td>{{ form.type       }}</td>
         </tr>
       </table>
       <input type="submit" value="Принять">
