@@ -24,6 +24,7 @@ urlpatterns = [
   url (r'^add_org_type',        views.add_org_type,        name = 'add_org_type'),
   url (r'^add_org',             views.add_org,             name = 'add_org'),
   url (r'^display_cards',       views.display_cards,       name = 'display_cards'),
+  url (r'^display_debets',      views.display_debets,      name = 'display_debets'),
   url (r'^display_debet_types', views.display_debet_types, name = 'display_debet_types'),
   url (r'^display_org_types',   views.display_org_types,   name = 'display_org_types'),
   url (r'^set_cards',           views.set_cards,           name = 'set_cards'),
