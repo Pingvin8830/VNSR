@@ -10,7 +10,7 @@ class Debets (models.Model):
   id      = models.AutoField    (primary_key = True)
   date    = models.DateField    (null = False)
   time    = models.TimeField    (null = True)
-  summa   = models.DecimalField (null = False, max_digits = 9, decimal_places = 4)
+  summa   = models.DecimalField (null = False, max_digits = 11, decimal_places = 4)
   comment = models.CharField    (null = True,  max_length = 100)
   type    = models.ForeignKey   ('DebetTypes', db_column = 'type',  null = False, on_delete = models.SET_DEFAULT, default = -1)
   card    = models.ForeignKey   ('Cards',      db_column = 'card',  null = False, on_delete = models.SET_DEFAULT, default = -1)
