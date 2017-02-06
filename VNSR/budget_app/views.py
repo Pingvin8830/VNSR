@@ -79,7 +79,7 @@ def add_org_type (request):
     form = AddOrgTypeForm (request.POST)
     if form.is_valid ():
       form.save ()
-    return display_org_types (request)
+    return display_debets (request)
   else:
     page    = 'budget/add_org_type.html'
     context = default_context (request)
