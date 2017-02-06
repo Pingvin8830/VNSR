@@ -7,5 +7,35 @@
 {% endblock %}
 
 {% block content %}
-  Страница отображения доходов с {{ date_start }} по {{ date_end }}
+  <table>
+    <caption>Доходы с {{ date_start }} по {{ date_end }}</caption>
+    <tr>
+      <th>Дата       </th>
+      <th>Время      </th>
+      <th>Сумма      </th>
+      <th>Комментарий</th>
+      <th>Счет       </th>
+      <th>Плательщик </th>
+      <th>Тип        </th>
+    </tr>
+    {% for debet in debets %}
+      <tr>
+        <td>{{ debet.date    }}</td>
+        <td>{{ debet.time    }}</td>
+        <td align='right'>{{ debet.summa   }}</td>
+        <td>{{ debet.comment }}</td>
+        <td>{{ debet.card    }}</td>
+        <td>{{ debet.payer   }}</td>
+        <td>{{ debet.type    }}</td>
+      </tr>
+    {% endfor %}
+      <tr>
+        <td colspan=7>
+          <hr>
+        </td>
+      <tr>
+        <td colspan=2>Итого</td>
+        <td>{{ akkum }}</td>
+      </tr>
+  </table>
 {% endblock %}
