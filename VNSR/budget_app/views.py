@@ -1,4 +1,4 @@
-from datetime                           import date
+from datetime                           import date, time
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
 from .forms                             import AddCardForm, AddDebetForm, AddDebetTypeForm, AddOrgForm, AddOrgTypeForm, CasePeriodForm
@@ -29,10 +29,13 @@ def add_debet (request):
   if not is_user (request): return redirect (request)
   if request.POST:
     form = AddDebetForm (request.POST)
-    print ()
-    print (form.cleaned_data ())
-    print ()
-    return redirect ('/')
+    if form.is_valid ():
+      data = form.cleaned_data
+      debet = form.save (commit = False)
+      debet.date = date (int (data ['year']), int (data ['month']),  int (data ['day']))
+      debet.time = time (int (data ['hour']), int (data ['minute']), int (data ['second']))
+      debet.save ()
+      return display_debets (request)
   else:
     page = 'budget/add_debet.html'
     context = default_context (request)
@@ -151,16 +154,36 @@ def display_debets (request):
       form_data = form.cleaned_data
       page      = 'budget/display_debets.html'
       context   = default_context (request)
-      context ['date_start'] = date (
-        int (form_data ['year_start']),
-        int (form_data ['month_start']),
-        int (form_data ['day_start'])
-      )
-      context ['date_end'] = date (
-        int (form_data ['year_end']),
-        int (form_data ['month_end']),
-        int (form_data ['day_end'])
-      )
+      day = int (form_data ['day_start'])
+      while True:
+        try:
+          date_start = date (
+            int (form_data ['year_start']),
+            int (form_data ['month_start']),
+            day
+          )
+          break
+        except:
+          day -= 1
+      day = int (form_data ['day_end'])
+      while True:
+        try:
+          date_end = date (
+            int (form_data ['year_end']),
+            int (form_data ['month_end']),
+            day
+          )
+          break
+        except:
+          day -= 1
+      debets = Debets.objects.filter (date__gte = date_start, date__lte = date_end)
+      akkum = 0
+      for debet in debets:
+        akkum += debet.summa
+      context ['date_start'] = date_start
+      context ['date_end']   = date_end
+      context ['debets']     = debets
+      context ['akkum']      = akkum
       return render (request, page, context)
     else:
       return case_period (request)
