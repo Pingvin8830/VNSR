@@ -64,10 +64,8 @@ def add_org (request):
   if request.POST:
     form = AddOrgForm (request.POST)
     if form.is_valid ():
-      print ()
-      print ('save')
-      print ()
-    return redirect ('/')
+      form.save ()
+    return display_debets (request)
   else:
     page    = 'budget/add_org.html'
     context = default_context (request)
