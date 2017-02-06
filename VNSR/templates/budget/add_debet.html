@@ -15,12 +15,12 @@
       <table>
         <caption>Добавление дохода</caption>
         <tr>
-          <td>{{ form.date.label }}</td>
-          <td>{{ form.date       }}</td>
+          <td>Дата</td>
+          <td>{{ form.day }}{{ form.month }}{{ form.year }}</td>
         </tr>
         <tr>
-          <td>{{ form.time.label }}</td>
-          <td>{{ form.time       }}</td>
+          <td>Время</td>
+          <td>{{ form.hour }}{{ form.minute }}{{ form.second }}</td>
         </tr>
         <tr>
           <td>{{ form.summa.label }}</td>
