@@ -152,6 +152,7 @@ def display_debets (request):
       form_data = form.cleaned_data
       page      = 'budget/display_debets.html'
       context   = default_context (request)
+      context ['template'] = form_data ['template']
       day = int (form_data ['day_start'])
       while True:
         try:
@@ -175,12 +176,18 @@ def display_debets (request):
         except:
           day -= 1
       debets = Debets.objects.filter (date__gte = date_start, date__lte = date_end)
+      i = {}
       akkum = 0
       for debet in debets:
         akkum += debet.summa
+        if debet.payer not in i: i [debet.payer] = 0
+        i [debet.payer] += debet.summa
+      orgs = []
+      for org in i: orgs.append ({'name': org.name, 'summa': i [org]})
       context ['date_start'] = date_start
       context ['date_end']   = date_end
       context ['debets']     = debets
+      context ['orgs']       = orgs
       context ['akkum']      = akkum
       return render (request, page, context)
     else:
