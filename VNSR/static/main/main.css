@@ -1,13 +1,17 @@
 body {
-  margin-left: 50%;
+  margin-left:  50%;
+}
+
+INPUT[type="number"] {
+  width:        100px;
 }
 
 #main {
-  width:       1330;
-  height:      650;
-  margin:      0;
-  padding:     0;
-  position:    relative;
-  left:        -665;
+  width:        1330;
+  height:       650;
+  margin:       0;
+  padding:      0;
+  position:     relative;
+  left:         -665;
 }
 
