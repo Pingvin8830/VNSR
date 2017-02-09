@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'budget/case_period.css' %}">
   <center>
     <form action="{% url 'budget_app:display_debets' %}" method="post">
       {% csrf_token %}
