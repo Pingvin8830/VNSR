@@ -176,18 +176,30 @@ def display_debets (request):
         except:
           day -= 1
       debets = Debets.objects.filter (date__gte = date_start, date__lte = date_end)
-      i = {}
+      o = {}
+      c = {}
+      t = {}
       akkum = 0
       for debet in debets:
         akkum += debet.summa
-        if debet.payer not in i: i [debet.payer] = 0
-        i [debet.payer] += debet.summa
-      orgs = []
-      for org in i: orgs.append ({'name': org.name, 'summa': i [org]})
+        if debet.payer not in o: o [debet.payer] = 0
+        if debet.card  not in c: c [debet.card]  = 0
+        if debet.type  not in t: t [debet.type]  = 0
+        o [debet.payer] += debet.summa
+        c [debet.card]  += debet.summa
+        t [debet.type]  += debet.summa
+      orgs  = []
+      cards = []
+      types = []
+      for org  in o: orgs.append  ({'name': org.name,  'summa': o [org]})
+      for card in c: cards.append ({'name': card.name, 'summa': c [card]})
+      for type in t: types.append ({'name': type.name, 'summa': t [type]})
       context ['date_start'] = date_start
       context ['date_end']   = date_end
       context ['debets']     = debets
       context ['orgs']       = orgs
+      context ['cards']      = cards
+      context ['types']      = types
       context ['akkum']      = akkum
       return render (request, page, context)
     else:
