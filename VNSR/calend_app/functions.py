@@ -10,7 +10,7 @@ def get_month_text (year = get_now ().year, month = get_now ().month):
   month = int (month)
   MONTH = (
     'Январь',
-    'Фефраль',
+    'Февраль',
     'Март',
     'Апрель',
     'Май',
