@@ -56,6 +56,24 @@
           <td>Итого</td>
           <td>{{ akkum }}</td>
         </tr>
+      {% elif template == 'card' %}
+        <tr>
+          <th>Счет </th>
+          <th>Сумма</th>
+        </tr>
+        {% for card in cards %}
+          <tr>
+            <td>{{ card.name  }}</td>
+            <td>{{ card.summa }}</td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td colspan=2><hr></td>
+        </tr>
+        <tr>
+          <td>Итого</td>
+          <td>{{ akkum }}</td>
+        </tr>
       {% endif %}
     </table>
   </center>
