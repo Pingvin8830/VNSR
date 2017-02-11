@@ -1,6 +1,7 @@
 from datetime             import date, time, timedelta
 from django               import forms
 from django.shortcuts     import render, redirect
+from .forms               import AddPayslipForm
 from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails, Rate
 from calend_app.functions import get_now, get_month_text
 from menu_app.functions   import create_menu_app
@@ -132,8 +133,14 @@ def add_payslip (request):
   if not is_user (request): return redirect ('/')
   if request.POST:
     if not request.POST ['rotate_dolg']: request.POST.rotate_dolg = None
-    payslip = Payslip (period = request.POST ['year'] + '-' + request.POST ['month'] + '-01', division = request.POST ['division'], post = request.POST ['post'], rate = request.POST ['rate'].replace (',', '.'), begin_dolg = request.POST ['begin_dolg'].replace (',', '.'), rotate_dolg = request.POST ['rotate_dolg'].replace (',', '.'), end_dolg = request.POST ['end_dolg'].replace (',', '.'), income = request.POST ['income'].replace (',', '.'), consumption = request.POST ['consumption'].replace (',', '.'), paying = request.POST ['paying'].replace (',', '.'))
-    payslip.save ()
+    form = AddPayslipForm (request.POST)
+    if form.is_valid ():
+      payslip = form.save (commit = False)
+      payslip.period = date (
+        int (form.cleaned_data ['year']),
+        int (form.cleaned_data ['month']),
+        1)
+      payslip.save ()
     context = default_context (request)
     return redirect ('/metro/display_payslip_details/%d' % payslip.id)
   return redirect ('/metro')
@@ -142,6 +149,7 @@ def display_payslip (request, payslip = None):
   '''Отображает расчетный листок'''
   if not is_user (request): return redirect ('/')
   if request.POST:
+    context = default_context (request)
     if not payslip:
       try:
         payslip = Payslip.objects.get (period = '%s-%s-01' % (str (request.POST ['year']), str (request.POST ['month'])))
@@ -150,10 +158,10 @@ def display_payslip (request, payslip = None):
       except:
         payslip = Payslip ()
         page    = 'metro/add_payslip.html'
+        context ['form'] = AddPayslipForm
     else:
         page    = 'metro/display_payslip.html'
         payslip.print_edit ()
-    context = default_context (request)
     context ['payslip']     = payslip
     details = PayslipDetails.objects.filter (payslip = payslip.id).order_by ('code', 'period')
     context ['incomes']      = []

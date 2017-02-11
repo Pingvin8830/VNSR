@@ -215,11 +215,11 @@ class AddOrgTypeForm (forms.ModelForm):
 class CasePeriodForm (forms.Form):
   '''Выбор периода'''
 
-  year_start  = forms.IntegerField (label = 'Год',           min_value = 0,  max_value = 9999, initial = 2017)
-  year_end    = forms.IntegerField (label = 'Год',           min_value = 0,  max_value = 9999, initial = 2017)
-  month_start = forms.ChoiceField  (label = 'Месяц',         choices   = MONTHS)
-  month_end   = forms.ChoiceField  (label = 'Месяц',         choices   = MONTHS)
-  day_start   = forms.ChoiceField  (label = 'День',          choices   = DAYS)
-  day_end     = forms.ChoiceField  (label = 'День',          choices   = DAYS)
+  year_start  = forms.IntegerField (label = 'Год',           min_value = 0,      max_value = 9999, initial = 2017)
+  year_end    = forms.IntegerField (label = 'Год',           min_value = 0,      max_value = 9999, initial = 2017)
+  month_start = forms.ChoiceField  (label = 'Месяц',         choices   = MONTHS, initial =  1)
+  month_end   = forms.ChoiceField  (label = 'Месяц',         choices   = MONTHS, initial = 12)
+  day_start   = forms.ChoiceField  (label = 'День',          choices   = DAYS,   initial =  1)
+  day_end     = forms.ChoiceField  (label = 'День',          choices   = DAYS,   initial = 31)
   template    = forms.ChoiceField  (label = 'Представление', choices   = TEMPLATES)
 
