@@ -89,26 +89,30 @@ def display_tabel (request):
     context ['start']  = start
     context ['end']    = end
     context ['shifts'] = []
-    shifts = SheduleReal.objects.filter (data__gte = start, data__lte = end)
-    signs  = Signs.objects.filter       (data__gte = start, data__lte = end)
-    norma = 0
-    for sign in signs:
-      if   sign.work:  norma += 8
-      elif sign.short: norma += 7
+    data        = start
+    norma       = 0
     akk_hours   = 0
     akk_night   = 0
     akk_holiday = 0
     akk_sick    = 0
-    for shift in shifts:
+    while end >= data:
+      signs = Signs.objects.get (data = data)
+      if   signs.work:  norma += 8
+      elif signs.short: norma += 7
+      try:
+        shift = SheduleReal.objects.get (data = data)
+      except:
+        shift = SheduleReal (data = data, start = time (0, 0, 0), end = time (0, 0, 0), break_day = 0, break_night = 0)
       shift.if_sick ()
       shift.hours   ()
       shift.night   ()
       shift.holiday ()
       context ['shifts'].append (shift)
-      akk_hours   += shift.hours
-      akk_night   += shift.night
+      akk_hours += shift.hours
+      akk_night += shift.night
       akk_holiday += shift.holiday
       if shift.sick: akk_sick += 1
+      data += timedelta (days = 1)
     context ['akk_hours']   = akk_hours
     context ['akk_night']   = akk_night
     context ['akk_holiday'] = akk_holiday
