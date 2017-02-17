@@ -41,11 +41,18 @@
           </tr>
         {% endfor %}
         <tr>
+          <td colspan=9><hr></td>
+        </tr>
+        <tr>
           <th align='right' colspan=5>Итого</th>
           <th align='right'>{{ akk_hours }}</th>
           <th align='right'>{{ akk_night }}</th>
           <th align='right'>{{ akk_holiday }}</th>
           <th align='right'>{{ akk_sick }}</th>
+        </tr>
+        <tr>
+          <th align='right' colspan=5>Норма часов</th>
+          <th align='right'>{{ norma }}</th>
         </tr>
       </table>
     </div>
