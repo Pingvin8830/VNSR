@@ -91,7 +91,14 @@ class Products (models.Model):
   class Meta (object):
     db_table = 'products'
 
-  DIMENSIONS = (('шт.', 'штуки'), ('кг.', 'килограммы'))
+  def __str__ (self):
+    return self.name
+
+  DIMENSIONS = (
+    ('шт.', 'штуки'),
+    ('кг.', 'килограммы'),
+    ('л.',  'литры'),
+  )
 
   id        = models.AutoField  (primary_key = True)
   name      = models.CharField  (null = False, max_length = 50)
@@ -103,6 +110,9 @@ class CredCats (models.Model):
   '''Категории трат'''
   class Meta (object):
     db_table = 'credit_categories'
+
+  def __str__ (self):
+    return self.name
 
   id      = models.AutoField (primary_key = True)
   name    = models.CharField (null = False, max_length = 50)
@@ -121,7 +131,7 @@ class Cheques (models.Model):
   date     = models.DateField    (null = False)
   time     = models.TimeField    (null = True)
   kassa    = models.IntegerField (null = True)
-  discount = models.DecimalField (null = False, default = 0, max_digits = 9, decimal_places = 2)
+  discount = models.DecimalField (null = True, default = 0, max_digits = 9, decimal_places = 2)
   org      = models.ForeignKey   ('Orgs',  db_column = 'org',  null = False, on_delete = models.SET_DEFAULT, default = -1)
   card     = models.ForeignKey   ('Cards', db_column = 'card', null = False, on_delete = models.SET_DEFAULT, default = -1)
 

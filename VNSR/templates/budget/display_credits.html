@@ -2,7 +2,8 @@
 {% load staticfiles %}
 
 {% block menu %}
-  <a href="{% url 'budget_app:index' %}">Добавить расход</a>
+  <a href="{% url 'budget_app:add_cheque' %}">Добавить чек</a>
+  <a href="{% url 'budget_app:case_cheque' %}">Добавить товары в чек</a>
   <a href="{% url 'budget_app:index' %}">Назад</a>
 {% endblock %}
 
