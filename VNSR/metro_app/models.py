@@ -113,13 +113,13 @@ class SheduleReal (models.Model):
     signs = Signs.objects.get (data = self.data)
     if signs.holiday:
       if self.start > self.end:
-        self.week  = (datetime (1, 1, 2) - datetime.combine (date (1, 1, 1), self.start)).seconds / 3600 - self.break_day * 0.5 - self.break_night * 0.5
-        self.night = 0
+        self.holiday = (datetime (1, 1, 2) - datetime.combine (date (1, 1, 1), self.start)).seconds / 3600 - self.break_day * 0.5 - self.break_night * 0.5
+        self.night   = 0
       else:
-        self.week  = self.hours
-        self.night = 0
+        self.holiday = self.hours
+        self.night   = 0
     else:
-      self.week = 0
+      self.holiday = 0
 
 class Lanch (models.Model):
   '''Стоимость обеда'''
