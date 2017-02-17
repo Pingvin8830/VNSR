@@ -54,7 +54,7 @@ class AddCreditForm (forms.ModelForm):
   price    = forms.DecimalField     (label = 'Цена',        min_value  = 0, max_digits = 9,  decimal_places = 2)
   count    = forms.DecimalField     (label = 'Количество',  min_value  = 0, max_digits = 9,  decimal_places = 2)
   cost     = forms.DecimalField     (label = 'Стоимость',   min_value  = 0, max_digits = 9,  decimal_places = 2, required = False)
-  is_need  = forms.BooleanField     (label = 'Обязательно', initial    = True)
+  is_need  = forms.BooleanField     (label = 'Обязательно', initial    = True, required = False)
   product  = forms.ModelChoiceField (label = 'Товар',       queryset   = Products.objects.all ())
 
 class AddCredCatForm (forms.ModelForm):
@@ -97,15 +97,16 @@ class AddOrgForm (forms.ModelForm):
   '''Организации'''
   class Meta ():
     model = Orgs
-    fields = ['name', 'city', 'street', 'house', 'build', 'flat', 'phone', 'type']
+    fields = ['name', 'region', 'city', 'street', 'house', 'build', 'flat', 'phone', 'type']
 
   name   = forms.CharField        (label = 'Название / ФИО',  max_length = 100)
-  city   = forms.CharField        (label = 'Город',           max_length = 50, required = False)
-  street = forms.CharField        (label = 'Улица',           max_length = 50, required = False)
-  house  = forms.IntegerField     (label = 'Дом',             min_value  = 0,  required = False)
-  build  = forms.CharField        (label = 'Корпус / Литера', max_length = 2,  required = False)
-  flat   = forms.IntegerField     (label = 'Квартира',        min_value  = 0,  required = False)
-  phone  = forms.CharField        (label = 'Телефон',         max_length = 20, required = False)
+  region = forms.CharField        (label = 'Область',         max_length = 100, required = False)
+  city   = forms.CharField        (label = 'Город',           max_length = 50,  required = False)
+  street = forms.CharField        (label = 'Улица',           max_length = 50,  required = False)
+  house  = forms.IntegerField     (label = 'Дом',             min_value  = 0,   required = False)
+  build  = forms.CharField        (label = 'Корпус / Литера', max_length = 2,   required = False)
+  flat   = forms.IntegerField     (label = 'Квартира',        min_value  = 0,   required = False)
+  phone  = forms.CharField        (label = 'Телефон',         max_length = 20,  required = False)
   type   = forms.ModelChoiceField (label = 'Тип', queryset = OrgTypes.objects.all ())
 
 class AddOrgTypeForm (forms.ModelForm):
