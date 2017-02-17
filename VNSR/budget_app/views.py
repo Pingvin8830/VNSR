@@ -2,7 +2,7 @@ from datetime                           import date, time
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
 from .forms                             import AddCardForm, AddDebetForm, AddDebetTypeForm, AddOrgForm, AddOrgTypeForm, CasePeriodForm
-from .models                            import Cards, Debets, DebetTypes, Orgs, OrgTypes
+from .models                            import Cards, Debets, DebetTypes, Orgs, OrgTypes, Cheques, Credits
 from main_app.views                     import is_user, default_context
 from menu_app.functions                 import create_menu_app
 
@@ -87,12 +87,13 @@ def add_org_type (request):
     context ['form'] = AddOrgTypeForm
     return render (request, page, context)
 
-def case_period (request):
+def case_period (request, func = 'debets'):
   '''Выбор периода'''
   page    = 'budget/case_period.html'
   context = default_context (request)
   context.update (csrf (request))
   context ['form'] = CasePeriodForm
+  context ['func'] = func
   return render (request, page, context)
 
 def set_cards (request):
@@ -142,6 +143,69 @@ def display_cards (request):
   context = default_context (request)
   context ['cards'] = Cards.objects.all ()
   return render (request, page, context)
+
+def display_credits (request):
+  '''Отображение расходов'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = CasePeriodForm (request.POST)
+    if form.is_valid ():
+      form_data = form.cleaned_data
+      page = 'budget/display_credits.html'
+      context = default_context (request)
+      context ['template'] = form_data ['template']
+      day = int (form_data ['day_start'])
+      while True:
+        try:
+          date_start = date (
+            int (form_data ['year_start']),
+            int (form_data ['month_start']),
+            day
+          )
+          break
+        except:
+          day -= 1
+      day = int (form_data ['day_end'])
+      while True:
+        try:
+          date_end = date (
+            int (form_data ['year_end']),
+            int (form_data ['month_end']),
+            day
+          )
+          break
+        except:
+          day -= 1
+    credits = Credits.objects.filter (cheque__date__gte = date_start, cheque__date__lte = date_end).order_by ('cheque__date')
+    akkum = 0
+    o = {}
+    c = {}
+    t = {}
+    for credit in credits:
+      if not credit.cost: credit.cost = credit.price * credit.count
+      akkum += credit.cost
+      if credit.cheque.org       not in o: o [credit.cheque.org]       = 0
+      if credit.cheque.card      not in c: c [credit.cheque.card]      = 0
+      if credit.product.category not in t: t [credit.product.category] = 0
+      o [credit.cheque.org]       += credit.cost
+      c [credit.cheque.card]      += credit.cost
+      t [credit.product.category] += credit.cost
+    orgs  = []
+    cards = []
+    types = []
+    for org  in o: orgs.append  ({'name': org.name,  'summa': o [org]})
+    for card in c: cards.append ({'name': card.name, 'summa': c [card]})
+    for type in t: types.append ({'name': type.name, 'summa': t [type]})
+    context ['date_start'] = date_start
+    context ['date_end']   = date_end
+    context ['credits']    = credits
+    context ['akkum']      = akkum
+    context ['orgs']       = orgs
+    context ['cards']      = cards
+    context ['types']      = types
+    return render (request, page, context)
+  else:
+    return case_period (request, 'credits')
 
 def display_debets (request):
   '''Отображение доходов'''
