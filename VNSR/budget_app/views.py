@@ -2,7 +2,7 @@ from datetime                           import date, time
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
 from .forms                             import AddCardForm, AddDebetForm, AddDebetTypeForm, AddOrgForm, AddOrgTypeForm, CasePeriodForm
-from .models                            import Cards, Debets, DebetTypes, Orgs, OrgTypes, Cheques
+from .models                            import Cards, Debets, DebetTypes, Orgs, OrgTypes, Cheques, Credits
 from main_app.views                     import is_user, default_context
 from menu_app.functions                 import create_menu_app
 
@@ -176,10 +176,33 @@ def display_credits (request):
           break
         except:
           day -= 1
-    cheques = Cheques.objects.filter (date__gte = date_start, date__lte = date_end)
+    credits = Credits.objects.filter (cheque__date__gte = date_start, cheque__date__lte = date_end).order_by ('cheque__date')
+    akkum = 0
+    o = {}
+    c = {}
+    t = {}
+    for credit in credits:
+      if not credit.cost: credit.cost = credit.price * credit.count
+      akkum += credit.cost
+      if credit.cheque.org       not in o: o [credit.cheque.org]       = 0
+      if credit.cheque.card      not in c: c [credit.cheque.card]      = 0
+      if credit.product.category not in t: t [credit.product.category] = 0
+      o [credit.cheque.org]       += credit.cost
+      c [credit.cheque.card]      += credit.cost
+      t [credit.product.category] += credit.cost
+    orgs  = []
+    cards = []
+    types = []
+    for org  in o: orgs.append  ({'name': org.name,  'summa': o [org]})
+    for card in c: cards.append ({'name': card.name, 'summa': c [card]})
+    for type in t: types.append ({'name': type.name, 'summa': t [type]})
     context ['date_start'] = date_start
     context ['date_end']   = date_end
-    context ['cheques']    = cheques
+    context ['credits']    = credits
+    context ['akkum']      = akkum
+    context ['orgs']       = orgs
+    context ['cards']      = cards
+    context ['types']      = types
     return render (request, page, context)
   else:
     return case_period (request, 'credits')
