@@ -74,16 +74,23 @@ def display_tabel (request):
       int (request.POST ['start_month']),
       int (request.POST ['start_day'])
     )
-    end = date (
-      int (request.POST ['end_year']),
-      int (request.POST ['end_month']),
-      int (request.POST ['end_day'])
-    )
+    day = int (request.POST ['end_day'])
+    while True:
+      try:
+        end = date (
+          int (request.POST ['end_year']),
+          int (request.POST ['end_month']),
+          day
+        )
+        break
+      except:
+        day -= 1
     context ['start']  = start
     context ['end']    = end
     context ['shifts'] = []
     shifts = SheduleReal.objects.filter (data__gte = start, data__lte = end)
     for shift in shifts:
+      shift.if_sick ()
       shift.hours   ()
       shift.night   ()
       shift.holiday ()
