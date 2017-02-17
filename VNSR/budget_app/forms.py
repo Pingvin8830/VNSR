@@ -167,7 +167,7 @@ class AddDebetForm (forms.ModelForm):
     model = Debets
     fields = ['comment', 'summa', 'type', 'card', 'payer']
 
-  year    = forms.IntegerField     (label = 'Год',         max_value  = 9999)
+  year    = forms.IntegerField     (label = 'Год',         max_value  = 9999, initial = 2017)
   month   = forms.ChoiceField      (label = 'Месяц',       choices    = MONTHS)
   day     = forms.ChoiceField      (label = 'День',        choices    = DAYS)
   hour    = forms.ChoiceField      (label = 'Часы',        choices    = HOURS,   required   = False)
