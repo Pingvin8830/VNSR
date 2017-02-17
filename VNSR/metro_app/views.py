@@ -4,6 +4,7 @@ from django.shortcuts     import render, redirect
 from .forms               import AddPayslipForm
 from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails, Rate
 from calend_app.functions import get_now, get_month_text
+from calend_app.models    import Signs
 from menu_app.functions   import create_menu_app
 from main_app.views       import is_user, default_context
 
@@ -89,6 +90,11 @@ def display_tabel (request):
     context ['end']    = end
     context ['shifts'] = []
     shifts = SheduleReal.objects.filter (data__gte = start, data__lte = end)
+    signs  = Signs.objects.filter       (data__gte = start, data__lte = end)
+    norma = 0
+    for sign in signs:
+      if   sign.work:  norma += 8
+      elif sign.short: norma += 7
     akk_hours   = 0
     akk_night   = 0
     akk_holiday = 0
@@ -107,6 +113,7 @@ def display_tabel (request):
     context ['akk_night']   = akk_night
     context ['akk_holiday'] = akk_holiday
     context ['akk_sick']    = akk_sick
+    context ['norma']       = norma
     return render (request, page, context)
   else:
     return case_period (request)
