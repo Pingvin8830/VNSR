@@ -89,12 +89,24 @@ def display_tabel (request):
     context ['end']    = end
     context ['shifts'] = []
     shifts = SheduleReal.objects.filter (data__gte = start, data__lte = end)
+    akk_hours   = 0
+    akk_night   = 0
+    akk_holiday = 0
+    akk_sick    = 0
     for shift in shifts:
       shift.if_sick ()
       shift.hours   ()
       shift.night   ()
       shift.holiday ()
       context ['shifts'].append (shift)
+      akk_hours   += shift.hours
+      akk_night   += shift.night
+      akk_holiday += shift.holiday
+      if shift.sick: akk_sick += 1
+    context ['akk_hours']   = akk_hours
+    context ['akk_night']   = akk_night
+    context ['akk_holiday'] = akk_holiday
+    context ['akk_sick']    = akk_sick
     return render (request, page, context)
   else:
     return case_period (request)
