@@ -3,7 +3,9 @@
 
 {% block menu %}
   {% if   func == 'debets'  %}<a href="{% url 'budget_app:add_debet' %}">Добавить доход </a>
-  {% elif func == 'credits' %}<a href="{% url 'budget_app:index'     %}">Добавить расход</a>
+  {% elif func == 'credits' %}
+    <a href="{% url 'budget_app:add_cheque' %}">Добавить чек</a>
+    <a href="{% url 'budget_app:case_cheque' %}">Добавить товар в чек</a>
   {% endif %}
   <a href="{% url 'budget_app:index' %}">Назад</a>
 {% endblock %}
