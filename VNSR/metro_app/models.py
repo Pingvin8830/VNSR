@@ -36,6 +36,9 @@ class SheduleReal (models.Model):
   class Meta ():
     db_table = 'shedule_real'
 
+  def __str__ (self):
+    return '%s' % self.data
+
   id          = models.AutoField         (primary_key = True      )
   data        = models.DateField         (unique      = True      )
   start       = models.TimeField         (                   null = True)
