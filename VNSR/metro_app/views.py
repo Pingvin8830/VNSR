@@ -4,6 +4,7 @@ from django.shortcuts     import render, redirect
 from .forms               import AddPayslipForm
 from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails, Rate
 from calend_app.functions import get_now, get_month_text
+from calend_app.models    import Signs
 from menu_app.functions   import create_menu_app
 from main_app.views       import is_user, default_context
 
@@ -88,25 +89,35 @@ def display_tabel (request):
     context ['start']  = start
     context ['end']    = end
     context ['shifts'] = []
-    shifts = SheduleReal.objects.filter (data__gte = start, data__lte = end)
+    data        = start
+    norma       = 0
     akk_hours   = 0
     akk_night   = 0
     akk_holiday = 0
     akk_sick    = 0
-    for shift in shifts:
+    while end >= data:
+      signs = Signs.objects.get (data = data)
+      if   signs.work:  norma += 8
+      elif signs.short: norma += 7
+      try:
+        shift = SheduleReal.objects.get (data = data)
+      except:
+        shift = SheduleReal (data = data, start = time (0, 0, 0), end = time (0, 0, 0), break_day = 0, break_night = 0)
       shift.if_sick ()
       shift.hours   ()
       shift.night   ()
       shift.holiday ()
       context ['shifts'].append (shift)
-      akk_hours   += shift.hours
-      akk_night   += shift.night
+      akk_hours += shift.hours
+      akk_night += shift.night
       akk_holiday += shift.holiday
       if shift.sick: akk_sick += 1
+      data += timedelta (days = 1)
     context ['akk_hours']   = akk_hours
     context ['akk_night']   = akk_night
     context ['akk_holiday'] = akk_holiday
     context ['akk_sick']    = akk_sick
+    context ['norma']       = norma
     return render (request, page, context)
   else:
     return case_period (request)
