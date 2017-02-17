@@ -1,0 +1,21 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'budget_app:index' %}">Добавить расход</a>
+  <a href="{% url 'budget_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <table>
+      <caption>Расходы с {{ date_start }} по {{ date_end }}</caption>
+      <tr>
+        <td>{{ template }}</td>
+      </tr>
+      <tr>
+        <td>{{ cheques }}</td>
+      </tr>
+    </table>
+  </center>
+{% endblock %}
