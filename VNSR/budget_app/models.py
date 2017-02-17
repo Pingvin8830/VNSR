@@ -77,12 +77,11 @@ class Credits (models.Model):
     db_table = 'credits'
 
   id      = models.AutoField    (primary_key = True) 
-  date    = models.DateField    (null = False)
-  time    = models.TimeField    (null = True)
   price   = models.DecimalField (null = False, max_digits = 9, decimal_places = 4)
   count   = models.DecimalField (null = False, max_digits = 9, decimal_places = 4)
   is_need = models.BooleanField (default = True)
   product = models.ForeignKey   ('Products',   db_column = 'product', null = False, on_delete = models.SET_DEFAULT, default = -1)
+  cheque  = models.ForeignKey   ('Cheques',    db_column = 'cheque',  null = False, on_delete = models.SET_DEFAULT, default = -1)
 
 class Products (models.Model):
   '''Товары'''
@@ -105,4 +104,16 @@ class CredCats (models.Model):
   id      = models.AutoField (primary_key = True)
   name    = models.CharField (null = False, max_length = 50)
   comment = models.CharField (null = True,  max_length = 100)
+
+class Cheques (models.Model):
+  '''Чеки'''
+  class Meta (object):
+    db_table = 'cheques'
+
+  id     = models.AutoField  (primary_key = True)
+  number = models.CharField  (null = True, max_length = 5)
+  date   = models.DateField  (null = False)
+  time   = models.TimeField  (null = True)
+  org    = models.ForeignKey ('Orgs',  db_column = 'org',  null = False, on_delete = models.SET_DEFAULT, default = -1)
+  card   = models.ForeignKey ('Cards', db_column = 'card', null = False, on_delete = models.SET_DEFAULT, default = -1)
 
