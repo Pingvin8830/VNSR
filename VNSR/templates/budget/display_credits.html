@@ -7,15 +7,93 @@
 {% endblock %}
 
 {% block content %}
-  <center>
-    <table>
-      <caption>Расходы с {{ date_start }} по {{ date_end }}</caption>
-      <tr>
-        <td>{{ template }}</td>
-      </tr>
-      <tr>
-        <td>{{ cheques }}</td>
-      </tr>
-    </table>
-  </center>
+  <link rel='stylesheet' type='text/css' href="{% static 'budget/display_credits.css' %}">
+  <div id='credits'>
+    <center>
+      <table>
+        <caption>Расходы с {{ date_start }} по {{ date_end }}</caption>
+        {% if template == 'all' %}
+          <tr>
+            <th>Дата</th>
+            <th>Время</th>
+            <th>Сумма</th>
+            <th>Товар</th>
+            <th>Количество</th>
+            <th>Организация</th>
+          </tr>
+          {% for credit in credits %}
+            <tr>
+              <td>{{ credit.cheque.date }}</td>
+              <td align='right'>{{ credit.cheque.time }}</td>
+              <td align='right'>{{ credit.cost }}</td>
+              <td>{{ credit.product.name }}</td>
+              <td align='right'>{{ credit.count }}</td>
+              <td>{{ credit.cheque.org.name }}</td>
+            </tr>
+          {% endfor %}
+            <tr>
+              <td colspan=6><hr></td>
+            </tr>
+            <tr>
+              <th colspan=2 align='right'>Итого</th>
+              <th>{{ akkum }}</th>
+            </tr>
+        {% elif template == 'org' %}
+          <tr>
+            <th>Организация</th>
+            <th>Сумма</th>
+          </tr>
+          {% for org in orgs %}
+            <tr>
+              <td>{{ org.name }}</td>
+              <td align='right'>{{ org.summa }}</td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <td colspan=2><hr></td>
+          </tr>
+          <tr>
+            <th align='right'>Итого</th>
+            <th>{{ akkum }}</th>
+          </tr>
+        {% elif template == 'card' %}
+          <tr>
+            <th>Счет</th>
+            <th>Сумма</th>
+          </tr>
+          {% for card in cards %}
+            <tr>
+              <td>{{ card.name }}</td>
+              <td align='right'>{{ card.summa }}</td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <td colspan=2 align='right'><hr></td>
+          </tr>
+          <tr>
+            <th align='right'>Итого</th>
+            <th>{{ akkum }}</th>
+          </tr>
+        {% elif template == 'type' %}
+          <tr>
+            <th>Категория</th>
+            <th>Сумма</th>
+          </tr>
+          {% for type in types %}
+          <tr>
+            <td>{{ type.name }}</td>
+            <td align='right'>{{ type.summa }}</td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td colspan=2><hr></td>
+          </tr>
+          <tr>
+            <th align='right'>Итого</th>
+            <th align='right'>{{ akkum }}</th>
+          </tr>
+        {% endif %}
+      </table>
+    </center>
+  </div>
 {% endblock %}
