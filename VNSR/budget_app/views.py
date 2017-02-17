@@ -1,7 +1,7 @@
 from datetime                           import date, time
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
-from .forms                             import AddCardForm, AddDebetForm, AddDebetTypeForm, AddOrgForm, AddOrgTypeForm, CasePeriodForm
+from .forms                             import AddCardForm, AddDebetForm, AddDebetTypeForm, AddOrgForm, AddOrgTypeForm, CasePeriodForm, AddCreditForm, AddChequeForm, AddProductForm, AddCredCatForm, CaseChequeForm
 from .models                            import Cards, Debets, DebetTypes, Orgs, OrgTypes, Cheques, Credits
 from main_app.views                     import is_user, default_context
 from menu_app.functions                 import create_menu_app
@@ -41,6 +41,70 @@ def add_debet (request):
     context = default_context (request)
     context.update (csrf (request))
     context ['form'] = AddDebetForm
+    return render (request, page, context)
+
+def add_credit (request, cheque_id = -1):
+  '''Добавляет расход'''
+  if not is_user (request): return redirect ('/')
+  cheque = Cheques.objects.get (id = cheque_id)
+  if request.POST:
+    form = AddCreditForm (request.POST)
+    if form.is_valid ():
+      credit = form.save (commit = False)
+      credit.cheque = cheque
+      credit.save ()
+      request.POST = {}
+      return add_credit (request, cheque.id)
+  else:
+    page = 'budget/add_credit.html'
+    context = default_context (request)
+    context.update (csrf (request))
+    context ['form']   = AddCreditForm
+    context ['cheque'] = cheque
+    context ['credits'] = Credits.objects.filter (cheque = cheque)
+    return render (request, page, context)
+
+def add_cred_cat (request):
+  '''Добавляет категорию расходов'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddCredCatForm (request.POST)
+    if form.is_valid ():
+      CredCat = form.save ()
+      return index (request)
+  else:
+    page    = 'budget/add_cred_cat.html'
+    context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = AddCredCatForm
+    return render (request, page, context)
+
+def add_cheque (request):
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddChequeForm (request.POST)
+    if form.is_valid ():
+      cheque = form.save (commit = False)
+      data = date (
+        int (form.cleaned_data ['year']),
+        int (form.cleaned_data ['month']),
+        int (form.cleaned_data ['day'])
+      )
+      tim = time (
+        int (form.cleaned_data ['hour']),
+        int (form.cleaned_data ['minute']),
+        int (form.cleaned_data ['second'])
+      )
+      cheque.date = data
+      cheque.time = tim
+      cheque.save ()
+      request.POST = {}
+      return add_credit (request, cheque.id)
+  else:
+    page = 'budget/add_cheque.html'
+    context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = AddChequeForm
     return render (request, page, context)
 
 def add_debet_type (request):
@@ -85,6 +149,40 @@ def add_org_type (request):
     context = default_context (request)
     context.update (csrf (request))
     context ['form'] = AddOrgTypeForm
+    return render (request, page, context)
+
+def add_product (request):
+  '''Добавляет товар'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddProductForm (request.POST)
+    if form.is_valid ():
+      product = form.save ()
+      return index (request)
+  else:
+    page = 'budget/add_product.html'
+    context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = AddProductForm
+    return render (request, page, context)
+
+def case_cheque (request):
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = CaseChequeForm (request.POST)
+    if form.is_valid ():
+      form_data = form.cleaned_data
+      cheque = form_data ['cheque']
+      request.POST = {}
+      return add_credit (request, cheque.id)
+    else:
+      request.POST = {}
+      return case_cheque (request)
+  else:
+    page = 'budget/case_cheque.html'
+    context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = CaseChequeForm
     return render (request, page, context)
 
 def case_period (request, func = 'debets'):
