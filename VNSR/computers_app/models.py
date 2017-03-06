@@ -137,23 +137,35 @@ class Hosts (models.Model):
   video     = models.ForeignKey   ('Videos',   on_delete = models.SET_NULL, null = True, db_column = 'video',  verbose_name = 'Видеокарта')
   name      = models.CharField    (max_length = 30,                                                            verbose_name = 'Сетевое имя')
   ip        = models.CharField    (max_length = 15,                                                            verbose_name = 'IP-адрес')
-  soft_days = models.IntegerField (                                         null = True,                       verbose_name = 'Период обновления')
-  hard_days = models.IntegerField (                                         null = True,                       verbose_name = 'Период обслуживания')
-  os        = models.CharField    (max_length = 10,                         null = True,                       verbose_name = 'Операционная система')
   comment   = models.CharField    (max_length = 100,                        null = True,                       verbose_name = 'Комментарий')
 
 class StaffLog (models.Model):
   '''Логирование обслуживания'''
-  TYPES = (
-    ('soft', 'ПО'),
-    ('hard', 'Железо'),
-  )
   class Meta (object):
     db_table = 'staff_log'
 
   id   = models.AutoField  (primary_key = True)
-  host = models.ForeignKey ('Hosts', on_delete = models.SET_NULL, null = True, db_column = 'host', verbose_name = 'Хост')
-  date = models.DateField  ()
-  time = models.TimeField  ()
-  type = models.CharField  (max_length = 5, choices = TYPES)
+  host = models.ForeignKey ('Hosts',      on_delete = models.SET_NULL, null = True, db_column = 'host', verbose_name = 'Хост')
+  type = models.ForeignKey ('StaffTypes', on_delete = models.SET_NULL, null = True, db_column = 'type', verbose_name = 'Тип обслуживания')
+  date = models.DateField  (                                                                            verbose_name = 'Дата')
+  time = models.TimeField  (                                                                            verbose_name = 'Время')
+
+class StaffTypes (models.Model):
+  '''Типы обслуживания'''
+  class Meta (object):
+    db_table = 'staff_types'
+
+  id      = models.AutoField (primary_key = True)
+  name    = models.CharField (max_length =   5, verbose_name = 'Название')
+  comment = models.CharField (max_length = 100, verbose_name = 'Комментарий')
+
+class StaffPeriods (models.Model):
+  '''Периоды обслуживания'''
+  class Meta (object):
+    db_table = 'staff_periods'
+
+  id     = models.AutoField    (primary_key = True)
+  host   = models.ForeignKey   ('Hosts',      on_delete = models.SET_NULL, null = True, db_column = 'host', verbose_name = 'Хост')
+  type   = models.ForeignKey   ('StaffTypes', on_delete = models.SET_NULL, null = True, db_column = 'type', verbose_name = 'Тип обслуживания')
+  period = models.IntegerField (                                           null = False,                    verbose_name = 'Период обслуживания')
 
