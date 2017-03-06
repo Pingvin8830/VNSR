@@ -122,20 +122,38 @@ class Hosts (models.Model):
   class Meta (object):
     db_table = 'hosts'
 
-  id      = models.AutoField  (primary_key = True,                                                         verbose_name = 'Код')
-  cpu     = models.ForeignKey ('CPUs',     on_delete = models.SET_NULL, null = True, db_column = 'cpu',    verbose_name = 'Процессор')
-  mother  = models.ForeignKey ('Mothers',  on_delete = models.SET_NULL, null = True, db_column = 'mother', verbose_name = 'Материнская плата')
-  ram1    = models.ForeignKey ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram1',   verbose_name = 'ОП1',        related_name = 'ram1')
-  ram2    = models.ForeignKey ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram2',   verbose_name = 'ОП2',        related_name = 'ram2')
-  ram3    = models.ForeignKey ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram3',   verbose_name = 'ОП3',        related_name = 'ram3')
-  ram4    = models.ForeignKey ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram4',   verbose_name = 'ОП4',        related_name = 'ram4')
-  hdd1    = models.ForeignKey ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd1',   verbose_name = 'Винчестер1', related_name = 'hdd1')
-  hdd2    = models.ForeignKey ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd2',   verbose_name = 'Винчестер2', related_name = 'hdd2')
-  hdd3    = models.ForeignKey ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd3',   verbose_name = 'Винчестер3', related_name = 'hdd3')
-  hdd4    = models.ForeignKey ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd4',   verbose_name = 'Винчестер4', related_name = 'hdd4')
-  net     = models.ForeignKey ('Networks', on_delete = models.SET_NULL, null = True, db_column = 'net',    verbose_name = 'Сетевая карта')
-  video   = models.ForeignKey ('Videos',   on_delete = models.SET_NULL, null = True, db_column = 'video',  verbose_name = 'Видеокарта')
-  name    = models.CharField  (max_length = 30,                                                            verbose_name = 'Сетевое имя')
-  ip      = models.CharField  (max_length = 15,                                                            verbose_name = 'IP-адрес')
-  comment = models.CharField  (max_length = 100,                        null = True,                       verbose_name = 'Комментарий')
+  id        = models.AutoField    (primary_key = True,                                                         verbose_name = 'Код')
+  cpu       = models.ForeignKey   ('CPUs',     on_delete = models.SET_NULL, null = True, db_column = 'cpu',    verbose_name = 'Процессор')
+  mother    = models.ForeignKey   ('Mothers',  on_delete = models.SET_NULL, null = True, db_column = 'mother', verbose_name = 'Материнская плата')
+  ram1      = models.ForeignKey   ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram1',   verbose_name = 'ОП1',        related_name = 'ram1')
+  ram2      = models.ForeignKey   ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram2',   verbose_name = 'ОП2',        related_name = 'ram2')
+  ram3      = models.ForeignKey   ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram3',   verbose_name = 'ОП3',        related_name = 'ram3')
+  ram4      = models.ForeignKey   ('RAMs',     on_delete = models.SET_NULL, null = True, db_column = 'ram4',   verbose_name = 'ОП4',        related_name = 'ram4')
+  hdd1      = models.ForeignKey   ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd1',   verbose_name = 'Винчестер1', related_name = 'hdd1')
+  hdd2      = models.ForeignKey   ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd2',   verbose_name = 'Винчестер2', related_name = 'hdd2')
+  hdd3      = models.ForeignKey   ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd3',   verbose_name = 'Винчестер3', related_name = 'hdd3')
+  hdd4      = models.ForeignKey   ('HDDs',     on_delete = models.SET_NULL, null = True, db_column = 'hdd4',   verbose_name = 'Винчестер4', related_name = 'hdd4')
+  net       = models.ForeignKey   ('Networks', on_delete = models.SET_NULL, null = True, db_column = 'net',    verbose_name = 'Сетевая карта')
+  video     = models.ForeignKey   ('Videos',   on_delete = models.SET_NULL, null = True, db_column = 'video',  verbose_name = 'Видеокарта')
+  name      = models.CharField    (max_length = 30,                                                            verbose_name = 'Сетевое имя')
+  ip        = models.CharField    (max_length = 15,                                                            verbose_name = 'IP-адрес')
+  soft_days = models.IntegerField (                                         null = True,                       verbose_name = 'Период обновления')
+  hard_days = models.IntegerField (                                         null = True,                       verbose_name = 'Период обслуживания')
+  os        = models.CharField    (max_length = 10,                         null = True,                       verbose_name = 'Операционная система')
+  comment   = models.CharField    (max_length = 100,                        null = True,                       verbose_name = 'Комментарий')
+
+class StaffLog (models.Model):
+  '''Логирование обслуживания'''
+  TYPES = (
+    ('soft', 'ПО'),
+    ('hard', 'Железо'),
+  )
+  class Meta (object):
+    db_table = 'staff_log'
+
+  id   = models.AutoField  (primary_key = True)
+  host = models.ForeignKey ('Hosts', on_delete = models.SET_NULL, null = True, db_column = 'host', verbose_name = 'Хост')
+  date = models.DateField  ()
+  time = models.TimeField  ()
+  type = models.CharField  (max_length = 5, choices = TYPES)
 
