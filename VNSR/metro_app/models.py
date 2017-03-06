@@ -1,6 +1,8 @@
+from datetime             import datetime, date, time
 from django.db            import models
-from .functions           import decimal_to_money, control_period
+from .functions           import decimal_to_money, control_period, time_to_int, int_to_time
 from calend_app.functions import get_month_text, get_now
+from calend_app.models    import Signs
 
 # Create your models here.
 
@@ -34,6 +36,9 @@ class SheduleReal (models.Model):
   class Meta ():
     db_table = 'shedule_real'
 
+  def __str__ (self):
+    return '%s' % self.data
+
   id          = models.AutoField         (primary_key = True      )
   data        = models.DateField         (unique      = True      )
   start       = models.TimeField         (                   null = True)
@@ -44,6 +49,77 @@ class SheduleReal (models.Model):
   delay       = models.TimeField         (default = '00:00', null = True)
   vacation    = models.BooleanField      (default = False)
   sick        = models.BooleanField      (default = False)
+
+  def if_sick (self):
+    if self.sick:
+      self.start       = time (0, 0, 0)
+      self.end         = time (0, 0, 0)
+      self.break_day   = 0
+      self.break_night = 0
+
+  def hours (self):
+    '''Считает количество рабочих часов'''
+    if self.start > self.end: e = datetime.combine (date (1, 1, 2), self.end)
+    else:                     e = datetime.combine (date (1, 1, 1), self.end)
+    s = datetime.combine (date (1, 1, 1), self.start)
+    self.hours = (e - s).seconds - self.break_day * 30 * 60 - self.break_night * 30 * 60
+    self.hours = self.hours / 60 / 60
+
+  def night (self):
+    '''Считает количество ночных часов'''
+    # 00 01 02 03 04 05 06|07 08 09 10 11 12 13 14 15 16 17 18 19 20 21|22 23 24||01 02 03 04 05 06|07 08 09 10 11 12 13 14 15 16 17 18 19 20 21|22 23 24|
+    #                     |                                            |        ||                 |                                            |        |
+    # 1        ------     |                                            |        ||                 |                                            |        |
+    # 2        -----------+------------------------------------------  |        ||                 |                                            |        |
+    # 3        -----------+--------------------------------------------+---     ||                 |                                            |        |
+    # 4        -----------+--------------------------------------------+--------++---              |                                            |        |
+
+    # 5                   |               ---------------------------  |        ||                 |                                            |        |
+    # 6                   |               -----------------------------+---     ||                 |                                            |        |
+    # 7                   |               -----------------------------+--------++------------     |                                            |        |
+    # 8                   |               -----------------------------+--------++-----------------+------------                                |        |
+
+    # 9                   |                                            |   ---  ||                 |                                            |        |
+    # 10                  |                                            |   -----++------------     |                                            |        |
+    # 11                  |                                            |   -----++-----------------+------------------------------------------  |        |
+    # 12                  |                                            |   -----++-----------------+--------------------------------------------+---     |
+    #                     1                                            2        3                  4                                            5        6
+
+    if self.start > self.end: end = datetime.combine (date (1, 1, 2), self.end)
+    else:                     end = datetime.combine (date (1, 1, 1), self.end)
+    start = datetime.combine (date (1, 1, 1), self.start)
+
+    ctrl_fst_mng = datetime (1, 1, 1, 6)
+    ctrl_fst_evn = datetime (1, 1, 1, 22)
+    ctrl_fst_day = datetime (1, 1, 2)
+    ctrl_scn_mng = datetime (1, 1, 2, 6)
+    ctrl_scn_evn = datetime (1, 1, 2, 22)
+    ctrl_scn_day = datetime (1, 1, 3)
+
+    if   (start < ctrl_fst_mng) and (end <= ctrl_fst_mng): self.night = (end          - start       ).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_mng) and (end <= ctrl_fst_evn): self.night = (ctrl_fst_mng - start       ).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_mng) and (end <= ctrl_fst_day): self.night = (end          - start       ).seconds / 3600 - 16 - self.break_night * 0.5
+    elif (start < ctrl_fst_mng) and (end <= ctrl_scn_mng): self.night = (end          - start       ).seconds / 3600 - 16 - self.break_night * 0.5
+    elif (start < ctrl_fst_evn) and (end <= ctrl_fst_evn): self.night = 0
+    elif (start < ctrl_fst_evn) and (end <= ctrl_fst_day): self.night = (end          - ctrl_fst_evn).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_evn) and (end <= ctrl_scn_mng): self.night = (end          - ctrl_fst_evn).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_evn) and (end <= ctrl_scn_evn): self.night = 8                                                 - self.break_night * 0.5
+    elif (start < ctrl_fst_day) and (end <= ctrl_fst_day): self.night = (end          - start       ).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_day) and (end <= ctrl_scn_mng): self.night = (end          - start       ).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_day) and (end <= ctrl_scn_evn): self.night = (ctrl_scn_mng - start       ).seconds / 3600      - self.break_night * 0.5
+    elif (start < ctrl_fst_day) and (end <= ctrl_scn_day): self.night = (end          - start       ).seconds / 3600 - 16 - self.break_night * 0.5
+
+  def holiday (self):
+    signs = Signs.objects.get (data = self.data)
+    if signs.holiday:
+      if self.start > self.end:
+        self.holiday = (datetime (1, 1, 2) - datetime.combine (date (1, 1, 1), self.start)).seconds / 3600 - self.break_day * 0.5 - self.break_night * 0.5
+        self.night   = 0
+      else:
+        self.holiday = self.hours
+        self.night   = 0
+    else:
+      self.holiday = 0
 
 class Lanch (models.Model):
   '''Стоимость обеда'''
