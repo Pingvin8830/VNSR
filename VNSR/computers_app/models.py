@@ -148,7 +148,7 @@ class StaffLog (models.Model):
   host = models.ForeignKey ('Hosts',      on_delete = models.SET_NULL, null = True, db_column = 'host', verbose_name = 'Хост')
   type = models.ForeignKey ('StaffTypes', on_delete = models.SET_NULL, null = True, db_column = 'type', verbose_name = 'Тип обслуживания')
   date = models.DateField  (                                                                            verbose_name = 'Дата')
-  time = models.TimeField  (                                                                            verbose_name = 'Время')
+  time = models.TimeField  (                                           null = True,                     verbose_name = 'Время')
 
 class StaffTypes (models.Model):
   '''Типы обслуживания'''
@@ -156,16 +156,28 @@ class StaffTypes (models.Model):
     db_table = 'staff_types'
 
   id      = models.AutoField (primary_key = True)
-  name    = models.CharField (max_length =   5, verbose_name = 'Название')
-  comment = models.CharField (max_length = 100, verbose_name = 'Комментарий')
+  name    = models.CharField (max_length =   5, unique = True, verbose_name = 'Название')
+  comment = models.CharField (max_length = 100, null   = True, verbose_name = 'Комментарий')
 
 class StaffPeriods (models.Model):
   '''Периоды обслуживания'''
   class Meta (object):
-    db_table = 'staff_periods'
+    db_table        = 'staff_periods'
+    unique_together = ('host', 'type')
 
   id     = models.AutoField    (primary_key = True)
   host   = models.ForeignKey   ('Hosts',      on_delete = models.SET_NULL, null = True, db_column = 'host', verbose_name = 'Хост')
   type   = models.ForeignKey   ('StaffTypes', on_delete = models.SET_NULL, null = True, db_column = 'type', verbose_name = 'Тип обслуживания')
   period = models.IntegerField (                                           null = False,                    verbose_name = 'Период обслуживания')
+
+class StaffNeed (models.Model):
+  '''Необходимость обслуживания'''
+  class Meta (object):
+    db_table        = 'staff_need'
+    unique_together = ('host', 'type')
+
+  id      = models.AutoField    (primary_key = True)
+  host    = models.ForeignKey   ('Hosts',      on_delete = models.CASCADE, db_column = 'host', verbose_name = 'Хост')
+  type    = models.ForeignKey   ('StaffTypes', on_delete = models.CASCADE, db_column = 'type', verbose_name = 'Тип')
+  is_need = models.BooleanField (              default = False,                               verbose_name = 'Необходимость')
 
