@@ -176,8 +176,9 @@ class StaffNeed (models.Model):
     db_table        = 'staff_need'
     unique_together = ('host', 'type')
 
-  id      = models.AutoField    (primary_key = True)
-  host    = models.ForeignKey   ('Hosts',      on_delete = models.CASCADE, db_column = 'host', verbose_name = 'Хост')
-  type    = models.ForeignKey   ('StaffTypes', on_delete = models.CASCADE, db_column = 'type', verbose_name = 'Тип')
-  is_need = models.BooleanField (              default = False,                               verbose_name = 'Необходимость')
+  id           = models.AutoField     (primary_key = True)
+  host         = models.ForeignKey    ('Hosts',      on_delete = models.CASCADE, db_column = 'host', verbose_name = 'Хост')
+  type         = models.ForeignKey    ('StaffTypes', on_delete = models.CASCADE, db_column = 'type', verbose_name = 'Тип')
+  is_need      = models.BooleanField  (              default = False,                                verbose_name = 'Необходимость')
+  last_control = models.DateTimeField (              null = True,                                    verbose_name = 'Время последней проверки')
 
