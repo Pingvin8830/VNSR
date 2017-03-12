@@ -188,10 +188,21 @@ class StaffDoings (models.Model):
     db_table = 'staff_doings'
 
   id      = models.AutoField    (primary_key = True)
-  type    = models.ForeignKey   ('StaffTypes', on_delete = models.SET_NULL, null = True, db_column = 'type', verbose_name = 'Тип обслуживания')
+  type    = models.ForeignKey   ('StaffTypes',     on_delete = models.SET_NULL, null = True, db_column = 'type',    verbose_name = 'Тип обслуживания')
+  command = models.ForeignKey   ('SystemCommands', on_delete = models.SET_NULL, null = True, db_column = 'command', verbose_name = 'Команда')
   code    = models.IntegerField (                  null = False, verbose_name = 'Код процедуры')
-  command = models.CharField    (max_length = 100, null = False, verbose_name = 'Команда')
   task    = models.CharField    (max_length = 100, null = True,  verbose_name = 'Сообщение пользователю')
   is_need = models.BooleanField (default    = True,              verbose_name = 'Обязательность выполнения')
+  is_args = models.BooleanField (default    = False,             verbose_name = 'Необходимость параметров')
+  is_loop = models.BooleanField (default    = False,             verbose_name = 'Цикличность')
   comment = models.CharField    (max_length = 100, null = True,  verbose_name = 'Комментарий')
+
+class SystemCommands (models.Model):
+  '''Системные команды'''
+  class Meta (object):
+    db_table = 'system_commands'
+
+  id   = models.AutoField (primary_key = True)
+  name = models.CharField (max_length = 100, null = True,  verbose_name = 'Имя')
+  text = models.CharField (max_length = 100, null = False, verbose_name = 'Текст')
 
