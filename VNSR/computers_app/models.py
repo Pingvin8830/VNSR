@@ -156,7 +156,7 @@ class StaffTypes (models.Model):
     db_table = 'staff_types'
 
   id      = models.AutoField (primary_key = True)
-  name    = models.CharField (max_length =   5, unique = True, verbose_name = 'Название')
+  name    = models.CharField (max_length = 100, unique = True, verbose_name = 'Название')
   comment = models.CharField (max_length = 100, null   = True, verbose_name = 'Комментарий')
 
 class StaffPeriods (models.Model):
