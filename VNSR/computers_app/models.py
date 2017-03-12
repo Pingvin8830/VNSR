@@ -182,3 +182,16 @@ class StaffNeed (models.Model):
   is_need      = models.BooleanField  (              default = False,                                verbose_name = 'Необходимость')
   last_control = models.DateTimeField (              null = True,                                    verbose_name = 'Время последней проверки')
 
+class StaffDoings (models.Model):
+  '''Процедуры обслуживания'''
+  class Meta (object):
+    db_table = 'staff_doings'
+
+  id      = models.AutoField    (primary_key = True)
+  type    = models.ForeignKey   ('StaffTypes', on_delete = models.SET_NULL, null = True, db_column = 'type', verbose_name = 'Тип обслуживания')
+  code    = models.IntegerField (                  null = False, verbose_name = 'Код процедуры')
+  command = models.CharField    (max_length = 100, null = False, verbose_name = 'Команда')
+  task    = models.CharField    (max_length = 100, null = True,  verbose_name = 'Сообщение пользователю')
+  is_need = models.BooleanField (default    = True,              verbose_name = 'Обязательность выполнения')
+  comment = models.CharField    (max_length = 100,               verbose_name = 'Комментарий')
+
