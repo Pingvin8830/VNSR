@@ -193,5 +193,5 @@ class StaffDoings (models.Model):
   command = models.CharField    (max_length = 100, null = False, verbose_name = 'Команда')
   task    = models.CharField    (max_length = 100, null = True,  verbose_name = 'Сообщение пользователю')
   is_need = models.BooleanField (default    = True,              verbose_name = 'Обязательность выполнения')
-  comment = models.CharField    (max_length = 100,               verbose_name = 'Комментарий')
+  comment = models.CharField    (max_length = 100, null = True,  verbose_name = 'Комментарий')
 
