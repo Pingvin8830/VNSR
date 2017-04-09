@@ -7,9 +7,10 @@ class ItemsMenu (models.Model):
   class Meta ():
     db_table = 'items_menu'
 
-  id   = models.AutoField (primary_key = True)
-  app  = models.CharField (max_length  = 100, verbose_name = 'Ссылка')
-  text = models.CharField (max_length  = 100, verbose_name = 'Подпись')
+  id      = models.AutoField (primary_key = True)
+  app     = models.CharField (max_length  = 100,              verbose_name = 'Ссылка')
+  text    = models.CharField (max_length  = 100,              verbose_name = 'Подпись')
+  comment = models.CharField (max_length  = 100, null = True, verbose_name = 'Комментарий')
 
 class Users (models.Model):
   '''Пользователи'''
@@ -33,9 +34,10 @@ class ItemsApp (models.Model):
   class Meta ():
     db_table = 'items_app'
 
-  id     = models.AutoField (primary_key = True)
-  text   = models.CharField (max_length = 20, verbose_name = 'Название подпункта')
-  href   = models.CharField (max_length = 20, verbose_name = 'Вторая часть url')
+  id      = models.AutoField (primary_key = True)
+  text    = models.CharField (max_length  =  20,              verbose_name = 'Название подпункта')
+  href    = models.CharField (max_length  =  20,              verbose_name = 'Вторая часть url')
+  comment = models.CharField (max_length  = 100, null = True, verbose_name = 'Комментарий')
 
 class AppMenu (models.Model):
   '''Сопоставление приложениям пунктов меню - действий'''
