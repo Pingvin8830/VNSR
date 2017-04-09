@@ -9,6 +9,6 @@ def index (request):
   if not is_user (request): return redirect ('/auth/login/')
   page    = 'main/index.html'
   context = default_context (request)
-  context ['apps'] = ItemsMenu.objects.all ()
+  context ['apps'] = ItemsMenu.objects.all ().order_by ('text')
   return render (request, page, context)
 
