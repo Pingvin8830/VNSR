@@ -16,6 +16,7 @@
           <th colspan=2>Смена</th>
           <th colspan=2>Перерывы</th>
           <th colspan=3>Часы</th>
+          <th rowspan=2>Больничный</th>
         </tr>
         <tr>
           <th>С</th>
@@ -33,11 +34,26 @@
             <td>{% if shift.end.hour   < 10 %}0{% endif %}{{ shift.end }}</td>
             <td>{{ shift.break_day   }}</td>
             <td>{{ shift.break_night }}</td>
-            <td>{{ shift.hours }}</td>
-            <td>{{ shift.night }}</td>
-            <td>{{ shift.week  }}</td>
+            <td align='right'>{{ shift.hours }}</td>
+            <td align='right'>{{ shift.night }}</td>
+            <td align='right'>{{ shift.holiday  }}</td>
+            <td>{{ shift.sick  }}</td>
           </tr>
         {% endfor %}
+        <tr>
+          <td colspan=9><hr></td>
+        </tr>
+        <tr>
+          <th align='right' colspan=5>Итого</th>
+          <th align='right'>{{ akk_hours }}</th>
+          <th align='right'>{{ akk_night }}</th>
+          <th align='right'>{{ akk_holiday }}</th>
+          <th align='right'>{{ akk_sick }}</th>
+        </tr>
+        <tr>
+          <th align='right' colspan=5>Норма часов</th>
+          <th align='right'>{{ norma }}</th>
+        </tr>
       </table>
     </div>
   </center>

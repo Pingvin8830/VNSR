@@ -1,12 +1,61 @@
 from datetime             import date, time, timedelta
 from django               import forms
 from django.shortcuts     import render, redirect
-from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails
+from .forms               import AddPayslipForm
+from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails, Rate
 from calend_app.functions import get_now, get_month_text
+from calend_app.models    import Signs
 from menu_app.functions   import create_menu_app
 from main_app.views       import is_user, default_context
 
 # Create your views here.
+
+def calculation (request):
+  '''Расчеты за месяц'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    context = default_context (request)
+    page    = 'metro/calculation.html'
+    month = int (request.POST ['month'])
+    if month == 1:
+      date_start_avans = date (
+        int (request.POST ['year']) - 1,
+        12,
+        16
+      )
+      days = 31
+      while True:
+        try:
+          date_end_avans = date (
+            int (request.POST ['year']) - 1,
+            12,
+            days
+          )
+          break
+        except:
+          days -= 1
+    else:
+      date_start_avans = date (
+        int (request.POST ['year']),
+        int (request.POST ['month']) - 1,
+        16
+      )
+      days = 31
+      while True:
+        try:
+          date_end_avans = date (
+            int (request.POST ['year']),
+            int (request.POST ['month']) - 1,
+            days
+          )
+          break
+        except:
+          days -= 1
+    context ['test'] = '%s %s' % (date_start_avans, date_end_avans)
+    return render (request, page, context)
+  else:
+    return case_month (request, href = 'calculation')
+  return redirect ('/')
 
 def case_period (request):
   '''Запрашивает период'''
@@ -26,20 +75,49 @@ def display_tabel (request):
       int (request.POST ['start_month']),
       int (request.POST ['start_day'])
     )
-    end = date (
-      int (request.POST ['end_year']),
-      int (request.POST ['end_month']),
-      int (request.POST ['end_day'])
-    )
+    day = int (request.POST ['end_day'])
+    while True:
+      try:
+        end = date (
+          int (request.POST ['end_year']),
+          int (request.POST ['end_month']),
+          day
+        )
+        break
+      except:
+        day -= 1
     context ['start']  = start
     context ['end']    = end
     context ['shifts'] = []
-    shifts = SheduleReal.objects.filter (data__gte = start, data__lte = end)
-    for shift in shifts:
+    data        = start
+    norma       = 0
+    akk_hours   = 0
+    akk_night   = 0
+    akk_holiday = 0
+    akk_sick    = 0
+    while end >= data:
+      signs = Signs.objects.get (data = data)
+      if   signs.work:  norma += 8
+      elif signs.short: norma += 7
+      try:
+        shift = SheduleReal.objects.get (data = data)
+      except:
+        shift = SheduleReal (data = data, start = time (0, 0, 0), end = time (0, 0, 0), break_day = 0, break_night = 0)
+      shift.if_sick ()
       shift.hours   ()
       shift.night   ()
       shift.holiday ()
       context ['shifts'].append (shift)
+      akk_hours += shift.hours
+      akk_night += shift.night
+      akk_holiday += shift.holiday
+      if shift.sick: akk_sick += 1
+      data += timedelta (days = 1)
+    context ['akk_hours']   = akk_hours
+    context ['akk_night']   = akk_night
+    context ['akk_holiday'] = akk_holiday
+    context ['akk_sick']    = akk_sick
+    context ['norma']       = norma
     return render (request, page, context)
   else:
     return case_period (request)
@@ -85,8 +163,14 @@ def add_payslip (request):
   if not is_user (request): return redirect ('/')
   if request.POST:
     if not request.POST ['rotate_dolg']: request.POST.rotate_dolg = None
-    payslip = Payslip (period = request.POST ['year'] + '-' + request.POST ['month'] + '-01', division = request.POST ['division'], post = request.POST ['post'], rate = request.POST ['rate'].replace (',', '.'), begin_dolg = request.POST ['begin_dolg'].replace (',', '.'), rotate_dolg = request.POST ['rotate_dolg'].replace (',', '.'), end_dolg = request.POST ['end_dolg'].replace (',', '.'), income = request.POST ['income'].replace (',', '.'), consumption = request.POST ['consumption'].replace (',', '.'), paying = request.POST ['paying'].replace (',', '.'))
-    payslip.save ()
+    form = AddPayslipForm (request.POST)
+    if form.is_valid ():
+      payslip = form.save (commit = False)
+      payslip.period = date (
+        int (form.cleaned_data ['year']),
+        int (form.cleaned_data ['month']),
+        1)
+      payslip.save ()
     context = default_context (request)
     return redirect ('/metro/display_payslip_details/%d' % payslip.id)
   return redirect ('/metro')
@@ -95,6 +179,7 @@ def display_payslip (request, payslip = None):
   '''Отображает расчетный листок'''
   if not is_user (request): return redirect ('/')
   if request.POST:
+    context = default_context (request)
     if not payslip:
       try:
         payslip = Payslip.objects.get (period = '%s-%s-01' % (str (request.POST ['year']), str (request.POST ['month'])))
@@ -103,10 +188,10 @@ def display_payslip (request, payslip = None):
       except:
         payslip = Payslip ()
         page    = 'metro/add_payslip.html'
+        context ['form'] = AddPayslipForm
     else:
         page    = 'metro/display_payslip.html'
         payslip.print_edit ()
-    context = default_context (request)
     context ['payslip']     = payslip
     details = PayslipDetails.objects.filter (payslip = payslip.id).order_by ('code', 'period')
     context ['incomes']      = []
@@ -119,13 +204,14 @@ def display_payslip (request, payslip = None):
       elif i.type == 'o': context ['others'].append       (i)
     return render (request, page, context)
   else:
-    return case_month (request)
+    return case_month (request, href = 'payslip')
 
-def case_month (request):
+def case_month (request, href):
   '''Выбор месяца'''
   if not is_user (request): redirect ('/')
   page = 'metro/case_month.html'
   context = default_context (request)
+  context ['href'] = href
   return render (request, page, context)
 
 def add_codes_payslip (request):

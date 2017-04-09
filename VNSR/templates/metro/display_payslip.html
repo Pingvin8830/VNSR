@@ -4,7 +4,7 @@
 {% block menu %}
   <a href="{% url 'metro_app:add_details'     payslip.id %}">Добавить запись</a>
   <a href="{% url 'metro_app:control_payslip' payslip.id %}" target='_blank'>Контроль</a>
-  <a href="{% url 'metro_app:case_month' %}">Назад</a>
+  <a href="{% url 'metro_app:index' %}">Назад</a>
 {% endblock %}
 
 {% block content %}

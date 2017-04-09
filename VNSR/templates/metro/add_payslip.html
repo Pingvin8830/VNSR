@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block menu %}
-  <a href="{% url 'metro_app:case_month' %}">Назад</a>
+  <a href="{% url 'metro_app:index' %}">Назад</a>
 {% endblock %}
 
 {% block content %}
@@ -28,23 +28,10 @@
                 За &nbsp
               </td>
               <td>
-                <select name='month' size=1>
-                  <option value='1'>Январь
-                  <option value='2'>Февраль
-                  <option value='3'>Март
-                  <option value='4'>Апрель
-                  <option value='5'>Май
-                  <option value='6'>Июнь
-                  <option value='7'>Июль
-                  <option value='8'>Август
-                  <option value='9'>Сентябрь
-                  <option value='10'>Октябрь
-                  <option value='11'>Ноябрь
-                  <option value='12'>Декабрь
-                </select>
+                {{ form.month }}
               </td>
               <td>
-                <input type='number' name='year' value='2016'>
+                {{ form.year }}
               </td>
             </tr>
           </table>
@@ -68,7 +55,7 @@
                 Подразделение:
               </td>
               <td>
-                <input type='text' name='division' size=30 maxlength=50>
+                {{ form.division }}
               </td>
             </tr>
             <tr>
@@ -76,7 +63,7 @@
                 Должность:
               </td>
               <td>
-                <input type='text' name='post' size=30 maxlength=50>
+                {{ form.post }}
               </td>
             </tr>
             <tr>
@@ -84,7 +71,7 @@
                 Оклад/Тариф:
               </td>
               <td>
-                <input type='text' name='rate' size=30 maxlength=10>
+                {{ form.rate }}
               </td>
             </tr>
           </table>
@@ -102,7 +89,7 @@
                 ─
               </td>
               <td class='t-r'>
-                <input type='text' name='begin_dolg' size=10 maxlength=10 value='0.00'>
+                {{ form.begin_dolg }}
               </td>
             </tr>
             <tr>
@@ -113,7 +100,8 @@
                 ─
               </td>
               <td class='t-r'>
-                <input type='text' name='rotate_dolg' size=10 maxlength=10 value='0.00'>
+                {{ form.rotate_dolg }}
+              </td>
               <td class='t-r'>
               </td>
             </tr>
@@ -125,7 +113,7 @@
                 ─
               </td>
               <td class='t-r'>
-                <input type='text' name='end_dolg' size=10 maxlength=10 value='0.00'>
+                {{ form.end_dolg }}
               </td>
             </tr>
           </table>
@@ -144,7 +132,7 @@
                 Начислено
               </td>
               <td class='t-r_b-rb'>
-                <input type='text' name='income' size=10 maxlength=10>
+                {{ form.income }}
               </td>
             </tr>
             <tr>
@@ -152,7 +140,7 @@
                 Пересылка в банк
               </td>
               <td class='t-r_b-rb'>
-                <input type='text' name='paying' size=10 maxlength=10>
+                {{ form.paying }}
               </td>
               <td class='t-r'>
               </td>
@@ -172,7 +160,7 @@
                 Удержано
               </td>
               <td class='t-r_b-rb'>
-                <input type='text' name='consumption' size=10 maxlength=10>
+                {{ form.consumption }}
               </td>
             </tr>
           </table>

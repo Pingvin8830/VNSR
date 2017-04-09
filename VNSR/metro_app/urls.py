@@ -22,6 +22,7 @@ urlpatterns = [
   url (r'^add_details/(?P<id>[0-9]+)',                             views.add_details,       name = 'add_details'),
   url (r'^add_payslip',                                            views.add_payslip,       name = 'add_payslip'),
   url (r'^case_month',                                             views.case_month,        name = 'case_month'),
+  url (r'^calculation',                                            views.calculation,       name = 'calculation'),
   url (r'^control_payslip/(?P<id>[0-9]+)',                         views.control_payslip,   name = 'control_payslip'),
   url (r'^display_payslip',                                        views.display_payslip,   name = 'display_payslip'),
   url (r'^display_tabel',                                          views.display_tabel,     name = 'display_tabel'),
