@@ -39,22 +39,22 @@
         <link rel="stylesheet" type="text/css" href="{% static 'main/calend.css' %}">
         <div id="calend">
           <br>
-          <table align="center" border="1">
-            <caption>{{ month_text }}</caption>
-            <tr>
-              <td>Пн</td>
-              <td>Вт</td>
-              <td>Ср</td>
-              <td>Чт</td>
-              <td>Пт</td>
-              <td class="week">Сб</td>
-              <td class="week">Вс</td>
-            </tr>
-            {% autoescape off %}
-              {{ calend }}
-            {% endautoescape %}
-          </table>
           <center>
+            <table border="1">
+              <caption>{{ month_text }}</caption>
+              <tr>
+                <td>Пн</td>
+                <td>Вт</td>
+                <td>Ср</td>
+                <td>Чт</td>
+                <td>Пт</td>
+                <td class="week">Сб</td>
+                <td class="week">Вс</td>
+              </tr>
+              {% autoescape off %}
+                {{ calend }}
+              {% endautoescape %}
+            </table>
             Сегодня: {{ now }}
           </center>
         </div>
