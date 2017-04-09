@@ -36,6 +36,9 @@ class SheduleReal (models.Model):
   class Meta ():
     db_table = 'shedule_real'
 
+  def __str__ (self):
+    return '%s' % self.data
+
   id          = models.AutoField         (primary_key = True      )
   data        = models.DateField         (unique      = True      )
   start       = models.TimeField         (                   null = True)
@@ -46,6 +49,13 @@ class SheduleReal (models.Model):
   delay       = models.TimeField         (default = '00:00', null = True)
   vacation    = models.BooleanField      (default = False)
   sick        = models.BooleanField      (default = False)
+
+  def if_sick (self):
+    if self.sick:
+      self.start       = time (0, 0, 0)
+      self.end         = time (0, 0, 0)
+      self.break_day   = 0
+      self.break_night = 0
 
   def hours (self):
     '''Считает количество рабочих часов'''
@@ -103,13 +113,13 @@ class SheduleReal (models.Model):
     signs = Signs.objects.get (data = self.data)
     if signs.holiday:
       if self.start > self.end:
-        self.week  = (datetime (1, 1, 2) - datetime.combine (date (1, 1, 1), self.start)).seconds / 3600 - self.break_day * 0.5 - self.break_night * 0.5
-        self.night = 0
+        self.holiday = (datetime (1, 1, 2) - datetime.combine (date (1, 1, 1), self.start)).seconds / 3600 - self.break_day * 0.5 - self.break_night * 0.5
+        self.night   = 0
       else:
-        self.week  = self.hours
-        self.night = 0
+        self.holiday = self.hours
+        self.night   = 0
     else:
-      self.week = 0
+      self.holiday = 0
 
 class Lanch (models.Model):
   '''Стоимость обеда'''
