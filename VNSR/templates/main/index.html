@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="{% static 'main/main.css' %}">
     <title>
-      Мой сайт
+      Мой сайт (develop)
     </title>
   </head>
   <body>
@@ -39,22 +39,22 @@
         <link rel="stylesheet" type="text/css" href="{% static 'main/calend.css' %}">
         <div id="calend">
           <br>
-          <table align="center" border="1">
-            <caption>{{ month_text }}</caption>
-            <tr>
-              <td>Пн</td>
-              <td>Вт</td>
-              <td>Ср</td>
-              <td>Чт</td>
-              <td>Пт</td>
-              <td class="week">Сб</td>
-              <td class="week">Вс</td>
-            </tr>
-            {% autoescape off %}
-              {{ calend }}
-            {% endautoescape %}
-          </table>
           <center>
+            <table border="1">
+              <caption>{{ month_text }}</caption>
+              <tr>
+                <td>Пн</td>
+                <td>Вт</td>
+                <td>Ср</td>
+                <td>Чт</td>
+                <td>Пт</td>
+                <td class="week">Сб</td>
+                <td class="week">Вс</td>
+              </tr>
+              {% autoescape off %}
+                {{ calend }}
+              {% endautoescape %}
+            </table>
             Сегодня: {{ now }}
           </center>
         </div>
@@ -62,13 +62,30 @@
       <link rel="stylesheet" type="text/css" href="{% static 'main/content.css' %}">
       <div id="content">
         {% block content %}
-          Добро пожаловать на сайт VlasovNetwork.sknt.ru
+          <center>
+            Добро пожаловать на сайт VlasovNetwork.sknt.ru<br><br>
+
+            Сайт создан для личных потребностей.<br><br>
+            <table border=1>
+              <caption>Приложения</caption>
+              <tr>
+                <th>Название</th>
+                <th>Описание</th>
+              </tr>
+              {% for app in apps %}
+                <tr>
+                  <td>{{ app.text    }}</td>
+                  <td>{{ app.comment }}</td>
+                </tr>
+              {% endfor %}
+            </table>
+          </center>
         {% endblock %}
       </div>
       <link rel="stylesheet" type="text/css" href="{% static 'main/footer.css' %}">
       <div id="footer">
         {% block footer %}
-          Vlasov Anton &copy; 2016 <br>
+          Vlasov Anton &copy; 2016 - 2017<br>
         {% endblock %}
       </div>
     </div>
