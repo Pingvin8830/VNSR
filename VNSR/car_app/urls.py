@@ -18,6 +18,7 @@ from .                import views
 
 app_name    = 'car_app' 
 urlpatterns = [
-  url (r'^', views.index, name = 'index'),
+  url (r'^add_refuel', views.add_refuel, name = 'add_refuel'),
+  url (r'^',           views.index,      name = 'index'),
 ]
 
