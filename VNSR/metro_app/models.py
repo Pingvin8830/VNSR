@@ -57,6 +57,13 @@ class SheduleReal (models.Model):
       self.break_day   = 0
       self.break_night = 0
 
+  def if_vacation (self):
+    if self.vacation:
+      self.start       = time (0, 0, 0)
+      self.end         = time (0, 0, 0)
+      self.break_day   = 0
+      self.break_night = 0
+
   def hours (self):
     '''Считает количество рабочих часов'''
     if self.start > self.end: e = datetime.combine (date (1, 1, 2), self.end)
