@@ -16,9 +16,8 @@ Including another URLconf
 from django.conf.urls import url
 from .                import views
 
-app_name    = 'car_app' 
+app_name    = 'computers_app' 
 urlpatterns = [
-  url (r'^add_refuel', views.add_refuel, name = 'add_refuel'),
-  url (r'^',           views.index,      name = 'index'),
+  url (r'staff_hosts',views.staff_hosts, name = 'staff_hosts'),
+  url (r'^',          views.index,       name = 'index'),
 ]
-

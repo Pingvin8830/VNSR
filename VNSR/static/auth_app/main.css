@@ -1,16 +1,17 @@
 body {
-  background:       blue;
-  background-image: url('../images/header.jpg');
+  background:           blue;
+  background-image:     url('../images/sky.jpg');
+  background-repeat:    no-repeat;
+  background-position:  center top;
 }
 
 table {
-  background:       white;
-  border:           1px solid red;
-  margin-top:       150;
+  margin:               10%;
+  color:                yellow;
 }
 
 caption {
-  color:           white;
-  text-decoration: underline;
+  color:                white;
+  text-decoration:      underline;
 }
 

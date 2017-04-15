@@ -14,6 +14,9 @@ class Azs (models.Model):
   phone   = models.CharField (max_length = 15)
   comment = models.CharField (max_length = 100)
 
+  def __str__ (self):
+    return '%s - %s' % (self.company, self.name)
+
 class FuelTypes (models.Model):
   '''Типы топлива'''
   class Meta (object):
@@ -22,6 +25,9 @@ class FuelTypes (models.Model):
   id      = models.AutoField (primary_key = True)
   name    = models.CharField (max_length = 30, null = False)
   comment = models.CharField (max_length = 100)
+
+  def __str__ (self):
+    return self.name
 
 class PayTypes (models.Model):
   '''Типы оплаты'''
@@ -32,6 +38,9 @@ class PayTypes (models.Model):
   name     = models.CharField (max_length = 50, null = False)
   card_num = models.CharField (max_length = 30)
   comment  = models.CharField (max_length = 100)
+
+  def __str__ (self):
+    return self.name
 
 class Refuels (models.Model):
   '''Заправки автомобиля'''
