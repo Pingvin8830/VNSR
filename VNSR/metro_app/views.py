@@ -1,4 +1,4 @@
-from datetime             import date, time, timedelta
+from datetime             import date, datetime, time, timedelta
 from django               import forms
 from django.shortcuts     import render, redirect
 from .forms               import AddPayslipForm
@@ -97,31 +97,74 @@ def display_tabel (request):
     akk_sick     = 0
     akk_vacation = 0
     while end >= data:
-      signs = Signs.objects.get (data = data)
+      try:
+        signs = Signs.objects.get (data = data)
+      except:
+        signs = Signs ()
       if   signs.work:  norma += 8
       elif signs.short: norma += 7
       try:
         shift = SheduleReal.objects.get (data = data)
       except:
         shift = SheduleReal (data = data, start = time (0, 0, 0), end = time (0, 0, 0), break_day = 0, break_night = 0)
-      shift.if_sick ()
-      shift.if_vacation ()
-      shift.hours   ()
-      shift.night   ()
-      shift.holiday ()
+      if shift.sick or shift.vacation:
+        shift.start       = time (0, 0, 0)
+        shift.end         = time (0, 0, 0)
+        shift.break_day   = 0
+        shift.break_night = 0
+
+      if shift.start > shift.end: end_shift = datetime.combine (date (1, 1, 2), shift.end)
+      else:                       end_shift = datetime.combine (date (1, 1, 1), shift.end)
+      start_shift = datetime.combine (date (1, 1, 1), shift.start)
+      shift.hours = (end_shift - start_shift).seconds / 3600 - (shift.break_day + shift.break_night) * 0.5
+      ctrl_fst_mng = datetime (1, 1, 1,  6)
+      ctrl_fst_evn = datetime (1, 1, 1, 22)
+      ctrl_fst_day = datetime (1, 1, 2)
+      ctrl_scn_mng = datetime (1, 1, 2,  6)
+      ctrl_scn_evn = datetime (1, 1, 2, 22)
+      ctrl_scn_day = datetime (1, 1, 3)
+
+      if   (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_fst_mng): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_fst_evn): shift.night = (ctrl_fst_mng - start_shift).seconds  / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_fst_day): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5 - 16
+      elif (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_scn_mng): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5 - 16
+      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_fst_evn): shift.night = 0
+      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_fst_day): shift.night = (end_shift    - ctrl_fst_evn).seconds / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_scn_mng): shift.night = (end_shift    - ctrl_fst_evn).seconds / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_scn_evn): shift.night = 8                                            - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_fst_day): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_scn_mng): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_scn_evn): shift.night = (ctrl_scn_mng - start_shift).seconds  / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_scn_day): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5 - 16
+
+      if signs.holiday:
+        if shift.start > shift.end: shift.holiday = (datetime (1, 1, 2) - datetime.combine (date (1, 1, 1), shift.start)).seconds / 3600 - (shift.break_day + shift.break_night) * 0.5
+        else:                       shift.holiday = shift.hours
+        shift.night = 0
+      else:
+        shift.holiday = 0
+
       context ['shifts'].append (shift)
       akk_hours   += shift.hours
       akk_night   += shift.night
       akk_holiday += shift.holiday
-      if shift.sick:     akk_sick += 1
-      if shift.vacation: akk_vacation += 1
+      if shift.sick:
+        if   signs.work:  akk_sick += 8
+        elif signs.short: akk_sick += 7
+      if shift.vacation:
+        if   signs.work:  akk_vacation += 8
+        elif signs.short: akk_vacation += 7
       data += timedelta (days = 1)
+
+    norma_edit = norma - akk_sick - akk_vacation
+
     context ['akk_hours']    = akk_hours
     context ['akk_night']    = akk_night
     context ['akk_holiday']  = akk_holiday
     context ['akk_sick']     = akk_sick
     context ['akk_vacation'] = akk_vacation
     context ['norma']        = norma
+    context ['norma_edit']   = norma_edit
     return render (request, page, context)
   else:
     return case_period (request)

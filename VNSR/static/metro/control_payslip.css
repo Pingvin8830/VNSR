@@ -1,0 +1,9 @@
+#control_payslip {
+  height:   100%;
+  overflow: scroll;
+}
+
+#control_payslip table {
+  border: solid 1px red;
+}
+
