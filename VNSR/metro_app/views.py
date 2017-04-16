@@ -148,15 +148,23 @@ def display_tabel (request):
       akk_hours   += shift.hours
       akk_night   += shift.night
       akk_holiday += shift.holiday
-      if shift.sick:     akk_sick += 1
-      if shift.vacation: akk_vacation += 1
+      if shift.sick:
+        if   signs.work:  akk_sick += 8
+        elif signs.short: akk_sick += 7
+      if shift.vacation:
+        if   signs.work:  akk_vacation += 8
+        elif signs.short: akk_vacation += 7
       data += timedelta (days = 1)
+
+    norma_edit = norma - akk_sick - akk_vacation
+
     context ['akk_hours']    = akk_hours
     context ['akk_night']    = akk_night
     context ['akk_holiday']  = akk_holiday
     context ['akk_sick']     = akk_sick
     context ['akk_vacation'] = akk_vacation
     context ['norma']        = norma
+    context ['norma_edit']   = norma_edit
     return render (request, page, context)
   else:
     return case_period (request)
