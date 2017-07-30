@@ -2,6 +2,7 @@ from datetime                           import datetime
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
 from .forms                             import AddRefuelForm, AddTravelForm
+from calend_app.forms                   import CalendLabels
 from main_app.views                     import is_user, default_context
 from menu_app.functions                 import create_menu_app
 
@@ -70,6 +71,7 @@ def add_travel (request):
     page = 'car/add_travel.html'
     context = default_context (request)
     context.update (csrf (request))
-    context ['form'] = AddTravelForm
+    context ['form']          = AddTravelForm
+    context ['calend_labels'] = CalendLabels
     return render (request, page, context)
 
