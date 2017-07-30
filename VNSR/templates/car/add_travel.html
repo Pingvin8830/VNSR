@@ -1,0 +1,69 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'car_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <form method='post' action='{% url "car_app:add_travel" %}'>
+      {% csrf_token %}
+      <table border=1>
+        <caption>Поездка</caption>
+        <tr>
+          <td>Точки маршрута</td>
+        </tr>
+        <tr>
+          <td>{{ form.point_start.label }}</td>
+          <td>{{ form.point_start       }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.point_end.label }}</td>
+          <td>{{ form.point_end       }}</td>
+        </tr>
+        <tr>
+          <td>Время</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>День</td>
+          <td>Месяц</td>
+          <td>Год</td>
+          <td>Час</td>
+          <td>Минута</td>
+          <td>Секунда</td>
+        </tr>
+        <tr>
+          <td>Выезда</td>
+          <td>{{ form.day_start    }}</td>
+          <td>{{ form.month_start  }}</td>
+          <td>{{ form.year_start   }}</td>
+          <td>{{ form.hour_start   }}</td>
+          <td>{{ form.minute_start }}</td>
+          <td>{{ form.second_start }}</td>
+        </tr>
+        <tr>
+          <td>Прибытия</td>
+          <td>{{ form.day_end    }}</td>
+          <td>{{ form.month_end  }}</td>
+          <td>{{ form.year_end   }}</td>
+          <td>{{ form.hour_end   }}</td>
+          <td>{{ form.minute_end }}</td>
+          <td>{{ form.second_end }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.distance.label }}</td>
+          <td>{{ form.distance       }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.comment.label }}</td>
+          <td>{{ form.comment       }}</td>
+        </tr>
+      </table>
+      <input type='submit' value='Записать'>
+      <input type='reset'  value='Очистить'>
+    </form>
+  </center>
+{% endblock %}
+
