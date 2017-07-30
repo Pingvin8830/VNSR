@@ -50,8 +50,8 @@ def add_travel (request):
     return index (request)
   else:
     page = 'car/add_travel.html'
-    context = defult_context (request)
-    context.updte (csrf (request))
+    context = default_context (request)
+    context.update (csrf (request))
     context ['form'] = AddTravelForm
     return render (request, page, context)
 
