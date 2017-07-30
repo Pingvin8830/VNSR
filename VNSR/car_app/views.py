@@ -1,7 +1,7 @@
 from datetime                           import datetime
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
-from .forms                             import AddRefuelForm
+from .forms                             import AddRefuelForm, AddTravelForm
 from main_app.views                     import is_user, default_context
 from menu_app.functions                 import create_menu_app
 
@@ -20,9 +20,6 @@ def add_refuel (request):
   if not is_user (request): return redirect ('/')
   if request.POST:
     form = AddRefuelForm (request.POST)
-    print ()
-    print (form.is_valid ())
-    print ()
     if form.is_valid ():
       data = form.cleaned_data
       refuel = form.save (commit = False)
@@ -41,5 +38,20 @@ def add_refuel (request):
     context = default_context (request)
     context.update (csrf (request))
     context ['form'] = AddRefuelForm
+    return render (request, page, context)
+
+def add_travel (request):
+  '''Добавление поездки'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    print ()
+    print ('request.POST')
+    print ()
+    return index (request)
+  else:
+    page = 'car/add_travel.html'
+    context = defult_context (request)
+    context.updte (csrf (request))
+    context ['form'] = AddTravelForm
     return render (request, page, context)
 
