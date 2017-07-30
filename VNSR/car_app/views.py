@@ -44,9 +44,27 @@ def add_travel (request):
   '''Добавление поездки'''
   if not is_user (request): return redirect ('/')
   if request.POST:
-    print ()
-    print ('request.POST')
-    print ()
+    form = AddTravelForm (request.POST)
+    if form.is_valid ():
+      data = form.cleaned_data
+      travel = form.save (commit = False)
+      travel.date_time_start = datetime (
+        int (data ['year_start']),
+        int (data ['month_start']),
+        int (data ['day_start']),
+        int (data ['hour_start']),
+        int (data ['minute_start']),
+        int (data ['second_start'])
+      )
+      travel.date_time_end = datetime (
+        int (data ['year_end']),
+        int (data ['month_end']),
+        int (data ['day_end']),
+        int (data ['hour_end']),
+        int (data ['minute_end']),
+        int (data ['second_end'])
+      )
+      travel.save ()
     return index (request)
   else:
     page = 'car/add_travel.html'
