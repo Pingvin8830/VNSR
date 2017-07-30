@@ -56,8 +56,6 @@ class AddTravelForm (forms.ModelForm):
     fields = [
       'point_start',
       'point_end',
-      'date_time_start',
-      'date_time_end',
       'distance',
       'comment',
     ]
