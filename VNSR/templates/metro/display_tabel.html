@@ -17,6 +17,7 @@
           <th colspan=2>Перерывы</th>
           <th colspan=3>Часы</th>
           <th rowspan=2>Больничный</th>
+          <th rowspan=2>Отпуск</th>
         </tr>
         <tr>
           <th>С</th>
@@ -37,22 +38,26 @@
             <td align='right'>{{ shift.hours }}</td>
             <td align='right'>{{ shift.night }}</td>
             <td align='right'>{{ shift.holiday  }}</td>
-            <td>{{ shift.sick  }}</td>
+            <td>{{ shift.sick     }}</td>
+            <td>{{ shift.vacation }}</td>
           </tr>
         {% endfor %}
         <tr>
-          <td colspan=9><hr></td>
+          <td colspan=10><hr></td>
         </tr>
         <tr>
           <th align='right' colspan=5>Итого</th>
-          <th align='right'>{{ akk_hours }}</th>
-          <th align='right'>{{ akk_night }}</th>
-          <th align='right'>{{ akk_holiday }}</th>
-          <th align='right'>{{ akk_sick }}</th>
+          <th align='right'>{{ akk_hours    }}</th>
+          <th align='right'>{{ akk_night    }}</th>
+          <th align='right'>{{ akk_holiday  }}</th>
+          <th align='right'>{{ akk_sick     }}</th>
+          <th align='right'>{{ akk_vacation }}</th>
         </tr>
         <tr>
-          <th align='right' colspan=5>Норма часов</th>
-          <th align='right'>{{ norma }}</th>
+          <th align='right' colspan=5>Откорректированная норма часов</th>
+          <th align='right'>{{ norma_edit }}</th>
+          <th align='right' colspan=2>Норма часов</th>
+          <th align='right' colspan=2>{{ norma }}</th>
         </tr>
       </table>
     </div>
