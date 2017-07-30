@@ -9,57 +9,75 @@
   <center>
     <form method='post' action='{% url "car_app:add_travel" %}'>
       {% csrf_token %}
-      <table border=1>
+      <table>
         <caption>Поездка</caption>
+        <tr><td><hr></td></tr>
         <tr>
-          <td>Точки маршрута</td>
+          <td>
+            <table align='center'>
+              <caption>{{ form.points.label }}</caption>
+              <tr>
+                <td>{{ form.point_start.label }}</td>
+                <td>{{ form.point_start       }}</td>
+              </tr>
+              <tr>
+                <td>{{ form.point_end.label }}</td>
+                <td>{{ form.point_end       }}</td>
+              </tr>
+            </table>
+          </td>
         </tr>
+        <tr><td><hr></td></tr>
         <tr>
-          <td>{{ form.point_start.label }}</td>
-          <td>{{ form.point_start       }}</td>
+          <td>
+            <table align='center'>
+              <caption>{{ form.times.label }}</caption>
+              <tr>
+                <td></td>
+                <td>{{ form.day.label    }}</td>
+                <td>{{ form.month.label  }}</td>
+                <td>{{ form.year.label   }}</td>
+                <td>{{ form.hour.label   }}</td>
+                <td>{{ form.minute.label }}</td>
+                <td>{{ form.second.label }}</td>
+              </tr>
+              <tr>
+                <td>{{ form.start.label  }}</td>
+                <td>{{ form.day_start    }}</td>
+                <td>{{ form.month_start  }}</td>
+                <td>{{ form.year_start   }}</td>
+                <td>{{ form.hour_start   }}</td>
+                <td>{{ form.minute_start }}</td>
+                <td>{{ form.second_start }}</td>
+              </tr>
+              <tr>
+                <td>{{ form.end.label  }}</td>
+                <td>{{ form.day_end    }}</td>
+                <td>{{ form.month_end  }}</td>
+                <td>{{ form.year_end   }}</td>
+                <td>{{ form.hour_end   }}</td>
+                <td>{{ form.minute_end }}</td>
+                <td>{{ form.second_end }}</td>
+              </tr>
+            </table>
+          </td>
         </tr>
+        <tr><td><hr></td></tr>
         <tr>
-          <td>{{ form.point_end.label }}</td>
-          <td>{{ form.point_end       }}</td>
+          <td>
+            <table align='center'>
+              <tr>
+                <td>{{ form.distance.label }}</td>
+                <td>{{ form.distance       }}</td>
+              </tr>
+              <tr>
+                <td>{{ form.comment.label }}</td>
+                <td>{{ form.comment       }}</td>
+              </tr>
+            </table>
+          </td>
         </tr>
-        <tr>
-          <td>Время</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>День</td>
-          <td>Месяц</td>
-          <td>Год</td>
-          <td>Час</td>
-          <td>Минута</td>
-          <td>Секунда</td>
-        </tr>
-        <tr>
-          <td>Выезда</td>
-          <td>{{ form.day_start    }}</td>
-          <td>{{ form.month_start  }}</td>
-          <td>{{ form.year_start   }}</td>
-          <td>{{ form.hour_start   }}</td>
-          <td>{{ form.minute_start }}</td>
-          <td>{{ form.second_start }}</td>
-        </tr>
-        <tr>
-          <td>Прибытия</td>
-          <td>{{ form.day_end    }}</td>
-          <td>{{ form.month_end  }}</td>
-          <td>{{ form.year_end   }}</td>
-          <td>{{ form.hour_end   }}</td>
-          <td>{{ form.minute_end }}</td>
-          <td>{{ form.second_end }}</td>
-        </tr>
-        <tr>
-          <td>{{ form.distance.label }}</td>
-          <td>{{ form.distance       }}</td>
-        </tr>
-        <tr>
-          <td>{{ form.comment.label }}</td>
-          <td>{{ form.comment       }}</td>
-        </tr>
+        <tr><td><hr></td></tr>
       </table>
       <input type='submit' value='Записать'>
       <input type='reset'  value='Очистить'>
