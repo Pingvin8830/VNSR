@@ -63,7 +63,7 @@ class AddTravelForm (forms.ModelForm):
     ]
 
   point_start  = forms.CharField    (label = 'Стартовая точка',  max_length = 100)
-  point_end    = forms.CharField    (label = 'Стартовая точка',  max_length = 100)
+  point_end    = forms.CharField    (label = 'Точка назначения', max_length = 100)
 
   year_start   = forms.IntegerField (label = 'Год выезда',       min_value = 1966, initial = 2017)
   month_start  = forms.ChoiceField  (label = 'Месяц выезда',     choices = MONTHS)
