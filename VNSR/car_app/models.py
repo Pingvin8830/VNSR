@@ -77,3 +77,16 @@ class Travels (models.Model):
   distance        = models.PositiveIntegerField ()
   comment         = models.CharField            (max_length = 100, null = True)
 
+class CheckPoints (models.Model):
+  '''Контрольные точки поездки'''
+  class Meta (object):
+    db_table = 'checkpoints'
+
+  id            = models.AutoField            (primary_key = True)
+  travel        = models.ForeignKey           ('Travels', on_delete = models.SET (-1), null = False, db_column = 'travel')
+  address       = models.CharField            (max_length = 100)
+  date_time_in  = models.DateTimeField        (null = True)
+  date_time_out = models.DateTimeField        (null = True)
+  odometer      = models.PositiveIntegerField ()
+  comment       = models.CharField            (max_length = 100, null = True)
+
