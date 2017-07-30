@@ -14,6 +14,9 @@ class Azs (models.Model):
   phone   = models.CharField (max_length = 15)
   comment = models.CharField (max_length = 100)
 
+  def __str__ (self):
+    return '%s - %s' % (self.company, self.name)
+
 class FuelTypes (models.Model):
   '''Типы топлива'''
   class Meta (object):
@@ -22,6 +25,9 @@ class FuelTypes (models.Model):
   id      = models.AutoField (primary_key = True)
   name    = models.CharField (max_length = 30, null = False)
   comment = models.CharField (max_length = 100)
+
+  def __str__ (self):
+    return self.name
 
 class PayTypes (models.Model):
   '''Типы оплаты'''
@@ -32,6 +38,9 @@ class PayTypes (models.Model):
   name     = models.CharField (max_length = 50, null = False)
   card_num = models.CharField (max_length = 30)
   comment  = models.CharField (max_length = 100)
+
+  def __str__ (self):
+    return self.name
 
 class Refuels (models.Model):
   '''Заправки автомобиля'''
@@ -54,4 +63,30 @@ class Refuels (models.Model):
   odometer     = models.DecimalField              (max_digits = 5, decimal_places = 1, null = False)
   consumption  = models.DecimalField              (max_digits = 4, decimal_places = 1)
   speed        = models.PositiveSmallIntegerField ()
+
+class Travels (models.Model):
+  '''Поездки'''
+  class Meta (object):
+    db_table = 'travels'
+
+  id              = models.AutoField            (primary_key = True)
+  point_start     = models.CharField            (max_length = 100)
+  point_end       = models.CharField            (max_length = 100)
+  date_time_start = models.DateTimeField        ()
+  date_time_end   = models.DateTimeField        ()
+  distance        = models.PositiveIntegerField ()
+  comment         = models.CharField            (max_length = 100, null = True)
+
+class CheckPoints (models.Model):
+  '''Контрольные точки поездки'''
+  class Meta (object):
+    db_table = 'checkpoints'
+
+  id            = models.AutoField            (primary_key = True)
+  travel        = models.ForeignKey           ('Travels', on_delete = models.SET (-1), null = False, db_column = 'travel')
+  address       = models.CharField            (max_length = 100)
+  date_time_in  = models.DateTimeField        (null = True)
+  date_time_out = models.DateTimeField        (null = True)
+  odometer      = models.PositiveIntegerField ()
+  comment       = models.CharField            (max_length = 100, null = True)
 

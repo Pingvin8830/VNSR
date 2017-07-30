@@ -1,8 +1,11 @@
-from datetime             import date, time, timedelta
+from datetime             import date, datetime, time, timedelta
 from django               import forms
 from django.shortcuts     import render, redirect
-from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails, Rate
+from .forms               import AddPayslipForm
+from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails, Rate, Lanch
+from budget_app.models    import Debets
 from calend_app.functions import get_now, get_month_text
+from calend_app.models    import Signs
 from menu_app.functions   import create_menu_app
 from main_app.views       import is_user, default_context
 
@@ -73,20 +76,96 @@ def display_tabel (request):
       int (request.POST ['start_month']),
       int (request.POST ['start_day'])
     )
-    end = date (
-      int (request.POST ['end_year']),
-      int (request.POST ['end_month']),
-      int (request.POST ['end_day'])
-    )
+    day = int (request.POST ['end_day'])
+    while True:
+      try:
+        end = date (
+          int (request.POST ['end_year']),
+          int (request.POST ['end_month']),
+          day
+        )
+        break
+      except:
+        day -= 1
     context ['start']  = start
     context ['end']    = end
     context ['shifts'] = []
-    shifts = SheduleReal.objects.filter (data__gte = start, data__lte = end)
-    for shift in shifts:
-      shift.hours   ()
-      shift.night   ()
-      shift.holiday ()
+    data         = start
+    norma        = 0
+    akk_hours    = 0
+    akk_night    = 0
+    akk_holiday  = 0
+    akk_sick     = 0
+    akk_vacation = 0
+    while end >= data:
+      try:
+        signs = Signs.objects.get (data = data)
+      except:
+        signs = Signs ()
+      if   signs.work:  norma += 8
+      elif signs.short: norma += 7
+      try:
+        shift = SheduleReal.objects.get (data = data)
+      except:
+        shift = SheduleReal (data = data, start = time (0, 0, 0), end = time (0, 0, 0), break_day = 0, break_night = 0)
+      if shift.sick or shift.vacation:
+        shift.start       = time (0, 0, 0)
+        shift.end         = time (0, 0, 0)
+        shift.break_day   = 0
+        shift.break_night = 0
+
+      if shift.start > shift.end: end_shift = datetime.combine (date (1, 1, 2), shift.end)
+      else:                       end_shift = datetime.combine (date (1, 1, 1), shift.end)
+      start_shift = datetime.combine (date (1, 1, 1), shift.start)
+      shift.hours = (end_shift - start_shift).seconds / 3600 - (shift.break_day + shift.break_night) * 0.5
+      ctrl_fst_mng = datetime (1, 1, 1,  6)
+      ctrl_fst_evn = datetime (1, 1, 1, 22)
+      ctrl_fst_day = datetime (1, 1, 2)
+      ctrl_scn_mng = datetime (1, 1, 2,  6)
+      ctrl_scn_evn = datetime (1, 1, 2, 22)
+      ctrl_scn_day = datetime (1, 1, 3)
+
+      if   (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_fst_mng): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_fst_evn): shift.night = (ctrl_fst_mng - start_shift).seconds  / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_fst_day): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5 - 16
+      elif (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_scn_mng): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5 - 16
+      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_fst_evn): shift.night = 0
+      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_fst_day): shift.night = (end_shift    - ctrl_fst_evn).seconds / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_scn_mng): shift.night = (end_shift    - ctrl_fst_evn).seconds / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_scn_evn): shift.night = 8                                            - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_fst_day): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_scn_mng): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_scn_evn): shift.night = (ctrl_scn_mng - start_shift).seconds  / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_scn_day): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5 - 16
+
+      if signs.holiday:
+        if shift.start > shift.end: shift.holiday = (datetime (1, 1, 2) - datetime.combine (date (1, 1, 1), shift.start)).seconds / 3600 - (shift.break_day + shift.break_night) * 0.5
+        else:                       shift.holiday = shift.hours
+        shift.night = 0
+      else:
+        shift.holiday = 0
+
       context ['shifts'].append (shift)
+      akk_hours   += shift.hours
+      akk_night   += shift.night
+      akk_holiday += shift.holiday
+      if shift.sick:
+        if   signs.work:  akk_sick += 8
+        elif signs.short: akk_sick += 7
+      if shift.vacation:
+        if   signs.work:  akk_vacation += 8
+        elif signs.short: akk_vacation += 7
+      data += timedelta (days = 1)
+
+    norma_edit = norma - akk_sick - akk_vacation
+
+    context ['akk_hours']    = akk_hours
+    context ['akk_night']    = akk_night
+    context ['akk_holiday']  = akk_holiday
+    context ['akk_sick']     = akk_sick
+    context ['akk_vacation'] = akk_vacation
+    context ['norma']        = norma
+    context ['norma_edit']   = norma_edit
     return render (request, page, context)
   else:
     return case_period (request)
@@ -94,20 +173,155 @@ def display_tabel (request):
 def control_payslip (request, id):
   '''Проверка расчётного листка'''
   if not is_user (request): return redirect ('/')
-  payslip                         = Payslip.objects.get (id = id)
-  context                         = default_context (request)
-  context ['control_payslip']     = payslip.control ()
-  context ['control_details']     = payslip.control_details ()
-  context ['differences_payslip'] = payslip.differences ()
-  context ['differences_details'] = payslip.differences_details ()
-  for key, value in context ['control_payslip'].items ():
-    if value: context ['is_error'] = True
-  for key, value in context ['control_details'].items ():
-    if value: context ['is_error'] = True
-  for key, value in context ['differences_payslip'].items ():
-    if value: context ['is_difference'] = True
-  for key, value in context ['differences_details'].items ():
-    if value: context ['is_difference'] = True
+  payslip = Payslip.objects.get (id = id)
+  errors  = []
+
+  akk_nalog_summa = 0
+  for detail in PayslipDetails.objects.filter (payslip = payslip).exclude (code__type = 'c'):
+    akk_nalog_summa += float (detail.summa)
+  akk_nalog_summa *= 0.13
+
+  ctrl_fst_mng = datetime (1, 1, 1,  6)
+  ctrl_fst_evn = datetime (1, 1, 1, 22)
+  ctrl_fst_day = datetime (1, 1, 2)
+  ctrl_scn_mng = datetime (1, 1, 2,  6)
+  ctrl_scn_evn = datetime (1, 1, 2, 22)
+  ctrl_scn_day = datetime (1, 1, 3)
+
+  date_end_1   = payslip.period - timedelta (days = 1)
+  date_start_1 = date (date_end_1.year, date_end_1.month, 16)
+  date_start_2 = payslip.period
+  date_end_2   = date (date_start_2.year, date_start_2.month, 15)
+
+  try:    avans = Debets.objects.get (payer__name = 'ООО Метро Кэш энд Керри (16)', type__name = 'Аванс', date__gte = date_start_2, date__lte = date_end_2 )
+  except: avans = Debets             (summa = 0)
+  period_number = 1
+  while period_number <= 2:
+    if period_number == 1:
+      date_start = date_start_1
+      date_end   = date_end_1
+    elif period_number == 2:
+      date_start = date_start_2
+      date_end   = date_end_2
+    data = date_start
+    akk_hours_count = 0
+    akk_hours_summa = 0
+    akk_night_count = 0
+    akk_night_summa = 0
+    akk_holid_count = 0
+    akk_holid_summa = 0
+    while data <= date_end:
+      try:    signs = Signs.objects.get       (data = data)
+      except: signs = Signs (data = data)
+      try:    shift = SheduleReal.objects.get (data = data)
+      except: shift = SheduleReal             (data = data, start = time (0), end = time (0), break_day = 0, break_night = 0, sick = False, vacation = False, lanch = False)
+      try:    rate  = Rate.objects.get        (start__lte = data, end__gte = data)
+      except: rate  = Rate                    (value = 0)
+      rate.value = float (rate.value)
+      if not shift.start or not shift.end:
+        shift.start       = time (0)
+        shift.end         = time (0)
+        shift.break_day   = 0
+        shift.break_night = 0
+      if shift.end < shift.start: shift.end = datetime.combine (date (1, 1, 2), shift.end)
+      else:                       shift.end = datetime.combine (date (1, 1, 1), shift.end)
+      shift.start = datetime.combine (date (1, 1, 1), shift.start)
+
+      shift.hours_count = (shift.end - shift.start).seconds / 3600 - (shift.break_day + shift.break_night) * 0.5
+      shift.hours_summa = shift.hours_count * rate.value
+
+      if   (shift.start < ctrl_fst_mng) and (shift.end <= ctrl_fst_mng): shift.night_count = (shift.end    - shift.start).seconds  / 3600 - shift.break_night * 0.5
+      elif (shift.start < ctrl_fst_mng) and (shift.end <= ctrl_fst_evn): shift.night_count = (ctrl_fst_mng - shift.start).seconds  / 3600 - shift.break_night * 0.5
+      elif (shift.start < ctrl_fst_mng) and (shift.end <= ctrl_fst_day): shift.night_count = (shift.end    - shift.start).seconds  / 3600 - shift.break_night * 0.5 - 16
+      elif (shift.start < ctrl_fst_mng) and (shift.end <= ctrl_scn_mng): shift.night_count = (shift.end    - shift.start).seconds  / 3600 - shift.break_night * 0.5 - 16
+      elif (shift.start < ctrl_fst_evn) and (shift.end <= ctrl_fst_evn): shift.night_count = 0
+      elif (shift.start < ctrl_fst_evn) and (shift.end <= ctrl_fst_day): shift.night_count = (shift.end    - ctrl_fst_evn).seconds / 3600 - shift.break_night * 0.5
+      elif (shift.start < ctrl_fst_evn) and (shift.end <= ctrl_scn_mng): shift.night_count = (shift.end    - ctrl_fst_evn).seconds / 3600 - shift.break_night * 0.5
+      elif (shift.start < ctrl_fst_evn) and (shift.end <= ctrl_scn_evn): shift.night_count = 8                                            - shift.break_night * 0.5
+      elif (shift.start < ctrl_fst_day) and (shift.end <= ctrl_fst_day): shift.night_count = (shift.end    - shift.start).seconds  / 3600 - shift.break_night * 0.5
+      elif (shift.start < ctrl_fst_day) and (shift.end <= ctrl_scn_mng): shift.night_count = (shift.end    - shift.start).seconds  / 3600 - shift.break_night * 0.5
+      elif (shift.start < ctrl_fst_day) and (shift.end <= ctrl_scn_evn): shift.night_count = (ctrl_scn_mng - shift.start).seconds  / 3600 - shift.break_night * 0.5
+      elif (shift.start < ctrl_fst_day) and (shift.end <= ctrl_scn_day): shift.night_count = (shift.end    - shift.start).seconds  / 3600 - shift.break_night * 0.5 - 16
+
+      shift.night_summa = shift.night_count * rate.value * 0.4
+
+      if signs.holiday:
+        if shift.end > ctrl_fst_day: shift.holid_count = (ctrl_fst_day - datetime.combine (date (1, 1, 1), shift.start)).seconds / 3600 - (shift.break_day + shift.break_night) * 0.5
+        else:                        shift.holid_count = shift.hours_count
+        shift.night_count = 0
+      else:
+        shift.holid_count = 0
+
+      shift.holid_summa = shift.holid_count * rate.value
+
+      akk_hours_count += shift.hours_count
+      akk_hours_summa += shift.hours_summa
+      akk_night_count += shift.night_count
+      akk_night_summa += shift.night_summa
+      akk_holid_count += shift.holid_count
+      akk_holid_summa += shift.holid_summa
+
+      data       += timedelta (days = 1)
+
+    for code in CodesPayslip.objects.all ().order_by ('code'):
+      try:    detail = PayslipDetails.objects.get (payslip = payslip, code = code, period = date (date_start.year, date_start.month, 1))
+      except: detail = PayslipDetails             (payslip = payslip, code = code, period = date (date_start.year, date_start.month, 1), count = 0, summa = 0)
+      if   code.code == '/322':
+        detail.math_count = 0
+        if period_number == 1: detail.math_summa = 0
+        else:                  detail.math_summa = akk_nalog_summa
+      elif code.code == '/853':
+        detail.math_count = akk_hours_count / 8
+        detail.math_summa = 0
+      elif code.code == '1201':
+        detail.math_count = 99999
+        detail.math_summa = 99999
+      elif code.code == '1329':
+        detail.math_count = akk_hours_count
+        detail.math_summa = akk_hours_summa
+      elif code.code == '2720':
+        detail.math_count = 0
+        detail.math_summa = 88888
+      elif code.code == '3007':
+        detail.math_count = akk_night_count
+        detail.math_summa = akk_night_summa
+      elif code.code == '3009':
+        detail.math_count = akk_holid_count
+        detail.math_summa = akk_holid_summa
+      elif code.code == '4004':
+        detail.math_count = 0
+        detail.math_summa = 0
+      elif code.code == '6101':
+        detail.math_count = 0
+        if period_number == 1: detail.math_summa = 0
+        else:                  detail.math_summa = float (avans.summa)
+      elif code.code == '6200':
+        detail.math_count = 0
+        detail.math_summa = 88888
+      elif code.code == '7550':
+        detail.math_count = 0
+        detail.math_summa = 0
+      elif code.code == '8003':
+        detail.math_count = 99999
+        detail.math_summa = 99999
+      elif code.code == '8019':
+        detail.math_count = 99999
+        detail.math_summa = 99999
+      else:
+        detail.math_count = 99999
+        detail.math_summa = 99999
+      detail.err_count = float (detail.count) - detail.math_count
+      detail.err_summa = float (detail.summa) - detail.math_summa
+      if detail.err_count or detail.err_summa:
+        detail.print_edit ()
+        errors.append (detail)
+
+    period_number += 1
+
+  payslip.print_edit ()
+  context             = default_context (request)
+  context ['payslip'] = payslip
+  context ['errors']  = errors
   page                = 'metro/control_payslip.html'
   return render (request, page, context)
 
@@ -132,8 +346,14 @@ def add_payslip (request):
   if not is_user (request): return redirect ('/')
   if request.POST:
     if not request.POST ['rotate_dolg']: request.POST.rotate_dolg = None
-    payslip = Payslip (period = request.POST ['year'] + '-' + request.POST ['month'] + '-01', division = request.POST ['division'], post = request.POST ['post'], rate = request.POST ['rate'].replace (',', '.'), begin_dolg = request.POST ['begin_dolg'].replace (',', '.'), rotate_dolg = request.POST ['rotate_dolg'].replace (',', '.'), end_dolg = request.POST ['end_dolg'].replace (',', '.'), income = request.POST ['income'].replace (',', '.'), consumption = request.POST ['consumption'].replace (',', '.'), paying = request.POST ['paying'].replace (',', '.'))
-    payslip.save ()
+    form = AddPayslipForm (request.POST)
+    if form.is_valid ():
+      payslip = form.save (commit = False)
+      payslip.period = date (
+        int (form.cleaned_data ['year']),
+        int (form.cleaned_data ['month']),
+        1)
+      payslip.save ()
     context = default_context (request)
     return redirect ('/metro/display_payslip_details/%d' % payslip.id)
   return redirect ('/metro')
@@ -142,6 +362,7 @@ def display_payslip (request, payslip = None):
   '''Отображает расчетный листок'''
   if not is_user (request): return redirect ('/')
   if request.POST:
+    context = default_context (request)
     if not payslip:
       try:
         payslip = Payslip.objects.get (period = '%s-%s-01' % (str (request.POST ['year']), str (request.POST ['month'])))
@@ -150,10 +371,10 @@ def display_payslip (request, payslip = None):
       except:
         payslip = Payslip ()
         page    = 'metro/add_payslip.html'
+        context ['form'] = AddPayslipForm
     else:
         page    = 'metro/display_payslip.html'
         payslip.print_edit ()
-    context = default_context (request)
     context ['payslip']     = payslip
     details = PayslipDetails.objects.filter (payslip = payslip.id).order_by ('code', 'period')
     context ['incomes']      = []
