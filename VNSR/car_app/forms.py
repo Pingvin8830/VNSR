@@ -1,5 +1,5 @@
 from django           import forms
-from .models          import Azs, FuelTypes, PayTypes, Refuels
+from .models          import Azs, FuelTypes, PayTypes, Refuels, Travels
 from calend_app.lists import DAYS, MONTHS, HOURS, MINUTES, SECONDS
 
 class AddRefuelForm (forms.ModelForm):
@@ -47,4 +47,38 @@ class AddRefuelForm (forms.ModelForm):
   score_total  = forms.DecimalField     (label = 'Итого баллов',       min_value  = 0,                   max_digits = 7, decimal_places = 2, initial =     0)
   odometer     = forms.DecimalField     (label = 'Заправочный пробег', min_value  = 0, max_value = 1000, max_digits = 5, decimal_places = 1, initial =     0)
   consumption  = forms.DecimalField     (label = 'Расход топлива',     min_value  = 0,                   max_digits = 4, decimal_places = 1, initial =    10)
+
+
+class AddTravelForm (forms.ModelForm):
+  '''Добавление поездки'''
+  class Meta (object):
+    model = Travels
+    fields = [
+      'point_start',
+      'point_end',
+      'date_time_start',
+      'date_time_end',
+      'distance',
+      'comment',
+    ]
+
+  point_start  = forms.CharField    (label = 'Стартовая точка',  max_length = 100)
+  point_end    = forms.CharField    (label = 'Стартовая точка',  max_length = 100)
+
+  year_start   = forms.IntegerField (label = 'Год выезда',       min_value = 1966, initial = 2017)
+  month_start  = forms.ChoiceField  (label = 'Месяц выезда',     choices = MONTHS)
+  day_start    = forms.ChoiceField  (label = 'День выезда',      choices = DAYS)
+  hour_start   = forms.ChoiceField  (label = 'Час выезда',       choices = HOURS)
+  minute_start = forms.ChoiceField  (label = 'Минута выезда',    choices = MINUTES)
+  second_start = forms.ChoiceField  (label = 'Секунда выезда',   choices = SECONDS)
+
+  year_end     = forms.IntegerField (label = 'Год прибытия',     min_value = 1966, initial = 2017)
+  month_end    = forms.ChoiceField  (label = 'Месяц прибытия',   choices = MONTHS)
+  day_end      = forms.ChoiceField  (label = 'День прибытия',    choices = DAYS)
+  hour_end     = forms.ChoiceField  (label = 'Час прибытия',     choices = HOURS)
+  minute_end   = forms.ChoiceField  (label = 'Минута прибытия',  choices = MINUTES)
+  second_end   = forms.ChoiceField  (label = 'Секунда прибытия', choices = SECONDS)
+
+  distance     = forms.IntegerField (label = 'Расстояние', min_value = 0)
+  comment      = forms.CharField    (label = 'Комментарий', max_length = 100, required = False)
 
