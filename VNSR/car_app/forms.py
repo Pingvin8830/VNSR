@@ -64,15 +64,8 @@ class AddTravelForm (forms.ModelForm):
   point_start  = forms.CharField    (label = 'Выезд',            max_length = 100)
   point_end    = forms.CharField    (label = 'Назначение',       max_length = 100)
 
-  times        = forms.CharField    (label = 'Время',            max_length = 0, required = False)
   start        = forms.CharField    (label = 'Выезда',           max_length = 0, required = False)
   end          = forms.CharField    (label = 'Прибытия',         max_length = 0, required = False)
-  year         = forms.CharField    (label = 'Год',              max_length = 0, required = False)
-  month        = forms.CharField    (label = 'Месяц',            max_length = 0, required = False)
-  day          = forms.CharField    (label = 'День',             max_length = 0, required = False)
-  hour         = forms.CharField    (label = 'Час',              max_length = 0, required = False)
-  minute       = forms.CharField    (label = 'Минута',           max_length = 0, required = False)
-  second       = forms.CharField    (label = 'Секунда',          max_length = 0, required = False)
 
   year_start   = forms.IntegerField (label = 'Год выезда',       min_value = 1966, initial = 2017)
   month_start  = forms.ChoiceField  (label = 'Месяц выезда',     choices = MONTHS)
