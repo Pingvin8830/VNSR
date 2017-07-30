@@ -2,83 +2,55 @@
 {% load staticfiles %}
 
 {% block content %}
-  <style type='text/css'>
-    td {border: 1px solid red;}
-  </style>
-  <table>
-    <tr>
-      <td>
-        {% if is_error %}
-          <table>
-            <caption>Ошибки</caption>
-            <tr>
-              <th>Цель</th>
-              <th>Название</th>
-              <th>Период</th>
-              <th>Ошибка</th>
-            </tr>
-            {% for type, error in control_payslip.items %}
-              {% for text in error %}
-                <tr>
-                  <td colspan = 3>{{ type }}</td>
-                  <td>{{ text }}</td>
-                </tr>
-              {% endfor %}
-            {% endfor %}
-            {% for type, error in control_details.items %}
-              {% for text in error %}
-                <tr>
-                  <td>{{ type.code.code }}</td>
-                  <td>{{ type.code.name }}</td>
-                  <td>{{ type.period.month }}/{{ type.period.year }}</td>
-                  <td>{{ text }}</td>
-                </tr>
-              {% endfor %}
-            {% endfor %}
-          </table>
-        {% else %}
-          Ошибок нет
+  <link rel='stylesheet' type='text/css' href='{% static "metro/control_payslip.css" %}'>
+  <div id='control_payslip'>
+    <table>
+      <caption>Страница контроля расчётного листка за {{ payslip.period }}</caption>
+      <tr>
+        <th>Код НДФЛ</th>
+        <th>Расшифровка кода</th>
+        <th>Период</th>
+        <th>Ошибка</th>
+        <th>Разница</th>
+      </tr>
+      {% for error in errors %}
+        {% if error.math_count == 99999 %}
+          <tr>
+            <td>{{ error.code.code }}</td>
+            <td>{{ error.code.name }}</td>
+            <td>{{ error.period }}</td>
+            <td>Неизвестное правило контроля количества</td>
+            <td></td>
+          </tr>
+        {% elif error.err_count > 0.009 or error.err_count < -0.009%}
+          <tr>
+            <td>{{ error.code.code }}</td>
+            <td>{{ error.code.name }}</td>
+            <td>{{ error.period }}</td>
+            <td>Неверное количество</td>
+            <td>{{ error.err_count }}</td>
         {% endif %}
-      </td>
-      <td>
-        {% if is_difference %}
-          <table>
-            <caption>Расхождения</caption>
-            <tr>
-              <th>Цель</th>
-              <th>Период</th>
-              <th>Ошибка</th>
-              <th>Расчет</th>
-              <th>Факт</th>
-              <th>Разность</th>
-            </tr>
-            {% for type, diff in differences_payslip.items %}
-              {% for context in diff %}
-                <tr>
-                  <td colspan=2>{{ type }}</td>
-                  {% for data in context %}
-                    <td>{{ data }}</td>
-                  {% endfor %}
-                </tr>
-              {% endfor %}
-            {% endfor %}
-            {% for type, diff in differences_details.items %}
-              {% for context in diff %}
-                <tr>
-                  <td>{{ type.code.code }} {{ type.code.name }}     </td>
-                  <td>{{ type.period.month }}/{{ type.period.year }}</td>
-                  {% for data in context %}
-                    <td>{{ data }}</td>
-                  {% endfor %}
-                </tr>
-              {% endfor %}
-            {% endfor %}
-          </table>
-        {% else %}
-          Расхождений нет
+        {% if error.math_summa == 99999 %}
+          <tr>
+            <td>{{ error.code.code }}</td>
+            <td>{{ error.code.name }}</td>
+            <td>{{ error.period }}</td>
+            <td>Неизвестное правило контроля суммы</td>
+            <td></td>
+          </tr>
+        {% elif error.math_summa == 88888 %}
+          <tr></tr>
+        {% elif error.err_summa > 0.009 or error.err_summa < -0.009%}
+          <tr>
+            <td>{{ error.code.code }}</td>
+            <td>{{ error.code.name }}</td>
+            <td>{{ error.period }}</td>
+            <td>Неверная сумма</td>
+            <td>{{ error.err_summa }}</td>
+          </tr>
         {% endif %}
-      </td>
-    </tr>
-  </table>
+      {% endfor %}
+    </table>
+  </div>
 {% endblock%}
 
