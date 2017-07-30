@@ -64,3 +64,16 @@ class Refuels (models.Model):
   consumption  = models.DecimalField              (max_digits = 4, decimal_places = 1)
   speed        = models.PositiveSmallIntegerField ()
 
+class Travels (models.Model):
+  '''Поездки'''
+  class Meta (object):
+    db_table = 'travels'
+
+  id              = models.AutoField            (primary_key = True)
+  point_start     = models.CharField            (max_length = 100)
+  point_end       = models.CharField            (max_length = 100)
+  date_time_start = models.DateTimeField        ()
+  date_time_end   = models.DateTimeField        ()
+  distance        = models.PositiveIntegerField ()
+  comment         = models.CharField            (max_length = 100, null = True)
+
