@@ -1,7 +1,7 @@
 from datetime                           import datetime
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
-from .forms                             import AddRefuelForm, AddTravelForm
+from .forms                             import AddCheckPointForm, AddRefuelForm, AddTravelForm
 from .models                            import CheckPoints, Travels
 from calend_app.forms                   import CalendLabels
 from main_app.views                     import is_user, default_context
@@ -16,6 +16,25 @@ def index (request):
   context = default_context (request)
   context ['items'] = create_menu_app ('car')
   return render (request, page, context)
+
+def add_check_point (request, travel_id):
+  '''Добавление контрольной точки поездки'''
+  if not is_user (request): return redirect ('/')
+  print ()
+  print ('travel_id:', travel_id)
+  if request.POST:
+    print ('request.POST: ok')
+  else:
+    print ('request.POST: bad')
+    print ()
+    page                      = 'car/add_check_point.html'
+    context                   = default_context (request)
+    context ['travel']        = Travels.objects.get (id = travel_id)
+    context ['form']          = AddCheckPointForm
+    context ['calend_labels'] = CalendLabels
+    return render (request, page, context)
+  print ()
+  return index (request)
 
 def add_refuel (request):
   '''Добавление чека с заправки'''
