@@ -21,7 +21,11 @@
       </tr>
       {% for travel in travels %}
         <tr>
-          <td>{{ travel.id          }}</td>
+          <td>
+            <a href="{% url 'car_app:display_check_points' travel.id %}">
+              {{ travel.id }}
+            </a>
+          </td>
           <td>{{ travel.point_start }}</td>
           <td>{{ travel.point_end   }}</td>
           <td>{{ travel.start       }}</td>
