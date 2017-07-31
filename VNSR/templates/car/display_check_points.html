@@ -1,0 +1,36 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'car_app:index'      %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <table border=1>
+      <caption>Контрольные точки поездки из {{ travel.point_start }} в {{ travel.point_end }}</caption>
+      <tr>
+        <th>Id</th>
+        <th>Travel</th>
+        <th>Name</th>
+        <th>Date_time_in</th>
+        <th>Date_time_out</th>
+        <th>Odometer</th>
+        <th>Comment</th>
+      </tr>
+      {% for check_point in check_points %}
+        <tr>
+          <td>{{ check_point.id            }}</td>
+          <td>{{ check_point.travel        }}</td>
+          <td>{{ check_point.name          }}</td>
+          <td>{{ check_point.date_time_in  }}</td>
+          <td>{{ check_point.date_time_out }}</td>
+          <td>{{ check_point.odometer      }}</td>
+          <td>{{ check_point.comment       }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </center>
+{% endblock %}
+
+

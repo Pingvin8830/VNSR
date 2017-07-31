@@ -2,6 +2,7 @@ from datetime                           import datetime
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
 from .forms                             import AddRefuelForm, AddTravelForm
+from .models                            import CheckPoints, Travels
 from calend_app.forms                   import CalendLabels
 from main_app.views                     import is_user, default_context
 from menu_app.functions                 import create_menu_app
@@ -74,4 +75,26 @@ def add_travel (request):
     context ['form']          = AddTravelForm
     context ['calend_labels'] = CalendLabels
     return render (request, page, context)
+
+def display_check_points (request, travel_id):
+  '''Отображение контрольных точек поездки'''
+  if not is_user (request): return redirect ('/')
+  travel = Travels.objects.get (id = travel_id)
+  page                     = 'car/display_check_points.html'
+  context                  = default_context (request)
+  context ['check_points'] = CheckPoints.objects.filter (travel = travel)
+  context ['travel']       = travel
+  return render (request, page, context)
+
+def display_travels (request):
+  '''Отображение поездок'''
+  if not is_user (request): return redirect ('/')
+  page    = 'car/display_travels.html'
+  context = default_context (request)
+  context ['travels'] = []
+  for travel in Travels.objects.all ():
+    travel.start = str (travel.date_time_start)
+    travel.end   = str (travel.date_time_end)
+    context ['travels'].append (travel)
+  return render (request, page, context)
 
