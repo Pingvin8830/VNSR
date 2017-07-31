@@ -1,6 +1,32 @@
 from django           import forms
-from .models          import Azs, FuelTypes, PayTypes, Refuels, Travels
+from .models          import Azs, CheckPoints, FuelTypes, PayTypes, Refuels, Travels
 from calend_app.lists import DAYS, MONTHS, HOURS, MINUTES, SECONDS
+
+class AddCheckPointForm (forms.ModelForm):
+  '''Добавление контрольной точки'''
+  class Meta (object):
+    model  = CheckPoints
+    fields = [
+      'name',
+      'odometer',
+      'comment',
+    ]
+
+  name       = forms.CharField    (required = True,  label = 'Название',         max_length = 100)
+  year_in    = forms.IntegerField (required = False, label = 'Год прибытия',     min_value  = 1966,)
+  month_in   = forms.ChoiceField  (required = False, label = 'Месяц прибытия',   choices    = MONTHS)
+  day_in     = forms.ChoiceField  (required = False, label = 'День прибытия',    choices    = DAYS)
+  hour_in    = forms.ChoiceField  (required = False, label = 'Час прибытия',     choices    = HOURS)
+  minute_in  = forms.ChoiceField  (required = False, label = 'Минута прибытия',  choices    = MINUTES)
+  second_in  = forms.ChoiceField  (required = False, label = 'Секунда прибытия', choices    = SECONDS)
+  year_out   = forms.IntegerField (required = False, label = 'Год отъезда',      min_value  = 1966)
+  month_out  = forms.ChoiceField  (required = False, label = 'Месяц отъезда',    choices    = MONTHS)
+  day_out    = forms.ChoiceField  (required = False, label = 'День отъезда',     choices    = DAYS)
+  hour_out   = forms.ChoiceField  (required = False, label = 'Час отъезда',      choices    = HOURS)
+  minute_out = forms.ChoiceField  (required = False, label = 'Минута отъезда',   choices    = MINUTES)
+  second_out = forms.ChoiceField  (required = False, label = 'Секунда отъезда',  choices    = SECONDS)
+  odometer   = forms.IntegerField (required = True,  label = 'Текущий пробег',   min_value  = 0)
+  comment    = forms.CharField    (required = False, label = 'Комментарий',      max_length = 100)
 
 class AddRefuelForm (forms.ModelForm):
   '''Добавление чека с заправки'''
@@ -47,7 +73,6 @@ class AddRefuelForm (forms.ModelForm):
   score_total  = forms.DecimalField     (label = 'Итого баллов',       min_value  = 0,                   max_digits = 7, decimal_places = 2, initial =     0)
   odometer     = forms.DecimalField     (label = 'Заправочный пробег', min_value  = 0, max_value = 1000, max_digits = 5, decimal_places = 1, initial =     0)
   consumption  = forms.DecimalField     (label = 'Расход топлива',     min_value  = 0,                   max_digits = 4, decimal_places = 1, initial =    10)
-
 
 class AddTravelForm (forms.ModelForm):
   '''Добавление поездки'''
