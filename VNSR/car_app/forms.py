@@ -12,6 +12,8 @@ class AddCheckPointForm (forms.ModelForm):
       'comment',
     ]
 
+  inside     = forms.CharField    (required = False, label = 'Прибытие',         max_length = 0)
+  outside    = forms.CharField    (required = False, label = 'Отъезд',           max_length = 0)
   name       = forms.CharField    (required = True,  label = 'Название',         max_length = 100)
   year_in    = forms.IntegerField (required = False, label = 'Год прибытия',     min_value  = 1966,)
   month_in   = forms.ChoiceField  (required = False, label = 'Месяц прибытия',   choices    = MONTHS)
