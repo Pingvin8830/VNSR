@@ -1,0 +1,36 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'car_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <table border=1>
+      <caption>Поездки</caption>
+      <tr>
+        <th>Id</th>
+        <th>Откуда</th>
+        <th>Куда</th>
+        <th>Выезд</th>
+        <th>Прибытие</th>
+        <th>Путь (км)</th>
+        <th>Комментарий</th>
+      </tr>
+      {% for travel in travels %}
+        <tr>
+          <td>{{ travel.id          }}</td>
+          <td>{{ travel.point_start }}</td>
+          <td>{{ travel.point_end   }}</td>
+          <td>{{ travel.start       }}</td>
+          <td>{{ travel.end         }}</td>
+          <td>{{ travel.distance    }}</td>
+          <td>{{ travel.comment     }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </center>
+{% endblock %}
+
+
