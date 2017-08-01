@@ -20,20 +20,44 @@ def index (request):
 def add_check_point (request, travel_id):
   '''Добавление контрольной точки поездки'''
   if not is_user (request): return redirect ('/')
-  print ()
-  print ('travel_id:', travel_id)
   if request.POST:
-    print ('request.POST: ok')
+    form = AddCheckPointForm (request.POST)
+    if form.is_valid ():
+      data = form.cleaned_data
+      check_point = form.save (commit = False)
+      check_point.travel = Travels.objects.get (id = travel_id)
+      try:
+        check_point.date_time_in = datetime (
+            int (data ['year_in']),
+            int (data ['month_in']),
+            int (data ['day_in']),
+            int (data ['hour_in']),
+            int (data ['minute_in']),
+            int (data ['second_in'])
+          )
+      except:
+        check_point.date_time_in = None
+      try:
+        check_point.date_time_out = datetime (
+          int (data ['year_out']),
+          int (data ['month_out']),
+          int (data ['day_out']),
+          int (data ['hour_out']),
+          int (data ['minute_out']),
+          int (data ['second_out'])
+        )
+      except:
+        check_point.date_time_out = None
+      check_point.save ()
+      return index (request)
   else:
-    print ('request.POST: bad')
-    print ()
     page                      = 'car/add_check_point.html'
     context                   = default_context (request)
+    context.update (csrf (request))
     context ['travel']        = Travels.objects.get (id = travel_id)
     context ['form']          = AddCheckPointForm
     context ['calend_labels'] = CalendLabels
     return render (request, page, context)
-  print ()
   return index (request)
 
 def add_refuel (request):
