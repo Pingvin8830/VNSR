@@ -1,7 +1,7 @@
 from datetime                           import datetime
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
-from .forms                             import AddRefuelForm, AddTravelForm
+from .forms                             import AddCheckPointForm, AddRefuelForm, AddTravelForm
 from .models                            import CheckPoints, Travels
 from calend_app.forms                   import CalendLabels
 from main_app.views                     import is_user, default_context
@@ -16,6 +16,49 @@ def index (request):
   context = default_context (request)
   context ['items'] = create_menu_app ('car')
   return render (request, page, context)
+
+def add_check_point (request, travel_id):
+  '''Добавление контрольной точки поездки'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddCheckPointForm (request.POST)
+    if form.is_valid ():
+      data = form.cleaned_data
+      check_point = form.save (commit = False)
+      check_point.travel = Travels.objects.get (id = travel_id)
+      try:
+        check_point.date_time_in = datetime (
+            int (data ['year_in']),
+            int (data ['month_in']),
+            int (data ['day_in']),
+            int (data ['hour_in']),
+            int (data ['minute_in']),
+            int (data ['second_in'])
+          )
+      except:
+        check_point.date_time_in = None
+      try:
+        check_point.date_time_out = datetime (
+          int (data ['year_out']),
+          int (data ['month_out']),
+          int (data ['day_out']),
+          int (data ['hour_out']),
+          int (data ['minute_out']),
+          int (data ['second_out'])
+        )
+      except:
+        check_point.date_time_out = None
+      check_point.save ()
+      return index (request)
+  else:
+    page                      = 'car/add_check_point.html'
+    context                   = default_context (request)
+    context.update (csrf (request))
+    context ['travel']        = Travels.objects.get (id = travel_id)
+    context ['form']          = AddCheckPointForm
+    context ['calend_labels'] = CalendLabels
+    return render (request, page, context)
+  return index (request)
 
 def add_refuel (request):
   '''Добавление чека с заправки'''
