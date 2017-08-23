@@ -1,6 +1,5 @@
 {% load staticfiles %}
 
-
 <html>
   <head>
     <meta charset="utf-8">
@@ -18,7 +17,7 @@
           <a href="/">Домой (VlasovNetwork.sknt.ru)</a>
           <br>
           <a href="{% url 'auth_app:logout' %}">
-            Выход ({{ username }})
+            Выход ({{ user.username }})
           </a>
         {% endblock %}
       </div>

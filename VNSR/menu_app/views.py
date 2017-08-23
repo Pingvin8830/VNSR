@@ -4,7 +4,7 @@ from django.contrib                     import auth
 from django.template.context_processors import csrf
 from .models                            import Users, ItemsMenu, AppMenu, ItemsApp, UserMenu
 from .functions                         import create_menu_app
-from .forms                             import UsersForm, ItemsAppForm, ItemsMenuForm
+from .forms                             import ItemsAppForm, ItemsMenuForm
 
 # Create your views here.
 
@@ -92,7 +92,7 @@ def display_user (request):
   '''Отображает пользователей'''
   page = 'menu/display_user.html'
   context = default_context (request)
-  context ['menu_users'] = Users.objects.all ().order_by ('name')
+  context ['menu_users'] = Users.objects.all ().order_by ('username')
   return render (request, page, context)
 
 def add_user (request):
@@ -198,7 +198,7 @@ def case_user (request):
   if not is_user (request): return redirect ('/')
   page                   = 'menu/case_user.html'
   context                = default_context (request)
-  context ['menu_users'] = Users.objects.all ().order_by ('name')
+  context ['menu_users'] = Users.objects.all ().order_by ('username')
   return render (request, page, context)
 
 def case_app (request):

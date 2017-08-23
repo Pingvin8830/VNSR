@@ -1,16 +1,11 @@
-from .models import ItemsMenu, ItemsApp
+from .models import ItemsApp, UserMenu
 
-def create_menu_user (username):
-  '''Создаёт меню для пользователя'''
-  sql = '                                       \
-    SELECT *                                    \
-    FROM   user_menu um, users u, items_menu im \
-    WHERE  um.user_id = u.id                    \
-      AND  um.item_id = im.id                   \
-      AND  u.name     = "%s"                    \
-    ORDER BY im.text                            \
-  ' % username
-  return ItemsMenu.objects.raw (sql)
+def create_menu_user (user):
+  ''' Создаёт меню для пользователя'''
+  user_menu = UserMenu.objects.filter (user = user).order_by ('item__text')
+  items = []
+  for item in user_menu: items.append (item.item)
+  return items
 
 def create_menu_app (app):
   '''Создаёт меню для приложения'''

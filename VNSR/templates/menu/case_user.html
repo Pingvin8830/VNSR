@@ -14,7 +14,7 @@
         {% for user in menu_users %}
           <tr>
             <td>
-              <input type="radio" name="user_id" value="{{ user.id }}">{{ user.name }}
+              <input type="radio" name="user_id" value="{{ user.id }}">{{ user.username }}
             </td>
           </tr>
         {% endfor %}
