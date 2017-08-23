@@ -11,14 +11,6 @@ class ItemsMenuForm (ModelForm):
       'text',
     ]
 
-class UsersForm (ModelForm):
-  '''Пользователи'''
-  class Meta ():
-    model = Users
-    fields = [
-      'name',
-    ]
-
 class ItemsAppForm (ModelForm):
   '''Пункты меню для приложений - действия'''
   class Meta ():

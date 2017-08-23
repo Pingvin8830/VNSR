@@ -13,9 +13,7 @@ def index (request):
   page    = 'hrefs/index.html'
   context = default_context (request)
   context ['items'] = create_menu_app ('hrefs')
-  '''user  = Users.objects.get (name = auth.get_user (request).username)
-  context ['links'] = Links.objects.filter (user = user)'''
-  user = Users.objects.get (name = auth.get_user (request).username)
+  user = Users.objects.get (username = auth.get_user (request).username)
   user_links = UserLinks.objects.filter (user = user)
   links = []
   for user_link in user_links:

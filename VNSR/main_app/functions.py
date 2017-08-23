@@ -4,13 +4,13 @@ from menu_app.functions   import create_menu_user, create_menu_app
 
 def default_context (request, app = None):
   '''Создаёт контекст для шаблона сайта по умолчанию'''
-  username = auth.get_user (request).username
+  user = auth.get_user (request)
   context = {
-    'username':   username,
+    'user':       user,
     'month_text': get_month_text (),
     'calend':     create_calend_month (),
     'now':        get_now (),
   }
-  context ['items'] = create_menu_user (username)
+  context ['items'] = create_menu_user (user)
   return context
 

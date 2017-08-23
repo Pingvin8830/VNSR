@@ -1,4 +1,5 @@
-from django.db import models
+from django.db                  import models
+from django.contrib.auth.models import User as Users
 
 # Create your models here.
 
@@ -17,19 +18,6 @@ class ItemsMenu (models.Model):
   def __str__ (self):
     return self.text
 
-class Users (models.Model):
-  '''Пользователи'''
-  class Meta ():
-    db_table            = 'users'
-    verbose_name        = 'Пользователь'
-    verbose_name_plural = 'Пользователи'
-
-  id   = models.AutoField (primary_key = True)
-  name = models.CharField (max_length  = 10,   verbose_name = 'Логин')
-
-  def __str__ (self):
-    return self.name
-
 class UserMenu (models.Model):
   '''Сопоставление пользователям пунктов меню - приложений'''
   class Meta ():
@@ -38,11 +26,11 @@ class UserMenu (models.Model):
     verbose_name_plural = 'Меню пользователей'
 
   id   = models.AutoField  (primary_key = True)
-  user = models.ForeignKey (Users, verbose_name     = 'Пользователь')
+  user = models.ForeignKey (Users,     verbose_name = 'Пользователь')
   item = models.ForeignKey (ItemsMenu, verbose_name = 'Приложение')
 
   def __str__ (self):
-    return self.user.name + ' / ' + self.item.text
+    return self.user.username + ' / ' + self.item.text
 
 class ItemsApp (models.Model):
   '''Пункты меню для приложений - действия'''
