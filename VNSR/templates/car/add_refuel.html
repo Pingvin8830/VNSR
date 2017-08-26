@@ -1,0 +1,46 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'car_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <form method='post' action='{% url "car_app:add_refuel" %}'>
+      {% csrf_token %}
+      <table>
+        <caption>Заправка автомобиля</caption>
+        <tr><td>{{ form.azs.label          }}</td><td colspan=4>{{ form.azs          }}</td></tr>
+        <tr><td>{{ form.check_number.label }}</td><td colspan=4>{{ form.check_number }}</td></tr>
+        <tr><td>{{ form.dispencer.label    }}</td><td colspan=4>{{ form.dispencer    }}</td></tr>
+        <tr><td>{{ form.fuel_type.label    }}</td><td colspan=4>{{ form.fuel_type    }}</td></tr>
+        <tr><td>{{ form.fuel_count.label   }}</td><td colspan=4>{{ form.fuel_count   }}</td></tr>
+        <tr><td>{{ form.price.label        }}</td><td colspan=4>{{ form.price        }}</td></tr>
+        <tr><td>{{ form.cost.label         }}</td><td colspan=4>{{ form.cost         }}</td></tr>
+        <tr><td>{{ form.pay_type.label     }}</td><td colspan=4>{{ form.pay_type     }}</td></tr>
+        <tr><td>{{ form.score_plus.label   }}</td><td colspan=4>{{ form.score_plus   }}</td></tr>
+        <tr><td>{{ form.score_minus.label  }}</td><td colspan=4>{{ form.score_minus  }}</td></tr>
+        <tr><td>{{ form.score_total.label  }}</td><td colspan=4>{{ form.score_total  }}</td></tr>
+        <tr>
+          <td>Дата</td>
+          <td>{{ form.day   }}</td>
+          <td colspan=2>{{ form.month }}</td>
+          <td>{{ form.year  }}</td>
+        </tr>
+        <tr>
+          <td>Время</td>
+          <td>{{ form.hour   }}</td>
+          <td>{{ form.minute }}</td>
+          <td>{{ form.second }}</td>
+        </tr>
+        <tr><td>{{ form.odometer.label    }}</td><td colspan=4>{{ form.odometer    }}</td></tr>
+        <tr><td>{{ form.consumption.label }}</td><td colspan=4>{{ form.consumption }}</td></tr>
+        <tr><td>{{ form.speed.label       }}</td><td colspan=4>{{ form.speed       }}</td></tr>
+      </table>
+      <input type='submit' value='Записать'>
+      <input type='reset'  value='Очистить'>
+    </form>
+  </center>
+{% endblock %}
+

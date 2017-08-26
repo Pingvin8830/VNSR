@@ -1,9 +1,10 @@
 #content {
-  border-right: 1px solid #0a33a9;
-  width:        1067;
-  height:       530;
+  border-right: 1px solid #0c3297;
+  width:        84%;
+  height:       85%;
   margin:       0;
-  padding:      10;
-  float:        left;
+  padding:      0;
+  position: relative;
+  float:        right;
 }
 
