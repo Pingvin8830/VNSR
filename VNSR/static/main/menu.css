@@ -1,9 +1,9 @@
 #menu {
-  width:            240;
-  height:           290;
+  width:            100%;
+  height:           60%;
   margin:           0;
   padding:          0;
-  background-color: #0a63e8;
+  background-color: #0c3297;
   color:            yellow;
 }
 

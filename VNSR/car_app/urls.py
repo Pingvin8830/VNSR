@@ -18,6 +18,11 @@ from .                import views
 
 app_name    = 'car_app' 
 urlpatterns = [
-  url (r'^', views.index, name = 'index'),
+  url (r'^add_check_point/(?P<travel_id>[0-9]*)',      views.add_check_point,      name = 'add_check_point'),
+  url (r'^add_refuel',                                 views.add_refuel,           name = 'add_refuel'),
+  url (r'^add_travel',                                 views.add_travel,           name = 'add_travel'),
+  url (r'^display_check_points/(?P<travel_id>[0-9]*)', views.display_check_points, name = 'display_check_points'),
+  url (r'^display_travels',                            views.display_travels,      name = 'disply_travels'),
+  url (r'^',                                           views.index,                name = 'index'),
 ]
 
