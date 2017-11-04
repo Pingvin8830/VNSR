@@ -15,6 +15,9 @@ class Humans (models.Model):
   deadday     = models.DateField (null = True)
   comment     = models.CharField (max_length = 250, null = True)
 
+  def __str__ (self):
+    return self.family + ' ' + self.name + ' ' + self.father_name
+
 class Relations (models.Model):
   '''Варианты связей'''
 
