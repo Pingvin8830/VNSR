@@ -10,11 +10,21 @@
     <table>
       {% for human in humans %}
         <tr>
-          <td>{{ human.family      }}</td>
-          <td>{{ human.name        }}</td>
-          <td>{{ human.father_name }}</td>
-          <td>{{ human.birthday    }}</td>
-          <td>{{ human.deadday     }}</td>
+          <td>
+            <a href="{% url 'humans_app:index' %}">
+              {{ human }}
+            </a>
+          </td>
+          <td>
+            {% if human.birthday %}
+              {{ human.birthday }}
+            {% endif %}
+          </td>
+          <td>
+            {% if human.deadday %}
+              {{ human.deadday }}
+            {% endif %}
+          </td>
         </tr>
       {% endfor %}
     </table>
