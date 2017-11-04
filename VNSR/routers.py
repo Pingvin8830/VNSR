@@ -4,6 +4,7 @@ MY_APPS = [
   'car_app',
   'computers_app',
   'hrefs_app',
+  'humans_app',
   'menu_app',
   'metro_app',
 ]
@@ -14,6 +15,7 @@ MY_DB = [
   'car_db',
   'computers_db',
   'hrefs_db',
+  'humans_db',
   'menu_db',
   'metro_db',
 ]
@@ -101,6 +103,23 @@ class HrefsRouter (object):
     return None
   def allow_migrate (self, db, app_label, model = None, **hints):
     if app_label == 'hrefs_app': return db == 'hrefs_db'
+    return None
+
+class HumansRouter (object):
+  '''Перенаправление в БД humans'''
+  def db_for_read (self, model, **hints):
+    if model._meta.app_label == 'humans_app': return 'humans_db'
+    return None
+  def db_for_write (self, model, **hints):
+    if model._meta.app_label == 'humans_app': return 'humans_db'
+    return None
+  def allow_relation (self, obj1, obj2, **hints):
+    if  obj1._meta.app_label == 'humans_app' or \
+        obj2._meta.app_label == 'humans_app':
+          return True
+    return None
+  def allow_migrate (self, db, app_label, model = None, **hints):
+    if app_label == 'humans_app': return db == 'humans_db'
     return None
 
 class MenuRouter (object):

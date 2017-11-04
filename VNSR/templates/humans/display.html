@@ -1,0 +1,41 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'humans_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <table>
+      <tr>
+        <td>Фамилия</td>
+        <td>{{ human.family }}</td>
+      </tr>
+      <tr>
+        <td>Имя</td>
+        <td>{{ human.name }}</td>
+      </tr>
+      <tr>
+        <td>Отчество</td>
+        <td>{{ human.father_name }}</td>
+      </tr>
+    </table>
+    <hr>
+    <table>
+      {% if human.birthday %}
+        <tr>
+          <td>Дата рождения</td>
+          <td>{{ human.birthday }}</td>
+        </tr>
+      {% endif %}
+      {% if human.deadday %}
+        <tr>
+          <td>Дата смерти</td>
+          <td>{{ human.deadday }}</td>
+        </tr>
+      {% endif %}
+    </table>
+  </center>
+{% endblock %}
+
