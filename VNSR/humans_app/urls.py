@@ -18,9 +18,10 @@ from .                import views
 
 app_name    = 'humans_app' 
 urlpatterns = [
-  url (r'^add_human',              views.add_human,   name = 'add_human'),
-  url (r'^display/(?P<id>[0-9]+)', views.display,     name = 'display'),
-  url (r'^display_all',            views.display_all, name = 'display_all'),
-  url (r'^',                       views.index,       name = 'index'),
+  url (r'^add_human',                 views.add_human,   name = 'add_human'),
+  url (r'^display/(?P<id>[0-9]+)',    views.display,     name = 'display'),
+  url (r'^display_all',               views.display_all, name = 'display_all'),
+  url (r'^edit_human/(?P<id>[0-9]+)', views.edit_human,  name = 'edit_human'),
+  url (r'^',                          views.index,       name = 'index'),
 ]
 
