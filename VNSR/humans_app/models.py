@@ -35,7 +35,7 @@ class HumansRelations (models.Model):
   human_2   = models.ForeignKey (Humans,    on_delete = models.SET_NULL, null = True, db_column = 'human_2', related_name = 'human_2')
   relation  = models.ForeignKey (Relations, on_delete = models.SET_NULL, null = True, db_column = 'relation')
 
-class EventTypes (models.Models):
+class EventTypes (models.Model):
   '''Типы событий'''
 
   class Meta (object):
