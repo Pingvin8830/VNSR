@@ -18,7 +18,7 @@ from .                import views
 
 app_name    = 'humans_app' 
 urlpatterns = [
-  url (r'^all/', views.all,   name = 'display_all'),
-  url (r'^',     views.index, name = 'index'),
+  url (r'^display_all/', views.display_all, name = 'display_all'),
+  url (r'^',             views.index,       name = 'index'),
 ]
 
