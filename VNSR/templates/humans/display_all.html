@@ -2,7 +2,8 @@
 {% load staticfiles %}
 
 {% block menu %}
-  <a href="{% url 'humans_app:index' %}">Назад</a>
+  <a href="{% url 'humans_app:add_human' %}">Добавить человека</a>
+  <a href="{% url 'humans_app:index'     %}">Назад</a>
 {% endblock %}
 
 {% block content %}
