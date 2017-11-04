@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block menu %}
-  <a href="{% url 'humans_app:index' %}">Назад</a>
+  <a href="{% url 'humans_app:display_all' %}">Назад</a>
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,12 @@
     <table>
       <tr>
         <td>Фамилия</td>
-        <td>{{ human.family }}</td>
+        <td>
+          {{ human.family }}
+          {% if human.first_family %}
+            ({{ human.first_family }})
+          {% endif %}
+        </td>
       </tr>
       <tr>
         <td>Имя</td>
@@ -20,9 +25,18 @@
         <td>Отчество</td>
         <td>{{ human.father_name }}</td>
       </tr>
-    </table>
-    <hr>
-    <table>
+      {% if human.sex != None %}
+        <tr>
+          <td>Пол</td>
+          <td>
+            {% if human.sex %}
+              Мужской
+            {% else %}
+              Женский
+            {% endif %}
+          </td>
+        </tr>
+      {% endif %}
       {% if human.birthday %}
         <tr>
           <td>Дата рождения</td>
