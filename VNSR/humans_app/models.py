@@ -10,9 +10,9 @@ class Humans (models.Model):
   id          = models.AutoField (primary_key = True)
   family      = models.CharField (max_length = 20)
   name        = models.CharField (max_length = 20)
-  father_name = models.CharField (max_length = 20)
-  birthday    = models.DateField ()
-  deadday     = models.DateField ()
+  father_name = models.CharField (max_length = 20, null = True)
+  birthday    = models.DateField (null = True)
+  deadday     = models.DateField (null = True)
   comment     = models.CharField (max_length = 250)
 
 class Relations (models.Model):
@@ -52,7 +52,7 @@ class Events (models.Model):
 
   id          = models.AutoField  (primary_key = True)
   date        = models.DateField  ()
-  time        = models.TimeField  ()
+  time        = models.TimeField  (null = True)
   description = models.CharField  (max_length = 250)
   human       = models.ForeignKey (Humans,     on_delete = models.SET_NULL, null = True, db_column = 'human')
   type        = models.ForeignKey (EventTypes, on_delete = models.SET_NULL, null = True, db_column = 'type')
