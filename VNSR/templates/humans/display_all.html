@@ -1,0 +1,23 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'humans_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <table>
+      {% for human in humans %}
+        <tr>
+          <td>{{ human.family      }}</td>
+          <td>{{ human.name        }}</td>
+          <td>{{ human.father_name }}</td>
+          <td>{{ human.birthday    }}</td>
+          <td>{{ human.deadday     }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </center>
+{% endblock %}
+
