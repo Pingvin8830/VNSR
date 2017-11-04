@@ -5,7 +5,7 @@ from calend_app.lists import MONTHS, DAYS
 
 # Create your forms here.
 
-class AddHumanForm (forms.ModelForm):
+class HumanForm (forms.ModelForm):
   '''Добавление человека'''
   class Meta (object):
     model = Humans
