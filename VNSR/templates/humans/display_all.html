@@ -11,7 +11,7 @@
       {% for human in humans %}
         <tr>
           <td>
-            <a href="{% url 'humans_app:index' %}">
+            <a href="{% url 'humans_app:display' human.id %}">
               {{ human }}
             </a>
           </td>
