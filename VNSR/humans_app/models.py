@@ -13,7 +13,7 @@ class Humans (models.Model):
   father_name = models.CharField (max_length = 20, null = True)
   birthday    = models.DateField (null = True)
   deadday     = models.DateField (null = True)
-  comment     = models.CharField (max_length = 250)
+  comment     = models.CharField (max_length = 250, null = True)
 
 class Relations (models.Model):
   '''Варианты связей'''
