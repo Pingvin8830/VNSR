@@ -7,10 +7,20 @@
 
 {% block content %}
   <center>
-    <form action="{% url 'humans_app:add_human' %}" method='post'>
+    {% if type == 'add' %}
+      <form action="{% url 'humans_app:add_human' %}" method='post'>
+    {% elif type == 'edit' %}
+      <form action="{% url 'humans_app:edit_human' id %}" method='post'>
+    {% endif %}
       {% csrf_token %}
       <table>
-        <caption>Добавление человека</caption>
+        <caption>
+          {% if type == 'add' %}
+            Добавление человека
+          {% elif type == 'edit' %}
+            Редактирование информации о человеке
+          {% endif %}
+        </caption>
         <tr>
           <td>{{ form.family.label }}</td>
           <td>{{ form.family       }}</td>
@@ -46,7 +56,7 @@
         </tr>
       </table>
       {{ form.comment }}<br>
-      <input type='submit' value='Добавить'>
+      <input type='submit' value='Записать'>
       <input type='reset'  value='Очистить'>
     </form>
   </center>
