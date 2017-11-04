@@ -1,4 +1,5 @@
 from django.db import models
+from .lists    import SEXS
 
 # Create your models here.
 class Humans (models.Model):
@@ -7,16 +8,21 @@ class Humans (models.Model):
   class Meta (object):
     db_table = 'humans'
 
-  id          = models.AutoField (primary_key = True)
-  family      = models.CharField (max_length = 20)
-  name        = models.CharField (max_length = 20)
-  father_name = models.CharField (max_length = 20, null = True)
-  birthday    = models.DateField (null = True)
-  deadday     = models.DateField (null = True)
-  comment     = models.CharField (max_length = 250, null = True)
+  id           = models.AutoField        (primary_key = True)
+  sex          = models.NullBooleanField (choices = SEXS)
+  family       = models.CharField        (max_length = 20)
+  first_family = models.CharField        (max_length = 20, null = True)
+  name         = models.CharField        (max_length = 20)
+  father_name  = models.CharField        (max_length = 20, null = True)
+  birthday     = models.DateField        (null = True)
+  deadday      = models.DateField        (null = True)
+  comment      = models.CharField        (max_length = 250, null = True)
 
   def __str__ (self):
-    return self.family + ' ' + self.name + ' ' + self.father_name
+    r = self.family
+    if self.first_family: r += ' (' + self.first_family + ')'
+    r += ' ' + self.name + ' ' + self.father_name
+    return r
 
 class Relations (models.Model):
   '''Варианты связей'''
