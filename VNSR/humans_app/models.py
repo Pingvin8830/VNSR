@@ -9,7 +9,7 @@ class Humans (models.Model):
 
   id          = models.AutoField (primary_key = True)
   family      = models.CharField (max_length = 20)
-  name        = modles.CharField (max_length = 20)
+  name        = models.CharField (max_length = 20)
   father_name = models.CharField (max_length = 20)
   birthday    = models.DateField ()
   deadday     = models.DateField ()
