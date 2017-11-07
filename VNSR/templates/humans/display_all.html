@@ -1,0 +1,34 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'humans_app:add_human' %}">Добавить человека</a>
+  <a href="{% url 'humans_app:index'     %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <table>
+      {% for human in humans %}
+        <tr>
+          <td>
+            <a href="{% url 'humans_app:display' human.id %}">
+              {{ human }}
+            </a>
+          </td>
+          <td>
+            {% if human.birthday %}
+              {{ human.birthday }}
+            {% endif %}
+          </td>
+          <td>
+            {% if human.deadday %}
+              {{ human.deadday }}
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </center>
+{% endblock %}
+
