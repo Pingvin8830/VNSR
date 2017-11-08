@@ -96,6 +96,9 @@ DATABASES = {
     'USER':     'pingvin',
     'PASSWORD': 'server881130',
     'HOST':     'localhost',
+    'OPTIONS': {
+      'init_command': 'SET sql_mode="STRICT_ALL_TABLES"',
+    },
   },
   'budget_db': {
     'ENGINE':   'django.db.backends.mysql',
@@ -103,6 +106,9 @@ DATABASES = {
     'USER':     'pingvin',
     'PASSWORD': 'server881130',
     'HOST':     'localhost',
+    'OPTIONS': {
+      'init_command': 'SET sql_mode="STRICT_ALL_TABLES"',
+    },
   },
   'calend_db': {
     'ENGINE':   'django.db.backends.mysql',
@@ -110,6 +116,9 @@ DATABASES = {
     'USER':     'pingvin',
     'PASSWORD': 'server881130',
     'HOST':     'localhost',
+    'OPTIONS': {
+      'init_command': 'SET sql_mode="STRICT_ALL_TABLES"',
+    },
   },
   'car_db': {
     'ENGINE':   'django.db.backends.mysql',
@@ -117,6 +126,9 @@ DATABASES = {
     'USER':     'pingvin',
     'PASSWORD': 'server881130',
     'HOST':     'localhost',
+    'OPTIONS': {
+      'init_command': 'SET sql_mode="STRICT_ALL_TABLES"',
+    },
   },
   'computers_db': {
     'ENGINE':   'django.db.backends.mysql',
@@ -124,6 +136,9 @@ DATABASES = {
     'USER':     'pingvin',
     'PASSWORD': 'server881130',
     'HOST':     'localhost',
+    'OPTIONS': {
+      'init_command': 'SET sql_mode="STRICT_ALL_TABLES"',
+    },
   },
   'hrefs_db': {
     'ENGINE':   'django.db.backends.mysql',
@@ -131,6 +146,9 @@ DATABASES = {
     'USER':     'pingvin',
     'PASSWORD': 'server881130',
     'HOST':     'localhost',
+    'OPTIONS': {
+      'init_command': 'SET sql_mode="STRICT_ALL_TABLES"',
+    },
   },
   'humans_db': {
     'ENGINE':   'django.db.backends.mysql',
@@ -138,6 +156,9 @@ DATABASES = {
     'USER':     'pingvin',
     'PASSWORD': 'server881130',
     'HOST':     'localhost',
+    'OPTIONS': {
+      'init_command': 'SET sql_mode="STRICT_ALL_TABLES"',
+    },
   },
   'menu_db': {
     'ENGINE':   'django.db.backends.mysql',
@@ -145,6 +166,9 @@ DATABASES = {
     'USER':     'pingvin',
     'PASSWORD': 'server881130',
     'HOST':     'localhost',
+    'OPTIONS': {
+      'init_command': 'SET sql_mode="STRICT_ALL_TABLES"',
+    },
   },
   'metro_db': {
     'ENGINE':   'django.db.backends.mysql',
@@ -152,6 +176,9 @@ DATABASES = {
     'USER':     'pingvin',
     'PASSWORD': 'server881130',
     'HOST':     'localhost',
+    'OPTIONS': {
+      'init_command': 'SET sql_mode="STRICT_ALL_TABLES"',
+    },
   },
 }
 
