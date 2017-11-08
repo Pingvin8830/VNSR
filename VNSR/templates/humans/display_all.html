@@ -7,28 +7,31 @@
 {% endblock %}
 
 {% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'humans/display_all.css' %}">
   <center>
-    <table>
-      {% for human in humans %}
-        <tr>
-          <td>
-            <a href="{% url 'humans_app:display' human.id %}">
-              {{ human }}
-            </a>
-          </td>
-          <td>
-            {% if human.birthday %}
-              {{ human.birthday }}
-            {% endif %}
-          </td>
-          <td>
-            {% if human.deadday %}
-              {{ human.deadday }}
-            {% endif %}
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
+    <div id="all_humans">
+      <table>
+        {% for human in humans %}
+          <tr>
+            <td>
+              <a href="{% url 'humans_app:display' human.id %}">
+                {{ human }}
+              </a>
+            </td>
+            <td>
+              {% if human.birthday %}
+                {{ human.birthday }}
+              {% endif %}
+            </td>
+            <td>
+              {% if human.deadday %}
+                {{ human.deadday }}
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
   </center>
 {% endblock %}
 
