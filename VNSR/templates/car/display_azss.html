@@ -1,0 +1,34 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'car_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <table border=1>
+      <caption>Запрвочные станции</caption>
+      <tr>
+        <th>Id</th>
+        <th>Компания</th>
+        <th>Название</th>
+        <th>Адрес</th>
+        <th>Телефон</th>
+        <th>Комментарий</th>
+      </tr>
+      {% for azs in azss %}
+        <tr>
+          <td>{{ azs.id      }}</td>
+          <td>{{ azs.company }}</td>
+          <td>{{ azs.name    }}</td>
+          <td>{{ azs.address }}</td>
+          <td>{{ azs.phone   }}</td>
+          <td>{{ azs.comment }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </center>
+{% endblock %}
+
+
