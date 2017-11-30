@@ -2,7 +2,7 @@ from datetime                           import datetime
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
 from .forms                             import AddAzsForm, AddCheckPointForm, AddRefuelForm, AddTravelForm
-from .models                            import Azs, CheckPoints, Travels
+from .models                            import Azs, CheckPoints, FuelTypes, Travels
 from calend_app.forms                   import CalendLabels
 from main_app.views                     import is_user, default_context
 from menu_app.functions                 import create_menu_app
@@ -150,6 +150,14 @@ def display_check_points (request, travel_id):
   context                  = default_context (request)
   context ['check_points'] = CheckPoints.objects.filter (travel = travel)
   context ['travel']       = travel
+  return render (request, page, context)
+
+def display_fuel_types (request):
+  '''Отображение типов топлива'''
+  if not is_user (request): return redirect ('/')
+  page = 'car/display_fuel_types.html'
+  context = default_context (request)
+  context ['fuel_types'] = FuelTypes.objects.all ().order_by ('name')
   return render (request, page, context)
 
 def display_travels (request):

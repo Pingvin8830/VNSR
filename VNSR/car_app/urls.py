@@ -24,6 +24,7 @@ urlpatterns = [
   url (r'^add_travel',                                 views.add_travel,           name = 'add_travel'),
   url (r'^display_azs',                                views.display_azs,          name = 'display_azs'),
   url (r'^display_check_points/(?P<travel_id>[0-9]*)', views.display_check_points, name = 'display_check_points'),
+  url (r'^display_fuel_types',                         views.display_fuel_types,   name = 'display_fuel_types'),
   url (r'^display_travels',                            views.display_travels,      name = 'disply_travels'),
   url (r'^',                                           views.index,                name = 'index'),
 ]
