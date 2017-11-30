@@ -7,29 +7,32 @@
 {% endblock %}
 
 {% block content %}
-  <center>
-    <table border=1>
-      <caption>Автозаправочные станции</caption>
-      <tr>
-        <th>Id</th>
-        <th>Компания</th>
-        <th>Название</th>
-        <th>Адрес</th>
-        <th>Телефон</th>
-        <th>Комментарий</th>
-      </tr>
-      {% for azs in azss %}
+  <link rel="stylesheet" type="text/css" href="{% static 'car/display_azss.css' %}">
+  <div id='azss'>
+    <center>
+      <table border=1>
+        <caption>Автозаправочные станции</caption>
         <tr>
-          <td>{{ azs.id      }}</td>
-          <td>{{ azs.company }}</td>
-          <td>{{ azs.name    }}</td>
-          <td>{{ azs.address }}</td>
-          <td>{{ azs.phone   }}</td>
-          <td>{{ azs.comment }}</td>
+          <th>Id</th>
+          <th>Компания</th>
+          <th>Название</th>
+          <th>Адрес</th>
+          <th>Телефон</th>
+          <th>Комментарий</th>
         </tr>
-      {% endfor %}
-    </table>
-  </center>
+        {% for azs in azss %}
+          <tr>
+            <td>{{ azs.id      }}</td>
+            <td>{{ azs.company }}</td>
+            <td>{{ azs.name    }}</td>
+            <td>{{ azs.address }}</td>
+            <td>{{ azs.phone   }}</td>
+            <td>{{ azs.comment }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    </center>
+  </div>
 {% endblock %}
 
 
