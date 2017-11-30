@@ -1,0 +1,50 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'car_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <form method='post' action='{% url "car_app:add_azs" %}'>
+      {% csrf_token %}
+      <table>
+        <caption>Автозаправочная станция</caption>
+        <tr>
+          <td colspan=2>
+            <hr>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ form.company.label }}</td>
+          <td>{{ form.company       }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.name.label }}</td>
+          <td>{{ form.name       }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.address.label }}</td>
+          <td>{{ form.address       }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.phone.label }}</td>
+          <td>{{ form.phone       }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.comment.label }}</td>
+          <td>{{ form.comment       }}</td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <hr>
+          </td>
+        </tr>
+      </table>
+      <input type='submit' value='Записать'>
+      <input type='reset'  value='Очистить'>
+    </form>
+  </center>
+{% endblock %}
+

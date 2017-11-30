@@ -1,8 +1,8 @@
 from datetime                           import datetime
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
-from .forms                             import AddCheckPointForm, AddRefuelForm, AddTravelForm
-from .models                            import CheckPoints, Travels
+from .forms                             import AddAzsForm, AddCheckPointForm, AddFuelTypeForm, AddRefuelForm, AddTravelForm
+from .models                            import Azs, CheckPoints, FuelTypes, PayTypes, Travels
 from calend_app.forms                   import CalendLabels
 from main_app.views                     import is_user, default_context
 from menu_app.functions                 import create_menu_app
@@ -16,6 +16,21 @@ def index (request):
   context = default_context (request)
   context ['items'] = create_menu_app ('car')
   return render (request, page, context)
+
+def add_azs (request):
+  '''Добавляет АЗС'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddAzsForm (request.POST)
+    if form.is_valid ():
+      azs = form.save ()
+    return index (request)
+  else:
+    page = 'car/add_azs.html'
+    context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = AddAzsForm
+    return render (request, page, context)
 
 def add_check_point (request, travel_id):
   '''Добавление контрольной точки поездки'''
@@ -59,6 +74,21 @@ def add_check_point (request, travel_id):
     context ['calend_labels'] = CalendLabels
     return render (request, page, context)
   return index (request)
+
+def add_fuel_type (request):
+  '''Добавление типа топлива'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddFuelTypeForm (request.POST)
+    if form.is_valid ():
+        fule_type = form.save ()
+    return index (request)
+  else:
+    page = 'car/add_fuel_type.html'
+    context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = AddFuelTypeForm
+    return render (request, page, context)
 
 def add_refuel (request):
   '''Добавление чека с заправки'''
@@ -119,6 +149,14 @@ def add_travel (request):
     context ['calend_labels'] = CalendLabels
     return render (request, page, context)
 
+def display_azss (request):
+  '''Отображение автозаправочных станций'''
+  if not is_user (request): return redirect ('/')
+  page             = 'car/display_azss.html'
+  context          = default_context (request)
+  context ['azss'] = Azs.objects.all ().order_by ('company', 'name')
+  return render (request, page, context)
+
 def display_check_points (request, travel_id):
   '''Отображение контрольных точек поездки'''
   if not is_user (request): return redirect ('/')
@@ -127,6 +165,22 @@ def display_check_points (request, travel_id):
   context                  = default_context (request)
   context ['check_points'] = CheckPoints.objects.filter (travel = travel)
   context ['travel']       = travel
+  return render (request, page, context)
+
+def display_fuel_types (request):
+  '''Отображение типов топлива'''
+  if not is_user (request): return redirect ('/')
+  page = 'car/display_fuel_types.html'
+  context = default_context (request)
+  context ['fuel_types'] = FuelTypes.objects.all ().order_by ('name')
+  return render (request, page, context)
+
+def display_pay_types (request):
+  '''Отображение типов оплаты'''
+  if not is_user (request): return redirect ('/')
+  page = 'car/display_pay_types.html'
+  context = default_context (request)
+  context ['pay_types'] = PayTypes.objects.all ().order_by ('name')
   return render (request, page, context)
 
 def display_travels (request):
