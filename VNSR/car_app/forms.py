@@ -2,6 +2,24 @@ from django           import forms
 from .models          import Azs, CheckPoints, FuelTypes, PayTypes, Refuels, Travels
 from calend_app.lists import DAYS, MONTHS, HOURS, MINUTES, SECONDS
 
+class AddAzsForm (forms.ModelForm):
+  '''Добавление автозаправочной станции'''
+  class Meta (object):
+    model  = Azs
+    fields = [
+      'company',
+      'name',
+      'address',
+      'phone',
+      'comment',
+    ]
+
+  company = forms.CharField (required = True,  label = 'Компания',    max_length = 100)
+  name    = forms.CharField (required = True,  label = 'Название',    max_length = 20)
+  address = forms.CharField (required = True,  label = 'Адрес',       max_length = 100)
+  phone   = forms.CharField (required = False, label = 'Телефон',     max_length = 15)
+  comment = forms.CharField (required = False, label = 'Комментарий', max_length = 100, widget = forms.Textarea)
+
 class AddCheckPointForm (forms.ModelForm):
   '''Добавление контрольной точки'''
   class Meta (object):
