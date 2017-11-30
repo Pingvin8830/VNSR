@@ -1,0 +1,12 @@
+#refuels {
+  height:   100%;
+  overflow: scroll;
+}
+
+.bad {
+  color:  red;
+}
+
+.ok {
+  color:  green;
+}
