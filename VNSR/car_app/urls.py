@@ -20,6 +20,7 @@ app_name    = 'car_app'
 urlpatterns = [
   url (r'^add_azs',                                    views.add_azs,              name = 'add_azs'),
   url (r'^add_check_point/(?P<travel_id>[0-9]*)',      views.add_check_point,      name = 'add_check_point'),
+  url (r'^add_fuel_type',                              views.add_fuel_type,        name = 'add_fuel_type'),
   url (r'^add_refuel',                                 views.add_refuel,           name = 'add_refuel'),
   url (r'^add_travel',                                 views.add_travel,           name = 'add_travel'),
   url (r'^display_azs',                                views.display_azs,          name = 'display_azs'),

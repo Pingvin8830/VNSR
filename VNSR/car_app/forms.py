@@ -48,6 +48,18 @@ class AddCheckPointForm (forms.ModelForm):
   odometer   = forms.IntegerField (required = True,  label = 'Текущий пробег',   min_value  = 0)
   comment    = forms.CharField    (required = False, label = 'Комментарий',      max_length = 100)
 
+class AddFuelTypeForm (forms.ModelForm):
+  '''Добавление типа топлива'''
+  class Meta (object):
+    model  = FuelTypes
+    fields = [
+      'name',
+      'comment',
+    ]
+
+  name    = forms.CharField (required = True,  label = 'Название',    max_length = 30)
+  comment = forms.CharField (required = False, label = 'Комментарий', max_length = 100, widget = forms.Textarea)
+
 class AddRefuelForm (forms.ModelForm):
   '''Добавление чека с заправки'''
   class Meta (object):

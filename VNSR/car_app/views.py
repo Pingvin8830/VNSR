@@ -1,7 +1,7 @@
 from datetime                           import datetime
 from django.shortcuts                   import render, redirect
 from django.template.context_processors import csrf
-from .forms                             import AddAzsForm, AddCheckPointForm, AddRefuelForm, AddTravelForm
+from .forms                             import AddAzsForm, AddCheckPointForm, AddFuelTypeForm, AddRefuelForm, AddTravelForm
 from .models                            import Azs, CheckPoints, FuelTypes, Travels
 from calend_app.forms                   import CalendLabels
 from main_app.views                     import is_user, default_context
@@ -74,6 +74,21 @@ def add_check_point (request, travel_id):
     context ['calend_labels'] = CalendLabels
     return render (request, page, context)
   return index (request)
+
+def add_fuel_type (request):
+  '''Добавление типа топлива'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddFuelTypeForm (request.POST)
+    if form.is_valid ():
+        fule_type = form.save ()
+    return index (request)
+  else:
+    page = 'car/add_fuel_type.html'
+    context = default_context (request)
+    context.update (csrf (request))
+    context ['form'] = AddFuelTypeForm
+    return render (request, page, context)
 
 def add_refuel (request):
   '''Добавление чека с заправки'''
