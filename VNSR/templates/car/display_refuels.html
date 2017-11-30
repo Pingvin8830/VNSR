@@ -1,0 +1,62 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'car_app:index'   %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'car/display_refuels.css' %}">
+  <div id='refuels'>
+    <center>
+      <table border=1>
+        <caption>Заправки автомобиля</caption>
+        <tr>
+          <th rowspan=2>Id</th>
+          <th rowspan=2>Дата/время</th>
+          <th colspan=3>Топливо</th>
+          <th colspan=3>Баллы</th>
+          <th colspan=2>Автомобиль</th>
+          <th colspan=2>Расход</th>
+        </tr>
+        <tr>
+          <th>Стоимость</th>
+          <th>Количество</th>
+          <th>Цена</th>
+          <th>Начислено</th>
+          <th>Списано</th>
+          <th>Итого</th>
+          <th>Пробег</th>
+          <th>Скорость</th>
+          <th>Авто</th>
+          <th>Ручной</th>
+        </tr>
+        {% for refuel in refuels %}
+          <tr align='right'>
+            <td>{{ refuel.id }}</td>
+            <td>
+              {% if refuel.date_time.day < 10 %}0{% endif %}{{ refuel.date_time.day }}.{% if refuel.date_time.month < 10 %}0{% endif %}{{ refuel.date_time.month }}.{{ refuel.date_time.year }} {% if refuel.date_time.hour < 10 %}0{% endif %}{{ refuel.date_time.hour }}:{% if refuel.date_time.minute < 10 %}0{% endif %}{{ refuel.date_time.minute }}
+            </td>
+            <td>{{ refuel.price       }}</td>
+            <td>{{ refuel.fuel_count  }}</td>
+            <td class='{{ refuel.color.cost }}'>
+              {{ refuel.cost }}
+            </td>
+            <td>{{ refuel.score_plus  }}</td>
+            <td>{{ refuel.score_minus }}</td>
+            <td>{{ refuel.score_total }}</td>
+            <td>{{ refuel.odometer    }}</td>
+            <td>{{ refuel.speed       }}</td>
+            <td class='{{ refuel.color.auto }}'>
+              {{ refuel.consumption }}
+            </td>
+            <td class='{{ refuel.color.man }}'>
+              {{ refuel.man_cons }}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </center>
+  </div>
+{% endblock %}
+
