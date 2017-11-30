@@ -24,6 +24,7 @@ urlpatterns = [
   url (r'^car/',       include ('car_app.urls')),
   url (r'^computers/', include ('computers_app.urls')),
   url (r'^hrefs/',     include ('hrefs_app.urls')),
+  url (r'^humans/',    include ('humans_app.urls')),
   url (r'^main/',      include ('main_app.urls')),
   url (r'^menu/',      include ('menu_app.urls')),
   url (r'^metro/',     include ('metro_app.urls')),
