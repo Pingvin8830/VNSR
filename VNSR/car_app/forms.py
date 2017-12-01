@@ -2,6 +2,24 @@ from django           import forms
 from .models          import Azs, CheckPoints, FuelTypes, PayTypes, Refuels, Travels
 from calend_app.lists import DAYS, MONTHS, HOURS, MINUTES, SECONDS
 
+class AddAzsForm (forms.ModelForm):
+  '''Добавление автозаправочной станции'''
+  class Meta (object):
+    model  = Azs
+    fields = [
+      'company',
+      'name',
+      'address',
+      'phone',
+      'comment',
+    ]
+
+  company = forms.CharField (required = True,  label = 'Компания',    max_length = 100)
+  name    = forms.CharField (required = True,  label = 'Название',    max_length = 20)
+  address = forms.CharField (required = True,  label = 'Адрес',       max_length = 100)
+  phone   = forms.CharField (required = False, label = 'Телефон',     max_length = 15)
+  comment = forms.CharField (required = False, label = 'Комментарий', max_length = 100, widget = forms.Textarea)
+
 class AddCheckPointForm (forms.ModelForm):
   '''Добавление контрольной точки'''
   class Meta (object):
@@ -29,6 +47,18 @@ class AddCheckPointForm (forms.ModelForm):
   second_out = forms.ChoiceField  (required = False, label = 'Секунда отъезда',  choices    = SECONDS)
   odometer   = forms.IntegerField (required = True,  label = 'Текущий пробег',   min_value  = 0)
   comment    = forms.CharField    (required = False, label = 'Комментарий',      max_length = 100)
+
+class AddFuelTypeForm (forms.ModelForm):
+  '''Добавление типа топлива'''
+  class Meta (object):
+    model  = FuelTypes
+    fields = [
+      'name',
+      'comment',
+    ]
+
+  name    = forms.CharField (required = True,  label = 'Название',    max_length = 30)
+  comment = forms.CharField (required = False, label = 'Комментарий', max_length = 100, widget = forms.Textarea)
 
 class AddRefuelForm (forms.ModelForm):
   '''Добавление чека с заправки'''

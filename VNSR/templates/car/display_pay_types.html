@@ -1,0 +1,30 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'car_app:index'   %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <table border=1>
+      <caption>Типы оплаты</caption>
+      <tr>
+        <th>Id</th>
+        <th>Название</th>
+        <th>Номер карты</th>
+        <th>Комментарий</th>
+      </tr>
+      {% for pay_type in pay_types %}
+        <tr>
+          <td>{{ pay_type.id       }}</td>
+          <td>{{ pay_type.name     }}</td>
+          <td>{{ pay_type.card_num }}</td>
+          <td>{{ pay_type.comment  }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </center>
+{% endblock %}
+
+

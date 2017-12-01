@@ -1,5 +1,4 @@
 from django.db       import models
-from menu_app.models import Users
 
 # Create your models here.
 
@@ -16,8 +15,9 @@ class UserLinks (models.Model):
   '''Сопоставление ссылок и пользователей'''
   class Meta ():
     db_table = 'user_links'
+    unique_together = (('user', 'link'))
 
-  id = models.AutoField (primary_key = True)
-  user = models.ForeignKey (Users, db_column = 'user', on_delete = models.SET_DEFAULT, default = 0)
-  link = models.ForeignKey (Links, db_column = 'link', on_delete = models.SET_DEFAULT, default = 0)
+  id   = models.AutoField    (primary_key = True)
+  user = models.IntegerField (null = False)
+  link = models.ForeignKey   (Links, db_column = 'link', on_delete = models.SET_DEFAULT, default = 0)
 
