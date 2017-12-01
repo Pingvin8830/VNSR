@@ -1,15 +1,17 @@
-from django.shortcuts import redirect, render
-from .forms           import AddPayslipCodeForm
-from .models          import PayslipCodes
-from main_app.views   import default_context, is_user
+from datetime                 import datetime, date, timedelta, time
+from django.core.urlresolvers import reverse
+from django.shortcuts         import redirect, render
+from .forms                   import AddPayslipCodeForm
+from .models                  import PayslipCodes, SheduleReal
+from calend_app.forms         import CasePeriodForm
+from calend_app.models        import Signs
+from main_app.views           import default_context, is_user
 
-#from datetime             import date, datetime, time, timedelta
 #from django               import forms
 #from .forms               import AddPayslipForm
-#from .models              import WorkPlane, ShedulePlane, SheduleReal, Payslip, PayslipDetails, Rate, Lanch
+#from .models              import WorkPlane, ShedulePlane, Payslip, PayslipDetails, Rate, Lanch
 #from budget_app.models    import Debets
 #from calend_app.functions import get_now, get_month_text
-#from calend_app.models    import Signs
 #from menu_app.functions   import create_menu_app
 
 # Create your views here.
@@ -33,6 +35,134 @@ def display_payslip_codes (request):
   page = 'metro/display_payslip_codes.html'
   context = default_context (request)
   context ['codes'] = PayslipCodes.objects.all ().order_by ('code')
+  return render (request, page, context)
+
+def display_tabel (request):
+  '''Отображение табеля'''
+  if not is_user (request): return redirect ('/')
+  context = default_context (request)
+  if request.GET:
+    page = 'metro/display_tabel.html'
+    start = date (
+      int (request.GET ['start_year']),
+      int (request.GET ['start_month']),
+      int (request.GET ['start_day'])
+    )
+    end = date (
+      int (request.GET ['end_year']),
+      int (request.GET ['end_month']),
+      int (request.GET ['end_day'])
+    )
+    context ['start'] = start
+    context ['end'] = end
+    context ['shifts'] = []
+
+    data = start
+    norma = 0
+    akk_hours = 0
+    akk_night = 0
+    akk_holiday = 0
+    akk_sick = 0
+    akk_vacation = 0
+
+    while end >= data:
+
+      try: signs = Signs.objects.get (data = data)
+      except: signs = Signs ()
+
+      try: shift = SheduleReal.objects.get (data = data)
+      except:
+        shift = SheduleReal (
+          data = data,
+          start = time (0, 0, 0),
+          end = time (0, 0, 0),
+          break_day = 0,
+          break_night = 0,
+        )
+
+      if shift.sick or shift.vacation:
+        shift.start = time (0, 0, 0)
+        shift.end = time (0, 0, 0)
+        shift.break_day = 0
+        shift.break_night = 0
+
+      if signs.work:
+        norma += 8
+        shift.color = 'work'
+      elif signs.week:
+        shift.color = 'week'
+      elif signs.holiday:
+        shift.color = 'holiday'
+      elif signs.short:
+        norma += 7
+        shift.color = 'short'
+
+      if shift.start > shift.end: end_shift = datetime.combine (date (1, 1, 2), shift.end)
+      else: end_shift = datetime.combine (date (1, 1, 1), shift.end)
+
+      start_shift = datetime.combine (date (1, 1, 1), shift.start)
+
+      shift.hours = (end_shift - start_shift).seconds / 3600 - (shift.break_day + shift.break_night) * 0.5
+
+      ctrl_fst_mng = datetime (1, 1, 1, 6)
+      ctrl_fst_evn = datetime (1, 1, 1, 22)
+      ctrl_fst_day = datetime (1, 1, 2)
+      ctrl_scn_mng = datetime (1, 1, 2, 6)
+      ctrl_scn_evn = datetime (1, 1, 2, 22)
+      ctrl_scn_day = datetime (1, 1, 3)
+
+      if (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_fst_mng): shift.night = (end_shift - start_shift).seconds / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_fst_evn): shift.night = (ctrl_fst_mng - start_shift).seconds / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_fst_day): shift.night = (end_shift - start_shift).seconds / 3600 - shift.break_night * 0.5 - 16
+      elif (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_scn_mng): shift.night = (end_shift - start_shift).seconds / 3600 - shift.break_night * 0.5 - 16
+      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_fst_evn): shift.night = 0
+      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_fst_day): shift.night = (end_shift - ctrl_fst_evn).seconds / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_scn_mng): shift.night = (end_shift - ctrl_fst_evn).seconds / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_scn_evn): shift.night = 8 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_fst_day): shift.night = (end_shift - start_shift).seconds / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_scn_mng): shift.night = (end_shift - start_shift).seconds / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_scn_evn): shift.night = (ctrl_scn_mng - start_shift).seconds / 3600 - shift.break_night * 0.5
+      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_scn_day): shift.night = (end_shift - start_shift).seconds / 3600 - shift.break_night * 0.5 - 16
+
+      if signs.holiday:
+        if shift.start > shift.end: shift.holiday = (datetime (1, 1, 2) - datetime.combine (date (1, 1, 1), shift.start)).seconds / 3600 - (shift.break_day + shift.break_night) * 0.5
+        else: shift.holiday = shift.hours
+        shift.night = 0
+      else:
+        shift.holiday = 0
+
+      context ['shifts'].append (shift)
+
+      akk_hours += shift.hours
+      akk_night += shift.night
+      akk_holiday += shift.holiday
+
+      if shift.sick:
+        if signs.work: akk_sick += 8
+        elif signs.short: akk_sick += 7
+
+      if shift.vacation:
+        if signs.work: akk_vacation += 8
+        elif signs.short: akk_vacation += 7
+
+      data += timedelta (days = 1)
+
+    norma_edit = norma - akk_sick - akk_vacation
+
+    context ['akk_hours'] = akk_hours
+    context ['akk_night'] = akk_night
+    context ['akk_holiday'] = akk_holiday
+    context ['akk_sick'] = akk_sick
+    context ['akk_vacation'] = akk_vacation
+    context ['norma'] = norma
+    context ['norma_edit'] = norma_edit
+
+    return render (request, page, context)
+
+  page = 'calend/case_period.html'
+  context ['form'] = CasePeriodForm
+  context ['prev'] = reverse ('metro_app:index', args = ())
+  context ['next'] = reverse ('metro_app:display_tabel')
   return render (request, page, context)
 
 def index (request):
@@ -95,111 +225,6 @@ def index (request):
 #  context = default_context (request)
 #  page    = 'metro/case_period.html'
 #  return render (request, page, context)
-#
-#def display_tabel (request):
-#  '''Отображение табеля'''
-#  if not is_user (request): return redirect ('/')
-#  context = default_context (request)
-#  page    = 'metro/display_tabel.html'
-#  if request.POST:
-#    start = date (
-#      int (request.POST ['start_year']),
-#      int (request.POST ['start_month']),
-#      int (request.POST ['start_day'])
-#    )
-#    day = int (request.POST ['end_day'])
-#    while True:
-#      try:
-#        end = date (
-#          int (request.POST ['end_year']),
-#          int (request.POST ['end_month']),
-#          day
-#        )
-#        break
-#      except:
-#        day -= 1
-#    context ['start']  = start
-#    context ['end']    = end
-#    context ['shifts'] = []
-#    data         = start
-#    norma        = 0
-#    akk_hours    = 0
-#    akk_night    = 0
-#    akk_holiday  = 0
-#    akk_sick     = 0
-#    akk_vacation = 0
-#    while end >= data:
-#      try:
-#        signs = Signs.objects.get (data = data)
-#      except:
-#        signs = Signs ()
-#      if   signs.work:  norma += 8
-#      elif signs.short: norma += 7
-#      try:
-#        shift = SheduleReal.objects.get (data = data)
-#      except:
-#        shift = SheduleReal (data = data, start = time (0, 0, 0), end = time (0, 0, 0), break_day = 0, break_night = 0)
-#      if shift.sick or shift.vacation:
-#        shift.start       = time (0, 0, 0)
-#        shift.end         = time (0, 0, 0)
-#        shift.break_day   = 0
-#        shift.break_night = 0
-#
-#      if shift.start > shift.end: end_shift = datetime.combine (date (1, 1, 2), shift.end)
-#      else:                       end_shift = datetime.combine (date (1, 1, 1), shift.end)
-#      start_shift = datetime.combine (date (1, 1, 1), shift.start)
-#      shift.hours = (end_shift - start_shift).seconds / 3600 - (shift.break_day + shift.break_night) * 0.5
-#      ctrl_fst_mng = datetime (1, 1, 1,  6)
-#      ctrl_fst_evn = datetime (1, 1, 1, 22)
-#      ctrl_fst_day = datetime (1, 1, 2)
-#      ctrl_scn_mng = datetime (1, 1, 2,  6)
-#      ctrl_scn_evn = datetime (1, 1, 2, 22)
-#      ctrl_scn_day = datetime (1, 1, 3)
-#
-#      if   (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_fst_mng): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5
-#      elif (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_fst_evn): shift.night = (ctrl_fst_mng - start_shift).seconds  / 3600 - shift.break_night * 0.5
-#      elif (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_fst_day): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5 - 16
-#      elif (start_shift < ctrl_fst_mng) and (end_shift <= ctrl_scn_mng): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5 - 16
-#      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_fst_evn): shift.night = 0
-#      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_fst_day): shift.night = (end_shift    - ctrl_fst_evn).seconds / 3600 - shift.break_night * 0.5
-#      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_scn_mng): shift.night = (end_shift    - ctrl_fst_evn).seconds / 3600 - shift.break_night * 0.5
-#      elif (start_shift < ctrl_fst_evn) and (end_shift <= ctrl_scn_evn): shift.night = 8                                            - shift.break_night * 0.5
-#      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_fst_day): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5
-#      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_scn_mng): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5
-#      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_scn_evn): shift.night = (ctrl_scn_mng - start_shift).seconds  / 3600 - shift.break_night * 0.5
-#      elif (start_shift < ctrl_fst_day) and (end_shift <= ctrl_scn_day): shift.night = (end_shift    - start_shift).seconds  / 3600 - shift.break_night * 0.5 - 16
-#
-#      if signs.holiday:
-#        if shift.start > shift.end: shift.holiday = (datetime (1, 1, 2) - datetime.combine (date (1, 1, 1), shift.start)).seconds / 3600 - (shift.break_day + shift.break_night) * 0.5
-#        else:                       shift.holiday = shift.hours
-#        shift.night = 0
-#      else:
-#        shift.holiday = 0
-#
-#      context ['shifts'].append (shift)
-#      akk_hours   += shift.hours
-#      akk_night   += shift.night
-#      akk_holiday += shift.holiday
-#      if shift.sick:
-#        if   signs.work:  akk_sick += 8
-#        elif signs.short: akk_sick += 7
-#      if shift.vacation:
-#        if   signs.work:  akk_vacation += 8
-#        elif signs.short: akk_vacation += 7
-#      data += timedelta (days = 1)
-#
-#    norma_edit = norma - akk_sick - akk_vacation
-#
-#    context ['akk_hours']    = akk_hours
-#    context ['akk_night']    = akk_night
-#    context ['akk_holiday']  = akk_holiday
-#    context ['akk_sick']     = akk_sick
-#    context ['akk_vacation'] = akk_vacation
-#    context ['norma']        = norma
-#    context ['norma_edit']   = norma_edit
-#    return render (request, page, context)
-#  else:
-#    return case_period (request)
 #
 #def control_payslip (request, id):
 #  '''Проверка расчётного листка'''

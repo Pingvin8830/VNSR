@@ -29,7 +29,7 @@
           <th>Праздничные</th>
         </tr>
         {% for shift in shifts %}
-          <tr>
+          <tr class='{{ shift.color }}'>
             <td>{% if shift.data.day   < 10 %}0{% endif %}{{ shift.data.day }}.{%if shift.data.month < 10 %}0{% endif %}{{ shift.data.month }}.{{ shift.data.year }}</td>
             <td>{% if shift.start.hour < 10 %}0{% endif %}{{ shift.start }}</td>
             <td>{% if shift.end.hour   < 10 %}0{% endif %}{{ shift.end }}</td>

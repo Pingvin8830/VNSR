@@ -3,7 +3,8 @@
 
 {% block menu %}
   <a href="{% url 'metro_app:display_payslip_codes' %}">Коды НДФЛ</a>
-  <a href="{% url 'metro_app:index'                 %}">Назад</a>
+  <a href="{% url 'metro_app:display_tabel'         %}">Табель</a>
+  <a href="{% url 'main_app:index'                  %}">Назад</a>
 {% endblock %}
 
 {% block content %}
@@ -17,6 +18,10 @@
       <tr>
         <td>Коды НДФЛ</td>
         <td>Настройка кодов, допустимых в расчетном листке</td>
+      </tr>
+      <tr>
+        <td>Табель</td>
+        <td>Просмотр табеля отработанных смен</td>
       </tr>
     </table>
   </center>
