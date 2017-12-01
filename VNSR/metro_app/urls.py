@@ -18,8 +18,9 @@ from .                import views
 
 app_name    = 'metro_app' 
 urlpatterns = [
-  url (r'^display_payslip_codes',          views.display_payslip_codes, name = 'display_payslip_codes'),
-  url (r'^',                               views.index,                 name = 'index'),
+  url (r'^add_payslip_code',      views.add_payslip_code,      name = 'add_payslip_code'),
+  url (r'^display_payslip_codes', views.display_payslip_codes, name = 'display_payslip_codes'),
+  url (r'^',                      views.index,                 name = 'index'),
 #  url (r'^add_details/(?P<id>[0-9]+)',     views.add_details,           name = 'add_details'),
 #  url (r'^add_payslip',                    views.add_payslip,           name = 'add_payslip'),
 #  url (r'^control_payslip/(?P<id>[0-9]+)', views.control_payslip,       name = 'control_payslip'),

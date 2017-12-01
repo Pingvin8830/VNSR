@@ -1,19 +1,31 @@
 from django.shortcuts import redirect, render
+from .forms           import AddPayslipCodeForm
 from .models          import PayslipCodes
-from main_app.views   import is_user, default_context
+from main_app.views   import default_context, is_user
 
 #from datetime             import date, datetime, time, timedelta
 #from django               import forms
-#from django.shortcuts     import render, redirect
 #from .forms               import AddPayslipForm
-#from .models              import WorkPlane, ShedulePlane, SheduleReal, CodesPayslip, Payslip, PayslipDetails, Rate, Lanch
+#from .models              import WorkPlane, ShedulePlane, SheduleReal, Payslip, PayslipDetails, Rate, Lanch
 #from budget_app.models    import Debets
 #from calend_app.functions import get_now, get_month_text
 #from calend_app.models    import Signs
 #from menu_app.functions   import create_menu_app
-#from main_app.views       import is_user, default_context
 
 # Create your views here.
+
+def add_payslip_code (request):
+  '''Добавляет код НДФЛ'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddPayslipCodeForm (request.POST)
+    if form.is_valid ():
+      payslip_code = form.save ()
+    return display_payslip_codes (request)
+  page = 'metro/add_payslip_code.html'
+  context = default_context (request)
+  context ['form'] = AddPayslipCodeForm
+  return render (request, page, context)
 
 def display_payslip_codes (request):
   '''Отображение кодов НДФЛ'''

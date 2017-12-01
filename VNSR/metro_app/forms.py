@@ -1,8 +1,23 @@
 from django  import forms
-from .models import Payslip
+from .lists  import PAYSLIP_CODE_TYPES
+from .models import PayslipCodes, Payslip
 from calend_app.functions import MONTHS
 
 # Create your forms here.
+
+class AddPayslipCodeForm (forms.ModelForm):
+  '''Добавление кода НДФЛ'''
+  class Meta (object):
+    model = PayslipCodes
+    fields = [
+      'code',
+      'name',
+      'type'
+    ]
+
+  code = forms.CharField   (label = 'Код',      max_length =  8, initial = 'Новый код')
+  name = forms.CharField   (label = 'Название', max_length = 50, initial = 'Название')
+  type = forms.ChoiceField (label = 'Тип',      choices = PAYSLIP_CODE_TYPES)
 
 class AddPayslipForm (forms.ModelForm):
   '''Расчетный листок из ОК'''
