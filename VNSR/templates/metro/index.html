@@ -2,9 +2,10 @@
 {% load staticfiles %}
 
 {% block menu %}
-  {% for item in items %}
-    <a href="/{{ item.app }}/{{ item.href }}">{{ item.text }}</a>
-  {% endfor %}
+  <a href="{% url 'metro_app:add_shedule_real'      %}">Добавить смену</a>
+  <a href="{% url 'metro_app:display_payslip_codes' %}">Коды НДФЛ</a>
+  <a href="{% url 'metro_app:display_tabel'         %}">Табель</a>
+  <a href="{% url 'main_app:index'                  %}">Назад</a>
 {% endblock %}
 
 {% block content %}
@@ -16,20 +17,12 @@
         <th>Назначение</th>
       </tr>
       <tr>
+        <td>Добавить смену</td>
+        <td>Добавление отработанной смены в табель</td>
+      </tr>
+      <tr>
         <td>Коды НДФЛ</td>
         <td>Настройка кодов, допустимых в расчетном листке</td>
-      </tr>
-      <tr>
-        <td>Новая смена</td>
-        <td>Добавление смены в график реально отработанных смен</td>
-      </tr>
-      <tr>
-        <td>Новый график</td>
-        <td>Добавление предварительного графика на следующий месяц</td>
-      </tr>
-      <tr>
-        <td>Расчетный листок</td>
-        <td>Работа с предоставленным расчетным листком (создание, контроль)</td>
       </tr>
       <tr>
         <td>Табель</td>
