@@ -1,11 +1,12 @@
-from datetime                 import datetime, date, timedelta, time
-from django.core.urlresolvers import reverse
-from django.shortcuts         import redirect, render
-from .forms                   import AddPayslipCodeForm
-from .models                  import PayslipCodes, SheduleReal
-from calend_app.forms         import CasePeriodForm
-from calend_app.models        import Signs
-from main_app.views           import default_context, is_user
+from datetime                           import datetime, date, timedelta, time
+from django.core.urlresolvers           import reverse
+from django.shortcuts                   import redirect, render
+from django.template.context_processors import csrf
+from .forms                             import AddPayslipCodeForm, AddSheduleRealForm
+from .models                            import PayslipCodes, SheduleReal
+from calend_app.forms                   import CasePeriodForm
+from calend_app.models                  import Signs
+from main_app.views                     import default_context, is_user
 
 #from django               import forms
 #from .forms               import AddPayslipForm
@@ -27,6 +28,48 @@ def add_payslip_code (request):
   page = 'metro/add_payslip_code.html'
   context = default_context (request)
   context ['form'] = AddPayslipCodeForm
+  return render (request, page, context)
+
+def add_shedule_real (request):
+  '''Добавление рабочей смены'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddSheduleRealForm (request.POST)
+    if form.is_valid ():
+      shedule_real = form.save (commit = False)
+      shedule_real.data = date (
+        int (form.cleaned_data ['data_year']),
+        int (form.cleaned_data ['data_month']),
+        int (form.cleaned_data ['data_day'])
+      )
+      try:
+        shedule_real.start = time (
+          int (form.cleaned_data ['start_hour']),
+          int (form.cleaned_data ['start_minute']),
+          0
+        )
+        shedule_real.end = time (
+          int (form.cleaned_data ['end_hour']),
+          int (form.cleaned_data ['end_minute']),
+          0
+        )
+      except:
+        shedule_real.start = None
+        shedule_real.end = None
+      try:
+        shedule_real.delay = time (
+          int (form.cleaned_data ['delay_hour']),
+          int (form.cleaned_data ['delay_minute']),
+          0
+        )
+      except: shedule_real.delay = None
+      shedule_real.save ()
+    return index (request)
+
+  page = 'metro/add_shedule_real.html'
+  context = default_context (request)
+  context.update (csrf (request))
+  context ['form'] = AddSheduleRealForm
   return render (request, page, context)
 
 def display_payslip_codes (request):

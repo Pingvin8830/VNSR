@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block menu %}
+  <a href="{% url 'metro_app:add_shedule_real'      %}">Добавить смену</a>
   <a href="{% url 'metro_app:display_payslip_codes' %}">Коды НДФЛ</a>
   <a href="{% url 'metro_app:display_tabel'         %}">Табель</a>
   <a href="{% url 'main_app:index'                  %}">Назад</a>
@@ -14,6 +15,10 @@
       <tr>
         <th>Пункт меню</th>
         <th>Назначение</th>
+      </tr>
+      <tr>
+        <td>Добавить смену</td>
+        <td>Добавление отработанной смены в табель</td>
       </tr>
       <tr>
         <td>Коды НДФЛ</td>
