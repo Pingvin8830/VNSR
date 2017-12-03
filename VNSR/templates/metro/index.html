@@ -4,6 +4,7 @@
 {% block menu %}
   <a href="{% url 'metro_app:add_shedule_real'      %}">Добавить смену</a>
   <a href="{% url 'metro_app:display_payslip_codes' %}">Коды НДФЛ</a>
+  <a href="{% url 'metro_app:display_payslips'      %}">Расчётные листки</a>
   <a href="{% url 'metro_app:display_tabel'         %}">Табель</a>
   <a href="{% url 'main_app:index'                  %}">Назад</a>
 {% endblock %}
@@ -23,6 +24,10 @@
       <tr>
         <td>Коды НДФЛ</td>
         <td>Настройка кодов, допустимых в расчетном листке</td>
+      </tr>
+      <tr>
+        <td>Расчётные листки</td>
+        <td>Просмотр расчётных листков</td>
       </tr>
       <tr>
         <td>Табель</td>

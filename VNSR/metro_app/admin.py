@@ -4,7 +4,7 @@ from .models        import *
 # Register your models here.
 admin.site.register (PayslipCodes)
 admin.site.register (Lanch)
-admin.site.register (Payslip)
+admin.site.register (Payslips)
 admin.site.register (PayslipDetails)
 admin.site.register (Rate)
 admin.site.register (ShedulePlane)
