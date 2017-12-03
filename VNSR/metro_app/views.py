@@ -2,20 +2,18 @@ from datetime                           import datetime, date, timedelta, time
 from django.core.urlresolvers           import reverse
 from django.shortcuts                   import redirect, render
 from django.template.context_processors import csrf
-from .forms                             import AddPayslipCodeForm, AddSheduleRealForm
-from .models                            import PayslipCodes, Payslips, SheduleReal
+from .forms                             import AddPayslipCodeForm, AddPayslipDetailsForm, AddPayslipForm, AddSheduleRealForm
+from .models                            import PayslipCodes, PayslipDetails, Payslips, SheduleReal
 from calend_app.forms                   import CasePeriodForm
 from calend_app.lists                   import MONTHS
 from calend_app.models                  import Signs
 from main_app.views                     import default_context, is_user
 
 #from django               import forms
-#from .forms               import AddPayslipForm
 #from .models              import WorkPlane, ShedulePlane, PayslipDetails, Rate, Lanch
 #from budget_app.models    import Debets
 #from calend_app.functions import get_now, get_month_text
 #from menu_app.functions   import create_menu_app
-
 # Create your views here.
 
 def add_payslip_code (request):
@@ -29,6 +27,97 @@ def add_payslip_code (request):
   page = 'metro/add_payslip_code.html'
   context = default_context (request)
   context ['form'] = AddPayslipCodeForm
+  return render (request, page, context)
+
+def add_payslip_details (request, id):
+  '''Добавляет строку в расчётный листок'''
+  if not is_user (request): return redirect ('/')
+  payslip      = Payslips.objects.get (id = id)
+  incomes      = []
+  others       = []
+  consumptions = []
+  for detail in PayslipDetails.objects.filter (payslip = payslip).order_by ('code__code', 'period'):
+    detail.print_edit ()
+    if   detail.type == 'i': incomes.append (detail)
+    elif detail.type == 'o': others.append (detail)
+    elif detail.type == 'c': consumptions.append (detail)
+  payslip.print_edit ()
+  if request.POST:
+    form = AddPayslipDetailsForm (request.POST)
+    if form.is_valid ():
+      try:
+        PayslipDetails (
+          payslip = payslip,
+          code = PayslipCodes.objects.get (id = int (form.cleaned_data ['code_income'])),
+          period = date (
+            int (form.cleaned_data ['year_income']),
+            int (form.cleaned_data ['month_income']),
+            1
+          ),
+          summa = form.cleaned_data ['summa_income'],
+          count = form.cleaned_data ['count_income']
+        ).save ()
+      except:
+        print ()
+      try:
+        PayslipDetails (
+          payslip = payslip,
+          code = PayslipCodes.objects.get (id = int (form.cleaned_data ['code_other'])),
+          period = date (
+            int (form.cleaned_data ['year_other']),
+            int (form.cleaned_data ['month_other']),
+            1
+          ),
+          summa = form.cleaned_data ['summa_other'],
+          count = 0
+        ).save ()
+      except:
+        print ()
+      try:
+        consumption = PayslipDetails (
+          payslip = payslip,
+          code = PayslipCodes.objects.get (id = int (form.cleaned_data ['code_consumption'])),
+          period = date (
+            int (form.cleaned_data ['year_consumption']),
+            int (form.cleaned_data ['month_consumption']),
+            1
+          ),
+          summa = form.cleaned_data ['summa_consumption'],
+          count = 0
+        ).save ()
+      except:
+        print ()
+    return redirect (reverse ('metro_app:add_payslip_details', args = (payslip.id, )))
+  page = 'metro/add_payslip_details.html'
+  context = default_context (request)
+  context.update (csrf (request))
+  context ['payslip']      = payslip
+  context ['incomes']      = incomes
+  context ['others']       = others
+  context ['consumptions'] = consumptions
+  context ['form']         = AddPayslipDetailsForm
+  return render (request, page, context)
+
+def add_payslip (request):
+  '''Добавление нового расчётного листка'''
+  if not is_user (request): return redirect ('/')
+  if request.POST:
+    form = AddPayslipForm (request.POST)
+    if form.is_valid ():
+      payslip = form.save (commit = False)
+      payslip.period = date (
+        int (form.cleaned_data ['year']),
+        int (form.cleaned_data ['month']),
+        1
+      )
+      try:
+        payslip.save ()
+      except:
+        return redirect (reverse ('metro_app:display_payslips'))
+      return redirect (reverse ('metro_app:add_payslip_details', args = (payslip.id,)))
+  page = 'metro/add_payslip.html'
+  context = default_context (request)
+  context ['form'] = AddPayslipForm
   return render (request, page, context)
 
 def add_shedule_real (request):
@@ -454,17 +543,7 @@ def index (request):
 #
 #def add_payslip (request):
 #  '''Добавляет расчетный листок в БД'''
-#  if not is_user (request): return redirect ('/')
 #  if request.POST:
-#    if not request.POST ['rotate_dolg']: request.POST.rotate_dolg = None
-#    form = AddPayslipForm (request.POST)
-#    if form.is_valid ():
-#      payslip = form.save (commit = False)
-#      payslip.period = date (
-#        int (form.cleaned_data ['year']),
-#        int (form.cleaned_data ['month']),
-#        1)
-#      payslip.save ()
 #    context = default_context (request)
 #    return redirect ('/metro/display_payslip_details/%d' % payslip.id)
 #  return redirect ('/metro')
