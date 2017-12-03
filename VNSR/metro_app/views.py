@@ -3,14 +3,15 @@ from django.core.urlresolvers           import reverse
 from django.shortcuts                   import redirect, render
 from django.template.context_processors import csrf
 from .forms                             import AddPayslipCodeForm, AddSheduleRealForm
-from .models                            import PayslipCodes, SheduleReal
+from .models                            import PayslipCodes, Payslips, SheduleReal
 from calend_app.forms                   import CasePeriodForm
+from calend_app.lists                   import MONTHS
 from calend_app.models                  import Signs
 from main_app.views                     import default_context, is_user
 
 #from django               import forms
 #from .forms               import AddPayslipForm
-#from .models              import WorkPlane, ShedulePlane, Payslip, PayslipDetails, Rate, Lanch
+#from .models              import WorkPlane, ShedulePlane, PayslipDetails, Rate, Lanch
 #from budget_app.models    import Debets
 #from calend_app.functions import get_now, get_month_text
 #from menu_app.functions   import create_menu_app
@@ -78,6 +79,17 @@ def display_payslip_codes (request):
   page = 'metro/display_payslip_codes.html'
   context = default_context (request)
   context ['codes'] = PayslipCodes.objects.all ().order_by ('code')
+  return render (request, page, context)
+
+def display_payslips (request):
+  '''Отображение расчётных листков'''
+  if not is_user (request): return redirect ('/')
+  page = 'metro/display_payslips.html'
+  context = default_context (request)
+  context ['payslips'] = []
+  for payslip in Payslips.objects.all ().order_by ('period'):
+    payslip.month_text = MONTHS [payslip.period.month][1]
+    context ['payslips'].append (payslip)
   return render (request, page, context)
 
 def display_tabel (request):

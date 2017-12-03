@@ -1,6 +1,6 @@
 from django           import forms
 from .lists           import PAYSLIP_CODE_TYPES
-from .models          import PayslipCodes, Payslip, SheduleReal
+from .models          import PayslipCodes, Payslips, SheduleReal
 from calend_app.lists import DAYS, HOURS, MINUTES, MONTHS
 
 # Create your forms here.
@@ -22,7 +22,7 @@ class AddPayslipCodeForm (forms.ModelForm):
 class AddPayslipForm (forms.ModelForm):
   '''Расчетный листок из ОК'''
   class Meta ():
-    model = Payslip
+    model = Payslips
     fields = ['division', 'post', 'rate', 'begin_dolg', 'rotate_dolg', 'end_dolg', 'income', 'consumption', 'paying']
 
   month       = forms.ChoiceField  (label = 'Месяц',         choices   = MONTHS)

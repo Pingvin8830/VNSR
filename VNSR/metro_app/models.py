@@ -91,10 +91,10 @@ class PayslipCodes (models.Model):
   name = models.CharField (max_length  = 50)
   type = models.CharField (max_length  = 1, choices = TYPES)
 
-class Payslip (models.Model):
+class Payslips (models.Model):
   '''Расчетный листок'''
   class Meta ():
-    db_table = 'payslip'
+    db_table = 'payslips'
 
   id          = models.AutoField    (primary_key = True)
   period      = models.DateField    (unique      = True)
@@ -128,7 +128,7 @@ class PayslipDetails (models.Model):
     unique_together = (('payslip', 'code', 'period'))
 
   id      = models.AutoField    (primary_key = True)
-  payslip = models.ForeignKey   ('Payslip',      null = True, on_delete = models.SET_NULL, db_column = 'payslip')
+  payslip = models.ForeignKey   ('Payslips',      null = True, on_delete = models.SET_NULL, db_column = 'payslip')
   code    = models.ForeignKey   ('PayslipCodes', null = True, on_delete = models.SET_NULL, db_column = 'code')
   period  = models.DateField    ()
   summa   = models.DecimalField (null = True, max_digits = 9, decimal_places = 4)
