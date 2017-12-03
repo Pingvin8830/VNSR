@@ -7,174 +7,170 @@
 
 {% block content %}
   <link rel='stylesheet' type='text/css' href="{% static 'metro/display_payslip.css' %}"> 
-  <form name='payslip' action="{% url 'metro_app:add_payslip' %}" method='post'>
-    {% csrf_token %}
-    <table cellpadding=0 cellspacing=0 class='payslip'>
-      <tr>
-        <td colspan=2 class='t-c_b-ltr'>
-          Р А С Ч Е Т Н Ы Й &nbsp; Л И С Т О К
-        </td>
-      </tr>
-      <tr>
-        <td colspan=2 class='b-lr'>
-          Предприятие  МЕТРО Кэш энд Керри ООО
-        </td>
-      </tr>
-      <tr>
-        <td colspan=2 class='b-lr'>
-          <table align='center'>
-            <tr>
-              <td>
-                За &nbsp
-              </td>
-              <td>
-                {{ form.month }}
-              </td>
-              <td>
-                {{ form.year }}
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td colspan=2 class='b-lr'>
-          Г─жа Власова Аксения Ивановна
-        </td>
-      </tr>
-      <tr>
-        <td colspan=2 class='b-lr'>
-          ТН:33076132
-        </td>
-      </tr>
-      <tr>
-        <td colspan=2 class='b-lr'>
-          <table align='center' cellpadding=0 cellspacing=0>
-            <tr>
-              <td class='t-r'>
-                Подразделение:
-              </td>
-              <td>
-                {{ form.division }}
-              </td>
-            </tr>
-            <tr>
-              <td class='t-r'>
-                Должность:
-              </td>
-              <td>
-                {{ form.post }}
-              </td>
-            </tr>
-            <tr>
-              <td class='t-r'>
-                Оклад/Тариф:
-              </td>
-              <td>
-                {{ form.rate }}
-              </td>
-            </tr>
-          </table>
-          <br>
-        </td>
-      </tr>
-      <tr>
-        <td colspan=2 class='b-lrb'>
-          <table cellpadding=0 cellspacing=0>
-            <tr>
-              <td>
-                Долг за работником на начало месяца
-              </td>
-              <td class='t-r'>
-                ─
-              </td>
-              <td class='t-r'>
-                {{ form.begin_dolg }}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Выплачено в течение месяца
-              </td>
-              <td class='t-r'>
-                ─
-              </td>
-              <td class='t-r'>
-                {{ form.rotate_dolg }}
-              </td>
-              <td class='t-r'>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Долг за работником на конец месяца
-              </td>
-              <td class='t-r'>
-                ─
-              </td>
-              <td class='t-r'>
-                {{ form.end_dolg }}
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td class='b-lrb'>
-          <table cellpadding=0 cellspacing=0>
-            <tr>
-              <td colspan=2 class='t-c_b-b'>
-                Начисления
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lrb'>
-                Начислено
-              </td>
-              <td class='t-r_b-rb'>
-                {{ form.income }}
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lrb'>
-                Пересылка в банк
-              </td>
-              <td class='t-r_b-rb'>
-                {{ form.paying }}
-              </td>
-              <td class='t-r'>
-              </td>
-            </tr>
-          </table>
-          <br>
-        </td>
-        <td valign='top' class='b-rb'>
-          <table cellpadding=0 cellspacing=0>
-            <tr>
-              <td colspan=2 class='t-c_b-b'>
-                Удержания
-              </td>
-            </tr>
-            <tr>
-              <td class='b-lrb'>
-                Удержано
-              </td>
-              <td class='t-r_b-rb'>
-                {{ form.consumption }}
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr align='center'>
-        <td>
-          <input type='submit' value='Далее'>
-        </td>
-        <td>
-          <input type='reset' value='Очистить'>
-        </td>
-      </tr>
-    </table>
-  </form>
+  <center>
+    <form name='payslip' action="{% url 'metro_app:add_payslip' %}" method='post'>
+      {% csrf_token %}
+      <table cellpadding=0 cellspacing=0 class='payslip'>
+        <tr>
+          <td colspan=2 class='t-c_b-ltr'>
+            Р А С Ч Е Т Н Ы Й &nbsp; Л И С Т О К
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2 class='b-lr'>
+            Предприятие  МЕТРО Кэш энд Керри ООО
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2 class='b-lr'>
+            <table align='center'>
+              <tr>
+                <td>
+                  За &nbsp
+                </td>
+                <td>
+                  {{ form.month }}
+                </td>
+                <td>
+                  {{ form.year }}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2 class='b-lr'>
+            Г─жа Власова Аксения Ивановна
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2 class='b-lr'>
+            ТН:33076132
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2 class='b-lr'>
+            <table align='center' cellpadding=0 cellspacing=0>
+              <tr>
+                <td class='t-r'>
+                  {{ form.division.label }}
+                </td>
+                <td>
+                  {{ form.division }}
+                </td>
+              </tr>
+              <tr>
+                <td class='t-r'>
+                  {{ form.post.label }}
+                </td>
+                <td>
+                  {{ form.post }}
+                </td>
+              </tr>
+              <tr>
+                <td class='t-r'>
+                  {{ form.rate.label }}
+                </td>
+                <td>
+                  {{ form.rate }}
+                </td>
+              </tr>
+            </table>
+            <br>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2 class='b-lrb'>
+            <table cellpadding=0 cellspacing=0>
+              <tr>
+                <td>
+                  {{ form.begin_dolg.label }}
+                </td>
+                <td class='t-r'>
+                  ─
+                </td>
+                <td class='t-r'>
+                  {{ form.begin_dolg }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{ form.rotate_dolg.label }}
+                </td>
+                <td class='t-r'>
+                  ─
+                </td>
+                <td class='t-r'>
+                  {{ form.rotate_dolg }}
+                </td>
+                <td class='t-r'>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{ form.end_dolg.label }}
+                </td>
+                <td class='t-r'>
+                  ─
+                </td>
+                <td class='t-r'>
+                  {{ form.end_dolg }}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td class='b-lrb'>
+            <table cellpadding=0 cellspacing=0>
+              <tr>
+                <td colspan=2 class='t-c_b-b'>
+                  Начисления
+                </td>
+              </tr>
+              <tr>
+                <td class='b-lrb'>
+                  {{ form.income.label }}
+                </td>
+                <td class='t-r_b-rb'>
+                  {{ form.income }}
+                </td>
+              </tr>
+              <tr>
+                <td class='b-lrb'>
+                  {{ form.paying.label }}
+                </td>
+                <td class='t-r_b-rb'>
+                  {{ form.paying }}
+                </td>
+                <td class='t-r'>
+                </td>
+              </tr>
+            </table>
+            <br>
+          </td>
+          <td valign='top' class='b-rb'>
+            <table cellpadding=0 cellspacing=0>
+              <tr>
+                <td colspan=2 class='t-c_b-b'>
+                  Удержания
+                </td>
+              </tr>
+              <tr>
+                <td class='b-lrb'>
+                  {{ form.consumption.label }}
+                </td>
+                <td class='t-r_b-rb'>
+                  {{ form.consumption }}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <input type='submit' value='Далее'>
+      <input type='reset' value='Очистить'>
+    </form>
+  </center>
 {% endblock %}
 
