@@ -2,10 +2,10 @@ from django.db import models
 
 # Create your models here.
 
-class Azs (models.Model):
+class Azss (models.Model):
   '''Авто-заправочные станции'''
   class Meta (object):
-    db_table = 'azs'
+    db_table = 'azss'
 
   id      = models.AutoField (primary_key = True)
   company = models.CharField (max_length = 100)
@@ -29,10 +29,10 @@ class FuelTypes (models.Model):
   def __str__ (self):
     return self.name
 
-class PayTypes (models.Model):
+class PayTypesOld (models.Model):
   '''Типы оплаты'''
   class Meta (object):
-    db_table = 'pay_types'
+    db_table = 'pay_types_old'
 
   id       = models.AutoField (primary_key = True)
   name     = models.CharField (max_length = 50, null = False)
@@ -48,14 +48,14 @@ class Refuels (models.Model):
     db_table = 'refuels'
 
   id           = models.AutoField                 (primary_key = True)
-  azs          = models.ForeignKey                ('Azs',       on_delete = models.SET (1), null = False, default = 1, db_column = 'azs')
+  azs          = models.ForeignKey                ('Azss',       on_delete = models.SET (1), null = False, default = 1, db_column = 'azs')
   check_number = models.CharField                 (max_length = 5)
   dispencer    = models.SmallIntegerField         ()
   fuel_type    = models.ForeignKey                ('FuelTypes', on_delete = models.SET (1), null = False, db_column = 'fuel_type')
   fuel_count   = models.DecimalField              (max_digits = 6, decimal_places = 3, null = False)
   price        = models.DecimalField              (max_digits = 5, decimal_places = 2)
   cost         = models.DecimalField              (max_digits = 7, decimal_places = 2)
-  pay_type     = models.ForeignKey                ('PayTypes', on_delete = models.SET_NULL, null = True, db_column = 'pay_type')
+  pay_type     = models.IntegerField              (null = True)
   score_plus   = models.DecimalField              (max_digits = 7, decimal_places = 2, default = 0, null = False)
   score_minus  = models.DecimalField              (max_digits = 7, decimal_places = 2, default = 0, null = False)
   score_total  = models.DecimalField              (max_digits = 7, decimal_places = 2, default = 0, null = False)
