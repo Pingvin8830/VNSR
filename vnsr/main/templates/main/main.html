@@ -4,14 +4,14 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="{% static 'main/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}">
     <title>
       Мой сайт (develop)
     </title>
   </head>
   <body>
     <div id="main">
-      <link rel="stylesheet" type="text/css" href="{% static 'main/header.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'main/css/header.css' %}">
       <div id="header">
         {% block header %}
           <br>
@@ -22,9 +22,9 @@
           </a>
         {% endblock %}
       </div>
-      <link rel="stylesheet" type="text/css" href="{% static 'main/staff.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'main/css/staff.css' %}">
       <div id="staff">
-        <link rel="stylesheet" type="text/css" href="{% static 'main/menu.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
         <div id="menu">
           {% block menu %}
             {% for item in items %}
@@ -34,7 +34,7 @@
             {% endfor %}
           {% endblock %}
         </div>
-        <link rel="stylesheet" type="text/css" href="{% static 'main/calend.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'main/css/calend.css' %}">
         <div id="calend">
           <br>
           <center>
@@ -57,7 +57,7 @@
           </center>
         </div>
       </div>
-      <link rel="stylesheet" type="text/css" href="{% static 'main/content.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'main/css/content.css' %}">
       <div id="content">
         {% block content %}
           <center>
@@ -80,7 +80,7 @@
           </center>
         {% endblock %}
       </div>
-      <link rel="stylesheet" type="text/css" href="{% static 'main/footer.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'main/css/footer.css' %}">
       <div id="footer">
         {% block footer %}
           Vlasov Anton &copy; 2016 - 2017<br>

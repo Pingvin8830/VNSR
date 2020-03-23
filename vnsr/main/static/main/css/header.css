@@ -1,0 +1,19 @@
+#header {
+  width:            100%;
+  height:           10%;
+  margin:           0;
+  padding:          0;
+  float:            left;
+  background-color: #0c3297;
+  background-image: url("../images/sky.jpg");
+  text-align:       center;
+}
+
+#header a {
+  color:            red;
+}
+
+#header a:hover {
+  text-decoration:  underline;
+}
+
