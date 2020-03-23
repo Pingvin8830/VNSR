@@ -1,92 +1,79 @@
 {% load static %}
 
-
-<html>
+<!DOCTYPE html>
+<html lang="ru">
   <head>
     <meta charset="utf-8">
+    <meta name="author" content="Vlasov Anton">
+    <link rel="shortcut icon" href="{% static 'main/images/title_icon.jpg' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}">
-    <title>
-      Мой сайт (develop)
-    </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/aside.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/staff.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/calend.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/content.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/footer.css' %}">
+    <title>VNSR (develop)</title>
+    <style>
+
+    </style>
   </head>
   <body>
-    <div id="main">
-      <link rel="stylesheet" type="text/css" href="{% static 'main/css/header.css' %}">
-      <div id="header">
-        {% block header %}
-          <br>
-          <a href="/">Домой (VlasovNetwork.sknt.ru)</a>
-          <br>
-          <a href="{% url 'auth_app:logout' %}">
-            Выход ({{ username }})
-          </a>
-        {% endblock %}
+    <header>
+      <div id="header_text">
+        <b>VlasovNetwork.sknt.ru</b>
       </div>
-      <link rel="stylesheet" type="text/css" href="{% static 'main/css/staff.css' %}">
+    </header>
+    <nav>
+    </nav>
+    <aside>
       <div id="staff">
-        <link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
-        <div id="menu">
-          {% block menu %}
-            {% for item in items %}
-              <a href="/{{ item.app }}/">
-                {{ item.text }}
-              </a>
-            {% endfor %}
-          {% endblock %}
-        </div>
-        <link rel="stylesheet" type="text/css" href="{% static 'main/css/calend.css' %}">
-        <div id="calend">
-          <br>
-          <center>
-            <table border="1">
-              <caption>{{ month_text }}</caption>
-              <tr>
-                <td>Пн</td>
-                <td>Вт</td>
-                <td>Ср</td>
-                <td>Чт</td>
-                <td>Пт</td>
-                <td class="week">Сб</td>
-                <td class="week">Вс</td>
-              </tr>
-              {% autoescape off %}
-                {{ calend }}
-              {% endautoescape %}
-            </table>
-            Сегодня: {{ now }}
-          </center>
-        </div>
+        <ul>
+          <li>
+            <a href="{% url 'main:index' %}">Домой</a>
+          </li>
+          <li>
+            <a href="{% url 'tasks:index' %}">Планировщик</a>
+          </li>
+          <li>
+            <a href="{% url 'auth_app:logout' %}">Выход ({{ auth_user }})</a>
+          </li>
+        </ul>
       </div>
-      <link rel="stylesheet" type="text/css" href="{% static 'main/css/content.css' %}">
-      <div id="content">
-        {% block content %}
-          <center>
-            Добро пожаловать на сайт VlasovNetwork.sknt.ru<br><br>
+      <div id="calend">
+        <br>
+        <center>
+          <table border="1">
+            <caption>{{ month_text }}</caption>
+            <tr>
+              <td>Пн</td>
+              <td>Вт</td>
+              <td>Ср</td>
+              <td>Чт</td>
+              <td>Пт</td>
+              <td class="week">Сб</td>
+              <td class="week">Вс</td>
+            </tr>
+            {% autoescape off %}
+              {{ calend }}
+            {% endautoescape %}
+          </table>
+          Сегодня: {{ now }}
+        </center>
+      </div>
+    </aside>
+    <main id="content">
+      {% block content %}
+        <center>
+          Добро пожаловать на сайт VlasovNetwork.sknt.ru<br><br>
 
-            Сайт создан для личных потребностей.<br><br>
-            <table border=1>
-              <caption>Приложения</caption>
-              <tr>
-                <th>Название</th>
-                <th>Описание</th>
-              </tr>
-              {% for app in apps %}
-                <tr>
-                  <td>{{ app.text    }}</td>
-                  <td>{{ app.comment }}</td>
-                </tr>
-              {% endfor %}
-            </table>
-          </center>
-        {% endblock %}
-      </div>
-      <link rel="stylesheet" type="text/css" href="{% static 'main/css/footer.css' %}">
-      <div id="footer">
-        {% block footer %}
-          Vlasov Anton &copy; 2016 - 2017<br>
-        {% endblock %}
-      </div>
-    </div>
+          Сайт создан для личных потребностей.<br><br>
+        </center>
+      {% endblock %}
+    </main>
+    <footer>
+      <span class="right">Vlasov Anton &copy; 16.08.2016 - {% now 'd.m.Y' %}</span>
+    </footer>
   </body>
 </html>
-
