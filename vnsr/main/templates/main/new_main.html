@@ -1,0 +1,178 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Школа дрессировки">
+    <meta name="keywords" content="Dog">
+    <meta name="author" content="Vlasov Anton">
+    <link rel="shortcut icon" href="{% static 'main/images/title_icon.jpg' %}">
+    <link rel="stylesheet" href="{% static 'main/css/blocks.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'workers/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'workers/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'personal/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'personal/css/nav.css' %}">
+    <title>United Dogs</title>
+    <style>
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <div id="header_text">
+        <b>Школа дрессировки Юлии Успенской</b>
+      </div>
+      <div id="header_img">
+          <img src="{% static 'main/images/header.jpg' %}" alt="UNITED DOGS">
+      </div>
+      <div id="header_com">
+        <b>кинолог с доставкой на дом</b>
+      </div>
+    </header>
+    <nav>
+      <ul id="main_menu">
+        <li class="main_menu_item">
+          <a class="main_menu_link" href="{% url 'main:index' %}">
+            <div>Главная</div>
+          </a>
+        </li>
+        <li class="main_menu_item">
+          <a class="main_menu_link" href="{% url 'services:index' %}">
+            <div>Услуги</div>
+          </a>
+        </li>
+        <li class="main_menu_item">
+          <a class="main_menu_link" href="{% url 'workers:index' %}">
+            <div>Сотрудники</div>
+          </a>
+        </li>
+        <li class="main_menu_item">
+          <a class="main_menu_link" href="{% url 'contacts:index' %}">
+            <div>Контакты</div>
+          </a>
+        </li>
+        <li class="main_menu_item">
+          <a class="main_menu_link" href="{% url 'personal:index' %}">
+            <div>Личный кабинет</div>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    {% if auth_user %}
+      <aside>
+        {% block aside %}
+        <ul>
+          <li>Item 1</li>
+          <li>Item 2</li>
+        </ul>
+        {% endblock %}
+      </aside>
+      <main id="main_personal">
+    {% else %}
+      <main id="main_nopersonal">
+    {% endif %}
+      {% block main %}
+      {% endblock %}
+    </main>
+    <footer>
+      <a href="#head_img">Наверх</a>
+      <span class="right">17.07.2016 - {% now 'd.m.Y' %}</span>
+    </footer>
+  </body>
+</html>
+{% load static %}
+
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}">
+    <title>
+      Мой сайт (develop)
+    </title>
+  </head>
+  <body>
+    <div id="main">
+      <link rel="stylesheet" type="text/css" href="{% static 'main/css/header.css' %}">
+      <div id="header">
+        {% block header %}
+          <br>
+          <a href="/">Домой (VlasovNetwork.sknt.ru)</a>
+          <br>
+          <a href="{% url 'auth_app:logout' %}">
+            Выход ({{ username }})
+          </a>
+        {% endblock %}
+      </div>
+      <link rel="stylesheet" type="text/css" href="{% static 'main/css/staff.css' %}">
+      <div id="staff">
+        <link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
+        <div id="menu">
+          {% block menu %}
+            {% for item in items %}
+              <a href="/{{ item.app }}/">
+                {{ item.text }}
+              </a>
+            {% endfor %}
+          {% endblock %}
+        </div>
+        <link rel="stylesheet" type="text/css" href="{% static 'main/css/calend.css' %}">
+        <div id="calend">
+          <br>
+          <center>
+            <table border="1">
+              <caption>{{ month_text }}</caption>
+              <tr>
+                <td>Пн</td>
+                <td>Вт</td>
+                <td>Ср</td>
+                <td>Чт</td>
+                <td>Пт</td>
+                <td class="week">Сб</td>
+                <td class="week">Вс</td>
+              </tr>
+              {% autoescape off %}
+                {{ calend }}
+              {% endautoescape %}
+            </table>
+            Сегодня: {{ now }}
+          </center>
+        </div>
+      </div>
+      <link rel="stylesheet" type="text/css" href="{% static 'main/css/content.css' %}">
+      <div id="content">
+        {% block content %}
+          <center>
+            Добро пожаловать на сайт VlasovNetwork.sknt.ru<br><br>
+
+            Сайт создан для личных потребностей.<br><br>
+            <table border=1>
+              <caption>Приложения</caption>
+              <tr>
+                <th>Название</th>
+                <th>Описание</th>
+              </tr>
+              {% for app in apps %}
+                <tr>
+                  <td>{{ app.text    }}</td>
+                  <td>{{ app.comment }}</td>
+                </tr>
+              {% endfor %}
+            </table>
+          </center>
+        {% endblock %}
+      </div>
+      <link rel="stylesheet" type="text/css" href="{% static 'main/css/footer.css' %}">
+      <div id="footer">
+        {% block footer %}
+          Vlasov Anton &copy; 2016 - 2017<br>
+        {% endblock %}
+      </div>
+    </div>
+  </body>
+</html>
+
