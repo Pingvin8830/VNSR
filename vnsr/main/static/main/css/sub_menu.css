@@ -1,0 +1,14 @@
+#sub_menu {
+  background-color: #0c3297;
+}
+
+#sub_menu a {
+  display:  block;
+  color:    yellow;
+}
+
+#sub_menu a:hover {
+  background-color: yellow;
+  color:            blue;
+}
+
