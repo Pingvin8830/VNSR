@@ -1,7 +1,7 @@
 {% extends 'main/main.html' %}
 
 {% block submenu %}
-  <a href="#">Лист текущих задач</a>
+  <a href="{% url 'tasks:current_issues' %}">Лист текущих задач</a>
   <a href="#">Добавить задачу</a>
   <a href="#">Выполнение задач</a>
   <a href="#">Добавление информации</a>
