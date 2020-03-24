@@ -20,5 +20,6 @@ from main import views as main_views
 
 app_name = 'tasks'
 urlpatterns = [
+  path('current_issues', views.CurrentIssues.as_view(), name='current_issues'),
   path('', views.Index.as_view(), name='index'),
 ]
