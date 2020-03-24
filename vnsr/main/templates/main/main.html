@@ -5,15 +5,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="author" content="Vlasov Anton">
-    <link rel="shortcut icon" href="{% static 'main/images/title_icon.jpg' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/nav.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/aside.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'main/css/staff.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/article.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/main_menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/sub_menu.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/calend.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'main/css/content.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/footer.css' %}">
+    <!-- link rel="shortcut icon" href="{% static 'main/images/title_icon.jpg' %}" -->
     <title>VNSR (develop)</title>
     <style>
 
@@ -24,56 +25,49 @@
       <div id="header_text">
         <b>VlasovNetwork.sknt.ru</b>
       </div>
+      <nav id="main_menu">
+        <a href="{% url 'main:index' %}">Домой</a>
+        <a href="{% url 'tasks:index' %}">Планировщик</a>
+        <a href="{% url 'auth_app:logout' %}">Выход ({{ auth_user }})</a>
+      </nav>
     </header>
-    <nav>
-    </nav>
-    <aside>
-      <div id="staff">
-        <ul>
-          <li>
-            <a href="{% url 'main:index' %}">Домой</a>
-          </li>
-          <li>
-            <a href="{% url 'tasks:index' %}">Планировщик</a>
-          </li>
-          <li>
-            <a href="{% url 'auth_app:logout' %}">Выход ({{ auth_user }})</a>
-          </li>
-        </ul>
-      </div>
-      <div id="calend">
-        <br>
-        <center>
-          <table border="1">
+    <main>
+      <aside>
+        <nav id="sub_menu">
+          {% block submenu %}
+            <a href="#">Subitem 1</a>
+            <a href="#">Subitem 2</a>
+            <a href="#">Subitem 3</a>
+          {% endblock %}
+        </nav>
+        <div id="calend">
+          <table>
             <caption>{{ month_text }}</caption>
             <tr>
-              <td>Пн</td>
-              <td>Вт</td>
-              <td>Ср</td>
-              <td>Чт</td>
-              <td>Пт</td>
-              <td class="week">Сб</td>
-              <td class="week">Вс</td>
+              <th>Пн</th>
+              <th>Вт</th>
+              <th>Ср</th>
+              <th>Чт</th>
+              <th>Пт</th>
+              <th class="week">Сб</th>
+              <th class="week">Вс</th>
             </tr>
             {% autoescape off %}
               {{ calend }}
             {% endautoescape %}
           </table>
-          Сегодня: {{ now }}
-        </center>
-      </div>
-    </aside>
-    <main id="content">
-      {% block content %}
-        <center>
+          Сегодня: {% now 'd.m.Y' %}
+        </div>
+      </aside>
+      <article>
+        {% block content %}
           Добро пожаловать на сайт VlasovNetwork.sknt.ru<br><br>
-
-          Сайт создан для личных потребностей.<br><br>
-        </center>
-      {% endblock %}
+          Сайт создан для личных потребностей.
+        {% endblock %}
+      </article>
     </main>
     <footer>
-      <span class="right">Vlasov Anton &copy; 16.08.2016 - {% now 'd.m.Y' %}</span>
+      Vlasov Anton &copy; 16.08.2016 - {% now 'd.m.Y' %}
     </footer>
   </body>
 </html>
