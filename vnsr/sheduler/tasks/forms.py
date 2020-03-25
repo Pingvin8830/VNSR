@@ -15,4 +15,9 @@ class Update(forms.ModelForm):
   class Meta:
     model = models.Tasks
     fields = ['id', 'name']
+    error_messages = {
+      'name': {
+        'unique': 'Такая задача уже есть',
+      },
+    }
 

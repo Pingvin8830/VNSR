@@ -25,4 +25,13 @@
       </tr>
     </table>
   </form>
+  {% if form.name.errors %}
+    <br>
+    Ошибки
+    <ul>
+      {% for error in form.name.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 {% endblock %}

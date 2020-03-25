@@ -18,6 +18,7 @@ from . import views
 
 app_name = 'sheduler'
 urlpatterns = [
+  path('locations/', include('sheduler.locations.urls', namespace='locations')),
   path('tasks/', include('sheduler.tasks.urls', namespace='tasks')),
   path('', views.Index.as_view(), name='index'),
 ]
