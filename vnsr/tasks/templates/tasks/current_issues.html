@@ -1,0 +1,19 @@
+{% extends 'tasks/main.html' %}
+
+{% block content %}
+  <table>
+    <caption>Лист текущих задач</caption>
+    <tr>
+      <th>Кто</th>
+      <th>Где</th>
+      <th>Что</th>
+    </tr>
+    {% for detail in details %}
+      <tr>
+        <td>{{ detail.human.name }}</td>
+        <td>{{ detail.location.name }}</td>
+        <td>{{ detail.task.name }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
