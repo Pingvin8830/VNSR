@@ -19,7 +19,7 @@ class Humans(models.Model):
     verbose_name = 'Человек'
     verbose_name_plural = 'Люди'
 
-  name = models.CharField(max_length=50, unique=True)
+  name = models.CharField(max_length=50, unique=True, verbose_name='Имя')
 
 class Locations(models.Model):
   class Meta:
