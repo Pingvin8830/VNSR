@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
   'auth_app.apps.AuthAppConfig',
   'main.apps.MainConfig',
-  'tasks.apps.TasksConfig',
+  'sheduler.apps.ShedulerConfig',
   'django.contrib.admin',
   'django.contrib.auth',
   'django.contrib.contenttypes',

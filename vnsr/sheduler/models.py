@@ -35,5 +35,5 @@ class Tasks(models.Model):
     verbose_name = 'Задача'
     verbose_name_plural = 'Задачи'
 
-  name = models.CharField(max_length=50, unique=True)
+  name = models.CharField(max_length=50, unique=True, verbose_name='Название')
 
