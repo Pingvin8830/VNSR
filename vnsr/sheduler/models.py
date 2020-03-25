@@ -27,7 +27,7 @@ class Locations(models.Model):
     verbose_name = 'Место'
     verbose_name_plural = 'Места'
 
-  name = models.CharField(max_length=50, unique=True)
+  name = models.CharField(max_length=50, unique=True, verbose_name='Название')
 
 class Tasks(models.Model):
   class Meta:
