@@ -11,6 +11,9 @@ class Add(forms.ModelForm):
 #      },
 #    }
 
+  detail = forms.ModelChoiceField(models.Details.objects.filter(is_done=False).order_by('task__name', 'location__name', 'human__name'), label='Задача')
+  prev_detail = forms.ModelChoiceField(models.Details.objects.filter(is_done=False).order_by('task__name', 'location__name', 'human__name'), label='Предыдущая задача')
+
 class Update(forms.ModelForm):
   class Meta:
     model = models.Dependences

@@ -9,6 +9,10 @@ class Index(generic.TemplateView):
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    context['details'] = models.Details.objects.filter(is_done=False)
+    details = models.Details.objects.filter(is_done=False)
+    context['details'] = []
+    for detail in details:
+      if not detail.dependences.all():
+        context['details'].append(detail)
     return context
 
