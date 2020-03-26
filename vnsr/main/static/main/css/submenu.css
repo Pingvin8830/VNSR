@@ -1,13 +1,13 @@
-#sub_menu {
+#submenu {
   background-color: #0c3297;
 }
 
-#sub_menu a {
+#submenu a {
   display:  block;
   color:    yellow;
 }
 
-#sub_menu a:hover {
+#submenu a:hover {
   background-color: yellow;
   color:            blue;
 }

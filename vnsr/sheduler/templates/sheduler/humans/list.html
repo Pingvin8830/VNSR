@@ -1,0 +1,21 @@
+{% extends 'sheduler/humans/main.html' %}
+
+{% block content %}
+  <table>
+    <caption>Люди</caption>
+    <tr>
+      <th>Код</th>
+      <th>Имя</th>
+    </tr>
+    {% for human in humans %}
+      <tr>
+        <td>
+          <a href="{% url 'sheduler:humans:update' human.pk %}">{{ human.pk }}</a>
+        </td>
+        <td>
+          <a href="{% url 'sheduler:humans:update' human.pk %}">{{ human.name }}</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

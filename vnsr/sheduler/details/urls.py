@@ -14,10 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from sheduler.details import views
 
-from main import views as main_views
-
-app_name = 'tasks'
+app_name = 'details'
 urlpatterns = [
-  path('', main_views.Index.as_view(), name='index'),
+  path('add', views.Add.as_view(), name='add'),
+  path('update/<int:pk>', views.Update.as_view(), name='update'),
+  path('', views.List.as_view(), name='list'),
 ]

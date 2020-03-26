@@ -10,8 +10,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/aside.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/article.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'main/css/main_menu.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'main/css/sub_menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/submenu.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/calend.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/footer.css' %}">
     <!-- link rel="shortcut icon" href="{% static 'main/images/title_icon.jpg' %}" -->
@@ -25,19 +25,16 @@
       <div id="header_text">
         <b>VlasovNetwork.sknt.ru</b>
       </div>
-      <nav id="main_menu">
+      <nav id="menu">
         <a href="{% url 'main:index' %}">Домой</a>
-        <a href="{% url 'tasks:index' %}">Планировщик</a>
+        <a href="{% url 'sheduler:index' %}">Планировщик</a>
         <a href="{% url 'auth_app:logout' %}">Выход ({{ auth_user }})</a>
       </nav>
     </header>
     <main>
       <aside>
-        <nav id="sub_menu">
+        <nav id="submenu">
           {% block submenu %}
-            <a href="#">Subitem 1</a>
-            <a href="#">Subitem 2</a>
-            <a href="#">Subitem 3</a>
           {% endblock %}
         </nav>
         <div id="calend">
