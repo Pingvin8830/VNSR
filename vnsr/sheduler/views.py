@@ -7,3 +7,8 @@ class Index(generic.TemplateView):
   http_method_names = ['get']
   template_name = 'sheduler/index.html'
 
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['details'] = models.Details.objects.filter(is_done=False)
+    return context
+

@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Details(models.Model):
   class Meta:
-    ordering = ['human', 'location', 'task']
+    ordering = ['human__name', 'location__name', 'task__name']
     unique_together = ['human', 'location', 'task']
     verbose_name = 'Деталь'
     verbose_name_plural = 'Детали'

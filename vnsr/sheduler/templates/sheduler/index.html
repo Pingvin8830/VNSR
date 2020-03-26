@@ -1,5 +1,19 @@
 {% extends 'sheduler/main.html' %}
 
 {% block content %}
-  Стартовая страница приложения "Планировщик"
+  <table>
+    <caption>Лист текущих задач</caption>
+    <tr>
+      <th>Человек</th>
+      <th>Место</th>
+      <th>Задача</th>
+    </tr>
+    {% for detail in details %}
+      <tr>
+        <td>{{ detail.human.name }}</td>
+        <td>{{ detail.location.name }}</td>
+        <td>{{ detail.task.name }}</td>
+      </tr>
+    {% endfor %}
+  </table>
 {% endblock %}
