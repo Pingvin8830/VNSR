@@ -8,9 +8,9 @@ class Details(models.Model):
     verbose_name = 'Деталь'
     verbose_name_plural = 'Детали'
 
-  human = models.ForeignKey('Humans', on_delete=models.SET_NULL, null=True)
-  location = models.ForeignKey('Locations', on_delete=models.SET_NULL, null=True)
-  task = models.ForeignKey('Tasks', on_delete=models.SET_NULL, null=True)
+  human = models.ForeignKey('Humans', on_delete=models.SET_NULL, null=True, verbose_name='Человек')
+  location = models.ForeignKey('Locations', on_delete=models.SET_NULL, null=True, verbose_name='Место')
+  task = models.ForeignKey('Tasks', on_delete=models.SET_NULL, null=True, verbose_name='Задача')
   is_done = models.BooleanField(db_index=True, default=False)
 
 class Humans(models.Model):
@@ -21,6 +21,9 @@ class Humans(models.Model):
 
   name = models.CharField(max_length=50, unique=True, verbose_name='Имя')
 
+  def __str__(self):
+    return self.name
+
 class Locations(models.Model):
   class Meta:
     ordering = ['name']
@@ -29,6 +32,8 @@ class Locations(models.Model):
 
   name = models.CharField(max_length=50, unique=True, verbose_name='Название')
 
+  def __str__(self):
+    return self.name
 class Tasks(models.Model):
   class Meta:
     ordering = ['name']
@@ -37,3 +42,5 @@ class Tasks(models.Model):
 
   name = models.CharField(max_length=50, unique=True, verbose_name='Название')
 
+  def __str__(self):
+    return self.name
