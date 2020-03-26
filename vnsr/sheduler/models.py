@@ -1,6 +1,15 @@
 from django.db import models
 
 # Create your models here.
+class Dependences(models.Model):
+  class Meta:
+    unique_together = []
+    verbose_name = 'Зависимость'
+    verbose_name_plural = 'Зависимости'
+
+  prev_detail = models.ForeignKey('Details', on_delete=models.SET_NULL, null=True, verbose_name='Предыдущая задача', related_name='prev_details')
+  detail = models.ForeignKey('Details', on_delete=models.SET_NULL, null=True, verbose_name='Задача', related_name='dependences')
+
 class Details(models.Model):
   class Meta:
     ordering = ['human__name', 'location__name', 'task__name']
@@ -11,7 +20,10 @@ class Details(models.Model):
   human = models.ForeignKey('Humans', on_delete=models.SET_NULL, null=True, verbose_name='Человек')
   location = models.ForeignKey('Locations', on_delete=models.SET_NULL, null=True, verbose_name='Место')
   task = models.ForeignKey('Tasks', on_delete=models.SET_NULL, null=True, verbose_name='Задача')
-  is_done = models.BooleanField(db_index=True, default=False)
+  is_done = models.BooleanField(db_index=True, default=False, verbose_name='Выполнено')
+
+  def __str__(self):
+    return '%s - %s - %s' % (self.task.name, self.location.name, self.human.name)
 
 class Humans(models.Model):
   class Meta:
@@ -34,6 +46,7 @@ class Locations(models.Model):
 
   def __str__(self):
     return self.name
+
 class Tasks(models.Model):
   class Meta:
     ordering = ['name']
@@ -44,3 +57,4 @@ class Tasks(models.Model):
 
   def __str__(self):
     return self.name
+

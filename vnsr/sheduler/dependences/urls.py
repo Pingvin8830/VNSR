@@ -13,15 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import include, path
-from . import views
+from django.urls import path
+from sheduler.dependences import views
 
-app_name = 'sheduler'
+app_name = 'dependences'
 urlpatterns = [
-  path('dependences/', include('sheduler.dependences.urls', namespace='dependences')),
-  path('details/', include('sheduler.details.urls', namespace='details')),
-  path('humans/', include('sheduler.humans.urls', namespace='humans')),
-  path('locations/', include('sheduler.locations.urls', namespace='locations')),
-  path('tasks/', include('sheduler.tasks.urls', namespace='tasks')),
-  path('', views.Index.as_view(), name='index'),
+  path('add', views.Add.as_view(), name='add'),
+  path('update/<int:pk>', views.Update.as_view(), name='update'),
+  path('', views.List.as_view(), name='list'),
 ]
