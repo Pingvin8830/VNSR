@@ -1,5 +1,9 @@
 {% extends 'sheduler/locations/main.html' %}
 
+{% block submenu %}
+  <a href="{% url 'sheduler:locations:list' %}">Назад</a>
+{% endblock %}
+
 {% block content %}
   <form action="{% url 'sheduler:locations:add' %}" method="post">
     {% csrf_token %}

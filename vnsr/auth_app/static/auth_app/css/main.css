@@ -1,0 +1,16 @@
+body {
+  background-color: blue;
+  background-image: url("../images/sky.jpg");
+  color:            yellow;
+  align:            center;
+}
+
+table {
+  margin: 20% auto;
+}
+
+caption {
+  color:            white;
+  text-decoration:  underline;
+}
+
