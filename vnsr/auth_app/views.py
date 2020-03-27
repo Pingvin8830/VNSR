@@ -11,6 +11,12 @@ class Login(generic.FormView):
   success_url = reverse_lazy('main:index')
   template_name = 'auth_app/login.html'
 
+  def get(self, request, *args, **kwargs):
+    if request.user.is_authenticated:
+      return redirect(reverse_lazy('main:index'))
+    else:
+      return super().get(request, *args, **kwargs)
+
   def post(self, request, *args, **kwargs):
     username = request.POST['login']
     password = request.POST['password']
