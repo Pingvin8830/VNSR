@@ -1,0 +1,36 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'metro_app:add_payslip_code' %}">Добавить код НДФЛ</a>
+  <a href="{% url 'metro_app:index' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'metro/display_payslip_codes.css' %}">
+  <center>
+    <table border=1>
+      <caption>Коды НДФЛ</caption>
+      <tr>
+        <th>Id</th>
+        <th>Код</th>
+        <th>Расшифровка кода</th>
+        <th>Тип</th>
+      </tr>
+      {% for code in codes %}
+        <tr>
+          <td>{{ code.id   }}</td>
+          <td>{{ code.code }}</td>
+          <td>{{ code.name }}</td>
+          <td>
+            {% if   code.type == 'c' %}Расходы
+            {% elif code.type == 'i' %}Доходы
+            {% elif code.type == 'o' %}Прочие доходы
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </center>
+{% endblock %}
+

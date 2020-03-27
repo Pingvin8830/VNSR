@@ -1,5 +1,17 @@
 #tabel {
-  height:   500;
+  height:   100%;
   overflow: scroll;
+}
+
+.week {
+  color:  red;
+}
+
+.holiday {
+  color:  green;
+}
+
+.short {
+  color:  blue;
 }
 

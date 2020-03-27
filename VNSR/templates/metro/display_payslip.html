@@ -2,252 +2,260 @@
 {% load staticfiles %}
 
 {% block menu %}
-  <a href="{% url 'metro_app:add_details'     payslip.id %}">Добавить запись</a>
-  <a href="{% url 'metro_app:control_payslip' payslip.id %}" target='_blank'>Контроль</a>
   <a href="{% url 'metro_app:index' %}">Назад</a>
 {% endblock %}
 
 {% block content %}
   <link rel='stylesheet' type='text/css' href="{% static 'metro/display_payslip.css' %}"> 
-  <table cellpadding=0 cellspacing=0 class='payslip'>
-    <tr>
-      <td colspan=2 class='t-c_b-ltr'>
-        Р А С Ч Е Т Н Ы Й &nbsp; Л И С Т О К
-      </td>
-    </tr>
-    <tr>
-      <td colspan=2 class='b-lr'>
-        Предприятие  МЕТРО Кэш энд Керри ООО
-      </td>
-    </tr>
-    <tr>
-      <td colspan=2 class='t-c_b-lr'>
-        За &nbsp; {{ payslip.text_period }}
-      </td>
-    </tr>
-    <tr>
-      <td colspan=2 class='b-lr'>
-        Г─жа Власова Аксения Ивановна
-      </td>
-    </tr>
-    <tr>
-      <td colspan=2 class='b-lr'>
-        ТН:33076132
-      </td>
-    </tr>
-    <tr>
-      <td colspan=2 class='b-lr'>
-        <table align='center' cellpadding=0 cellspacing=0>
-          <tr>
-            <td class='t-r'>
-              Подразделение:
-            </td>
-            <td>
-              {{ payslip.division }}
-            </td>
-          </tr>
-          <tr>
-            <td class='t-r'>
-              Должность:
-            </td>
-            <td>
-              {{ payslip.post }}
-            </td>
-          </tr>
-          <tr>
-            <td class='t-r'>
-              Оклад/Тариф:
-            </td>
-            <td>
-              {{ payslip.rate }}
-            </td>
-          </tr>
-        </table>
-        <br>
-      </td>
-    </tr>
-    <tr>
-      <td colspan=2 class='b-lrb'>
-        <table cellpadding=0 cellspacing=0>
-          <tr>
-            <td>
-              Долг за работником на начало месяца
-            </td>
-            <td class='t-r'>
-              ─
-            </td>
-            <td class='t-r'>
-              {{ payslip.begin_dolg }}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Выплачено в течение месяца
-            </td>
-            <td class='t-r'>
-              ─
-            </td>
-            <td class='t-r'>
-              {{ payslip.rotate_dolg }}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Долг за работником на конец месяца
-            </td>
-            <td class='t-r'>
-              ─
-            </td>
-            <td class='t-r'>
-              {{ payslip.end_dolg }}
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td class='b-lrb'>
-        <table cellpadding=0 cellspacing=0>
-          <tr>
-            <td colspan=4 class='t-c_b-b'>
-              Начисления
-            </td>
-          </tr>
-          <tr>
-            <td class='b-lrb'>
-              Вид начисления
-            </td>
-            <td class='b-rb'>
-              Период
-            </td>
-            <td class='b-rb'>
-              Сумма
-            </td>
-            <td class='b-rb'>
-              Ед.
-            </td>
-          </tr>
-          <tr>
-            <td colspan=2 class='b-lrb'>
-              Начислено
-            </td>
-            <td class='t-r_b-rb'>
-              {{ payslip.income }}
-            </td>
-            <td class='b-rb'>
-            </td>
-          </tr>
-          {% for income in incomes %}
+  <center>
+    <table cellpadding=0 cellspacing=0 class='payslip'>
+      <tr>
+        <td colspan=2 class='t-c_b-ltr'>
+          Р А С Ч Е Т Н Ы Й &nbsp; Л И С Т О К
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class='b-lr'>
+          Предприятие  МЕТРО Кэш энд Керри ООО
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class='t-c_b-lr'>
+          За &nbsp; {{ payslip.text_period }}
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class='b-lr'>
+          Г─жа Власова Аксения Ивановна
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class='b-lr'>
+          ТН:33076132
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class='b-lr'>
+          <table align='center' cellpadding=0 cellspacing=0>
             <tr>
-              <td class='b-lr'>
-                {{ income.code_print }}
-              </td>
-              <td class='t-r_b-r'>
-                {{ income.period }}
-              </td>
-              <td class='t-r_b-r'>
-                {{ income.summa }}
-              </td>
-              <td class='t-r_b-r'>
-                {{ income.count }}
-              </td>
-            </tr>
-          {% endfor %}
-          <tr>
-            <td colspan=4 class='b-t'>
-            </td>
-          </tr>
-          <tr>
-            <td colspan=4 class='t-c'>
-              Прочие доходы
-            </td>
-          </tr>
-          <tr>
-            <td colspan=3 class='b-b'>
-            </td>
-          </tr>
-          {% for other in others %}
-            <tr>
-              <td class='b-lr'>
-                {{ other.code_print }}
-              </td>
-              <td class='t-r_b-r'>
-                {{ other.period }}
-              </td>
-              <td class='t-r_b-r'>
-                {{ other.summa }}
+              <td class='t-r'>
+                Подразделение:
               </td>
               <td>
+                {{ payslip.division }}
               </td>
             </tr>
-          {% endfor %}
-          <tr>
-            <td colspan=3 class='b-t'>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <br>
-              Пересылка в банк
-            </td>
-            <td class='t-r'>
-              <br>
-              {{ payslip.period }}
-            </td>
-            <td class='t-r'>
-              <br>
-              {{ payslip.paying }}
-            </td>
-          </tr>
-        </table>
-        <br>
-      </td>
-      <td valign='top' class='b-rb'>
-        <table cellpadding=0 cellspacing=0>
-          <tr>
-            <td colspan=3 class='t-c_b-b'>
-              Удержания
-            </td>
-          </tr>
-          <tr>
-            <td class='b-lrb'>
-              Вид удержания
-            </td>
-            <td class='b-rb'>
-              Период
-            </td>
-            <td class='b-rb'>
-              Сумма
-            </td>
-          </tr>
-          <tr>
-            <td colspan=2 class='b-lrb'>
-              Удержано
-            </td>
-            <td class='t-r_b-rb'>
-              {{ payslip.consumption }}
-            </td>
-          </tr>
-          {% for consumption in consumptions %}
             <tr>
-              <td class='b-lr'>
-                {{ consumption.code_print }}
+              <td class='t-r'>
+                Должность:
               </td>
-              <td class='t-r_b-r'>
-                {{ consumption.period }}
-              </td>
-              <td class='t-r_b-r'>
-                {{ consumption.summa }}
+              <td>
+                {{ payslip.post }}
               </td>
             </tr>
-          {% endfor %}
-          <tr>
-            <td colspan=3 class='b-t'>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+            <tr>
+              <td class='t-r'>
+                Оклад/Тариф:
+              </td>
+              <td>
+                {{ payslip.rate }}
+              </td>
+            </tr>
+          </table>
+          <br>
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class='b-lrb'>
+          <table cellpadding=0 cellspacing=0>
+            <tr>
+              <td>
+                Долг за работником на начало месяца
+              </td>
+              <td class='t-r'>
+                ─
+              </td>
+              <td class='t-r'>
+                {{ payslip.begin_dolg }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Выплачено в течение месяца
+              </td>
+              <td class='t-r'>
+                ─
+              </td>
+              <td class='t-r'>
+                {{ payslip.rotate_dolg }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Долг за работником на конец месяца
+              </td>
+              <td class='t-r'>
+                ─
+              </td>
+              <td class='t-r'>
+                {{ payslip.end_dolg }}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class='b-lrb'>
+          <table cellpadding=0 cellspacing=0>
+            <tr>
+              <td colspan=4 class='t-c_b-b'>
+                Начисления
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lrb'>
+                Вид начисления
+              </td>
+              <td class='b-rb'>
+                Период
+              </td>
+              <td class='b-rb'>
+                Сумма
+              </td>
+              <td class='b-rb'>
+                Ед.
+              </td>
+            </tr>
+            <tr>
+              <td colspan=2 class='b-lrb'>
+                Начислено
+              </td>
+              <td class='t-r_b-rb'>
+                {{ payslip.income }}
+              </td>
+              <td class='b-rb'>
+              </td>
+            </tr>
+            {% for income in incomes %}
+              <tr>
+                <td class='b-lr'>
+                  {{ income.code }}
+                </td>
+                <td class='t-r_b-r'>
+                  {{ income.period }}
+                </td>
+                <td class='t-r_b-r'>
+                  {{ income.summa }}
+                </td>
+                <td class='t-r_b-r'>
+                  {{ income.count }}
+                </td>
+              </tr>
+            {% endfor %}
+            {% block form_income %}
+            {% endblock %}
+            <tr>
+              <td colspan=4 class='b-t'>
+              </td>
+            </tr>
+            <tr>
+              <td colspan=4 class='t-c'>
+                Прочие доходы
+              </td>
+            </tr>
+            <tr>
+              <td colspan=3 class='b-b'>
+              </td>
+            </tr>
+            {% for other in others %}
+              <tr>
+                <td class='b-lr'>
+                  {{ other.code_print }}
+                </td>
+                <td class='t-r_b-r'>
+                  {{ other.period }}
+                </td>
+                <td class='t-r_b-r'>
+                  {{ other.summa }}
+                </td>
+                <td>
+                </td>
+              </tr>
+            {% endfor %}
+            {% block form_other %}
+            {% endblock %}
+            <tr>
+              <td colspan=3 class='b-t'>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <br>
+                Пересылка в банк
+              </td>
+              <td class='t-r'>
+                <br>
+                {{ payslip.period }}
+              </td>
+              <td class='t-r'>
+                <br>
+                {{ payslip.paying }}
+              </td>
+            </tr>
+          </table>
+          <br>
+        </td>
+        <td valign='top' class='b-rb'>
+          <table cellpadding=0 cellspacing=0>
+            <tr>
+              <td colspan=3 class='t-c_b-b'>
+                Удержания
+              </td>
+            </tr>
+            <tr>
+              <td class='b-lrb'>
+                Вид удержания
+              </td>
+              <td class='b-rb'>
+                Период
+              </td>
+              <td class='b-rb'>
+                Сумма
+              </td>
+            </tr>
+            <tr>
+              <td colspan=2 class='b-lrb'>
+                Удержано
+              </td>
+              <td class='t-r_b-rb'>
+                {{ payslip.consumption }}
+              </td>
+            </tr>
+            {% for consumption in consumptions %}
+              <tr>
+                <td class='b-lr'>
+                  {{ consumption.code_print }}
+                </td>
+                <td class='t-r_b-r'>
+                  {{ consumption.period }}
+                </td>
+                <td class='t-r_b-r'>
+                  {{ consumption.summa }}
+                </td>
+              </tr>
+            {% endfor %}
+            {% block form_consumption %}
+            {% endblock %}
+            <tr>
+              <td colspan=3 class='b-t'>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    {% block submit %}
+    {% endblock %}
+  </center>
 {% endblock %}
 

@@ -1,0 +1,25 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'metro_app:add_payslip' %}">Добавить расчётный листок</a>
+  <a href="{% url 'metro_app:index'       %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <table border=1>
+      <caption>Расчётные листки</caption>
+      <tr>
+        <th>Id</th>
+        <th>Месяц</th>
+      </tr>
+      {% for payslip in payslips %}
+        <tr align='right'>
+          <td>{{ payslip.id     }}</td>
+          <td>{{ payslip.month_text }} {{ payslip.period.year }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </center>
+{% endblock %}

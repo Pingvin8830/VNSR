@@ -1,0 +1,65 @@
+{% extends 'metro/display_payslip.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{% url 'metro_app:display_payslips' %}">Назад</a>
+{% endblock %}
+
+{% block form_income %}
+  <form action="{% url 'metro_app:add_payslip_details' payslip.id %}" method='post'>
+    {% csrf_token %}
+    <tr>
+      <td class='b-lr'>
+        {{ form.code_income }}
+      </td>
+      <td class='t-r_b-r'>
+        {{ form.month_income }}{{ form.year_income }}
+      </td>
+      <td class='t-r_b-r'>
+        {{ form.summa_income }}
+      </td>
+      <td class='t-r_b-r'>
+        {{ form.count_income }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan=4 align='center' class='b-lr'>
+        <input type='submit' value='Добавить'>
+        <input type='reset' value='Очистить'>
+      </td>
+    </tr>
+{% endblock %}
+
+{% block form_other %}
+    <tr>
+      <td class='b-lr'>
+        {{ form.code_other }}
+      </td>
+      <td class='t-r_b-r'>
+        {{ form.month_other }}{{ form.year_other }}
+      </td>
+      <td class='t-r_b-r'>
+        {{ form.summa_other }}
+      </td>
+    </tr>
+{% endblock %}
+
+{% block form_consumption %}
+    <tr>
+      <td class='b-lr'>
+        {{ form.code_consumption }}
+      </td>
+      <td class='t-r_b-r'>
+        {{ form.month_consumption }}{{ form.year_consumption }}
+      </td>
+      <td class='t-r_b-r'>
+        {{ form.summa_consumption }}
+      </td>
+    </tr>
+{% endblock %}
+
+{% block submit %}
+    <input type='submit' value='Записать'>
+    <input type='reset'  value='Очистить'>
+  </form>
+{% endblock %}

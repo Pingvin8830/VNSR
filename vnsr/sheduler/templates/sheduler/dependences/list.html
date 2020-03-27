@@ -1,0 +1,25 @@
+{% extends 'sheduler/dependences/main.html' %}
+
+{% block content %}
+  <table>
+    <caption>Зависимости</caption>
+    <tr>
+      <th>Код</th>
+      <th>Задача</th>
+      <th>Зависит от</th>
+    </tr>
+    {% for dependence in dependences %}
+      <tr>
+        <td>
+          <a href="{% url 'sheduler:dependences:update' dependence.pk %}">{{ dependence.pk }}</a>
+        </td>
+        <td>
+          <a href="{% url 'sheduler:dependences:update' dependence.pk %}">{{ dependence.detail }}</a>
+        </td>
+        <td>
+          <a href="{% url 'sheduler:dependences:update' dependence.pk %}">{{ dependence.prev_detail }}</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

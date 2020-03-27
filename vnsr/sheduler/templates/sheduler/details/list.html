@@ -1,0 +1,33 @@
+{% extends 'sheduler/details/main.html' %}
+
+{% block content %}
+  <table>
+    <caption>Детализация</caption>
+    <tr>
+      <th>Код</th>
+      <th>Задача</th>
+      <th>Место</th>
+      <th>Человек</th>
+      <th>Завершено</th>
+    </tr>
+    {% for detail in details %}
+      <tr>
+        <td>
+          <a href="{% url 'sheduler:details:update' detail.pk %}">{{ detail.pk }}</a>
+        </td>
+        <td>
+          <a href="{% url 'sheduler:details:update' detail.pk %}">{{ detail.task.name }}</a>
+        </td>
+        <td>
+          <a href="{% url 'sheduler:details:update' detail.pk %}">{{ detail.location.name }}</a>
+        </td>
+        <td>
+          <a href="{% url 'sheduler:details:update' detail.pk %}">{{ detail.human.name }}</a>
+        </td>
+        <td>
+          <a href="{% url 'sheduler:details:update' detail.pk %}">{{ detail.is_done }}</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

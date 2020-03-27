@@ -1,0 +1,9 @@
+{% extends 'main/main.html' %}
+
+{% block submenu %}
+  <a href="{% url 'sheduler:tasks:list' %}">Задачи</a>
+  <a href="{% url 'sheduler:locations:list' %}">Места</a>
+  <a href="{% url 'sheduler:humans:list' %}">Люди</a>
+  <a href="{% url 'sheduler:details:list' %}">Детали</a>
+  <a href="{% url 'sheduler:dependences:list' %}">Зависимости</a>
+{% endblock %}
