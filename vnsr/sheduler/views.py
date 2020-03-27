@@ -1,9 +1,12 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 from . import forms, models
 
 # Create your views here.
-class CurrentIssues(generic.TemplateView):
+class CurrentIssues(LoginRequiredMixin, generic.TemplateView):
+  login_url = reverse_lazy('auth_app:login')
+  redirect_field_name = None
   http_method_names = ['get', 'post']
   template_name = 'sheduler/current_issues.html'
 
