@@ -18,10 +18,10 @@ from . import views
 
 app_name = 'sheduler'
 urlpatterns = [
+  path('current_issues', views.CurrentIssues.as_view(), name='current_issues'),
   path('dependences/', include('sheduler.dependences.urls', namespace='dependences')),
   path('details/', include('sheduler.details.urls', namespace='details')),
   path('humans/', include('sheduler.humans.urls', namespace='humans')),
   path('locations/', include('sheduler.locations.urls', namespace='locations')),
   path('tasks/', include('sheduler.tasks.urls', namespace='tasks')),
-  path('', views.Index.as_view(), name='index'),
 ]
