@@ -1,5 +1,9 @@
 {% extends 'sheduler/humans/main.html' %}
 
+{% block submenu %}
+  <a href="{% url 'sheduler:humans:list' %}">Назад</a>
+{% endblock %}
+
 {% block content %}
   <form action="{% url 'sheduler:humans:add' %}" method="post">
     {% csrf_token %}
