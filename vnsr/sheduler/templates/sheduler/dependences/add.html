@@ -1,5 +1,9 @@
 {% extends 'sheduler/dependences/main.html' %}
 
+{% block submenu %}
+  <a href="{% url 'sheduler:dependences:list' %}">Назад</a>
+{% endblock %}
+
 {% block content %}
   <form action="{% url 'sheduler:dependences:add' %}" method="post">
     {% csrf_token %}
