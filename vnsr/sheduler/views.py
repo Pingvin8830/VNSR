@@ -1,9 +1,75 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from . import forms, models
+from . import forms, models, tasks
 
 # Create your views here.
+class AddIssues(LoginRequiredMixin, generic.TemplateView):
+  login_url = reverse_lazy('auth_app:login')
+  redirect_field_name = None
+  http_method_names = ['get', 'post']
+  template_name = 'sheduler/add.html'
+
+  def get(self, request, *args, **kwargs):
+    response = super().get(request, *args, **kwargs)
+    response.context_data['type'] = 'task'
+    response.context_data['objects'] = models.Tasks.objects.all()
+    response.context_data['multi'] = False
+    return response
+
+  def post(self, request, *args, **kwargs):
+    response = super().get(request, *args, **kwargs)
+    response.context_data['task'] = models.Tasks.objects.get(pk=request.POST['task'])
+    response.context_data['locations_ids'] = request.POST['locations_ids']
+    response.context_data['locations'] = []
+    response.context_data['humans_ids'] = request.POST['humans_ids']
+    response.context_data['humans'] = []
+    response.context_data['multi'] = True
+    response.context_data['type'] = 'locations'
+    response.context_data['objects'] = models.Locations.objects.all()
+    if not response.context_data['locations_ids']:
+      for location_id in request.POST:
+        try:
+          location = models.Locations.objects.get(pk=location_id)
+          response.context_data['locations_ids'] += location_id + ' '
+        except ValueError:
+          continue
+      if response.context_data['locations_ids']:
+        response.context_data['type'] = 'humans'
+        response.context_data['objects'] = models.Humans.objects.all()
+    elif not response.context_data['humans_ids']:
+      for human_id in request.POST:
+        try:
+          human = models.Humans.objects.get(pk=human_id)
+          response.context_data['humans_ids'] += human_id + ' '
+        except ValueError:
+          continue
+      if response.context_data['humans_ids']:
+        response.context_data['type'] = 'excess'
+        response.context_data['objects'] = []
+        for location_id in response.context_data['locations_ids'].split():
+          location = models.Locations.objects.get(pk=location_id)
+          response.context_data['locations'].append(location)
+        for human_id in response.context_data['humans_ids'].split():
+          human = models.Humans.objects.get(pk=human_id)
+          response.context_data['humans'].append(human)
+    else:
+      for key in request.POST:
+        try:
+          (location_id, human_id) = key.split('_')
+          location = models.Locations.objects.get(pk=location_id)
+          human = models.Humans.objects.get(pk=human_id)
+        except ValueError:
+          continue
+        detail = models.Details()
+        detail.task = response.context_data['task']
+        detail.location = location
+        detail.human = human
+        detail.save()
+      return redirect(reverse_lazy('sheduler:current_issues'))
+    return response
+
 class CurrentIssues(LoginRequiredMixin, generic.TemplateView):
   login_url = reverse_lazy('auth_app:login')
   redirect_field_name = None

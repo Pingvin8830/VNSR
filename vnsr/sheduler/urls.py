@@ -18,6 +18,7 @@ from . import views
 
 app_name = 'sheduler'
 urlpatterns = [
+  path('add', views.AddIssues.as_view(), name='add'),
   path('dependences/', include('sheduler.dependences.urls', namespace='dependences')),
   path('details/', include('sheduler.details.urls', namespace='details')),
   path('humans/', include('sheduler.humans.urls', namespace='humans')),
