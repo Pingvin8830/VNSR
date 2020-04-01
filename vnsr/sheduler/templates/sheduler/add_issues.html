@@ -1,5 +1,16 @@
 {% extends 'sheduler/main.html' %}
 
+{% block submenu %}
+  {% if type == 'task' %}
+    <a href="{% url 'sheduler:tasks:add' %}">Добавить задачу</a>
+  {% elif type == 'locations' %}
+    <a href="{% url 'sheduler:locations:add' %}">Добавить место</a>
+  {% elif type == 'humans' %}
+    <a href="{% url 'sheduler:humans:add' %}">Добавить человека</a>
+  {% endif %}
+  <a href="{% url 'sheduler:current_issues' %}">Назад</a>
+{% endblock %}
+
 {% block content %}
   <form method="post">
     {% csrf_token %}

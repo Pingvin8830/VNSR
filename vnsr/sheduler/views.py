@@ -1,15 +1,59 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.utils import IntegrityError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from . import forms, models, tasks
 
 # Create your views here.
+class AddDependences(LoginRequiredMixin, generic.TemplateView):
+  login_url = reverse_lazy('auth_app:login')
+  redirect_field_name = None
+  http_method_names = ['get', 'post']
+  template_name = 'sheduler/add_dependences.html'
+
+  def get(self, request, *args, **kwargs):
+    response = super().get(request, *args, **kwargs)
+    response.context_data['details'] = models.Details.objects.filter(is_done=False).filter(dependences=None)
+    return response
+
+  def post(self, request, *args, **kwargs):
+    response = super().get(request, *args, **kwargs)
+    detail = models.Details.objects.get(pk=request.POST['detail'])
+    bad_details = [detail]
+    is_done = False
+    while not is_done:
+      is_done = True
+      for dependence in models.Dependences.objects.all():
+        for bad_detail in bad_details:
+          if dependence.prev_detail == bad_detail and dependence.detail not in bad_details:
+            bad_details.append(dependence.detail)
+            is_done = False
+    response.context_data['detail'] = detail
+    response.context_data['details'] = []
+    for dtl in models.Details.objects.filter(is_done=False).exclude(pk=detail.id):
+      if dtl not in bad_details:
+        response.context_data['details'].append(dtl)
+    is_done = False
+    for prev_detail_id in request.POST:
+      try:
+        prev_detail = models.Details.objects.get(pk=prev_detail_id)
+      except ValueError:
+        continue
+      is_done = True
+      dependence = models.Dependences()
+      dependence.detail = detail
+      dependence.prev_detail = prev_detail
+      dependence.save()
+    if is_done:
+      return redirect(reverse_lazy('sheduler:current_issues'))
+    return response
+
 class AddIssues(LoginRequiredMixin, generic.TemplateView):
   login_url = reverse_lazy('auth_app:login')
   redirect_field_name = None
   http_method_names = ['get', 'post']
-  template_name = 'sheduler/add.html'
+  template_name = 'sheduler/add_issues.html'
 
   def get(self, request, *args, **kwargs):
     response = super().get(request, *args, **kwargs)
@@ -66,7 +110,10 @@ class AddIssues(LoginRequiredMixin, generic.TemplateView):
         detail.task = response.context_data['task']
         detail.location = location
         detail.human = human
-        detail.save()
+        try:
+          detail.save()
+        except IntegrityError:
+          continue
       return redirect(reverse_lazy('sheduler:current_issues'))
     return response
 
@@ -79,7 +126,7 @@ class CurrentIssues(LoginRequiredMixin, generic.TemplateView):
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     context['humans'] = []
-    humans = models.Humans.objects.exclude(details=None).filter(details__is_done=False)
+    humans = models.Humans.objects.exclude(details=None).filter(details__is_done=False, details__dependences=None)
     humans_list = []
     for human in humans:
       for detail in human.details_set.all():
@@ -107,4 +154,6 @@ class CurrentIssues(LoginRequiredMixin, generic.TemplateView):
         continue
       detail.is_done = True
       detail.save()
+      for dependence in models.Dependences.objects.filter(prev_detail=detail):
+        dependence.delete()
     return self.get(request)

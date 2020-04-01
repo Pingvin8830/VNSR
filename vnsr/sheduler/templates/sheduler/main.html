@@ -1,10 +1,6 @@
 {% extends 'main/main.html' %}
 
 {% block submenu %}
-  <a href="{% url 'sheduler:add' %}">Добавить задачи в план</a>
-  <a href="{% url 'sheduler:tasks:list' %}">Задачи</a>
-  <a href="{% url 'sheduler:locations:list' %}">Места</a>
-  <a href="{% url 'sheduler:humans:list' %}">Люди</a>
-  <a href="{% url 'sheduler:details:list' %}">Детали</a>
-  <a href="{% url 'sheduler:dependences:list' %}">Зависимости</a>
+  <a href="{% url 'sheduler:add_issues' %}">Добавить задачи</a>
+  <a href="{% url 'sheduler:add_dependences' %}">Добавить зависимости</a>
 {% endblock %}
