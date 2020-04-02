@@ -11,7 +11,7 @@ class Add(LoginRequiredMixin, generic.CreateView):
   form_class = forms.Add
   http_method_names = ['get', 'post']
   model = models.Humans
-  success_url = reverse_lazy('sheduler:humans:list')
+  success_url = reverse_lazy('sheduler:add_issues')
   template_name = 'sheduler/humans/add.html'
 
 class List(LoginRequiredMixin, generic.ListView):
