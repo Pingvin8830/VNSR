@@ -14,7 +14,7 @@ class AddDependences(LoginRequiredMixin, generic.TemplateView):
 
   def get(self, request, *args, **kwargs):
     response = super().get(request, *args, **kwargs)
-    response.context_data['details'] = models.Details.objects.filter(is_done=False).filter(dependences=None)
+    response.context_data['details'] = models.Details.objects.filter(is_done=False).filter(dependences=None).order_by('task__name', 'location__name', 'human__name')
     return response
 
   def post(self, request, *args, **kwargs):
@@ -31,7 +31,7 @@ class AddDependences(LoginRequiredMixin, generic.TemplateView):
             is_done = False
     response.context_data['detail'] = detail
     response.context_data['details'] = []
-    for dtl in models.Details.objects.filter(is_done=False).exclude(pk=detail.id):
+    for dtl in models.Details.objects.filter(is_done=False).exclude(pk=detail.id).order_by('task__name', 'location__name', 'human__name'):
       if dtl not in bad_details:
         response.context_data['details'].append(dtl)
     is_done = False
