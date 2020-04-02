@@ -1,0 +1,46 @@
+{% extends 'main/index.html' %}
+{% load staticfiles %}
+
+{% block menu %}
+  <a href="{{ prev }}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <center>
+    <form action="{{ next }}" method='get'>
+      <table>
+        <caption>Выбор периода</caption>
+        <tr>
+          <td colspan=4>
+            <hr>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>{{ form.start_day.label   }}</td>
+          <td>{{ form.start_month.label }}</td>
+          <td>{{ form.start_year.label  }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.start.label }}</td>
+          <td>{{ form.start_day   }}</td>
+          <td>{{ form.start_month }}</td>
+          <td>{{ form.start_year  }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.end.label }}</td>
+          <td>{{ form.end_day   }}</td>
+          <td>{{ form.end_month }}</td>
+          <td>{{ form.end_year  }}</td>
+        </tr>
+        <tr>
+          <td colspan=4>
+            <hr>
+          </td>
+        </tr>
+      </table>
+      <input type="submit" value="Продолжить">
+      <input type="reset"  value="Очистить">
+    </form>
+  </center>
+{% endblock %}

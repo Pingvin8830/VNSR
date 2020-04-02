@@ -72,7 +72,7 @@ class Rate (models.Model):
   end   = models.DateField    (null        = True)
   value = models.DecimalField (max_digits  = 9, decimal_places = 4)
 
-class CodesPayslip (models.Model):
+class PayslipCodes (models.Model):
   '''Коды НДФЛ'''
   INCOME      = 'i'
   CONSUMPTION = 'c'
@@ -84,17 +84,20 @@ class CodesPayslip (models.Model):
   )
 
   class Meta ():
-    db_table = 'codes_payslip'
+    db_table = 'payslip_codes'
 
   id   = models.AutoField (primary_key = True)
   code = models.CharField (max_length  = 8, unique = True)
   name = models.CharField (max_length  = 50)
   type = models.CharField (max_length  = 1, choices = TYPES)
 
-class Payslip (models.Model):
+  def __str__ (self):
+    return self.code + ' ' + self.name
+
+class Payslips (models.Model):
   '''Расчетный листок'''
   class Meta ():
-    db_table = 'payslip'
+    db_table = 'payslips'
 
   id          = models.AutoField    (primary_key = True)
   period      = models.DateField    (unique      = True)
@@ -128,8 +131,8 @@ class PayslipDetails (models.Model):
     unique_together = (('payslip', 'code', 'period'))
 
   id      = models.AutoField    (primary_key = True)
-  payslip = models.ForeignKey   ('Payslip',      null = True, on_delete = models.SET_NULL, db_column = 'payslip')
-  code    = models.ForeignKey   ('CodesPayslip', null = True, on_delete = models.SET_NULL, db_column = 'code')
+  payslip = models.ForeignKey   ('Payslips',     null = True, on_delete = models.SET_NULL, db_column = 'payslip')
+  code    = models.ForeignKey   ('PayslipCodes', null = True, on_delete = models.SET_NULL, db_column = 'code')
   period  = models.DateField    ()
   summa   = models.DecimalField (null = True, max_digits = 9, decimal_places = 4)
   count   = models.DecimalField (null = True, max_digits = 9, decimal_places = 4)

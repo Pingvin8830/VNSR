@@ -1,0 +1,6 @@
+{% extends 'main/main.html' %}
+
+{% block submenu %}
+  <a href="{% url 'sheduler:add_issues' %}">Добавить задачи</a>
+  <a href="{% url 'sheduler:add_dependences' %}">Добавить зависимости</a>
+{% endblock %}
