@@ -1,6 +1,6 @@
 import calendar
 from datetime import datetime
-from calend import constants
+from calend import constants, models
 
 def calend(request):
   now = datetime.today()
@@ -16,14 +16,25 @@ def calend(request):
   calend_now += '<th class="week">Сб</th>'
   calend_now += '<th class="week">Вс</th>'
   calend_now += '</tr>'
-  for day in calend.itermonthdays2(now.year, now.month):
-    if day[1] == 0:
+  for day in calend.itermonthdates(now.year, now.month):
+    try:
+      production = models.Productions.objects.get(date=day)
+    except models.Productions.DoesNotExist:
+      production = models.Productions(date=day)
+    if day.weekday() == 0:
       calend_now += '<tr>'
-    if day[0] == 0:
+    if day.month != now.month:
       calend_now += '<td></td>'
     else:
-      calend_now += '<td>%d</td>' % day[0]
-    if day[1] == 6:
+      if not production.type:
+        calend_now += '<td>%d</td>' % day.day
+      elif production.type == 'В':
+        calend_now += '<td class="week">%d</td>' % day.day
+      elif production.type == 'П':
+        calend_now += '<td class="holiday">%d</td>' % day.day
+      elif production.type == 'С':
+        calend_now += '<td class="short">%d</td>' % day.day
+    if day.weekday() == 6:
       calend_now += '</tr>'
   calend_now += '</table>'
   return {'calend_now': calend_now}
