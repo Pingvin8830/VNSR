@@ -1,10 +1,10 @@
 import calendar
-from datetime import datetime
+from datetime import datetime, date
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 
-from calend import constants
+from calend import constants, models
 # Create your views here.
 
 class Index(LoginRequiredMixin, generic.RedirectView):
@@ -53,7 +53,13 @@ class Year(LoginRequiredMixin, generic.TemplateView):
     res += '<th class="week">Сб</th>'
     res += '<th class="week">Вс</th>'
     res += '</tr>'
+    print()
     for day in calend.itermonthdays2(year, month):
+      if day[0]:
+        try:
+          print(models.Productions.objects.get(date=date(year, month, day[0])).date)
+        except models.Productions.DoesNotExist:
+          pass
       if day[1] == 0:
         res += '<tr>'
       if day[0]:
@@ -62,5 +68,6 @@ class Year(LoginRequiredMixin, generic.TemplateView):
         res += '<td></td>'
       if day[1] == 6:
         res += '</tr>'
+    print()
     res += '</table>'
     return res
