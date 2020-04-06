@@ -1,0 +1,58 @@
+{% extends 'calend/main.html' %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="year" value="{{ year.now }}">
+    <input type="hidden" name="month" value="{{ month.now }}">
+    <table>
+      <caption>
+        <a href="{% url 'calend:set_production' year.prev month.prev %}"><--</a>
+        {{ month.now_text }} {{ year.now }}
+        <a href="{% url 'calend:set_production' year.next month.next %}">--></a>
+      </caption>
+      <tr>
+        <th>День</th>
+        <th>Рабочий</th>
+        <th>Выходной</th>
+        <th>Празничный</th>
+        <th>Сокращённый</th>
+      </tr>
+      {% for day in days %}
+        <tr>
+          <td align="right">{{ day.date }}</td>
+          <td>
+            <input type="radio" name="{{ day.date }}" value="Р"
+              {% if not day.type %}
+                checked
+              {% endif %}
+            >
+          </td>
+          <td>
+            <input type="radio" name="{{ day.date }}" value="В"
+              {% if day.type == 'В' %}
+                checked
+              {% endif %}
+            >
+          </td>
+          <td>
+            <input type="radio" name="{{ day.date }}" value="П"
+              {% if day.type == 'П' %}
+                checked
+              {% endif %}
+            >
+          </td>
+          <td>
+            <input type="radio" name="{{ day.date }}" value="С"
+              {% if day.type == 'С' %}
+                checked
+              {% endif %}
+            >
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+    <input type="submit" value="Сохранить">
+    <input type="reset" value="Сброс">
+  </form>
+{% endblock %}
