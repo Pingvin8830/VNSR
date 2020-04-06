@@ -15,6 +15,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/calend.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/footer.css' %}">
     <!-- link rel="shortcut icon" href="{% static 'main/images/title_icon.jpg' %}" -->
+    {% block add_links %}
+    {% endblock %}
     <title>VNSR (develop)</title>
     <style>
 
@@ -27,6 +29,7 @@
       </div>
       <nav id="menu">
         <a href="{% url 'main:index' %}">Домой</a>
+        <a href="{% url 'calend:index' %}">Календарь</a>
         <a href="{% url 'sheduler:current_issues' %}">Планировщик</a>
         <a href="{% url 'auth_app:logout' %}">Выход ({{ user }})</a>
       </nav>
@@ -38,21 +41,10 @@
           {% endblock %}
         </nav>
         <div id="calend">
-          <table>
-            <caption>{{ month_text }}</caption>
-            <tr>
-              <th>Пн</th>
-              <th>Вт</th>
-              <th>Ср</th>
-              <th>Чт</th>
-              <th>Пт</th>
-              <th class="week">Сб</th>
-              <th class="week">Вс</th>
-            </tr>
-            {% autoescape off %}
-              {{ calend }}
-            {% endautoescape %}
-          </table>
+          {% autoescape off %}
+            {{ calend_now }}
+          {% endautoescape %}
+          <br>
           Сегодня: {% now 'd.m.Y' %}
         </div>
       </aside>
