@@ -19,5 +19,6 @@ from . import views
 app_name = 'calend'
 urlpatterns = [
   path('<int:year>',views.Year.as_view(), name='year'),
+  path('set_production', views.SetProduction.as_view(), name='set_production'),
   path('', views.Index.as_view(), name='index'),
 ]
