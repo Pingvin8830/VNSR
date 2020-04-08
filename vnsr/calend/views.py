@@ -92,7 +92,7 @@ class Year(LoginRequiredMixin, generic.TemplateView):
 
   def get_context_data(self, *args, **kwargs):
     context = super().get_context_data(*args, **kwargs)
-    calend = '<table>\n'
+    calend = '<table id="year_calend">\n'
     calend += '<caption>\n'
     calend += '<a href="%s"><--</a>\n' % reverse_lazy('calend:year', args=[self.kwargs['year']-1])
     calend += '%d\n' % self.kwargs['year']
@@ -116,7 +116,9 @@ class Year(LoginRequiredMixin, generic.TemplateView):
   def get_month_html(self, year, month):
     calend = calendar.Calendar()
     res = '<table>\n'
-    res += '<caption>%s</caption>\n' % constants.MONTHS_TEXT[month]
+    res += '<caption>\n'
+    res += '%s\n' % constants.MONTHS_TEXT[month]
+    res += '</caption>\n' % constants.MONTHS_TEXT[month]
     res += '<tr> '
     res += '<th>Пн</th> '
     res += '<th>Вт</th> '

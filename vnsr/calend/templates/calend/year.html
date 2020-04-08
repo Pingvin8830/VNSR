@@ -1,4 +1,10 @@
 {% extends 'calend/main.html' %}
+{% load static %}
+
+{% block add_links %}
+  <link rel="stylesheet" type="text/css" href="{% static 'calend/css/year.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'calend/css/productions.css' %}">
+{% endblock %}
 
 {% block content %}
   {% autoescape off%}
