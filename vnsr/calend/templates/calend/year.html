@@ -1,7 +1,48 @@
 {% extends 'calend/main.html' %}
+{% load static %}
+
+{% block add_links %}
+  <link rel="stylesheet" type="text/css" href="{% static 'calend/css/year.css' %}">
+{% endblock %}
 
 {% block content %}
-  {% autoescape off%}
-    {{ calend }}
-  {% endautoescape %}
+  <table id="year_calend">
+    <caption>
+      <a href="{% url 'calend:year' year.prev %}"><--</a>
+      {{ year.now }}
+      <a href="{% url 'calend:year' year.next %}">--></a>
+    </caption>
+    {% for kvartal in kvartals %}
+      <tr>
+        <td>{{ kvartal.num }} квартал</td>
+        {% for month in kvartal.months %}
+          <td>
+            <table>
+              <caption>
+                <a href="{% url 'calend:month' year.now month.num %}">{{ month.name }}</a>
+              </caption>
+              <tr>
+                <th>Пн</th>
+                <th>Вт</th>
+                <th>Ср</th>
+                <th>Чт</th>
+                <th>Пт</th>
+                <th class="week">Сб</th>
+                <th class="week">Вс</th>
+              </tr>
+              {% for day in month.days %}
+                {% if day.weekkay == 0 %}
+                  <tr>
+                {% endif %}
+                <td class="{{ day.type }} right_text">{{ day.num }}</td>
+                {% if day.weekday == 6 %}
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            </table>
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
 {% endblock %}
