@@ -1,0 +1,40 @@
+{% extends 'calend/main.html' %}
+
+{% block submenu %}
+  <a href="{% url 'calend:set_production' year.now month.now %}">Настроить производственный календарь</a>
+{% endblock %}
+
+{% block content %}
+  <table>
+    <caption>
+      <a href="{% url 'calend:month' year.prev month.prev %}"><--</a>
+      {{ month.name }} {{ year.now }}
+      <a href="{% url 'calend:month' year.next month.next %}">--></a>
+    </caption>
+    {% for day in days %}
+      <tr>
+        <td class="{{ day.type }}">{{ day.num }}</td>
+        <td class="{{ day.type }}">{{ day.weekday }}</td>
+        <td>
+          {% for sign in day.signs %}
+            <details>
+              <summary>{{ sign.name }}</summary>
+              <ul>
+                {% for mark in day.marks %}
+                  {% if mark.sign == sign %}
+                    <li>{{ mark.comment }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </details>
+          {% endfor %}
+          <ul>
+            {% for comment in day.comments %}
+              <li>{{ comment }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
