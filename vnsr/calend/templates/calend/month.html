@@ -1,7 +1,13 @@
 {% extends 'calend/main.html' %}
+{% load static %}
+
+{% block add_links %}
+  <link rel="stylesheet" type="text/css" href="{% static 'calend/css/month.css' %}">
+{% endblock %}
 
 {% block submenu %}
   <a href="{% url 'calend:set_production' year.now month.now %}">Настроить производственный календарь</a>
+  <a href="{% url 'calend:add_mark' %}">Добавить напоминание</a>
 {% endblock %}
 
 {% block content %}
@@ -13,19 +19,26 @@
     </caption>
     {% for day in days %}
       <tr>
-        <td class="{{ day.type }}">{{ day.num }}</td>
-        <td class="{{ day.type }}">{{ day.weekday }}</td>
-        <td>
+        <td class="bd_t bd_l {{ day.type }}">{{ day.num }}</td>
+        <td class="bd_t {{ day.type }}">{{ day.weekday }}</td>
+        <td class="bd_t bd_r">
           {% for sign in day.signs %}
             <details>
               <summary>{{ sign.name }}</summary>
-              <ul>
+              <table>
                 {% for mark in day.marks %}
                   {% if mark.sign == sign %}
-                    <li>{{ mark.comment }}</li>
+                    <tr>
+                      <td>
+                        {% if mark.time %}
+                          {{ mark.time }}
+                        {% endif %}
+                      </td>
+                      <td>{{ mark.comment }}</td>
+                    </tr>
                   {% endif %}
                 {% endfor %}
-              </ul>
+              </table>
             </details>
           {% endfor %}
           <ul>
@@ -36,5 +49,8 @@
         </td>
       </tr>
     {% endfor %}
+    <tr>
+      <td colspan=3 class="bd_t"></td>
+    </tr>
   </table>
 {% endblock %}
