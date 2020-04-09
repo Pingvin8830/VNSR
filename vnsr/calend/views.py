@@ -5,8 +5,28 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from calend import constants, models
+from calend import constants, models, forms
 # Create your views here.
+
+class AddMark(LoginRequiredMixin, generic.CreateView):
+  login_url = reverse_lazy('auth_app:login')
+  redirect_field_name = None
+  context_object_name = 'mark'
+  form_class = forms.AddMark
+  http_method_names = ['get', 'post']
+  model = models.Marks
+  success_url = reverse_lazy('calend:index')
+  template_name = 'calend/add_mark.html'
+
+class AddSign(LoginRequiredMixin, generic.CreateView):
+  login_url = reverse_lazy('auth_app:login')
+  redirect_field_name = None
+  context_object_name = 'sign'
+  form_class = forms.AddSign
+  http_method_names = ['get', 'post']
+  model = models.Signs
+  success_url = reverse_lazy('calend:add_mark')
+  template_name = 'calend/add_sign.html'
 
 class Index(LoginRequiredMixin, generic.RedirectView):
   login_url = reverse_lazy('auth_app:login')
@@ -155,6 +175,9 @@ class Year(LoginRequiredMixin, generic.TemplateView):
           if k.month == j:
             day['num'] = k.day
             day['weekday'] = k.weekday()
+            day['mark'] = ''
+            if models.Marks.objects.filter(date=k).count():
+              day['mark'] = 'mark'
             try:
               date_type = models.Productions.objects.get(date=k).type
             except models.Productions.DoesNotExist:

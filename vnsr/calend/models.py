@@ -10,9 +10,10 @@ class Marks(models.Model):
     ordering = ['date', 'sign', 'comment']
     unique_together = ['date', 'sign', 'comment']
 
-  date = models.DateField()
-  sign = models.ForeignKey('Signs', on_delete=models.SET_NULL, null=True)
-  comment = models.CharField(max_length=50, null=True)
+  date = models.DateField(verbose_name='Дата')
+  time = models.TimeField(null=True, blank=True, verbose_name='Время')
+  sign = models.ForeignKey('Signs', on_delete=models.SET_NULL, null=True, verbose_name='Тип')
+  comment = models.CharField(max_length=50, null=True, verbose_name='Напоминание')
 
 class Productions(models.Model):
   class Meta:
@@ -27,8 +28,10 @@ class Productions(models.Model):
 class Signs(models.Model):
   class Meta:
     ordering = ['name']
-    verbose_name = 'Признак'
-    verbose_name_plural = 'Признаки'
+    verbose_name = 'Тип'
+    verbose_name_plural = 'Типы'
 
-  name = models.CharField(max_length=50, unique=True)
+  name = models.CharField(max_length=50, unique=True, verbose_name='Название')
 
+  def __str__(self):
+    return self.name
