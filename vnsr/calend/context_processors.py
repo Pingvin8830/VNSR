@@ -1,9 +1,9 @@
 from calendar import Calendar
-from datetime import datetime
+from datetime import date
 from calend import constants, models
 
 def calend(request):
-  now = datetime.today()
+  now = date.today()
   calend_now = {
     'month_text': constants.MONTHS_TEXT[now.month],
     'month': now.month,
@@ -15,8 +15,11 @@ def calend(request):
       'day':  day.day,
       'month': day.month,
       'weekday': day.weekday(),
-      'mark': ''
+      'mark': '',
+      'now': ''
     }
+    if day == now:
+      add['now'] = 'now'
     try:
       add['type'] = models.Productions.objects.get(date=day).type
     except models.Productions.DoesNotExist:
@@ -30,5 +33,4 @@ def calend(request):
     if models.Marks.objects.filter(date=day).count():
       add['mark'] = 'mark'
     calend_now['days'].append(add)
-
   return {'calend_now': calend_now}

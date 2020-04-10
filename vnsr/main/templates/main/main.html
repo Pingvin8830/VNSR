@@ -57,7 +57,7 @@
               {% if day.weekday == 0 %}
                 <tr>
               {% endif %}
-              <td class="{{ day.type }} {{ day.mark }}">
+              <td class="{{ day.type }} {{ day.mark }} {{ day.now }}">
                 {% if day.month == calend_now.month %}
                   {{ day.day }}
                 {% endif %}
