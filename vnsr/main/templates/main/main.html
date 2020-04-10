@@ -43,7 +43,11 @@
         </nav>
         <div id="calend">
           <table>
-            <caption>{{ calend_now.month_text }} {{ calend_now.year }}</caption>
+            <caption>
+              <a href="{% url 'calend:month' calend_now.year calend_now.month %}">
+                {{ calend_now.month_text }} {{ calend_now.year }}
+              </a>
+            </caption>
             <tr>
               <th>Пн</th>
               <th>Вт</th>
