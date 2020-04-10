@@ -42,6 +42,33 @@
             </table>
           </td>
         {% endfor %}
+        {% if kvartal.num == 1 %}
+          <td rowspan=4>
+            <table>
+              <caption>Легенда</caption>
+              <tr>
+                <td class="work">0</td>
+                <td>Рабочий день</td>
+              </tr>
+              <tr>
+                <td class="week">0</td>
+                <td>Выходной день</td>
+              </tr>
+              <tr>
+                <td class="holiday">0</td>
+                <td>Праздничный день</td>
+              </tr>
+              <tr>
+                <td class="short">0</td>
+                <td>Сокращённый день</td>
+              </tr>
+              <tr>
+                <td class="mark">0</td>
+                <td>Напоминание</td>
+              </tr>
+            </table>
+          </td>
+        {% endif %}
       </tr>
     {% endfor %}
   </table>
