@@ -1,0 +1,40 @@
+{% extends 'sheduler/main.html' %}
+
+{% block submenu %}
+  <a href="{% url 'sheduler:current_issues' %}">Назад</a>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    <table>
+      {% if detail %}
+        <input type="hidden" name="detail" value="{{ detail.id }}">
+        <caption>Выберите предшествующие задачи для</caption>
+        <tr>
+          <th></th>
+          <th>{{ detail.task.name }}</th>
+          <th>{{ detail.location.name }}</th>
+          <th>{{ detail.human.name }}</th>
+        </tr>
+      {% else %}
+        <caption>Выберите задачу</caption>
+      {% endif %}
+      {% for dtl in details %}
+        <tr>
+          <td>
+            {% if detail %}
+              <input type="checkbox" name="{{ dtl.id }}">
+            {% else %}
+              <input type="radio" name="detail" value="{{ dtl.id }}">
+            {% endif %}
+          </td>
+          <td>{{ dtl.task.name }}</td>
+          <td>{{ dtl.location.name }}</td>
+          <td>{{ dtl.human.name }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+    <input type="submit" value="Продолжить">
+  </form>
+{% endblock %}

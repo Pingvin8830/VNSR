@@ -1,0 +1,13 @@
+#year_calend a {
+  text-decoration:  none;
+  color:            blue;
+}
+
+#year_calend a:hover {
+  background-color: yellow;
+}
+
+.mark {
+  background-color: yellow;
+}
+

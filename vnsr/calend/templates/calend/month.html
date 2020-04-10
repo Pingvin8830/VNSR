@@ -1,0 +1,56 @@
+{% extends 'calend/main.html' %}
+{% load static %}
+
+{% block add_links %}
+  <link rel="stylesheet" type="text/css" href="{% static 'calend/css/month.css' %}">
+{% endblock %}
+
+{% block submenu %}
+  <a href="{% url 'calend:set_production' year.now month.now %}">Настроить производственный календарь</a>
+  <a href="{% url 'calend:add_mark' %}">Добавить напоминание</a>
+{% endblock %}
+
+{% block content %}
+  <table>
+    <caption>
+      <a href="{% url 'calend:month' year.prev month.prev %}"><--</a>
+      {{ month.name }} {{ year.now }}
+      <a href="{% url 'calend:month' year.next month.next %}">--></a>
+    </caption>
+    {% for day in days %}
+      <tr>
+        <td class="bd_t bd_l {{ day.type }}">{{ day.num }}</td>
+        <td class="bd_t {{ day.type }}">{{ day.weekday }}</td>
+        <td class="bd_t bd_r">
+          {% for sign in day.signs %}
+            <details>
+              <summary>{{ sign.name }}</summary>
+              <table>
+                {% for mark in day.marks %}
+                  {% if mark.sign == sign %}
+                    <tr>
+                      <td>
+                        {% if mark.time %}
+                          {{ mark.time }}
+                        {% endif %}
+                      </td>
+                      <td>{{ mark.comment }}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </table>
+            </details>
+          {% endfor %}
+          <ul>
+            {% for comment in day.comments %}
+              <li>{{ comment }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td colspan=3 class="bd_t"></td>
+    </tr>
+  </table>
+{% endblock %}

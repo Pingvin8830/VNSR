@@ -1,0 +1,21 @@
+{% extends 'sheduler/locations/main.html' %}
+
+{% block content %}
+  <table>
+    <caption>Места</caption>
+    <tr>
+      <th>Код</th>
+      <th>Название</th>
+    </tr>
+    {% for location in locations %}
+      <tr>
+        <td>
+          <a href="{% url 'sheduler:locations:update' location.pk %}">{{ location.pk }}</a>
+        </td>
+        <td>
+          <a href="{% url 'sheduler:locations:update' location.pk %}">{{ location.name }}</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

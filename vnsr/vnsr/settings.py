@@ -32,8 +32,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
   'auth_app.apps.AuthAppConfig',
+  'calend.apps.CalendConfig',
   'main.apps.MainConfig',
-  'tasks.apps.TasksConfig',
+  'sheduler.apps.ShedulerConfig',
   'django.contrib.admin',
   'django.contrib.auth',
   'django.contrib.contenttypes',
@@ -65,6 +66,7 @@ TEMPLATES = [
         'django.template.context_processors.request',
         'django.contrib.auth.context_processors.auth',
         'django.contrib.messages.context_processors.messages',
+        'calend.context_processors.calend',
       ],
     },
   },

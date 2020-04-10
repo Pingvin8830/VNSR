@@ -1,0 +1,6 @@
+{% extends 'main/main.html' %}
+
+{% block submenu %}
+  <a href="{% url 'sheduler:humans:add' %}">Добавить</a>
+  <a href="{% url 'sheduler:current_issues' %}">Назад</a>
+{% endblock %}
