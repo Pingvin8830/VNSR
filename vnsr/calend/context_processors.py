@@ -1,40 +1,36 @@
-import calendar
-from datetime import datetime
+from calendar import Calendar
+from datetime import date
 from calend import constants, models
 
 def calend(request):
-  now = datetime.today()
-  calend = calendar.Calendar()
-  calend_now =  '<table>'
-  calend_now += '<caption>%s %d</caption>' % (constants.MONTHS_TEXT[now.month], now.year) 
-  calend_now += '<tr>'
-  calend_now += '<th>Пн</th>'
-  calend_now += '<th>Вт</th>'
-  calend_now += '<th>Ср</th>'
-  calend_now += '<th>Чт</th>'
-  calend_now += '<th>Пт</th>'
-  calend_now += '<th class="week">Сб</th>'
-  calend_now += '<th class="week">Вс</th>'
-  calend_now += '</tr>'
-  for day in calend.itermonthdates(now.year, now.month):
+  now = date.today()
+  calend_now = {
+    'month_text': constants.MONTHS_TEXT[now.month],
+    'month': now.month,
+    'year': now.year,
+    'days': []
+  }
+  for day in Calendar().itermonthdates(now.year, now.month):
+    add = {
+      'day':  day.day,
+      'month': day.month,
+      'weekday': day.weekday(),
+      'mark': '',
+      'now': ''
+    }
+    if day == now:
+      add['now'] = 'now'
     try:
-      production = models.Productions.objects.get(date=day)
+      add['type'] = models.Productions.objects.get(date=day).type
     except models.Productions.DoesNotExist:
-      production = models.Productions(date=day)
-    if day.weekday() == 0:
-      calend_now += '<tr>'
-    if day.month != now.month:
-      calend_now += '<td></td>'
-    else:
-      if not production.type:
-        calend_now += '<td>%d</td>' % day.day
-      elif production.type == 'В':
-        calend_now += '<td class="week">%d</td>' % day.day
-      elif production.type == 'П':
-        calend_now += '<td class="holiday">%d</td>' % day.day
-      elif production.type == 'С':
-        calend_now += '<td class="short">%d</td>' % day.day
-    if day.weekday() == 6:
-      calend_now += '</tr>'
-  calend_now += '</table>'
+      add['type'] = ''
+    if add['type'] == 'В':
+      add['type'] = 'week'
+    elif add['type'] == 'П':
+      add['type'] = 'holiday'
+    elif add['type'] == 'С':
+      add['type'] = 'short'
+    if models.Marks.objects.filter(date=day).count():
+      add['mark'] = 'mark'
+    calend_now['days'].append(add)
   return {'calend_now': calend_now}

@@ -43,9 +43,35 @@
           {% endblock %}
         </nav>
         <div id="calend">
-          {% autoescape off %}
-            {{ calend_now }}
-          {% endautoescape %}
+          <table>
+            <caption>
+              <a href="{% url 'calend:month' calend_now.year calend_now.month %}">
+                {{ calend_now.month_text }} {{ calend_now.year }}
+              </a>
+            </caption>
+            <tr>
+              <th>Пн</th>
+              <th>Вт</th>
+              <th>Ср</th>
+              <th>Чт</th>
+              <th>Пт</th>
+              <th class="week">Сб</th>
+              <th class="week">Вс</th>
+            </tr>
+            {% for day in calend_now.days %}
+              {% if day.weekday == 0 %}
+                <tr>
+              {% endif %}
+              <td class="{{ day.type }} {{ day.mark }} {{ day.now }}">
+                {% if day.month == calend_now.month %}
+                  {{ day.day }}
+                {% endif %}
+              </td>
+              {% if day.weekday == 6 %}
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </table>
           <br>
           Сегодня: {% now 'd.m.Y' %}
         </div>
