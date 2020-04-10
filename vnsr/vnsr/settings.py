@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
   'auth_app.apps.AuthAppConfig',
   'calend.apps.CalendConfig',
+  'helper.apps.HelperConfig',
   'main.apps.MainConfig',
   'sheduler.apps.ShedulerConfig',
   'django.contrib.admin',
