@@ -1,0 +1,38 @@
+{% extends 'sheduler/main.html' %}
+
+{% block content %}
+  <form action="{% url 'sheduler:current_issues' %}" method="post">
+    {% csrf_token %}
+    <table border='1 solid black'>
+      <caption>Лист текущих задач</caption>
+      <tr>
+        <th>Человек</th>
+        <th>Место</th>
+        <th>Задача</th>
+        <th>Выполнение</th>
+      </tr>
+      {% for human in humans %}
+        <tr>
+          <td rowspan={{ human.rowspan }}>{{ human.name }}</td>
+          {% for location in human.locations %}
+            <td rowspan={{ location.rowspan }}>{{ location.name }}</td>
+            {% for detail in location.details %}
+              <td>{{ detail.task.name }}</td>
+              <td><input type="checkbox" name={{ detail.id }}></td>
+            </tr>
+            <tr>
+            {% endfor %}
+          </tr>
+          <tr>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+    <table>
+      <tr>
+        <td><input type="submit" value="Отметить выполненные задачи"></td>
+        <td><input type="reset" value="Очистить"></td>
+      </tr>
+    </table>
+  </form>
+{% endblock %}

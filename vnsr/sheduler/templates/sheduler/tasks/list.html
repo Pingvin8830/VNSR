@@ -1,0 +1,21 @@
+{% extends 'sheduler/tasks/main.html' %}
+
+{% block content %}
+  <table>
+    <caption>Задачи</caption>
+    <tr>
+      <th>Код</th>
+      <th>Название</th>
+    </tr>
+    {% for task in tasks %}
+      <tr>
+        <td>
+          <a href="{% url 'sheduler:tasks:update' task.pk %}">{{ task.pk }}</a>
+        </td>
+        <td>
+          <a href="{% url 'sheduler:tasks:update' task.pk %}">{{ task.name }}</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

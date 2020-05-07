@@ -1,0 +1,10 @@
+footer {
+  text-align:       right;
+  padding-top:      10px;
+  padding-bottom:   10px;
+  padding-right:    10px;
+  color:            white;
+  background-color: green;
+  background-image: url('../images/footer.jpg');
+}
+

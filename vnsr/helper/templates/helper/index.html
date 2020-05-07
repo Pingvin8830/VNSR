@@ -1,0 +1,12 @@
+{% extends 'helper/main.html' %}
+
+{% block submenu %}
+  <a href="#">HTML</a>
+  <a href="#">CSS</a>
+  <a href="#">python</a>
+  <a href="{% url 'helper:links:index' %}">Ссылки</a>
+{% endblock %}
+
+{% block content %}
+  Стартовая страница помощника
+{% endblock %}

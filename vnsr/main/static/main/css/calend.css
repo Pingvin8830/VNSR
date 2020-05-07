@@ -1,0 +1,27 @@
+#calend {
+  text-align:     center;
+  font-size:      96%;
+  padding-bottom: 10px;
+}
+
+#calend a {
+  color:  blue;
+  text-decoration:  none;
+}
+
+#calend a:hover {
+  background-color: yellow;
+}
+
+#calend table {
+  border:       1px solid black;
+  text-align:   right;
+  display:      inline-block;
+  margin-top:   10px;
+}
+
+#calend table .week    {color: red;}
+#calend table .holiday {color: green;}
+#calend table .short   {color: blue;}
+#calend table .mark    {background-color: yellow;}
+#calend table .now     {border: 1px solid black;}

@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Vlasov Anton">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/nav.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/aside.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/article.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/submenu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/calend.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/footer.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'calend/css/productions.css' %}">
+    <!-- link rel="shortcut icon" href="{% static 'main/images/title_icon.jpg' %}" -->
+    {% block add_links %}
+    {% endblock %}
+    <title>VNSR (develop)</title>
+    <style>
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <div id="header_text">
+        <b>VlasovNetwork.sknt.ru</b>
+      </div>
+      <nav id="menu">
+        <a href="{% url 'main:index' %}">Домой</a>
+        <a href="{% url 'calend:index' %}">Календарь</a>
+        <a href="{% url 'sheduler:current_issues' %}">Планировщик</a>
+        <a href="{% url 'helper:index' %}">Подсказки</a>
+        <a href="{% url 'auth_app:logout' %}">Выход ({{ user }})</a>
+      </nav>
+    </header>
+    <main>
+      <aside>
+        <nav id="submenu">
+          {% block submenu %}
+          {% endblock %}
+        </nav>
+        <div id="calend">
+          <table>
+            <caption>
+              <a href="{% url 'calend:month' calend_now.year calend_now.month %}">
+                {{ calend_now.month_text }} {{ calend_now.year }}
+              </a>
+            </caption>
+            <tr>
+              <th>Пн</th>
+              <th>Вт</th>
+              <th>Ср</th>
+              <th>Чт</th>
+              <th>Пт</th>
+              <th class="week">Сб</th>
+              <th class="week">Вс</th>
+            </tr>
+            {% for day in calend_now.days %}
+              {% if day.weekday == 0 %}
+                <tr>
+              {% endif %}
+              <td class="{{ day.type }} {{ day.mark }} {{ day.now }}">
+                {% if day.month == calend_now.month %}
+                  {{ day.day }}
+                {% endif %}
+              </td>
+              {% if day.weekday == 6 %}
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </table>
+          <br>
+          Сегодня: {% now 'd.m.Y' %}
+        </div>
+      </aside>
+      <article>
+        {% block content %}
+          Добро пожаловать на сайт VlasovNetwork.sknt.ru<br><br>
+          Сайт создан для личных потребностей.
+        {% endblock %}
+      </article>
+    </main>
+    <footer>
+      Vlasov Anton &copy; 16.08.2016 - {% now 'd.m.Y' %}
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+nav {
+}
+
+nav a {
+  padding-right:    10px;
+  padding-left:     10px;
+  text-decoration:  none;
+}
+
+nav a:hover {
+  background-color: red;
+}
+
