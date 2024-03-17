@@ -9,6 +9,9 @@ class TravelState(models.Model):
 
   name = models.CharField(max_length=20, unique=True, verbose_name='Название')
 
+  def __str__(self):
+    return self.name
+
 class Place(models.Model):
   class Meta:
     ordering = ['city', 'address']
@@ -19,6 +22,9 @@ class Place(models.Model):
   city    = models.CharField(max_length=255, verbose_name='Город')
   address = models.TextField(verbose_name='Адрес')
   phones  = models.CharField(max_length=255, verbose_name='Телефоны')
+
+  def __str__(self):
+    return self.name
 
 class Travel(models.Model):
   class Meta:
@@ -33,4 +39,7 @@ class Travel(models.Model):
   points         = models.ManyToManyField(Place, blank=True, verbose_name='Путевые точки')
   participants   = models.CharField(max_length=255, verbose_name='Участники')
   state          = models.ForeignKey(TravelState, on_delete=models.PROTECT, verbose_name='Состояние')
+
+  def __str__(self):
+    return self.name
 
