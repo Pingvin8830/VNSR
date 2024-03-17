@@ -5,3 +5,6 @@ from django.http import HttpResponse
 def index(request):
   return HttpResponse('Стартовая страница приложения "Путешествия"')
 
+def detail(request, travel_id):
+  return HttpResponse(f'Детализация поездки {travel_id}')
+
