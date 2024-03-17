@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class TravelStates(models.Model):
+class TravelState(models.Model):
   class Meta:
     ordering = ['name']
     verbose_name = 'Состояние поездки'
@@ -32,5 +32,5 @@ class Travel(models.Model):
   datetime_end   = models.DateTimeField(verbose_name='Дата и время окончания')
   points         = models.ManyToManyField(Place, blank=True, verbose_name='Путевые точки')
   participants   = models.CharField(max_length=255, verbose_name='Участники')
-  state          = models.ForeignKey(TravelStates, on_delete=models.PROTECT, verbose_name='Состояние')
+  state          = models.ForeignKey(TravelState, on_delete=models.PROTECT, verbose_name='Состояние')
 
