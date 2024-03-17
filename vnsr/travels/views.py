@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.http import Http404
+from django.shortcuts import render, get_object_or_404
 
 from .models import Travel
 
@@ -12,9 +11,6 @@ def index(request):
   return render(request, 'travels/index.html', context)
 
 def detail(request, travel_id):
-  try:
-    travel = Travel.objects.get(pk=travel_id)
-  except Travel.DoesNotExist:
-    raise Http404('Такого путешествия нет')
+  travel = get_object_or_404(Travel, pk=travel_id)
   return render(request, 'travels/detail.html', {'travel': travel})
 
