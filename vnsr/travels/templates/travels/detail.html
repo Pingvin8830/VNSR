@@ -1,1 +1,24 @@
-{{ travel }}
+<h1>Путешествие "{{ travel.name }}"</h1>
+<p>Состояние: {{ travel.state }}</p>
+<p>Начало: {{ travel.datetime_start }}, окончание: {{ travel.datetime_end }}</p>
+<p>
+  <table>
+    <caption>Путевыве точки</caption>
+    <tr>
+      <th>Дата и время</th>
+      <th>Город</th>
+      <th>Название</th>
+      <th>Действие</th>
+    </tr>
+    {% for point in travel.points.all %}
+      <tr>
+        <td>{{ point.datetime }}</td>
+        <td>{{ point.place.city }}</td>
+        <td>{{ point.place.name }}</td>
+        <td>{{ point.doing }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</p>
+<p>Участники: {{ travel.participants }}</p>
+
