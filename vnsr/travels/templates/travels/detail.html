@@ -80,6 +80,42 @@
     </tr>
   </table>
 </h3>
+<h3>
+  <table>
+    <caption>
+      <h3>Гостиницы</h3>
+    </caption>
+    <tr>
+      <th>Название</th>
+      <th>Город</th>
+      <th>Адрес</th>
+      <th>Заезд</th>
+      <th>Отъезд</th>
+      <th>Стоимость</th>
+      <th>Статус</th>
+    </tr>
+    {% for hotel in travel.hotels.all %}
+      <tr>
+        <td>{{ hotel.name }}</td>
+        <td>{{ hotel.city }}</td>
+        <td>{{ hotel.address }}</td>
+        <td>{{ hotel.arrival }}</td>
+        <td>{{ hotel.departure }}</td>
+        <td>{{ hotel.cost }}</td>
+        <td>{{ hotel.state }}</td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <th>Итого</th>
+      <td>{{ travel.get_hotel_cost }}</td>
+      <td></td>
+    </tr>
+  </table>
+</h3>
 
 <h1>DEBUG</h1>
-{{ travel.toll_roads.all }}
+{{ travel.hotels.all }}
