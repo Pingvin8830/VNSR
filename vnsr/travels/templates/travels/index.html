@@ -2,7 +2,7 @@
   <ul>
     {% for travel in travels %}
       <li>
-        <a href='{% url 'travels:detail' travel.id %}/'>{{ travel.name }}</a>
+        <a href='{% url 'travels:detail' travel.id %}'>{{ travel.name }}</a>
       </li>
     {% endfor %}
   </ul>
