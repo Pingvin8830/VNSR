@@ -29,14 +29,10 @@ class Place(models.Model):
 
 class Travel(models.Model):
   class Meta:
-    ordering = ['-datetime_start', '-datetime_end']
-    unique_together = ['datetime_start', 'datetime_end']
     verbose_name = 'Путешествие'
     verbose_name_plural = 'Путешествия'
 
   name             = models.CharField(max_length=255, unique=True, verbose_name='Название')
-  datetime_start   = models.DateTimeField(verbose_name='Дата и время начала')
-  datetime_end     = models.DateTimeField(verbose_name='Дата и время окончания')
   participants     = models.CharField(max_length=255, verbose_name='Участники')
   state            = models.ForeignKey(TravelState, on_delete=models.PROTECT, verbose_name='Состояние')
   fuel_consumption = models.DecimalField(default=10, max_digits=3, decimal_places=1, verbose_name='Расход топлива')
@@ -44,6 +40,11 @@ class Travel(models.Model):
 
   def __str__(self):
     return self.name
+
+  def get_datetimes(self):
+    start = self.points.order_by('datetime')[0].datetime
+    end = self.points.order_by('-datetime')[0].datetime
+    return {'start': start, 'end': end}
 
   def get_ways(self):
     return Way.objects.filter(start_point__travel__pk=self.pk)
@@ -100,6 +101,7 @@ class Way(models.Model):
     verbose_name = 'Отрезок пути'
     verbose_name_plural = 'Отрезки пути'
 
+  travel       = models.ForeignKey(Travel, on_delete=models.PROTECT, related_name='ways', verbose_name='Расстояние')
   start_point  = models.ForeignKey(Point, on_delete=models.PROTECT, related_name='start_points', verbose_name='Старт')
   target_point = models.ForeignKey(Point, on_delete=models.PROTECT, related_name='target_points', verbose_name='Цель')
   distance     = models.DecimalField(max_digits=5, decimal_places=1, verbose_name='Расстояние')
