@@ -78,6 +78,9 @@ class Travel(models.Model):
       cost += hotel.cost
     return cost
 
+  def get_cost(self):
+    return self.get_fuel_cost() + self.get_toll_road_cost() + self.get_hotel_cost()
+
 class Point(models.Model):
   class Meta:
     ordering = ['datetime']
