@@ -29,6 +29,9 @@ class TravelAdmin(admin.ModelAdmin):
     ('Топливо', {'fields': ['fuel_consumption', 'fuel_price'], 'classes': ['collapse']})
   ]
   inlines = [PointInline, WayInline, TollRoadInline, HotelInline]
+  list_display = ['name', 'get_datetime_start', 'get_datetime_end', 'state', 'participants']
+  list_filter = ['state']
+  search_fields = ['name']
 
 admin.site.register(Place)
 admin.site.register(TravelState)
