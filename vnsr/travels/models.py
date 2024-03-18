@@ -36,10 +36,23 @@ class Travel(models.Model):
   name           = models.CharField(max_length=255, unique=True, verbose_name='Название')
   datetime_start = models.DateTimeField(verbose_name='Дата и время начала')
   datetime_end   = models.DateTimeField(verbose_name='Дата и время окончания')
-  points         = models.ManyToManyField(Place, blank=True, verbose_name='Путевые точки')
   participants   = models.CharField(max_length=255, verbose_name='Участники')
   state          = models.ForeignKey(TravelState, on_delete=models.PROTECT, verbose_name='Состояние')
 
   def __str__(self):
     return self.name
+
+class Point(models.Model):
+  class Meta:
+    ordering = ['datetime']
+    verbose_name = 'Путевая точка'
+    verbose_name_plural = 'Путевые точки'
+
+  travel   = models.ForeignKey(Travel, on_delete=models.PROTECT, related_name='points', verbose_name='Путешествие')
+  place    = models.ForeignKey(Place, on_delete=models.PROTECT, verbose_name='Место')
+  datetime = models.DateTimeField(verbose_name='Дата и время')
+  doing    = models.CharField(max_length=10, db_index=True, verbose_name='Действие')
+
+  def __str__(self):
+    return f'{self.travel.name}, {self.place.name}, {self.doing}'
 
