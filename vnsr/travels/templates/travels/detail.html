@@ -53,6 +53,33 @@
     </tr>
   </table>
 </h3>
+<h3>
+  <table>
+    <caption>
+      <h3>Платные дороги</h3>
+    </caption>
+    <tr>
+      <th>Трасса</th>
+      <th>Заезд</th>
+      <th>Выезд</th>
+      <th>Стоимость</th>
+    </tr>
+    {% for toll_road in travel.toll_roads.all %}
+      <tr>
+        <td>{{ toll_road.name }}</td>
+        <td>{{ toll_road.start }}</td>
+        <td>{{ toll_road.end }}</td>
+        <td>{{ toll_road.price }}</td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td></td>
+      <td></td>
+      <th>Итого</th>
+      <td>{{ travel.get_toll_road_cost }}</td>
+    </tr>
+  </table>
+</h3>
 
 <h1>DEBUG</h1>
-{{ travel.get_ways }}
+{{ travel.toll_roads.all }}
