@@ -1,6 +1,6 @@
 <h1>Путешествие "{{ travel.name }}"</h1>
 <h3>Состояние: {{ travel.state }}</h3>
-<h3>Начало: {{ travel.datetime_start }}, окончание: {{ travel.datetime_end }}</h3>
+<h3>Начало: {{ travel.get_datetimes.start }}, окончание: {{ travel.get_datetimes.end }}</h3>
 <h3>Участники: {{ travel.participants }}</h3>
 <h3>Стоимость: {{ travel.get_cost }}</h3>
 <h3>
