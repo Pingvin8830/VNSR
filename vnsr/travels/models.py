@@ -1,5 +1,6 @@
 from decimal import Decimal
 from django.db import models
+from django.contrib import admin
 
 # Create your models here.
 class TravelState(models.Model):
@@ -45,6 +46,20 @@ class Travel(models.Model):
     start = self.points.order_by('datetime')[0].datetime
     end = self.points.order_by('-datetime')[0].datetime
     return {'start': start, 'end': end}
+
+  @admin.display(
+    description='Начало',
+#    ordering='points__datetime'
+  )
+  def get_datetime_start(self):
+    return self.get_datetimes()['start']
+
+  @admin.display(
+    description='Окончание',
+#    ordering='points__datetime'
+  )
+  def get_datetime_end(self):
+    return self.get_datetimes()['end']
 
   def get_ways(self):
     return Way.objects.filter(start_point__travel__pk=self.pk)
