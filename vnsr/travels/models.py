@@ -66,6 +66,12 @@ class Travel(models.Model):
       cost += way.get_fuel_cost()
     return cost
 
+  def get_toll_road_cost(self):
+    cost = 0
+    for road in self.toll_roads.all():
+      cost += road.price
+    return cost
+
 class Point(models.Model):
   class Meta:
     ordering = ['datetime']
@@ -97,4 +103,18 @@ class Way(models.Model):
 
   def get_fuel_cost(self):
     return self.get_fuel_count() * self.start_point.travel.fuel_price
+
+class TollRoad(models.Model):
+  class Meta:
+    verbose_name = 'Платная дорога'
+    verbose_name_plural = 'Платные дороги'
+
+  travel = models.ForeignKey(Travel, on_delete=models.PROTECT, related_name='toll_roads', verbose_name='Путешествие')
+  name  = models.CharField(max_length=10, verbose_name='Название')
+  start = models.CharField(max_length=255, verbose_name='Начало')
+  end   = models.CharField(max_length=255, verbose_name='Конец')
+  price = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Цена')
+
+  def __str__(self):
+    return f'{self.start} - {self.end}'
 
