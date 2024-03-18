@@ -1,9 +1,12 @@
 <h1>Путешествие "{{ travel.name }}"</h1>
-<p>Состояние: {{ travel.state }}</p>
-<p>Начало: {{ travel.datetime_start }}, окончание: {{ travel.datetime_end }}</p>
-<p>
+<h3>Состояние: {{ travel.state }}</h3>
+<h3>Начало: {{ travel.datetime_start }}, окончание: {{ travel.datetime_end }}</h3>
+<h3>Участники: {{ travel.participants }}</h3>
+<h3>
   <table>
-    <caption>Путевыве точки</caption>
+    <caption>
+      <h3>Путевыве точки</h3>
+    </caption>
     <tr>
       <th>Дата и время</th>
       <th>Город</th>
@@ -19,6 +22,37 @@
       </tr>
     {% endfor %}
   </table>
-</p>
-<p>Участники: {{ travel.participants }}</p>
+</h3>
+<h3>
+  <table>
+    <caption>
+      <h3>Топливо</h3>
+    </caption>
+    <tr>
+      <th>Старт</th>
+      <th>Цель</th>
+      <th>Расстояние</th>
+      <th>Топливо (л)</th>
+      <th>Стоимость (руб)</th>
+    </tr>
+    {% for way in travel.get_ways %}
+      <tr>
+        <td>{{ way.start_point.place.city }}</td>
+        <td>{{ way.target_point.place.city }}</td>
+        <td>{{ way.distance }}</td>
+        <td>{{ way.get_fuel_count }}</td>
+        <td>{{ way.get_fuel_cost }}</td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td></td>
+      <th>Итого</th>
+      <td>{{ travel.get_distance }}</td>
+      <td>{{ travel.get_fuel_count }}</td>
+      <td>{{ travel.get_fuel_cost }}</td>
+    </tr>
+  </table>
+</h3>
 
+<h1>DEBUG</h1>
+{{ travel.get_ways }}
