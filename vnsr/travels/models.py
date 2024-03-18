@@ -72,6 +72,12 @@ class Travel(models.Model):
       cost += road.price
     return cost
 
+  def get_hotel_cost(self):
+    cost = 0
+    for hotel in self.hotels.all():
+      cost += hotel.cost
+    return cost
+
 class Point(models.Model):
   class Meta:
     ordering = ['datetime']
@@ -117,4 +123,21 @@ class TollRoad(models.Model):
 
   def __str__(self):
     return f'{self.start} - {self.end}'
+
+class Hotel(models.Model):
+  class Meta:
+    verbose_name = 'Гостиница'
+    verbose_name_plural = 'Гостиницы'
+
+  travel    = models.ForeignKey(Travel, on_delete=models.PROTECT, related_name='hotels', verbose_name='Путешествие')
+  name      = models.CharField(max_length=255, verbose_name='Название')
+  city      = models.CharField(max_length=255, verbose_name='Город')
+  address   = models.TextField(verbose_name='Адрес')
+  arrival   = models.DateTimeField(verbose_name='Заезд')
+  departure = models.DateTimeField(verbose_name='Отъезд')
+  cost      = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Стоимость')
+  state     = models.TextField(verbose_name='Статус')
+
+  def __str__(self):
+    return f'{self.city} - {self.name}'
 
