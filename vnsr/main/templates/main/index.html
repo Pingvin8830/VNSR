@@ -1,0 +1,44 @@
+<p>
+  <a href="{% url 'travels:index' %}">Travels</a>
+</p>
+<p>
+  <a href="{% url 'admin:index' %}">Admin</a>
+</p>
+
+{% if debug %}
+  <h1>DEBUG</h1>
+  Request: {{ request }}<br><br>
+  Scheme: {{ request.scheme }}<br><br>
+  Body: {{ request.body }}<br><br>
+  Path: {{ request.path }}<br><br>
+  Path info: {{ request.path_info }}<br><br>
+  Method: {{ request.method }}<br><br>
+  Encoding: {{ request.encoding }}<br><br>
+  Content type: {{ request.content_type }}<br><br>
+  Content params: {{ request.content_params }}<br><br>
+  GET: {{ request.GET }}<br><br>
+  POST: {{ request.POST }}<br><br>
+  COOKIES: {{ request.COOKIES }}<br><br>
+  FILES: {{ request.files }}<br><br>
+  META: {{ request.METa }}<br><br>
+  Headers: {{ request.headers }}<br><br>
+  Resolver_match: {{ request.resolver_match }}<br><br>
+  Current_app: {{ request.current_app }}<br><br>
+  Urlconf: {{ request.urlconf }}<br><br>
+  Exception reporter filter: {{ request.exception_reporter_filter }}<br><br>
+  Exception reporter class: {{ request.exception_reporter_class }}<br><br>
+  Sessions: {{ request.sessions }}<br><br>
+  Site: {{ request.site }}<br><br>
+  User: {{ request.user }}<br><br>
+  Get host: {{ request.get_host }}<br><br>
+  Get port: {{ request.get_port }}<br><br>
+  Get full path: {{ request.get_full_path }}<br><br>
+  Get full path info: {{ request.get_full_path_info }}<br><br>
+  Build absolute uri: {{ request.build_absolute_uri }}<br><br>
+  Get signed cookie: {{ request.get_signed_cookie }}<br><br>
+  Is recure: {{ request.is_recure }}<br><br>
+  Accepts: {{ request.accepts }}<br><br>
+  Read: {{ request.read }}<br><br>
+  Readline: {{ request.readline }}<br><br>
+{% endif %}
+

@@ -1,0 +1,128 @@
+<h1>Путешествие "{{ travel.name }}"</h1>
+<h3>Состояние: {{ travel.state }}</h3>
+<h3>Начало: {{ travel.get_datetimes.start }}, окончание: {{ travel.get_datetimes.end }}</h3>
+<h3>Участники: {{ travel.participants }}</h3>
+<h3>Стоимость: {{ travel.get_cost }}</h3>
+<h3>
+  <table>
+    <caption>
+      <h3>Путевыве точки</h3>
+    </caption>
+    <tr>
+      <th>Дата и время</th>
+      <th>Город</th>
+      <th>Название</th>
+      <th>Действие</th>
+    </tr>
+    {% for point in travel.points.all %}
+      <tr>
+        <td>{{ point.datetime }}</td>
+        <td>{{ point.place.city }}</td>
+        <td>{{ point.place.name }}</td>
+        <td>{{ point.doing }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</h3>
+<h3>
+  <table>
+    <caption>
+      <h3>Топливо</h3>
+    </caption>
+    <tr>
+      <td>Расход (л/100 км)</td>
+      <td>{{ travel.fuel_consumption }}</td>
+    </tr>
+    <tr>
+      <td>Цена (руб/л)</td>
+      <td>{{ travel.fuel_price }}</td>
+    </tr>
+    <tr>
+      <th>Старт</th>
+      <th>Цель</th>
+      <th>Расстояние</th>
+      <th>Топливо (л)</th>
+      <th>Стоимость (руб)</th>
+    </tr>
+    {% for way in travel.get_ways %}
+      <tr>
+        <td>{{ way.start_point.place.city }}</td>
+        <td>{{ way.target_point.place.city }}</td>
+        <td>{{ way.distance }}</td>
+        <td>{{ way.get_fuel_count }}</td>
+        <td>{{ way.get_fuel_cost }}</td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td></td>
+      <th>Итого</th>
+      <td>{{ travel.get_distance }}</td>
+      <td>{{ travel.get_fuel_count }}</td>
+      <td>{{ travel.get_fuel_cost }}</td>
+    </tr>
+  </table>
+</h3>
+<h3>
+  <table>
+    <caption>
+      <h3>Платные дороги</h3>
+    </caption>
+    <tr>
+      <th>Трасса</th>
+      <th>Заезд</th>
+      <th>Выезд</th>
+      <th>Стоимость</th>
+    </tr>
+    {% for toll_road in travel.toll_roads.all %}
+      <tr>
+        <td>{{ toll_road.name }}</td>
+        <td>{{ toll_road.start }}</td>
+        <td>{{ toll_road.end }}</td>
+        <td>{{ toll_road.price }}</td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td></td>
+      <td></td>
+      <th>Итого</th>
+      <td>{{ travel.get_toll_road_cost }}</td>
+    </tr>
+  </table>
+</h3>
+<h3>
+  <table>
+    <caption>
+      <h3>Гостиницы</h3>
+    </caption>
+    <tr>
+      <th>Название</th>
+      <th>Город</th>
+      <th>Адрес</th>
+      <th>Заезд</th>
+      <th>Отъезд</th>
+      <th>Стоимость</th>
+      <th>Статус</th>
+    </tr>
+    {% for hotel in travel.hotels.all %}
+      <tr>
+        <td>{{ hotel.name }}</td>
+        <td>{{ hotel.city }}</td>
+        <td>{{ hotel.address }}</td>
+        <td>{{ hotel.arrival }}</td>
+        <td>{{ hotel.departure }}</td>
+        <td>{{ hotel.cost }}</td>
+        <td>{{ hotel.state }}</td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <th>Итого</th>
+      <td>{{ travel.get_hotel_cost }}</td>
+      <td></td>
+    </tr>
+  </table>
+</h3>
+
