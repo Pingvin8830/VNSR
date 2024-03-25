@@ -2,6 +2,8 @@ from decimal import Decimal
 from django.db import models
 from django.contrib import admin
 
+from kladr.models import Address
+
 # Create your models here.
 class TravelState(models.Model):
   class Meta:
@@ -10,20 +12,6 @@ class TravelState(models.Model):
     verbose_name_plural = 'Состояния поездки'
 
   name = models.CharField(max_length=20, unique=True, verbose_name='Название')
-
-  def __str__(self):
-    return self.name
-
-class Place(models.Model):
-  class Meta:
-    ordering = ['city', 'address']
-    verbose_name = 'Место'
-    verbose_name_plural = 'Места'
-
-  name    = models.CharField(max_length=255, verbose_name='Название')
-  city    = models.CharField(max_length=255, verbose_name='Город')
-  address = models.TextField(verbose_name='Адрес')
-  phones  = models.CharField(max_length=255, verbose_name='Телефоны')
 
   def __str__(self):
     return self.name
@@ -49,14 +37,12 @@ class Travel(models.Model):
 
   @admin.display(
     description='Начало',
-#    ordering='points__datetime'
   )
   def get_datetime_start(self):
     return self.get_datetimes()['start']
 
   @admin.display(
     description='Окончание',
-#    ordering='points__datetime'
   )
   def get_datetime_end(self):
     return self.get_datetimes()['end']
@@ -104,7 +90,7 @@ class Point(models.Model):
     verbose_name_plural = 'Путевые точки'
 
   travel   = models.ForeignKey(Travel, on_delete=models.PROTECT, related_name='points', verbose_name='Путешествие')
-  place    = models.ForeignKey(Place, on_delete=models.PROTECT, verbose_name='Место')
+  place    = models.ForeignKey(Address, on_delete=models.PROTECT, verbose_name='Место')
   datetime = models.DateTimeField(verbose_name='Дата и время')
   doing    = models.CharField(max_length=10, db_index=True, verbose_name='Действие')
 
@@ -150,14 +136,12 @@ class Hotel(models.Model):
     verbose_name_plural = 'Гостиницы'
 
   travel    = models.ForeignKey(Travel, on_delete=models.PROTECT, related_name='hotels', verbose_name='Путешествие')
-  name      = models.CharField(max_length=255, verbose_name='Название')
-  city      = models.CharField(max_length=255, verbose_name='Город')
-  address   = models.TextField(verbose_name='Адрес')
+  address   = models.ForeignKey(Address, on_delete=models.PROTECT, verbose_name='Адрес')
   arrival   = models.DateTimeField(verbose_name='Заезд')
   departure = models.DateTimeField(verbose_name='Отъезд')
   cost      = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Стоимость')
   state     = models.TextField(verbose_name='Статус')
 
   def __str__(self):
-    return f'{self.city} - {self.name}'
+    return f'{self.address.city} - {self.address.name}'
 

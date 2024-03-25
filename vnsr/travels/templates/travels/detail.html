@@ -105,9 +105,9 @@
     </tr>
     {% for hotel in travel.hotels.all %}
       <tr>
-        <td>{{ hotel.name }}</td>
-        <td>{{ hotel.city }}</td>
-        <td>{{ hotel.address }}</td>
+        <td>{{ hotel.address.name }}</td>
+        <td>{{ hotel.address.city }}</td>
+        <td>{{ hotel.address.short }}</td>
         <td>{{ hotel.arrival }}</td>
         <td>{{ hotel.departure }}</td>
         <td>{{ hotel.cost }}</td>
@@ -125,4 +125,4 @@
     </tr>
   </table>
 </h3>
-
+<a href="{% url 'travels:index' %}">Назад</a>
