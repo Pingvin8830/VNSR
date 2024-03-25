@@ -14,3 +14,8 @@ class Refuels(LoginRequiredMixin, generic.ListView):
   context_object_name = 'refuels'
   template_name = 'car/refuels.html'
 
+class RefuelView(LoginRequiredMixin, generic.DetailView):
+  raise_exception = True
+  model = Refuel
+  template_name = 'car/refuel.html'
+
