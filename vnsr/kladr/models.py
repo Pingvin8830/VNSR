@@ -74,3 +74,8 @@ class Address(models.Model):
   def __str__(self):
     return self.name
 
+  def short(self):
+    ret = f'{self.street}, {self.house}'
+    if self.building: ret += f'{self.building}'
+    if self.flat: ret += f', {self.flat}'
+    return ret
