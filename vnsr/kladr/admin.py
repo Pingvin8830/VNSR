@@ -4,7 +4,7 @@ from .models import Region, City, CityType, Street, StreetType, Address
 
 # Register your models here.
 class AddressAdmin(admin.ModelAdmin):
-  list_display = ['name', 'city', 'street', 'house', 'building', 'flat']
+  list_display = ['name', 'region', 'city', 'street', 'house', 'building', 'flat']
 
 admin.site.register(Region)
 admin.site.register(City)
