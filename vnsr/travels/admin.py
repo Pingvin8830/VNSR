@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Travel, TravelState, Point, Place, Way, TollRoad, Hotel
+from .models import Travel, TravelState, Point, Way, TollRoad, Hotel
 
 # Register your models here.
 class PointInline(admin.TabularInline):
@@ -33,7 +33,6 @@ class TravelAdmin(admin.ModelAdmin):
   list_filter = ['state']
   search_fields = ['name']
 
-admin.site.register(Place)
 admin.site.register(TravelState)
 admin.site.register(Travel, TravelAdmin)
 
