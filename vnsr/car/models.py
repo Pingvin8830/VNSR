@@ -1,5 +1,7 @@
 from django.db import models
 
+from kladr.models import Address
+
 # Create your models here.
 class FuelStation(models.Model):
   class Meta:
@@ -7,11 +9,10 @@ class FuelStation(models.Model):
     verbose_name_plural = 'АЗСы'
 
   company = models.CharField(max_length=255, verbose_name='Организация')
-  address = models.TextField(verbose_name='Адрес')
-  name    = models.CharField(max_length=50, verbose_name='Название')
+  address = models.ForeignKey(Address, on_delete=models.PROTECT, verbose_name='Адрес')
 
   def __str__(self):
-    return f'{self.company} - {self.name}'
+    return f'{self.company} - {self.address.name}'
 
 class Fuel(models.Model):
   class Meta:
