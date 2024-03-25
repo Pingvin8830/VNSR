@@ -1,1 +1,22 @@
-Car app, refuels page
+<table>
+  <caption>Дозаправки</caption>
+  <tr>
+    <th>Дата и время</th>
+    <th>АЗС</th>
+    <th>Топливо</th>
+    <th>Количество</th>
+    <th>Межзаправочный пробег</th>
+  </tr>
+  {% for refuel in refuels %}
+    <tr>
+      <td>
+        <a href="{% url 'car:refuel' refuel.pk %}">{{ refuel.datetime }}</a>
+      </td>
+      <td>{{ refuel.fuel_station }}</td>
+      <td>{{ refuel.fuel }}</td>
+      <td>{{ refuel.count }}</td>
+      <td>{{ refuel.distance }}</td>
+    </tr>
+  {% endfor %}
+</table>
+
