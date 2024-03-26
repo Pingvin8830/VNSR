@@ -1,0 +1,5 @@
+{% extends 'main/main.html' %}
+
+{% block submenu %}
+  <a href="{% url 'car:refuels' %}" {% if active_page == 'refuels' %}class="active"{% endif %}>Дозаправки</a>
+{% endblock %}
