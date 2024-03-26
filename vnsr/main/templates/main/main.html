@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Vlasov Anton">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/article.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/submenu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/footer.css' %}">
+    {% block add_links %}
+    {% endblock %}
+    <title>VNSR 2024</title>
+  </head>
+  <body>
+    <header>
+      <div id="header_text">
+        <b>VlasovNetwork.sknt.ru</b>
+      </div>
+      <nav id="menu">
+        <a href="{% url 'main:index' %}" {%    if active_app == 'main'    %}class="active"{% endif %}>Домой</a>
+        <a href="{% url 'car:index' %}" {%     if active_app == 'car'     %}class="active"{% endif %}>Авто</a>
+        <a href="{% url 'travels:index' %}" {% if active_app == 'travels' %}class="active"{% endif %}>Путешествия</a>
+        <a href="{% url 'admin:index' %}">Админка</a>
+        <a href="{% url 'main:logout' %}">Выход ({{ user }})</a>
+      </nav>
+      <nav id="submenu">
+        {% block submenu %}
+        {% endblock %}
+      </nav>
+    </header>
+    <main>
+      <article>
+        {% block content %}
+          Добро пожаловать на сайт VlasovNetwork.sknt.ru<br><br>
+          Сайт создан для личных потребностей.
+        {% endblock %}
+        <br><br>
+        {% if debug %}
+          <table>
+            <caption>Debug</caption>
+            <tr>
+              <th>active_app</th>
+              <td>{{ active_app }}</td>
+            </tr>
+            <tr>
+              <th>active_page</th>
+              <td>{{ active_page }}</td>
+            </tr>
+          </table>
+        {% endif %}
+      </article>
+    </main>
+    <footer>
+      Vlasov Anton &copy; 16.08.2016 - {% now 'd.m.Y' %}
+    </footer>
+  </body>
+</html>

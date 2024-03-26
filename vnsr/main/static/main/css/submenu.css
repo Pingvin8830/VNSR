@@ -1,0 +1,24 @@
+#submenu {
+  padding-top:    5px;
+  padding-bottom: 5px;
+}
+
+#submenu a {
+  color:           yellow;
+  text-decoration: none;
+  padding-top:     5px;
+  padding-bottom:  5px;
+  padding-right:   5px;
+  padding-left:    5px;
+}
+
+#submenu a.active {
+  background-color: orange;
+  color:            blue;
+}
+
+#submenu a:hover {
+  background-color: yellow;
+  color:            blue;
+}
+
