@@ -1,9 +1,18 @@
-<h1>Путешествие "{{ travel.name }}"</h1>
-<h3>Состояние: {{ travel.state }}</h3>
-<h3>Начало: {{ travel.get_datetimes.start }}, окончание: {{ travel.get_datetimes.end }}</h3>
-<h3>Участники: {{ travel.participants }}</h3>
-<h3>Стоимость: {{ travel.get_cost }}</h3>
-<h3>
+{% extends 'travels/main.html' %}
+{% load static %}
+
+
+{% block add_links %}
+  <link rel="stylesheet" type="text/css" href="{% static 'travels/css/content.css' %}">
+{% endblock %}
+
+{% block content %}
+  <h1>Путешествие "{{ travel.name }}"</h1>
+  <h3>Состояние: {{ travel.state }}</h3>
+  <h3>Начало: {{ travel.get_datetimes.start }}, окончание: {{ travel.get_datetimes.end }}</h3>
+  <h3>Участники: {{ travel.participants }}</h3>
+  <h3>Стоимость: {{ travel.get_cost }}</h3>
+
   <table>
     <caption>
       <h3>Путевыве точки</h3>
@@ -16,26 +25,36 @@
     </tr>
     {% for point in travel.points.all %}
       <tr>
-        <td>{{ point.datetime }}</td>
-        <td>{{ point.place.city }}</td>
-        <td>{{ point.place.name }}</td>
-        <td>{{ point.doing }}</td>
+        <td class="text bl">{{ point.datetime }}</td>
+        <td class="text bl">{{ point.place.city }}</td>
+        <td class="text bl">{{ point.place.name }}</td>
+        <td class="text bl br">{{ point.doing }}</td>
       </tr>
     {% endfor %}
+    <tr>
+      <td colspan=4 class="bt"></td>
+    </tr>
   </table>
-</h3>
-<h3>
+
   <table>
     <caption>
       <h3>Топливо</h3>
     </caption>
     <tr>
-      <td>Расход (л/100 км)</td>
-      <td>{{ travel.fuel_consumption }}</td>
-    </tr>
-    <tr>
-      <td>Цена (руб/л)</td>
-      <td>{{ travel.fuel_price }}</td>
+      <td colspan=5>
+        <table>
+          <tr>
+            <td class="text ba">Расход</td>
+            <td class="text ba">(л/100км)</td>
+            <td class="numeric ba">{{ travel.fuel_consumption }}</td>
+          </tr>
+          <tr>
+            <td class="text ba">Цена</td>
+            <td class="text ba">(руб/л)</td>
+            <td class="numeric ba">{{ travel.fuel_price }}</td>
+          </tr>
+        </table>
+      </td>
     </tr>
     <tr>
       <th>Старт</th>
@@ -46,23 +65,22 @@
     </tr>
     {% for way in travel.get_ways %}
       <tr>
-        <td>{{ way.start_point.place.city }}</td>
-        <td>{{ way.target_point.place.city }}</td>
-        <td>{{ way.distance }}</td>
-        <td>{{ way.get_fuel_count }}</td>
-        <td>{{ way.get_fuel_cost }}</td>
+        <td class="text bl">{{ way.start_point.place.city }}</td>
+        <td class="text bl">{{ way.target_point.place.city }}</td>
+        <td class="numeric bl">{{ way.distance }}</td>
+        <td class="numeric bl">{{ way.get_fuel_count }}</td>
+        <td class="numeric bl br">{{ way.get_fuel_cost }}</td>
       </tr>
     {% endfor %}
     <tr>
-      <td></td>
+      <td class="bt"></td>
       <th>Итого</th>
-      <td>{{ travel.get_distance }}</td>
-      <td>{{ travel.get_fuel_count }}</td>
-      <td>{{ travel.get_fuel_cost }}</td>
+      <td class="numeric ba">{{ travel.get_distance }}</td>
+      <td class="numeric ba">{{ travel.get_fuel_count }}</td>
+      <td class="numeric ba">{{ travel.get_fuel_cost }}</td>
     </tr>
   </table>
-</h3>
-<h3>
+
   <table>
     <caption>
       <h3>Платные дороги</h3>
@@ -75,21 +93,19 @@
     </tr>
     {% for toll_road in travel.toll_roads.all %}
       <tr>
-        <td>{{ toll_road.name }}</td>
-        <td>{{ toll_road.start }}</td>
-        <td>{{ toll_road.end }}</td>
-        <td>{{ toll_road.price }}</td>
+        <td class="text bl">{{ toll_road.name }}</td>
+        <td class="text bl">{{ toll_road.start }}</td>
+        <td class="text bl">{{ toll_road.end }}</td>
+        <td class="numeric bl br">{{ toll_road.price }}</td>
       </tr>
     {% endfor %}
     <tr>
-      <td></td>
-      <td></td>
+      <td colspan=2 class="bt"></td>
       <th>Итого</th>
-      <td>{{ travel.get_toll_road_cost }}</td>
+      <td class="numeric ba">{{ travel.get_toll_road_cost }}</td>
     </tr>
   </table>
-</h3>
-<h3>
+
   <table>
     <caption>
       <h3>Гостиницы</h3>
@@ -105,24 +121,21 @@
     </tr>
     {% for hotel in travel.hotels.all %}
       <tr>
-        <td>{{ hotel.address.name }}</td>
-        <td>{{ hotel.address.city }}</td>
-        <td>{{ hotel.address.short }}</td>
-        <td>{{ hotel.arrival }}</td>
-        <td>{{ hotel.departure }}</td>
-        <td>{{ hotel.cost }}</td>
-        <td>{{ hotel.state }}</td>
+        <td class="text bl">{{ hotel.address.name }}</td>
+        <td class="text bl">{{ hotel.address.city }}</td>
+        <td class="text bl">{{ hotel.address.short }}</td>
+        <td class="text bl">{{ hotel.arrival }}</td>
+        <td class="text bl">{{ hotel.departure }}</td>
+        <td class="numeric bl">{{ hotel.cost }}</td>
+        <td class="text bl br">{{ hotel.state }}</td>
       </tr>
     {% endfor %}
     <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td colspan=4 class="bt"></td>
       <th>Итого</th>
-      <td>{{ travel.get_hotel_cost }}</td>
-      <td></td>
+      <td class="numeric ba">{{ travel.get_hotel_cost }}</td>
+      <td class="bt"></td>
     </tr>
   </table>
-</h3>
-<a href="{% url 'travels:index' %}">Назад</a>
+{% endblock %}
+
