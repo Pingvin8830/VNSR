@@ -1,12 +1,22 @@
-{% if travels %}
-  <ul>
-    {% for travel in travels %}
-      <li>
-        <a href='{% url 'travels:detail' travel.id %}'>{{ travel.name }}</a>
-      </li>
-    {% endfor %}
-  </ul>
-{% else %}
-  <p>Нет доступных путешествий</p>
-{% endif %}
-<a href="{% url 'main:index' %}">Назад</a>
+{% extends 'travels/main.html' %}
+
+{% block content %}
+  {% if travels %}
+    <table>
+      <tr>
+        <th>Название</th>
+        <th>Даты</th>
+      </tr>
+      {% for travel in travels %}
+        <tr>
+          <td>
+            <a href='{% url 'travels:detail' travel.id %}'>{{ travel.name }}</a>
+          </td>
+          <td>{{ travel.get_datetime_start }} - {{ travel.get_datetime_end }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>Нет доступных путешествий</p>
+  {% endif %}
+{% endblock %}
