@@ -11,6 +11,7 @@ import ru.sknt.vlasovnetwork.vnsr.daos.kladr.RegionDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.kladr.StreetDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.kladr.StreetTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.HotelDao;
+import ru.sknt.vlasovnetwork.vnsr.daos.travels.PointDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.ToolRoadDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.TravelDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.WayDao;
@@ -22,6 +23,7 @@ import ru.sknt.vlasovnetwork.vnsr.models.kladr.Region;
 import ru.sknt.vlasovnetwork.vnsr.models.kladr.Street;
 import ru.sknt.vlasovnetwork.vnsr.models.kladr.StreetType;
 import ru.sknt.vlasovnetwork.vnsr.models.travels.Hotel;
+import ru.sknt.vlasovnetwork.vnsr.models.travels.Point;
 import ru.sknt.vlasovnetwork.vnsr.models.travels.ToolRoad;
 import ru.sknt.vlasovnetwork.vnsr.models.travels.Travel;
 import ru.sknt.vlasovnetwork.vnsr.models.travels.TravelState;
@@ -36,6 +38,7 @@ import ru.sknt.vlasovnetwork.vnsr.models.travels.Way;
                 ToolRoad.class,
                 Way.class,
                 Hotel.class,
+                Point.class,
                 Refuel.class,
                 Region.class,
                 CityType.class,
@@ -61,6 +64,7 @@ public abstract class VNSRDatabase extends RoomDatabase {
     public abstract ToolRoadDao toolRoadDao();
     public abstract WayDao wayDao();
     public abstract HotelDao hotelDao();
+    public abstract PointDao pointDao();
     public abstract RefuelDao refuelDao();
     public abstract RegionDao regionDao();
     public abstract CityTypeDao cityTypeDao();
