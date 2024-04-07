@@ -4,6 +4,7 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
 import ru.sknt.vlasovnetwork.vnsr.daos.car.FuelDao;
+import ru.sknt.vlasovnetwork.vnsr.daos.car.FuelStationDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.car.RefuelDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.kladr.AddressDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.kladr.CityDao;
@@ -17,6 +18,7 @@ import ru.sknt.vlasovnetwork.vnsr.daos.travels.ToolRoadDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.TravelDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.WayDao;
 import ru.sknt.vlasovnetwork.vnsr.models.car.Fuel;
+import ru.sknt.vlasovnetwork.vnsr.models.car.FuelStation;
 import ru.sknt.vlasovnetwork.vnsr.models.car.Refuel;
 import ru.sknt.vlasovnetwork.vnsr.models.kladr.Address;
 import ru.sknt.vlasovnetwork.vnsr.models.kladr.City;
@@ -41,6 +43,7 @@ import ru.sknt.vlasovnetwork.vnsr.models.travels.Way;
                 Way.class,
                 Hotel.class,
                 Point.class,
+                FuelStation.class,
                 Fuel.class,
                 Refuel.class,
                 Region.class,
@@ -68,6 +71,7 @@ public abstract class VNSRDatabase extends RoomDatabase {
     public abstract WayDao wayDao();
     public abstract HotelDao hotelDao();
     public abstract PointDao pointDao();
+    public abstract FuelStationDao fuelStationDao();
     public abstract FuelDao fuelDao();
     public abstract RefuelDao refuelDao();
     public abstract RegionDao regionDao();
