@@ -6,7 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import ru.sknt.vlasovnetwork.vnsr.daos.TravelStateDao;
+import ru.sknt.vlasovnetwork.vnsr.daos.travels.TravelStateDao;
 
 @Entity(
         tableName = "travels_travel",

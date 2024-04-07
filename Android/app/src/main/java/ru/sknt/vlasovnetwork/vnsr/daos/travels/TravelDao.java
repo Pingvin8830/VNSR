@@ -1,4 +1,4 @@
-package ru.sknt.vlasovnetwork.vnsr.daos;
+package ru.sknt.vlasovnetwork.vnsr.daos.travels;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
