@@ -1,4 +1,4 @@
-package ru.sknt.vlasovnetwork.vnsr.models.travels;
+package ru.sknt.vlasovnetwork.vnsr.daos;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
+
+import ru.sknt.vlasovnetwork.vnsr.models.travels.TravelState;
 
 @Dao
 public interface TravelStateDao {
