@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "35aa011bdc6f4a8f6613ecbb961e9c83",
+    "identityHash": "ba8d152a0639392a230a68ef494fdf80",
     "entities": [
       {
         "tableName": "travels_travelstate",
@@ -193,12 +193,116 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "car_refuel",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `fuel_station_id` INTEGER NOT NULL, `check_number` INTEGER NOT NULL, `datetime` INTEGER NOT NULL, `trk` INTEGER NOT NULL, `fuel_id` INTEGER NOT NULL, `count` REAL NOT NULL, `price` REAL NOT NULL, `cost` REAL NOT NULL, `distance_reserve` INTEGER NOT NULL, `fuel_consumption_avg` REAL NOT NULL, `odometer` INTEGER NOT NULL, `distance` REAL NOT NULL, `fuel_consumption` REAL NOT NULL, `timedelta` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "mId",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mFuelStationId",
+            "columnName": "fuel_station_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mCheckNumber",
+            "columnName": "check_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mDateTime",
+            "columnName": "datetime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mTrk",
+            "columnName": "trk",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mFuelId",
+            "columnName": "fuel_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mCount",
+            "columnName": "count",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mPrice",
+            "columnName": "price",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mCost",
+            "columnName": "cost",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mDistanceReserve",
+            "columnName": "distance_reserve",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mFuelConsumptionAvg",
+            "columnName": "fuel_consumption_avg",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mOdometer",
+            "columnName": "odometer",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mDistance",
+            "columnName": "distance",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mFuelConsumption",
+            "columnName": "fuel_consumption",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mTimedelta",
+            "columnName": "timedelta",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '35aa011bdc6f4a8f6613ecbb961e9c83')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ba8d152a0639392a230a68ef494fdf80')"
     ]
   }
 }
