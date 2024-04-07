@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ba8d152a0639392a230a68ef494fdf80",
+    "identityHash": "1ce1cfe6e9320f67c96987d2074c056e",
     "entities": [
       {
         "tableName": "travels_travelstate",
@@ -295,14 +295,24 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_car_refuel_datetime",
+            "unique": true,
+            "columnNames": [
+              "datetime"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_car_refuel_datetime` ON `${TABLE_NAME}` (`datetime`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ba8d152a0639392a230a68ef494fdf80')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1ce1cfe6e9320f67c96987d2074c056e')"
     ]
   }
 }

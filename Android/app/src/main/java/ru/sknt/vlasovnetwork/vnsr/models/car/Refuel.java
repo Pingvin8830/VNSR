@@ -3,10 +3,17 @@ package ru.sknt.vlasovnetwork.vnsr.models.car;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(
-        tableName = "car_refuel"
+        tableName = "car_refuel",
+        indices = {
+                @Index(
+                        value = {"datetime"},
+                        unique = true
+                )
+        }
 )
 public class Refuel {
     @PrimaryKey(autoGenerate = true)
