@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "86c2225e9d4406d03ecc32dca8f997a6",
+    "identityHash": "35aa011bdc6f4a8f6613ecbb961e9c83",
     "entities": [
       {
         "tableName": "travels_travelstate",
@@ -149,12 +149,56 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "travels_way",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `travel_id` INTEGER NOT NULL, `start_point_id` INTEGER NOT NULL, `target_point_id` INTEGER NOT NULL, `distance` REAL NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "mId",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mTravelId",
+            "columnName": "travel_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mStartPointId",
+            "columnName": "start_point_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mTargetPointId",
+            "columnName": "target_point_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mDistance",
+            "columnName": "distance",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '86c2225e9d4406d03ecc32dca8f997a6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '35aa011bdc6f4a8f6613ecbb961e9c83')"
     ]
   }
 }
