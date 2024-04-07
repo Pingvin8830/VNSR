@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4e920c7cbad7dc4db1ec92cb94d8fc12",
+    "identityHash": "86c2225e9d4406d03ecc32dca8f997a6",
     "entities": [
       {
         "tableName": "travels_travelstate",
@@ -99,12 +99,62 @@
           }
         ],
         "foreignKeys": []
+      },
+      {
+        "tableName": "travels_tollroad",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `travel_id` INTEGER NOT NULL, `name` TEXT, `start` TEXT, `end` TEXT, `price` REAL NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "mId",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mTravelId",
+            "columnName": "travel_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mName",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mStart",
+            "columnName": "start",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mEnd",
+            "columnName": "end",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mPrice",
+            "columnName": "price",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4e920c7cbad7dc4db1ec92cb94d8fc12')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '86c2225e9d4406d03ecc32dca8f997a6')"
     ]
   }
 }
