@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "aa3fe8a0d177bf774952732654f460be",
+    "identityHash": "4e920c7cbad7dc4db1ec92cb94d8fc12",
     "entities": [
       {
         "tableName": "travels_travelstate",
@@ -42,7 +42,7 @@
       },
       {
         "tableName": "travels_travel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT DEFAULT '', `participants` TEXT DEFAULT '', `state_id` INTEGER NOT NULL DEFAULT 0, `fuel_consumption` REAL NOT NULL DEFAULT 0, `fuel_price` REAL NOT NULL DEFAULT 0)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `participants` TEXT, `state_id` INTEGER NOT NULL, `fuel_consumption` REAL NOT NULL, `fuel_price` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -54,36 +54,31 @@
             "fieldPath": "mName",
             "columnName": "name",
             "affinity": "TEXT",
-            "notNull": false,
-            "defaultValue": "''"
+            "notNull": false
           },
           {
             "fieldPath": "mParticipants",
             "columnName": "participants",
             "affinity": "TEXT",
-            "notNull": false,
-            "defaultValue": "''"
+            "notNull": false
           },
           {
             "fieldPath": "mStateId",
             "columnName": "state_id",
             "affinity": "INTEGER",
-            "notNull": true,
-            "defaultValue": "0"
+            "notNull": true
           },
           {
             "fieldPath": "mFuelConsumption",
             "columnName": "fuel_consumption",
             "affinity": "REAL",
-            "notNull": true,
-            "defaultValue": "0"
+            "notNull": true
           },
           {
             "fieldPath": "mFuelPrice",
             "columnName": "fuel_price",
             "affinity": "REAL",
-            "notNull": true,
-            "defaultValue": "0"
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -109,7 +104,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aa3fe8a0d177bf774952732654f460be')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4e920c7cbad7dc4db1ec92cb94d8fc12')"
     ]
   }
 }

@@ -21,17 +21,17 @@ public class Travel {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int mId;
-    @ColumnInfo(name = "name", defaultValue = "")
+    @ColumnInfo(name = "name")
     private final String mName;
-    @ColumnInfo(name = "participants", defaultValue = "")
+    @ColumnInfo(name = "participants")
     private final String mParticipants;
-    @ColumnInfo(name = "state_id", defaultValue = "0")
+    @ColumnInfo(name = "state_id")
     private int mStateId;
     @Ignore
     private TravelState mState;
-    @ColumnInfo(name = "fuel_consumption", defaultValue = "0")
+    @ColumnInfo(name = "fuel_consumption")
     private float mFuelConsumption = 10f;
-    @ColumnInfo(name = "fuel_price", defaultValue = "0")
+    @ColumnInfo(name = "fuel_price")
     private float mFuelPrice;
 
     public int getId() {
