@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6df6a6eec0c7bb6f165840ef29adafc4",
+    "identityHash": "3a1c1b7b4d22f79177bd4cc44cb98237",
     "entities": [
       {
         "tableName": "travels_travelstate",
@@ -283,6 +283,38 @@
             "columnName": "doing",
             "affinity": "TEXT",
             "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "car_fuel",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `fuel_station_id` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "mId",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mName",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mFuelStationId",
+            "columnName": "fuel_station_id",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -722,7 +754,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6df6a6eec0c7bb6f165840ef29adafc4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3a1c1b7b4d22f79177bd4cc44cb98237')"
     ]
   }
 }
