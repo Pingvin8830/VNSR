@@ -9,10 +9,12 @@ class FuelStation(models.Model):
     verbose_name_plural = 'АЗСы'
 
   company = models.CharField(max_length=255, verbose_name='Организация')
+  name    = models.CharField(max_length=20,  verbose_name='Название')
+  phone   = models.CharField(max_length=20,  verbose_name='Телефон')
   address = models.ForeignKey(Address, on_delete=models.PROTECT, verbose_name='Адрес')
 
   def __str__(self):
-    return f'{self.company} - {self.address.name}'
+    return f'{self.name} - {self.address.name}'
 
 class Fuel(models.Model):
   class Meta:
@@ -20,9 +22,10 @@ class Fuel(models.Model):
     verbose_name_plural = 'Топливо'
 
   name = models.CharField(max_length=50, verbose_name='Название')
+  fuel_station = models.ForeignKey(FuelStation, on_delete=models.PROTECT, related_name='fuels', verbose_name='АЗС')
 
   def __str__(self):
-    return self.name
+    return f'{self.name} - {self.fuel_station.name}'
 
 class Refuel(models.Model):
   class Meta:
