@@ -4,10 +4,12 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
 import ru.sknt.vlasovnetwork.vnsr.daos.car.RefuelDao;
+import ru.sknt.vlasovnetwork.vnsr.daos.kladr.RegionDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.ToolRoadDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.TravelDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.WayDao;
 import ru.sknt.vlasovnetwork.vnsr.models.car.Refuel;
+import ru.sknt.vlasovnetwork.vnsr.models.kladr.Region;
 import ru.sknt.vlasovnetwork.vnsr.models.travels.ToolRoad;
 import ru.sknt.vlasovnetwork.vnsr.models.travels.Travel;
 import ru.sknt.vlasovnetwork.vnsr.models.travels.TravelState;
@@ -21,7 +23,8 @@ import ru.sknt.vlasovnetwork.vnsr.models.travels.Way;
                 Travel.class,
                 ToolRoad.class,
                 Way.class,
-                Refuel.class
+                Refuel.class,
+                Region.class
         }
 //        autoMigrations = {
 //                @AutoMigration(from = 1, to = 2),
@@ -40,4 +43,5 @@ public abstract class VNSRDatabase extends RoomDatabase {
     public abstract ToolRoadDao toolRoadDao();
     public abstract WayDao wayDao();
     public abstract RefuelDao refuelDao();
+    public abstract RegionDao regionDao();
 }
