@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="VNSR"
+        android:textAlignment="center"
+        android:textColor="#FF0000FF"
+        android:textSize="34sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtSubAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Kladr"
+        android:textAlignment="center"
+        android:textColor="#FF0000FF"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAppName" />
+
+    <LinearLayout
+        android:id="@+id/fldButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/bttnAddresses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Addresses" />
+
+        <Button
+            android:id="@+id/bttnRegions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Regions" />
+
+        <Button
+            android:id="@+id/bttnCityes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cityes" />
+
+        <Button
+            android:id="@+id/bttnStreets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Streets" />
+
+        <Button
+            android:id="@+id/bttnCityTypes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="City types" />
+
+        <Button
+            android:id="@+id/bttnStreetTypes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Street types" />
+
+        <Button
+            android:id="@+id/bttnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFF0000"
+            android:text="Back" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
