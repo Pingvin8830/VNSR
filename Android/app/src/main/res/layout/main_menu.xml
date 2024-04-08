@@ -8,12 +8,77 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/txtAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:text="VNSR"
+        android:textAlignment="center"
+        android:textColor="#FF0000FF"
+        android:textSize="34sp"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtClock" />
+
+    <LinearLayout
+        android:id="@+id/fldButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/bttnCar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Car" />
+
+        <Button
+            android:id="@+id/bttnTravels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Travels" />
+
+        <Button
+            android:id="@+id/bttnKladr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kladr" />
+
+        <Button
+            android:id="@+id/bttnSync"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sync" />
+
+        <Button
+            android:id="@+id/bttnLogOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFF0000"
+            android:text="LogOut" />
+    </LinearLayout>
+
+    <TextClock
+        android:id="@+id/txtClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAppName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
