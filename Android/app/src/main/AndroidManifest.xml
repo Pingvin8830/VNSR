@@ -13,6 +13,9 @@
         android:theme="@style/Theme.VNSR"
         tools:targetApi="31">
         <activity
+            android:name=".kladr.KladrActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
