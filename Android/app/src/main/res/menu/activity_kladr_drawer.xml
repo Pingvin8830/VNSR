@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_kladr_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Kladr home" />
+        <item
+            android:id="@+id/nav_kladr_addresses"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Addresses" />
+        <item
+            android:id="@+id/nav_kladr_streets"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Streets" />
+        <item
+            android:id="@+id/nav_kladr_cityes"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Cityes" />
+        <item
+            android:id="@+id/nav_kladr_regions"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Regions" />
+        <item
+            android:id="@+id/nav_kladr_street_types"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Street types" />
+        <item
+            android:id="@+id/nav_kladr_city_types"
+            android:title="City types" />
+        <item
+            android:id="@+id/nav_back"
+            android:title="Back" />
+    </group>
+</menu>
