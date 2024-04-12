@@ -60,7 +60,7 @@ public class KladrActivity extends AppCompatActivity implements NavigationView.O
 
         int id = item.getItemId();
 
-        if      (id == R.id.nav_kladr_regions)      { transaction.replace(R.id.fragmentHolder, new RegionsFragment()); }
+        if      (id == R.id.nav_kladr_regions)      { transaction.replace(R.id.fragmentHolder, new RegionsFragment(), "regions"); }
         else if (id == R.id.nav_kladr_cityes)       { transaction.replace(R.id.fragmentHolder, new CityesFragment()); }
         else if (id == R.id.nav_kladr_streets)      { transaction.replace(R.id.fragmentHolder, new StreetsFragment()); }
         else if (id == R.id.nav_kladr_addresses)    { transaction.replace(R.id.fragmentHolder, new AddressesFragment()); }
