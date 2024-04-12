@@ -7,7 +7,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ru.sknt.vlasovnetwork.vnsr.models.kladr.Region;
+import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 
 @Dao
 public interface RegionDao {
