@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_travels_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Travels home" />
+        <item
+            android:id="@+id/nav_travels_travels"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Travels" />
+        <item
+            android:id="@+id/nav_travels_points"
+            android:title="Points" />
+        <item
+            android:id="@+id/nav_travels_ways"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Ways" />
+        <item
+            android:id="@+id/nav_travels_toolroads"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Toolroads" />
+        <item
+            android:id="@+id/nav_travels_hotels"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Hotels" />
+        <item
+            android:id="@+id/nav_travels_travel_states"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Travel states" />
+        <item
+            android:id="@+id/nav_back"
+            android:title="Back" />
+    </group>
+</menu>
