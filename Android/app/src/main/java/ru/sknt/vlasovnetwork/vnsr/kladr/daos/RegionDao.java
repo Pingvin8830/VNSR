@@ -11,7 +11,7 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 
 @Dao
 public interface RegionDao {
-    @Query("SELECT * FROM kladr_region")
+    @Query("SELECT * FROM kladr_region ORDER BY code")
     List<Region> getAll();
 
     @Insert
