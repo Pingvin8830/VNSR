@@ -1,4 +1,4 @@
-package ru.sknt.vlasovnetwork.vnsr.daos.kladr;
+package ru.sknt.vlasovnetwork.vnsr.kladr.daos;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,7 +7,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ru.sknt.vlasovnetwork.vnsr.models.kladr.CityType;
+import ru.sknt.vlasovnetwork.vnsr.kladr.models.CityType;
 
 @Dao
 public interface CityTypeDao {
