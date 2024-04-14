@@ -1,4 +1,4 @@
-package ru.sknt.vlasovnetwork.vnsr.models.kladr;
+package ru.sknt.vlasovnetwork.vnsr.kladr.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
