@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         } else if (v.getId() == R.id.bttnLogOut) { finish(); }
         else if (v.getId() == R.id.bttnCar)      { startActivity(new Intent(this, CarActivity.class)); }
-        else if (v.getId() == R.id.bttnTravels) { startActivity(new Intent(this, TravelsActivity.class)); }
-        else if (v.getId() == R.id.bttnKladr)   { startActivity(new Intent(this, KladrActivity.class)); }
-//        else if (v.getId() == R.id.bttnSync)    { startActivity(new Intent(this, SyncActivity.class)); }
+        else if (v.getId() == R.id.bttnTravels)  { startActivity(new Intent(this, TravelsActivity.class)); }
+        else if (v.getId() == R.id.bttnKladr)    { startActivity(new Intent(this, KladrActivity.class)); }
+//        else if (v.getId() == R.id.bttnSync)     { startActivity(new Intent(this, SyncActivity.class)); }
         else {
             Button bttn = (Button) v;
             Toast.makeText(this, "Pressed button " + bttn.getText().toString(), Toast.LENGTH_LONG).show();
