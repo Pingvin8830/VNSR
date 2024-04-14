@@ -24,9 +24,11 @@ public class ShowRegionDialog extends DialogFragment implements View.OnClickList
         TextView txtCode = dialogView.findViewById(R.id.txtCode);
         TextView txtName = dialogView.findViewById(R.id.txtName);
         Button bttnBack = (Button) dialogView.findViewById(R.id.bttnBack);
+        Button bttnDelete = (Button) dialogView.findViewById(R.id.bttnDelete);
         txtCode.setText(mRegion.getCode());
         txtName.setText(mRegion.getName());
         bttnBack.setOnClickListener(this);
+        bttnDelete.setOnClickListener(this);
         builder.setView(dialogView).setMessage("Your region");
         return builder.create();
     }
@@ -35,6 +37,11 @@ public class ShowRegionDialog extends DialogFragment implements View.OnClickList
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.bttnBack) { dismiss(); }
+        else if (id == R.id.bttnDelete) {
+            RegionsFragment callingFragment = (RegionsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("regions");
+            callingFragment.deleteRegion(mRegion);
+            dismiss();
+        }
     }
 
     // Получаем регион из Activity
