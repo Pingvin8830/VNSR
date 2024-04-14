@@ -1,10 +1,12 @@
-package ru.sknt.vlasovnetwork.vnsr.models.kladr;
+package ru.sknt.vlasovnetwork.vnsr.kladr.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+
+import ru.sknt.vlasovnetwork.vnsr.models.kladr.CityType;
 
 @Entity(
         tableName = "kladr_city",
