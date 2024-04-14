@@ -6,6 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import ru.sknt.vlasovnetwork.vnsr.kladr.models.City;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 
 @Entity(
