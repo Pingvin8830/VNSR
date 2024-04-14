@@ -9,10 +9,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.room.Room;
 
 import com.google.android.material.navigation.NavigationView;
 
 import ru.sknt.vlasovnetwork.vnsr.R;
+import ru.sknt.vlasovnetwork.vnsr.VNSRDatabase;
 import ru.sknt.vlasovnetwork.vnsr.kladr.fragments.AddressesFragment;
 import ru.sknt.vlasovnetwork.vnsr.kladr.fragments.CityTypesFragment;
 import ru.sknt.vlasovnetwork.vnsr.kladr.fragments.CityesFragment;
@@ -22,9 +24,12 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.fragments.StreetsFragment;
 
 public class KladrActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout mDrawer;
+    private VNSRDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mDb = Room.databaseBuilder(getApplicationContext(), VNSRDatabase.class, "vnsr-database").allowMainThreadQueries().build();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kladr);
 
@@ -60,7 +65,7 @@ public class KladrActivity extends AppCompatActivity implements NavigationView.O
 
         int id = item.getItemId();
 
-        if      (id == R.id.nav_kladr_regions)      { transaction.replace(R.id.fragmentHolder, new RegionsFragment(), "regions"); }
+        if      (id == R.id.nav_kladr_regions)      { transaction.replace(R.id.fragmentHolder, new RegionsFragment(mDb.regionDao()), "regions"); }
         else if (id == R.id.nav_kladr_cityes)       { transaction.replace(R.id.fragmentHolder, new CityesFragment()); }
         else if (id == R.id.nav_kladr_streets)      { transaction.replace(R.id.fragmentHolder, new StreetsFragment()); }
         else if (id == R.id.nav_kladr_addresses)    { transaction.replace(R.id.fragmentHolder, new AddressesFragment()); }
