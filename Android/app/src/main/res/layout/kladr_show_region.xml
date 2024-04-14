@@ -66,16 +66,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tblRegion">
 
         <Button
-            android:id="@+id/bttnEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="#FFFFFF00"
-            android:text="Edit"
-            android:textColor="#FF000000" />
-
-        <Button
             android:id="@+id/bttnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
