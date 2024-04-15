@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey;
 
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.City;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
+import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 
 @Entity(
         tableName = "kladr_address",
