@@ -11,7 +11,7 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.City;
 
 @Dao
 public interface CityDao {
-    @Query("SELECT * FROM kladr_city")
+    @Query("SELECT * FROM kladr_city ORDER BY name")
     List<City> getAll();
 
     @Insert
