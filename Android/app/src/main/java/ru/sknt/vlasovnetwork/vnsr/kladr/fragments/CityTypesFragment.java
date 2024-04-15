@@ -61,9 +61,6 @@ public class CityTypesFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        // Добавляем аккуратную разделительную линию между элементами в списке
-        //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-
         // Устанавливаем адаптер
         recyclerView.setAdapter(mAdapter);
 
