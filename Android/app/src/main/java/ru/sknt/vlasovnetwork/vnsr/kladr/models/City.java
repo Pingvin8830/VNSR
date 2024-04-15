@@ -6,6 +6,8 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityTypeDao;
+
 @Entity(
         tableName = "kladr_city",
         indices = {
@@ -30,6 +32,7 @@ public class City {
     public int getId() { return this.mId; }
     public String getName() { return this.mName; }
     public int getTypeId() { return this.mTypeId; }
+    public CityType getType(CityTypeDao dao) { return dao.find(this.mTypeId); }
 
     public void setId(int id) { this.mId = id; }
 
