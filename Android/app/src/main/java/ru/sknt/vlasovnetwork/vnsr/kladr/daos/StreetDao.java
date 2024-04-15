@@ -1,4 +1,4 @@
-package ru.sknt.vlasovnetwork.vnsr.daos.kladr;
+package ru.sknt.vlasovnetwork.vnsr.kladr.daos;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,11 +7,11 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ru.sknt.vlasovnetwork.vnsr.models.kladr.Street;
+import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 
 @Dao
 public interface StreetDao {
-    @Query("SELECT * FROM kladr_street")
+    @Query("SELECT * FROM kladr_street ORDER BY name")
     List<Street> getAll();
 
     @Insert
