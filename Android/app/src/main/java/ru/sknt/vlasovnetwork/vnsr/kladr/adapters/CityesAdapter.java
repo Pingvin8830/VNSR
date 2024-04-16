@@ -11,19 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ru.sknt.vlasovnetwork.vnsr.R;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.fragments.CityesFragment;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.City;
 
 public class CityesAdapter extends RecyclerView.Adapter<CityesAdapter.ListItemHolder> {
     private final List<City> mCityes;
     private final CityesFragment mFragment;
-    private final CityTypeDao mCityTypeDao;
 
-    public CityesAdapter(CityesFragment fragment, List<City> cityes, CityTypeDao cityTypeDao) {
+    public CityesAdapter(CityesFragment fragment, List<City> cityes) {
         mFragment = fragment;
         mCityes = cityes;
-        mCityTypeDao = cityTypeDao;
     }
 
     @NonNull
@@ -36,7 +33,7 @@ public class CityesAdapter extends RecyclerView.Adapter<CityesAdapter.ListItemHo
     @Override
     public void onBindViewHolder(@NonNull CityesAdapter.ListItemHolder holder, int position) {
         City city = mCityes.get(position);
-        holder.mTxtType.setText(city.getType(mCityTypeDao).getName());
+        holder.mTxtType.setText(city.getCityType().getShort());
         holder.mTxtName.setText(city.getName());
     }
 
