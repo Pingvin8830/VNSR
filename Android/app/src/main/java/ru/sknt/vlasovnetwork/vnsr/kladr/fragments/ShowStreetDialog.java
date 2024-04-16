@@ -17,10 +17,9 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 
 public class ShowStreetDialog extends DialogFragment implements View.OnClickListener {
     private Street mStreet;
-    private final StreetTypeDao mStreetTypeDao;
 
-    public ShowStreetDialog(StreetTypeDao streetTypeDao) {
-        mStreetTypeDao = streetTypeDao;
+    public ShowStreetDialog(Street street) {
+        mStreet = street;
     }
 
     @NonNull
@@ -33,7 +32,7 @@ public class ShowStreetDialog extends DialogFragment implements View.OnClickList
         TextView txtName = dialogView.findViewById(R.id.txtName);
         Button bttnBack = (Button) dialogView.findViewById(R.id.bttnBack);
         Button bttnDelete = (Button) dialogView.findViewById(R.id.bttnDelete);
-        txtType.setText(mStreet.getType(mStreetTypeDao).getName());
+        txtType.setText(mStreet.getStreetType().getName());
         txtName.setText(mStreet.getName());
         bttnBack.setOnClickListener(this);
         bttnDelete.setOnClickListener(this);
@@ -50,10 +49,5 @@ public class ShowStreetDialog extends DialogFragment implements View.OnClickList
             callingFragment.deleteStreet(mStreet);
             dismiss();
         }
-    }
-
-    // Получаем улицу из Activity
-    public void sendStreetSelected(Street streetSelected) {
-        mStreet = streetSelected;
     }
 }
