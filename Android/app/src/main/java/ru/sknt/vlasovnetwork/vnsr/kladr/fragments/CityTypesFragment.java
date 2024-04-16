@@ -70,6 +70,7 @@ public class CityTypesFragment extends Fragment {
     @SuppressLint("NotifyDataSetChanged")
     public void createNewCityType(CityType cityType) {
         mDao.create(cityType);
+        cityType = mDao.find(cityType.getName()); // Получаем новый корректный Id
         mCityTypes.add(cityType);
         mTxtError.setVisibility(View.INVISIBLE);
     }

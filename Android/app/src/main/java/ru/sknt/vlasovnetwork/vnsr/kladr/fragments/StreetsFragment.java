@@ -74,6 +74,8 @@ public class StreetsFragment extends Fragment {
     @SuppressLint("NotifyDataSetChanged")
     public void createNewStreet(Street street) {
         mDao.create(street);
+        street = mDao.find(street.getTypeId(), street.getName()); // Получаем новый корректный Id
+        street.setStreetType(mStreetTypeDao); // Устанавливаем Foreign
         mStreets.add(street);
         mTxtError.setVisibility(View.INVISIBLE);
     }

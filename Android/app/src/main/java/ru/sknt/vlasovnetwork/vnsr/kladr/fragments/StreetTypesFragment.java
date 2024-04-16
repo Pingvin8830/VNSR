@@ -70,6 +70,7 @@ public class StreetTypesFragment extends Fragment {
     @SuppressLint("NotifyDataSetChanged")
     public void createNewStreetType(StreetType streetType) {
         mDao.create(streetType);
+        streetType = mDao.find(streetType.getName()); // Получаем новый корректный Id
         mStreetTypes.add(streetType);
         mTxtError.setVisibility(View.INVISIBLE);
     }

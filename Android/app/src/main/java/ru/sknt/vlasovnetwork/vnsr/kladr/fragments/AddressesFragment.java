@@ -90,6 +90,10 @@ public class AddressesFragment extends Fragment {
     @SuppressLint("NotifyDataSetChanged")
     public void createNewAddress(Address address) {
         mDao.create(address);
+        address = mDao.find(address.getName()); // Получаем новый корректный Id
+        address.setRegion(mRegionDao); // Устанавливаем Foreign
+        address.setCity(mCityDao, mCityTypeDao); // Устанавливаем Foreign
+        address.setStreet(mStreetDao, mStreetTypeDao); // Устанавливаем Foreign
         mAddresses.add(address);
         mTxtError.setVisibility(View.INVISIBLE);
     }

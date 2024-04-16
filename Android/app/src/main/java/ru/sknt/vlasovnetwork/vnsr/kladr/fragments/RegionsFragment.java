@@ -70,6 +70,7 @@ public class RegionsFragment extends Fragment {
     @SuppressLint("NotifyDataSetChanged")
     public void createNewRegion(Region region) {
         mDao.create(region);
+        region = mDao.find(region.getCode()); // Получаем новый корректный Id
         mRegions.add(region);
         mTxtError.setVisibility(View.INVISIBLE);
     }
