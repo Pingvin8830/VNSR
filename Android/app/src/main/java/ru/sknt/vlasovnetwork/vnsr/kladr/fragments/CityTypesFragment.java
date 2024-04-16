@@ -24,28 +24,36 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.CityType;
 public class CityTypesFragment extends Fragment {
     private FragmentManager mFragmentManager;
     private final CityTypeDao mDao;
-    private List<CityType> mCityTypes;
+    private final List<CityType> mCityTypes;
     private TextView mTxtError;
     private CityTypesAdapter mAdapter;
 
     public CityTypesFragment (CityTypeDao dao) {
         super();
         mDao = dao;
+        mCityTypes = mDao.getAll();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIntstanceState) {
         mFragmentManager = getActivity().getSupportFragmentManager();
-        mCityTypes = mDao.getAll();
         View v = inflater.inflate(R.layout.kladr_city_types, container, false);
         mTxtError = v.findViewById(R.id.txtError);
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+        Button bttnAdd = v.findViewById(R.id.bttnAdd);
+
+        mAdapter = new CityTypesAdapter(this, mCityTypes);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+
         if (mCityTypes.isEmpty()) {
             mTxtError.setText("City types not found");
             mTxtError.setVisibility(View.VISIBLE);
         } else {
             mTxtError.setVisibility(View.INVISIBLE);
         }
-        Button bttnAdd = v.findViewById(R.id.bttnAdd);
         bttnAdd.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -55,37 +63,28 @@ public class CityTypesFragment extends Fragment {
                     }
                 }
         );
-        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
-        mAdapter = new CityTypesAdapter(this, mCityTypes);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        // Устанавливаем адаптер
-        recyclerView.setAdapter(mAdapter);
 
         return v;
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void createNewCityType(CityType ct) {
-        mDao.create(ct);
-        ct = mDao.find(ct.getName());
-        mCityTypes.add(ct);
+    public void createNewCityType(CityType cityType) {
+        mDao.create(cityType);
+        mCityTypes.add(cityType);
         mTxtError.setVisibility(View.INVISIBLE);
     }
 
-    public void showCityType(int cityTypeToShow) {
-        ShowCityTypeDialog dialog = new ShowCityTypeDialog();
-        dialog.sendCityTypeSelected(mCityTypes.get(cityTypeToShow));
+    public void showCityType(int position) {
+        CityType cityType = mCityTypes.get(position);
+        ShowCityTypeDialog dialog = new ShowCityTypeDialog(cityType);
         dialog.show(mFragmentManager, "");
     }
 
-    public void deleteCityType(CityType ct) {
-        int pos = mCityTypes.indexOf(ct);
-        mDao.delete(ct);
-        mCityTypes.remove(ct);
-        mAdapter.notifyItemRemoved(pos);
+    public void deleteCityType(CityType cityType) {
+        int position = mCityTypes.indexOf(cityType);
+        mDao.delete(cityType);
+        mCityTypes.remove(cityType);
+        mAdapter.notifyItemRemoved(position);
         if (mCityTypes.isEmpty()) {
             mTxtError.setText("City types not found");
             mTxtError.setVisibility(View.VISIBLE);
