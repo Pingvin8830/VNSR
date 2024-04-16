@@ -12,15 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import ru.sknt.vlasovnetwork.vnsr.R;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.City;
 
 public class ShowCityDialog extends DialogFragment implements View.OnClickListener {
-    private City mCity;
-    private final CityTypeDao mCityTypeDao;
+    private final City mCity;
 
-    public ShowCityDialog(CityTypeDao cityTypeDao) {
-        mCityTypeDao = cityTypeDao;
+    public ShowCityDialog(City city) {
+        mCity = city;
     }
 
     @NonNull
@@ -33,7 +31,7 @@ public class ShowCityDialog extends DialogFragment implements View.OnClickListen
         TextView txtName = dialogView.findViewById(R.id.txtName);
         Button bttnBack = (Button) dialogView.findViewById(R.id.bttnBack);
         Button bttnDelete = (Button) dialogView.findViewById(R.id.bttnDelete);
-        txtType.setText(mCity.getType(mCityTypeDao).getName());
+        txtType.setText(mCity.getCityType().getName());
         txtName.setText(mCity.getName());
         bttnBack.setOnClickListener(this);
         bttnDelete.setOnClickListener(this);
@@ -50,10 +48,5 @@ public class ShowCityDialog extends DialogFragment implements View.OnClickListen
             callingFragment.deleteCity(mCity);
             dismiss();
         }
-    }
-
-    // Получаем город из Activity
-    public void sendCitySelected(City citySelected) {
-        mCity = citySelected;
     }
 }
