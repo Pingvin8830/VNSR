@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import ru.sknt.vlasovnetwork.vnsr.models.kladr.Address;
+import ru.sknt.vlasovnetwork.vnsr.kladr.models.Address;
 
 @Entity(
         tableName = "travels_point"
