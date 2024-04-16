@@ -27,17 +27,29 @@ public class City {
     @ColumnInfo(name = "type_id")
     private int mTypeId;
     @Ignore
-    private CityType mType;
+    private CityType mCityType;
 
     public int getId() { return this.mId; }
     public String getName() { return this.mName; }
     public int getTypeId() { return this.mTypeId; }
-    public CityType getType(CityTypeDao dao) { return dao.find(this.mTypeId); }
+    public CityType getCityType() { return this.mCityType; }
 
     public void setId(int id) { this.mId = id; }
+    public void setCityType(CityTypeDao dao) { this.mCityType = dao.find(mTypeId); }
+
 
     public City (String name, int typeId) {
         this.mName = name;
         this.mTypeId = typeId;
+    }
+    public City (String name, CityType type) {
+        this.mName = name;
+        this.mCityType = type;
+        this.mTypeId = type.getId();
+    }
+
+    @Override
+    public String toString() {
+        return getCityType().getShort() + ". " + getName();
     }
 }
