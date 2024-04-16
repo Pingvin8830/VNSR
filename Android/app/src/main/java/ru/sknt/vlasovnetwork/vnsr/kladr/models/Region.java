@@ -1,5 +1,6 @@
 package ru.sknt.vlasovnetwork.vnsr.kladr.models;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
@@ -36,5 +37,11 @@ public class Region {
     public Region (String code, String name) {
         this.mCode = code;
         this.mName = name;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getCode() + " - " + getName();
     }
 }
