@@ -21,6 +21,8 @@ public interface CityDao {
     City find(int id);
     @Query("SELECT * FROM kladr_city WHERE name=:name")
     City find(String name);
+    @Query("SELECT count(id) FROM kladr_city")
+    int getCount();
 
     @Delete
     void delete(City city);

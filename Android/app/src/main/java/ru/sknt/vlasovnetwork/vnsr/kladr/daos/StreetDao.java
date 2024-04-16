@@ -21,6 +21,8 @@ public interface StreetDao {
     Street find(int id);
     @Query("SELECT * FROM kladr_street WHERE type_id=:typeId AND name=:name")
     Street find(int typeId, String name);
+    @Query("SELECt count(id) FROM kladr_street")
+    int getCount();
 
     @Delete
     void delete(Street street);

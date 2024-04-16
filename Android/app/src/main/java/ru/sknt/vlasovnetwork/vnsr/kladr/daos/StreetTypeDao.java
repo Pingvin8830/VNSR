@@ -13,8 +13,6 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 public interface StreetTypeDao {
     @Query("SELECT * FROM kladr_streettype ORDER BY name")
     List<StreetType> getAll();
-    @Query("SELECT name FROM kladr_streettype ORDER BY name")
-    List<String> getAllNames();
 
     @Insert
     void create(StreetType streetType);
@@ -23,6 +21,8 @@ public interface StreetTypeDao {
     StreetType find(int id);
     @Query("SELECT * FROM kladr_streettype WHERE name=:name")
     StreetType find(String name);
+    @Query("SELECt count(id) FROM kladr_streettype")
+    int getCount();
 
     @Delete
     void delete(StreetType streetType);

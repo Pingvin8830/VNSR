@@ -23,6 +23,8 @@ public interface CityTypeDao {
     CityType find(int id);
     @Query("SELECT * FROM kladr_citytype WHERE name=:name")
     CityType find(String name);
+    @Query("SELECT count(id) FROM kladr_citytype")
+    int getCount();
 
     @Delete
     void delete(CityType cityType);
