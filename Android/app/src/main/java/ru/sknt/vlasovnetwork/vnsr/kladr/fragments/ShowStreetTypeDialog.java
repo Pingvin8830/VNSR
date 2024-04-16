@@ -16,6 +16,8 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 public class ShowStreetTypeDialog extends DialogFragment implements View.OnClickListener {
     private StreetType mStreetType;
 
+    public ShowStreetTypeDialog (StreetType streetType) { this.mStreetType = streetType; }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -42,10 +44,5 @@ public class ShowStreetTypeDialog extends DialogFragment implements View.OnClick
             callingFragment.deleteStreetType(mStreetType);
             dismiss();
         }
-    }
-
-    // Получаем тип улицы из Activity
-    public void sendStreetTypeSelected(StreetType streetTypeSelected) {
-        mStreetType = streetTypeSelected;
     }
 }
