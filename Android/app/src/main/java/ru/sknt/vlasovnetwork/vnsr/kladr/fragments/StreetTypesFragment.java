@@ -24,28 +24,36 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 public class StreetTypesFragment extends Fragment {
     private FragmentManager mFragmentManager;
     private final StreetTypeDao mDao;
-    private List<StreetType> mStreetTypes;
+    private final List<StreetType> mStreetTypes;
     private TextView mTxtError;
     private StreetTypesAdapter mAdapter;
 
     public StreetTypesFragment (StreetTypeDao dao) {
         super();
         mDao = dao;
+        mStreetTypes = mDao.getAll();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIntstanceState) {
         mFragmentManager = getActivity().getSupportFragmentManager();
-        mStreetTypes = mDao.getAll();
         View v = inflater.inflate(R.layout.kladr_street_types, container, false);
         mTxtError = v.findViewById(R.id.txtError);
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+        Button bttnAdd = v.findViewById(R.id.bttnAdd);
+
+        mAdapter = new StreetTypesAdapter(this, mStreetTypes);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+
         if (mStreetTypes.isEmpty()) {
             mTxtError.setText("Street types not found");
             mTxtError.setVisibility(View.VISIBLE);
         } else {
             mTxtError.setVisibility(View.INVISIBLE);
         }
-        Button bttnAdd = v.findViewById(R.id.bttnAdd);
         bttnAdd.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -55,37 +63,28 @@ public class StreetTypesFragment extends Fragment {
                     }
                 }
         );
-        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
-        mAdapter = new StreetTypesAdapter(this, mStreetTypes);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        // Устанавливаем адаптер
-        recyclerView.setAdapter(mAdapter);
 
         return v;
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void createNewStreetType(StreetType st) {
-        mDao.create(st);
-        st = mDao.find(st.getName());
-        mStreetTypes.add(st);
+    public void createNewStreetType(StreetType streetType) {
+        mDao.create(streetType);
+        mStreetTypes.add(streetType);
         mTxtError.setVisibility(View.INVISIBLE);
     }
 
-    public void showStreetType(int streetTypeToShow) {
-        ShowStreetTypeDialog dialog = new ShowStreetTypeDialog();
-        dialog.sendStreetTypeSelected(mStreetTypes.get(streetTypeToShow));
+    public void showStreetType(int position) {
+        StreetType streetType = mStreetTypes.get(position);
+        ShowStreetTypeDialog dialog = new ShowStreetTypeDialog(streetType);
         dialog.show(mFragmentManager, "");
     }
 
-    public void deleteStreetType(StreetType st) {
-        int pos = mStreetTypes.indexOf(st);
-        mDao.delete(st);
-        mStreetTypes.remove(st);
-        mAdapter.notifyItemRemoved(pos);
+    public void deleteStreetType(StreetType streetType) {
+        int position = mStreetTypes.indexOf(streetType);
+        mDao.delete(streetType);
+        mStreetTypes.remove(streetType);
+        mAdapter.notifyItemRemoved(position);
         if (mStreetTypes.isEmpty()) {
             mTxtError.setText("Street types not found");
             mTxtError.setVisibility(View.VISIBLE);
