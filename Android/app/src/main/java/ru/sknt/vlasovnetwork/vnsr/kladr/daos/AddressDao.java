@@ -7,7 +7,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ru.sknt.vlasovnetwork.vnsr.models.kladr.Address;
+import ru.sknt.vlasovnetwork.vnsr.kladr.models.Address;
 
 @Dao
 public interface AddressDao {
