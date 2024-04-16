@@ -16,6 +16,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.List;
+
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
@@ -27,29 +29,17 @@ public class NewStreetDialog extends DialogFragment implements View.OnClickListe
     private EditText mEdtxtName;
     private Spinner mSpnType;
     private final StreetTypeDao mStreetTypeDao;
+    private final List<StreetType> mStreetTypes;
 
-    public NewStreetDialog(StreetTypeDao dao) { mStreetTypeDao = dao; }
+    public NewStreetDialog(StreetTypeDao dao) {
+        mStreetTypeDao = dao;
+        mStreetTypes = dao.getAll();
+    }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         mAnimError = AnimationUtils.loadAnimation(getContext(),R.anim.error);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.kladr_new_street, null);
-        mTxtError = dialogView.findViewById(R.id.txtError);
-        mEdtxtName = dialogView.findViewById(R.id.edtxtName);
-        mSpnType = dialogView.findViewById(R.id.spnType);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mStreetTypeDao.getAllNames());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpnType.setAdapter(adapter);
-
-        Button bttnAdd = dialogView.findViewById(R.id.bttnAdd);
-        Button bttnCancel = dialogView.findViewById(R.id.bttnCancel);
-
-        mTxtError.setVisibility(View.INVISIBLE);
-        builder.setView(dialogView).setMessage("Add a new street");
-
         mAnimError.setAnimationListener(
                 new Animation.AnimationListener() {
                     @Override
@@ -60,10 +50,25 @@ public class NewStreetDialog extends DialogFragment implements View.OnClickListe
                     public void onAnimationRepeat(Animation animation) {}
                 }
         );
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.kladr_new_street, null);
+        mTxtError = dialogView.findViewById(R.id.txtError);
+        mEdtxtName = dialogView.findViewById(R.id.edtxtName);
+        mSpnType = dialogView.findViewById(R.id.spnType);
+        Button bttnAdd = dialogView.findViewById(R.id.bttnAdd);
+        Button bttnCancel = dialogView.findViewById(R.id.bttnCancel);
+
+        ArrayAdapter<StreetType> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mStreetTypes);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpnType.setAdapter(adapter);
+
+        mTxtError.setVisibility(View.INVISIBLE);
 
         bttnCancel.setOnClickListener(this);
         bttnAdd.setOnClickListener(this);
 
+        builder.setView(dialogView).setMessage("Add a new street");
         return builder.create();
     }
 
@@ -72,13 +77,13 @@ public class NewStreetDialog extends DialogFragment implements View.OnClickListe
         else if (v.getId() == R.id.bttnAdd) {
             // Создаём новую улицу
             String name = mEdtxtName.getText().toString();
-            StreetType streetType = mStreetTypeDao.find(mSpnType.getSelectedItem().toString());
+            StreetType streetType = mStreetTypes.get(mSpnType.getSelectedItemPosition());
 
             if (name.isEmpty()) {
                 mTxtError.setText("Bad name");
                 mTxtError.startAnimation(mAnimError);
             } else {
-                Street newStreet = new Street(streetType.getId(), name);
+                Street newStreet = new Street(streetType, name);
 
                 // Получаем ссылку на Fragment
                 StreetsFragment callingFragment = (StreetsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("streets");
