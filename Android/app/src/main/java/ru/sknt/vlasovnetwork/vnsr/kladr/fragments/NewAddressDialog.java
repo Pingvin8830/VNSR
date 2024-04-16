@@ -121,12 +121,19 @@ public class NewAddressDialog extends DialogFragment implements View.OnClickList
             Street street = mStreets.get(mSpnStreet.getSelectedItemPosition());
             String home = mEdtxtHome.getText().toString();
             String building = mEdtxtBuilding.getText().toString();
-            int flat = Integer.parseInt(mEdtxtFlat.getText().toString());
+            String flatString = mEdtxtFlat.getText().toString();
 
             if (name.isEmpty()) {
                 mTxtError.setText("Bad name");
                 mTxtError.startAnimation(mAnimError);
-            } else {
+            } else if (home.isEmpty()) {
+                mTxtError.setText("Bad home");
+                mTxtError.startAnimation(mAnimError);
+            }
+            else {
+                int flat;
+                if (flatString.isEmpty()) { flat = 0; }
+                else { flat = Integer.parseInt(flatString); }
                 Address newAddress = new Address(name, region, city, street, home, building, flat);
 
                 // Получаем ссылку на Fragment
