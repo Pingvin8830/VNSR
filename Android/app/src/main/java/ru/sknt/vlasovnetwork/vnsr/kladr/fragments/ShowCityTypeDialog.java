@@ -16,6 +16,8 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.CityType;
 public class ShowCityTypeDialog extends DialogFragment implements View.OnClickListener {
     private CityType mCityType;
 
+    public ShowCityTypeDialog (CityType cityType) { this.mCityType = cityType; }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -42,10 +44,5 @@ public class ShowCityTypeDialog extends DialogFragment implements View.OnClickLi
             callingFragment.deleteCityType(mCityType);
             dismiss();
         }
-    }
-
-    // Получаем тип города из Activity
-    public void sendCityTypeSelected(CityType cityTypeSelected) {
-        mCityType = cityTypeSelected;
     }
 }
