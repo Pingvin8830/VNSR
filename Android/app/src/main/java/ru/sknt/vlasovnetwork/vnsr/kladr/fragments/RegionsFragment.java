@@ -24,28 +24,36 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 public class RegionsFragment extends Fragment {
     private FragmentManager mFragmentManager;
     private final RegionDao mDao;
-    private List<Region> mRegions;
+    private final List<Region> mRegions;
     private TextView mTxtError;
     private RegionsAdapter mAdapter;
 
     public RegionsFragment (RegionDao dao) {
         super();
         mDao = dao;
+        mRegions = mDao.getAll();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIntstanceState) {
         mFragmentManager = getActivity().getSupportFragmentManager();
-        mRegions = mDao.getAll();
         View v = inflater.inflate(R.layout.kladr_regions, container, false);
         mTxtError = v.findViewById(R.id.txtError);
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+        Button bttnAdd = v.findViewById(R.id.bttnAdd);
+
+        mAdapter = new RegionsAdapter(this, mRegions);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+
         if (mRegions.isEmpty()) {
             mTxtError.setText("Regoins not found");
             mTxtError.setVisibility(View.VISIBLE);
         } else {
             mTxtError.setVisibility(View.INVISIBLE);
         }
-        Button bttnAdd = v.findViewById(R.id.bttnAdd);
         bttnAdd.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -55,40 +63,28 @@ public class RegionsFragment extends Fragment {
                     }
                 }
         );
-        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
-        mAdapter = new RegionsAdapter(this, mRegions);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        // Добавляем аккуратную разделительную линию между элементами в списке
-        //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-
-        // Устанавливаем адаптер
-        recyclerView.setAdapter(mAdapter);
 
         return v;
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void createNewRegion(Region r) {
-        mDao.create(r);
-        r = mDao.find(r.getCode());
-        mRegions.add(r);
+    public void createNewRegion(Region region) {
+        mDao.create(region);
+        mRegions.add(region);
         mTxtError.setVisibility(View.INVISIBLE);
     }
 
-    public void showRegion(int regionToShow) {
-        ShowRegionDialog dialog = new ShowRegionDialog();
-        dialog.sendRegionSelected(mRegions.get(regionToShow));
+    public void showRegion(int position) {
+        Region region = mRegions.get(position);
+        ShowRegionDialog dialog = new ShowRegionDialog(region);
         dialog.show(mFragmentManager, "");
     }
 
-    public void deleteRegion(Region r) {
-        int pos = mRegions.indexOf(r);
-        mDao.delete(r);
-        mRegions.remove(r);
-        mAdapter.notifyItemRemoved(pos);
+    public void deleteRegion(Region region) {
+        int position = mRegions.indexOf(region);
+        mDao.delete(region);
+        mRegions.remove(region);
+        mAdapter.notifyItemRemoved(position);
         if (mRegions.isEmpty()) {
             mTxtError.setText("Regions not found");
             mTxtError.setVisibility(View.VISIBLE);
