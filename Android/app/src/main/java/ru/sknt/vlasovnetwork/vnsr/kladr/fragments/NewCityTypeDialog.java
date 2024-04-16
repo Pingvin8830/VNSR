@@ -17,72 +17,70 @@ import androidx.fragment.app.DialogFragment;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.CityType;
 
-public class NewCityTypeDialog extends DialogFragment {
+public class NewCityTypeDialog extends DialogFragment implements View.OnClickListener {
+    private Animation mAnimError;
+    private TextView mTxtError;
+    private EditText mEdtxtShort;
+    private EditText mEdtxtName;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Animation animError = AnimationUtils.loadAnimation(getContext(),R.anim.error);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.kladr_new_city_type, null);
-        final TextView txtError = dialogView.findViewById(R.id.txtError);
-        final EditText edtxtShort = dialogView.findViewById(R.id.edtxtShort);
-        final EditText edtxtName = dialogView.findViewById(R.id.edtxtName);
-        Button bttnAdd = dialogView.findViewById(R.id.bttnAdd);
-        Button bttnCancel = dialogView.findViewById(R.id.bttnCancel);
-
-        txtError.setVisibility(View.INVISIBLE);
-        builder.setView(dialogView).setMessage("Add a new city type");
-
-        animError.setAnimationListener(
+        mAnimError = AnimationUtils.loadAnimation(getContext(),R.anim.error);
+        mAnimError.setAnimationListener(
                 new Animation.AnimationListener() {
                     @Override
-                    public void onAnimationStart(Animation animation) { txtError.setVisibility(View.VISIBLE); }
+                    public void onAnimationStart(Animation animation) { mTxtError.setVisibility(View.VISIBLE); }
                     @Override
-                    public void onAnimationEnd(Animation animation) { txtError.setVisibility(View.INVISIBLE); }
+                    public void onAnimationEnd(Animation animation) { mTxtError.setVisibility(View.INVISIBLE); }
                     @Override
                     public void onAnimationRepeat(Animation animation) {}
                 }
         );
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.kladr_new_city_type, null);
+        mTxtError = dialogView.findViewById(R.id.txtError);
+        mEdtxtShort = dialogView.findViewById(R.id.edtxtShort);
+        mEdtxtName = dialogView.findViewById(R.id.edtxtName);
+        Button bttnAdd = dialogView.findViewById(R.id.bttnAdd);
+        Button bttnCancel = dialogView.findViewById(R.id.bttnCancel);
 
-        // Обрабатываем кнопку Cancel
-        bttnCancel.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) { dismiss(); }
-                }
-        );
+        mTxtError.setVisibility(View.INVISIBLE);
 
-        bttnAdd.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Создаём новый тип города
-                        String shortName = edtxtShort.getText().toString();
-                        String name = edtxtName.getText().toString();
+        bttnCancel.setOnClickListener(this);
+        bttnAdd.setOnClickListener(this);
 
-                        if ((shortName.length() > 3) || (shortName.isEmpty())) {
-                            txtError.setText("Bad short name");
-                            txtError.startAnimation(animError);
-                        } else if (name.isEmpty()) {
-                            txtError.setText("Bad name");
-                            txtError.startAnimation(animError);
-                        } else {
-                            CityType newCityType = new CityType(name, shortName);
-
-                            // Получаем ссылку на Fragment
-                            CityTypesFragment callingFragment = (CityTypesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("city_types");
-
-                            // Передаём newRegion обратно в Fragment
-                            callingFragment.createNewCityType(newCityType);
-
-                            // Закрываем диалог
-                            dismiss();
-                        }
-                    }
-                }
-        );
-
+        builder.setView(dialogView).setMessage("Add a new city type");
         return builder.create();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.bttnCancel) { dismiss(); }
+        else if (v.getId() == R.id.bttnAdd) {
+            // Создаём новый тип города
+            String shortName = mEdtxtShort.getText().toString();
+            String name = mEdtxtName.getText().toString();
+
+            if ((shortName.length() > 3) || (shortName.isEmpty())) {
+                mTxtError.setText("Bad short name");
+                mTxtError.startAnimation(mAnimError);
+            } else if (name.isEmpty()) {
+                mTxtError.setText("Bad name");
+                mTxtError.startAnimation(mAnimError);
+            } else {
+                CityType newCityType = new CityType(name, shortName);
+
+                // Получаем ссылку на Fragment
+                CityTypesFragment callingFragment = (CityTypesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("city_types");
+
+                // Передаём newRegion обратно в Fragment
+                callingFragment.createNewCityType(newCityType);
+
+                // Закрываем диалог
+                dismiss();
+            }
+        }
     }
 }
