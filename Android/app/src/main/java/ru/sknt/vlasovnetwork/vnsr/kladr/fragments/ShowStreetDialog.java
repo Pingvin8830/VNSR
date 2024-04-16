@@ -12,11 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import ru.sknt.vlasovnetwork.vnsr.R;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 
 public class ShowStreetDialog extends DialogFragment implements View.OnClickListener {
-    private Street mStreet;
+    private final Street mStreet;
 
     public ShowStreetDialog(Street street) {
         mStreet = street;
