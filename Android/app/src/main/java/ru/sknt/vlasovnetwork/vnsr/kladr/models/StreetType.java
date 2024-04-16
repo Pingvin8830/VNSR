@@ -1,5 +1,6 @@
 package ru.sknt.vlasovnetwork.vnsr.kladr.models;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
@@ -37,5 +38,11 @@ public class StreetType {
     public StreetType (String name, String mShort) {
         this.mName = name;
         this.mShort = mShort;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getName();
     }
 }
