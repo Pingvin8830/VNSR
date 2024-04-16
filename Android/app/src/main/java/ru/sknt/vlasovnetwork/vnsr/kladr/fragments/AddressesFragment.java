@@ -88,9 +88,9 @@ public class AddressesFragment extends Fragment {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void createNewAddress(Address a) {
-        mDao.create(a);
-        mAddresses.add(a);
+    public void createNewAddress(Address address) {
+        mDao.create(address);
+        mAddresses.add(address);
         mTxtError.setVisibility(View.INVISIBLE);
     }
 
@@ -101,10 +101,10 @@ public class AddressesFragment extends Fragment {
     }
 
     public void deleteAddress(Address address) {
-        int pos = mAddresses.indexOf(address);
+        int position = mAddresses.indexOf(address);
         mDao.delete(address);
         mAddresses.remove(address);
-        mAdapter.notifyItemRemoved(pos);
+        mAdapter.notifyItemRemoved(position);
         if (mAddresses.isEmpty()) {
             mTxtError.setText("Addresses not found");
             mTxtError.setVisibility(View.VISIBLE);
