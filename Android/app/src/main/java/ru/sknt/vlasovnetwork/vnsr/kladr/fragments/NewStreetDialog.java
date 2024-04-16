@@ -28,11 +28,9 @@ public class NewStreetDialog extends DialogFragment implements View.OnClickListe
     private Animation mAnimError;
     private EditText mEdtxtName;
     private Spinner mSpnType;
-    private final StreetTypeDao mStreetTypeDao;
     private final List<StreetType> mStreetTypes;
 
     public NewStreetDialog(StreetTypeDao dao) {
-        mStreetTypeDao = dao;
         mStreetTypes = dao.getAll();
     }
 
