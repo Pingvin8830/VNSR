@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -62,8 +63,11 @@ public class StreetsFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        NewStreetDialog dialog = new NewStreetDialog(mStreetTypeDao);
-                        dialog.show(mFragmentManager, "");
+                        if (mStreetTypeDao.getCount() < 1) { Toast.makeText(getContext(), "Street types not found", Toast.LENGTH_SHORT).show(); }
+                        else {
+                            NewStreetDialog dialog = new NewStreetDialog(mStreetTypeDao);
+                            dialog.show(mFragmentManager, "");
+                        }
                     }
                 }
         );

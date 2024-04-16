@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -78,8 +79,13 @@ public class AddressesFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        NewAddressDialog dialog = new NewAddressDialog(mRegionDao, mCityDao, mCityTypeDao, mStreetDao, mStreetTypeDao);
-                        dialog.show(mFragmentManager, "");
+                        if      (mRegionDao.getCount() < 1) { Toast.makeText(getContext(), "Regions not found", Toast.LENGTH_SHORT).show(); }
+                        else if (mCityDao.getCount()   < 1) { Toast.makeText(getContext(), "Cityes not found",  Toast.LENGTH_SHORT).show(); }
+                        else if (mStreetDao.getCount() < 1) { Toast.makeText(getContext(), "Streets not found", Toast.LENGTH_SHORT).show(); }
+                        else {
+                            NewAddressDialog dialog = new NewAddressDialog(mRegionDao, mCityDao, mCityTypeDao, mStreetDao, mStreetTypeDao);
+                            dialog.show(mFragmentManager, "");
+                        }
                     }
                 }
         );

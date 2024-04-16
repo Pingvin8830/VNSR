@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -63,8 +64,11 @@ public class CityesFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        NewCityDialog dialog = new NewCityDialog(mCityTypeDao);
-                        dialog.show(mFragmentManager, "");
+                        if (mCityTypeDao.getCount() < 1) { Toast.makeText(getContext(), "City types not found", Toast.LENGTH_SHORT).show(); }
+                        else {
+                            NewCityDialog dialog = new NewCityDialog(mCityTypeDao);
+                            dialog.show(mFragmentManager, "");
+                        }
                     }
                 }
         );
@@ -76,6 +80,7 @@ public class CityesFragment extends Fragment {
     public void createNewCity(City city) {
         mDao.create(city);
         city = mDao.find(city.getName()); // Получаем новый корректный Id
+        city.setCityType(mCityTypeDao); // Устанавливаем Foreign
         mCityes.add(city);
         mTxtError.setVisibility(View.INVISIBLE);
     }
