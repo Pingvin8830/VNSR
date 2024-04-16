@@ -8,14 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 
 public class ShowRegionDialog extends DialogFragment implements View.OnClickListener {
-    private Region mRegion;
+    private final Region mRegion;
 
+    public ShowRegionDialog(Region region) { this.mRegion = region; }
+
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -42,10 +46,5 @@ public class ShowRegionDialog extends DialogFragment implements View.OnClickList
             callingFragment.deleteRegion(mRegion);
             dismiss();
         }
-    }
-
-    // Получаем регион из Activity
-    public void sendRegionSelected(Region regionSelected) {
-        mRegion = regionSelected;
     }
 }
