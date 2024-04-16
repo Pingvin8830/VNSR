@@ -34,7 +34,7 @@ public class AddressesFragment extends Fragment {
     private final CityTypeDao mCityTypeDao;
     private final StreetDao mStreetDao;
     private final StreetTypeDao mStreetTypeDao;
-    private List<Address> mAddresses;
+    private final List<Address> mAddresses;
     private TextView mTxtError;
     private AddressesAdapter mAdapter;
 
