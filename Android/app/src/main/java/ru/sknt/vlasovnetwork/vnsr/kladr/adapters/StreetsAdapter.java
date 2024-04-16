@@ -11,19 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ru.sknt.vlasovnetwork.vnsr.R;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.fragments.StreetsFragment;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 
 public class StreetsAdapter extends RecyclerView.Adapter<StreetsAdapter.ListItemHolder> {
     private final List<Street> mStreets;
     private final StreetsFragment mFragment;
-    private final StreetTypeDao mStreetTypeDao;
 
-    public StreetsAdapter(StreetsFragment fragment, List<Street> streets, StreetTypeDao streetTypeDao) {
+    public StreetsAdapter(StreetsFragment fragment, List<Street> streets) {
         mFragment = fragment;
         mStreets = streets;
-        mStreetTypeDao = streetTypeDao;
     }
 
     @NonNull
@@ -36,7 +33,7 @@ public class StreetsAdapter extends RecyclerView.Adapter<StreetsAdapter.ListItem
     @Override
     public void onBindViewHolder(@NonNull StreetsAdapter.ListItemHolder holder, int position) {
         Street street = mStreets.get(position);
-        holder.mTxtType.setText(street.getType(mStreetTypeDao).getName());
+        holder.mTxtType.setText(street.getStreetType().getShort());
         holder.mTxtName.setText(street.getName());
     }
 
