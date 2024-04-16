@@ -37,8 +37,10 @@ public class AddressesAdapter extends RecyclerView.Adapter<AddressesAdapter.List
         holder.mTxtCity.setText(address.getCity().toString());
         holder.mTxtStreet.setText(address.getStreet().toString());
         holder.mTxtHome.setText(", д. " + address.getHouse());
-        holder.mTxtBuilding.setText(", копр. " + address.getBuilding());
-        holder.mTxtFlat.setText(", кв. " + address.getFlat());
+        if (!address.getBuilding().isEmpty()) { holder.mTxtBuilding.setText(", копр. " + address.getBuilding()); }
+        else { holder.mTxtBuilding.setText(""); }
+        if (address.getFlat() != 0) { holder.mTxtFlat.setText(", кв. " + address.getFlat()); }
+        else { holder.mTxtFlat.setText(""); }
     }
 
     @Override
