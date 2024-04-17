@@ -57,9 +57,9 @@ public class CarActivity extends AppCompatActivity implements NavigationView.OnN
 
         int id = item.getItemId();
 
-        if      (id == R.id.nav_car_refuels)       { transaction.replace(R.id.fragmentHolder, new RefuelsFragment()); }
-        else if (id == R.id.nav_car_fuel_stations) { transaction.replace(R.id.fragmentHolder, new FuelStationsFragment()); }
-        else if (id == R.id.nav_car_fuels)         { transaction.replace(R.id.fragmentHolder, new FuelsFragment()); }
+        if      (id == R.id.nav_car_refuels)       { transaction.replace(R.id.fragmentHolder, new RefuelsFragment     (), "refuels"); }
+        else if (id == R.id.nav_car_fuel_stations) { transaction.replace(R.id.fragmentHolder, new FuelStationsFragment(), "fuel_stations" ); }
+        else if (id == R.id.nav_car_fuels)         { transaction.replace(R.id.fragmentHolder, new FuelsFragment       (), "fuels"); }
         else if (id == R.id.nav_back) { finish(); }
 
         // Просим Android запоминать, какие пункты меню выбрал пользователь
