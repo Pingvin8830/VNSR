@@ -56,7 +56,7 @@ public class RegionsAdapter extends RecyclerView.Adapter<RegionsAdapter.ListItem
 
         @Override
         public void onClick(View v) {
-            mFragment.showRegion(getAdapterPosition());
+            mFragment.showObject(getAdapterPosition());
         }
     }
 }

@@ -56,7 +56,7 @@ public class StreetTypesAdapter extends RecyclerView.Adapter<StreetTypesAdapter.
 
         @Override
         public void onClick(View v) {
-            mFragment.showStreetType(getAdapterPosition());
+            mFragment.showObject(getAdapterPosition());
         }
     }
 }

@@ -56,7 +56,7 @@ public class StreetsAdapter extends RecyclerView.Adapter<StreetsAdapter.ListItem
 
         @Override
         public void onClick(View v) {
-            mFragment.showStreet(getAdapterPosition());
+            mFragment.showObject(getAdapterPosition());
         }
     }
 }

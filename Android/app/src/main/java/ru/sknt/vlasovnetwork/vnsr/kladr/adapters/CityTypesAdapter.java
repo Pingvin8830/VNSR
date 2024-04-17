@@ -56,7 +56,7 @@ public class CityTypesAdapter extends RecyclerView.Adapter<CityTypesAdapter.List
 
         @Override
         public void onClick(View v) {
-            mFragment.showCityType(getAdapterPosition());
+            mFragment.showObject(getAdapterPosition());
         }
     }
 }
