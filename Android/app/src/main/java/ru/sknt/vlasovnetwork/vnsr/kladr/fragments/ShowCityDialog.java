@@ -1,52 +1,45 @@
 package ru.sknt.vlasovnetwork.vnsr.kladr.fragments;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-
 import ru.sknt.vlasovnetwork.vnsr.R;
+import ru.sknt.vlasovnetwork.vnsr.ShowObjectDialog;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.City;
 
-public class ShowCityDialog extends DialogFragment implements View.OnClickListener {
+public class ShowCityDialog extends ShowObjectDialog {
     private final City mCity;
+    private TextView mTxtName;
+    private TextView mTxtType;
 
-    public ShowCityDialog(City city) {
+    public ShowCityDialog (City city) {
         mCity = city;
     }
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.kladr_show_city, null);
-        TextView txtType = dialogView.findViewById(R.id.txtType);
-        TextView txtName = dialogView.findViewById(R.id.txtName);
-        Button bttnBack = (Button) dialogView.findViewById(R.id.bttnBack);
-        Button bttnDelete = (Button) dialogView.findViewById(R.id.bttnDelete);
-        txtType.setText(mCity.getCityType().getName());
-        txtName.setText(mCity.getName());
-        bttnBack.setOnClickListener(this);
-        bttnDelete.setOnClickListener(this);
-        builder.setView(dialogView).setMessage("Your city");
-        return builder.create();
+    protected int getLayoutCode() {
+        return R.layout.kladr_show_city;
     }
 
     @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.bttnBack) { dismiss(); }
-        else if (id == R.id.bttnDelete) {
-            CityesFragment callingFragment = (CityesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("cityes");
-            callingFragment.deleteCity(mCity);
-            dismiss();
-        }
+    protected void getDataViews() {
+        mTxtName = mDialogView.findViewById(R.id.txtName);
+        mTxtType = mDialogView.findViewById(R.id.txtType);
+    }
+
+    @Override
+    protected void setData() {
+        mTxtName.setText(mCity.getName());
+        mTxtType.setText(mCity.getCityType().getName());
+    }
+
+    @Override
+    protected String getDialogMessageText() {
+        return "Your city";
+    }
+
+    @Override
+    protected void deleteObject() {
+        CityesFragment callingFragment = (CityesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("cityes");
+        callingFragment.deleteCity(mCity);
     }
 }
