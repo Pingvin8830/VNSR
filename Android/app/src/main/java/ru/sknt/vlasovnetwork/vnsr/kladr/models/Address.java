@@ -6,14 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityTypeDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.RegionDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetTypeDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.models.City;
-import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
-import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 
 @Entity(
         tableName = "kladr_address",
@@ -31,15 +24,15 @@ public class Address {
     @ColumnInfo(name = "name")
     private final String mName;
     @ColumnInfo(name = "region_id")
-    private int mRegionId;
+    private final int mRegionId;
     @Ignore
     private Region mRegion;
     @ColumnInfo(name = "city_id")
-    private int mCityId;
+    private final int mCityId;
     @Ignore
     private City mCity;
     @ColumnInfo(name = "street_id")
-    private int mStreetId;
+    private final int mStreetId;
     @Ignore
     private Street mStreet;
     @ColumnInfo(name = "house")
@@ -47,7 +40,7 @@ public class Address {
     @ColumnInfo(name = "building")
     private final String mBuilding;
     @ColumnInfo(name = "flat")
-    private int mFlat;
+    private final int mFlat;
 
     public int getId() { return this.mId; }
     public String getName() { return this.mName; }
@@ -62,14 +55,14 @@ public class Address {
     public int getFlat() { return this.mFlat; }
 
     public void setId(int id) { this.mId = id; }
-    public void setRegion(RegionDao dao) { this.mRegion = dao.find(mRegionId); }
-    public void setCity(CityDao cityDao, CityTypeDao cityTypeDao) {
-        this.mCity = cityDao.find(this.mCityId);
-        this.mCity.setCityType(cityTypeDao);
+    public void setRegion() { this.mRegion = MainActivity.RegionDao.find(mRegionId); }
+    public void setCity() {
+        this.mCity = MainActivity.CityDao.find(this.mCityId);
+        this.mCity.setCityType();
     }
-    public void setStreet(StreetDao streetDao, StreetTypeDao streetTypeDao) {
-        this.mStreet = streetDao.find(this.mStreetId);
-        this.mStreet.setStreetType(streetTypeDao);
+    public void setStreet() {
+        this.mStreet = MainActivity.StreetDao.find(this.mStreetId);
+        this.mStreet.setStreetType();
     }
 
     public Address (String name, int regionId, int cityId, int streetId, String house, String building, int flat) {
@@ -93,5 +86,4 @@ public class Address {
         this.mCityId = city.getId();
         this.mStreetId = street.getId();
     }
-
 }

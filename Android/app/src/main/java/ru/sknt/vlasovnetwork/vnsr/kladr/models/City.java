@@ -6,7 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityTypeDao;
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 
 @Entity(
         tableName = "kladr_city",
@@ -35,7 +35,7 @@ public class City {
     public CityType getCityType() { return this.mCityType; }
 
     public void setId(int id) { this.mId = id; }
-    public void setCityType(CityTypeDao dao) { this.mCityType = dao.find(mTypeId); }
+    public void setCityType() { this.mCityType = MainActivity.CityTypeDao.find(mTypeId); }
 
 
     public City (String name, int typeId) {

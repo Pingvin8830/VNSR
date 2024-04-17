@@ -6,8 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetTypeDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 
 @Entity(
         tableName = "kladr_street",
@@ -36,7 +35,7 @@ public class Street {
     public StreetType getStreetType() { return mStreetType; }
 
     public void setId(int id) { this.mId = id; }
-    public void setStreetType(StreetTypeDao dao) { this.mStreetType = dao.find(mTypeId); }
+    public void setStreetType() { this.mStreetType = MainActivity.StreetTypeDao.find(mTypeId); }
 
     public Street (int typeId, String name) {
         this.mTypeId = typeId;
