@@ -55,32 +55,4 @@
 
     </TableLayout>
 
-    <LinearLayout
-        android:id="@+id/lineButtons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tblRegion">
-
-        <Button
-            android:id="@+id/bttnDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="#FFFF0000"
-            android:text="Delete" />
-
-        <Button
-            android:id="@+id/bttnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="#FF00FF00"
-            android:text="Back" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
