@@ -1,122 +1,81 @@
 package ru.sknt.vlasovnetwork.vnsr.kladr.fragments;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import ru.sknt.vlasovnetwork.vnsr.R;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.AddressDao;
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
+import ru.sknt.vlasovnetwork.vnsr.ObjectsFragment;
 import ru.sknt.vlasovnetwork.vnsr.kladr.adapters.AddressesAdapter;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityTypeDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.RegionDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Address;
 
-public class AddressesFragment extends Fragment {
-    private FragmentManager mFragmentManager;
-    private final AddressDao mDao;
-    private final RegionDao mRegionDao;
-    private final CityDao mCityDao;
-    private final CityTypeDao mCityTypeDao;
-    private final StreetDao mStreetDao;
-    private final StreetTypeDao mStreetTypeDao;
-    private final List<Address> mAddresses;
-    private TextView mTxtError;
+public class AddressesFragment extends ObjectsFragment {
+    private List<Address> mAddresses;
     private AddressesAdapter mAdapter;
 
-    public AddressesFragment (AddressDao dao, RegionDao regionDao, CityDao cityDao, CityTypeDao cityTypeDao, StreetDao streetDao, StreetTypeDao streetTypeDao) {
-        super();
-        mDao = dao;
-        mRegionDao = regionDao;
-        mCityDao = cityDao;
-        mCityTypeDao = cityTypeDao;
-        mStreetDao = streetDao;
-        mStreetTypeDao = streetTypeDao;
-        mAddresses = mDao.getAll();
+    @Override
+    protected void setObjectList() {
+        mAddresses = MainActivity.AddressDao.getAll();
         for (Address address : mAddresses) {
-            address.setRegion(mRegionDao);
-            address.setCity(mCityDao, mCityTypeDao);
-            address.setStreet(mStreetDao, mStreetTypeDao);
+            address.setRegion();
+            address.setCity();
+            address.setStreet();
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIntstanceState) {
-        mFragmentManager = getActivity().getSupportFragmentManager();
-        View v = inflater.inflate(R.layout.kladr_addresses, container, false);
-        mTxtError = v.findViewById(R.id.txtError);
-        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
-        Button bttnAdd = v.findViewById(R.id.bttnAdd);
-
+    protected void setRecyclerViewAdapter() {
         mAdapter = new AddressesAdapter(this, mAddresses);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-
-        if (mAddresses.isEmpty()) {
-            mTxtError.setText("Addresses not found");
-            mTxtError.setVisibility(View.VISIBLE);
-        } else {
-            mTxtError.setVisibility(View.INVISIBLE);
-        }
-        bttnAdd.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if      (mRegionDao.getCount() < 1) { Toast.makeText(getContext(), "Regions not found", Toast.LENGTH_SHORT).show(); }
-                        else if (mCityDao.getCount()   < 1) { Toast.makeText(getContext(), "Cityes not found",  Toast.LENGTH_SHORT).show(); }
-                        else if (mStreetDao.getCount() < 1) { Toast.makeText(getContext(), "Streets not found", Toast.LENGTH_SHORT).show(); }
-                        else {
-                            NewAddressDialog dialog = new NewAddressDialog(mRegionDao, mCityDao, mCityTypeDao, mStreetDao, mStreetTypeDao);
-                            dialog.show(mFragmentManager, "");
-                        }
-                    }
-                }
-        );
-
-        return v;
+        mRecyclerView.setAdapter(mAdapter);
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    public void createNewAddress(Address address) {
-        mDao.create(address);
-        address = mDao.find(address.getName()); // Получаем новый корректный Id
-        address.setRegion(mRegionDao); // Устанавливаем Foreign
-        address.setCity(mCityDao, mCityTypeDao); // Устанавливаем Foreign
-        address.setStreet(mStreetDao, mStreetTypeDao); // Устанавливаем Foreign
-        mAddresses.add(address);
-        mTxtError.setVisibility(View.INVISIBLE);
+    @Override
+    protected boolean isObjectListEmpty() { return mAddresses.size() == 0; }
+
+    @Override
+    protected String getErrorEmptyObjectsText() { return "Addresses not found"; }
+
+    @Override
+    protected String getBeforeError() {
+        String error = "";
+        if      (MainActivity.RegionDao.getCount() < 1) { error = "Regions not found"; }
+        else if (MainActivity.CityDao.getCount()   < 1) { error = "Cityes not found"; }
+        else if (MainActivity.StreetDao.getCount() < 1) { error = "Streets not found"; }
+        return error;
     }
 
-    public void showAddress(int position) {
+    @Override
+    public void showObject(int position) {
         Address address = mAddresses.get(position);
         ShowAddressDialog dialog = new ShowAddressDialog(address);
         dialog.show(mFragmentManager, "");
     }
 
+    @Override
+    protected void showNewDialog() {
+        NewAddressDialog dialog = new NewAddressDialog();
+        dialog.show(mFragmentManager, "");
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void createNewAddress(Address address) {
+        MainActivity.AddressDao.create(address);
+        address = MainActivity.AddressDao.find(address.getName()); // Получаем новый корректный Id
+        address.setRegion(); // Устанавливаем Foreign
+        address.setCity(); // Устанавливаем Foreign
+        address.setStreet(); // Устанавливаем Foreign
+        mAddresses.add(address);
+        mTxtError.setVisibility(View.INVISIBLE);
+    }
+
     public void deleteAddress(Address address) {
         int position = mAddresses.indexOf(address);
-        mDao.delete(address);
+        MainActivity.AddressDao.delete(address);
         mAddresses.remove(address);
         mAdapter.notifyItemRemoved(position);
         if (mAddresses.isEmpty()) {
-            mTxtError.setText("Addresses not found");
+            mTxtError.setText(getErrorEmptyObjectsText());
             mTxtError.setVisibility(View.VISIBLE);
         }
     }
