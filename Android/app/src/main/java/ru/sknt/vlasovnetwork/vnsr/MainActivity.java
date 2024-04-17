@@ -11,9 +11,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import ru.sknt.vlasovnetwork.vnsr.car.CarActivity;
 import ru.sknt.vlasovnetwork.vnsr.kladr.KladrActivity;
+import ru.sknt.vlasovnetwork.vnsr.kladr.daos.AddressDao;
+import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityDao;
+import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityTypeDao;
+import ru.sknt.vlasovnetwork.vnsr.kladr.daos.RegionDao;
+import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetDao;
+import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.TravelsActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -21,9 +28,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Animation mAnimError;
     private EditText mEdtxtLogin;
     private EditText mEdtxtPassword;
+    public static AddressDao AddressDao;
+    public static RegionDao RegionDao;
+    public static CityDao CityDao;
+    public static CityTypeDao CityTypeDao;
+    public static StreetDao StreetDao;
+    public static StreetTypeDao StreetTypeDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        VNSRDatabase db = Room.databaseBuilder(getApplicationContext(), VNSRDatabase.class, "vnsr-database").allowMainThreadQueries().build();
+        MainActivity.AddressDao = db.addressDao();
+        MainActivity.RegionDao = db.regionDao();
+        MainActivity.CityDao = db.cityDao();
+        MainActivity.CityTypeDao = db.cityTypeDao();
+        MainActivity.StreetDao = db.streetDao();
+        MainActivity.StreetTypeDao = db.streetTypeDao();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
