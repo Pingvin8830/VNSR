@@ -1,86 +1,63 @@
 package ru.sknt.vlasovnetwork.vnsr.kladr.fragments;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
+import java.util.List;
 
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
+import ru.sknt.vlasovnetwork.vnsr.NewObjectDialog;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 
-public class NewRegionDialog extends DialogFragment implements View.OnClickListener {
-    private Animation mAnimError;
-    private TextView mTxtError;
-    private EditText mEdtxtCode;
+public class NewRegionDialog extends NewObjectDialog {
+    private List<Region> mRegions;
     private EditText mEdtxtName;
+    private EditText mEdtxtCode;
+    private String mCode;
+    private String mName;
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        mAnimError = AnimationUtils.loadAnimation(getContext(),R.anim.error);
-        mAnimError.setAnimationListener(
-                new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) { mTxtError.setVisibility(View.VISIBLE); }
-                    @Override
-                    public void onAnimationEnd(Animation animation) { mTxtError.setVisibility(View.INVISIBLE); }
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {}
-                }
-        );
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.kladr_new_region, null);
-        mTxtError = dialogView.findViewById(R.id.txtError);
-        mEdtxtCode = dialogView.findViewById(R.id.edtxtCode);
-        mEdtxtName = dialogView.findViewById(R.id.edtxtName);
-        Button bttnAdd = dialogView.findViewById(R.id.bttnAdd);
-        Button bttnCancel = dialogView.findViewById(R.id.bttnCancel);
-
-        mTxtError.setVisibility(View.INVISIBLE);
-
-        bttnCancel.setOnClickListener(this);
-        bttnAdd.setOnClickListener(this);
-
-        builder.setView(dialogView).setMessage("Add a new region");
-        return builder.create();
+    protected void setObjectsLists() {
+        mRegions = MainActivity.RegionDao.getAll();
     }
 
     @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.bttnCancel) { dismiss(); }
-        else if (v.getId() == R.id.bttnAdd) {
-            // Создаём новый регион
-            String code = mEdtxtCode.getText().toString();
-            String name = mEdtxtName.getText().toString();
+    protected int getLayoutCode() {
+        return R.layout.kladr_new_region;
+    }
 
-            if ((code.length() > 3) || (code.isEmpty())) {
-                mTxtError.setText("Bad code");
-                mTxtError.startAnimation(mAnimError);
-            } else if (name.isEmpty()) {
-                mTxtError.setText("Bad name");
-                mTxtError.startAnimation(mAnimError);
-            } else {
-                Region newRegion = new Region(code, name);
+    @Override
+    protected void getDataViews() {
+        mEdtxtCode = mDialogView.findViewById(R.id.edtxtCode);
+        mEdtxtName = mDialogView.findViewById(R.id.edtxtName);
+    }
 
-                // Получаем ссылку на Fragment
-                RegionsFragment callingFragment = (RegionsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("regions");
+    @Override
+    protected void setAdapters() {}
 
-                // Передаём newRegion обратно в Fragment
-                callingFragment.createNewRegion(newRegion);
+    @Override
+    protected String getDialogMessageText() {
+        return "Add a new region";
+    }
 
-                // Закрываем диалог
-                dismiss();
-            }
-        }
+    @Override
+    protected void setData() {
+        mCode = mEdtxtCode.getText().toString();
+        mName = mEdtxtName.getText().toString();
+    }
+
+    @Override
+    protected String getErrorText() {
+        String error = "";
+        if ((mCode.length() > 3) || (mCode.isEmpty())) { error = "Bad code"; }
+        else if (mName.isEmpty()) { error = "Bad name"; }
+        return error;
+    }
+
+    @Override
+    protected void createObject() {
+        Region region = new Region(mCode, mName);
+        RegionsFragment callingFragment = (RegionsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("regions");
+        callingFragment.createNewRegion(region);
     }
 }

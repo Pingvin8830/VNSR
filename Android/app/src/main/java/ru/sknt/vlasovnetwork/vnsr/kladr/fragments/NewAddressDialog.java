@@ -1,37 +1,20 @@
 package ru.sknt.vlasovnetwork.vnsr.kladr.fragments;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 
 import java.util.List;
 
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
+import ru.sknt.vlasovnetwork.vnsr.NewObjectDialog;
 import ru.sknt.vlasovnetwork.vnsr.R;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityTypeDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.RegionDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetDao;
-import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Address;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.City;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 
-public class NewAddressDialog extends DialogFragment implements View.OnClickListener {
-    private TextView mTxtError;
-    private Animation mAnimError;
+public class NewAddressDialog extends NewObjectDialog {
     private EditText mEdtxtName;
     private Spinner mSpnRegion;
     private Spinner mSpnCity;
@@ -39,56 +22,42 @@ public class NewAddressDialog extends DialogFragment implements View.OnClickList
     private EditText mEdtxtHome;
     private EditText mEdtxtBuilding;
     private EditText mEdtxtFlat;
-    private final RegionDao mRegionDao;
-    private final CityDao mCityDao;
-    private final CityTypeDao mCityTypeDao;
-    private final StreetDao mStreetDao;
-    private final StreetTypeDao mStreetTypeDao;
-    private final List<Region> mRegions;
-    private final List<City> mCityes;
-    private final List<Street> mStreets;
+    private List<Region> mRegions;
+    private List<City> mCityes;
+    private List<Street> mStreets;
+    private String mName;
+    private Region mRegion;
+    private City mCity;
+    private Street mStreet;
+    private String mHome;
+    private String mBuilding;
+    private int mFlat;
 
-    public NewAddressDialog(RegionDao regionDao, CityDao cityDao, CityTypeDao cityTypeDao, StreetDao streetDao, StreetTypeDao streetTypeDao) {
-        mRegionDao = regionDao;
-        mCityDao = cityDao;
-        mCityTypeDao = cityTypeDao;
-        mStreetDao = streetDao;
-        mStreetTypeDao = streetTypeDao;
-        mRegions = mRegionDao.getAll();
-        mCityes = mCityDao.getAll();
-        mStreets = mStreetDao.getAll();
-        for (City city : mCityes) { city.setCityType(mCityTypeDao); }
-        for (Street street : mStreets) { street.setStreetType(mStreetTypeDao); }
+    @Override
+    protected void setObjectsLists() {
+        mRegions = MainActivity.RegionDao.getAll();
+        mCityes = MainActivity.CityDao.getAll();
+        mStreets = MainActivity.StreetDao.getAll();
+        for (City city : mCityes) { city.setCityType(); }
+        for (Street street : mStreets) { street.setStreetType(); }
     }
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        mAnimError = AnimationUtils.loadAnimation(getContext(),R.anim.error);
-        mAnimError.setAnimationListener(
-                new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) { mTxtError.setVisibility(View.VISIBLE); }
-                    @Override
-                    public void onAnimationEnd(Animation animation) { mTxtError.setVisibility(View.INVISIBLE); }
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {}
-                }
-        );
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.kladr_new_address, null);
-        mTxtError = dialogView.findViewById(R.id.txtError);
-        mEdtxtName = dialogView.findViewById(R.id.edtxtName);
-        mSpnRegion = dialogView.findViewById(R.id.spnRegion);
-        mSpnCity = dialogView.findViewById(R.id.spnCity);
-        mSpnStreet = dialogView.findViewById(R.id.spnStreet);
-        mEdtxtHome = dialogView.findViewById(R.id.edtxtHome);
-        mEdtxtBuilding = dialogView.findViewById(R.id.edtxtBuilding);
-        mEdtxtFlat = dialogView.findViewById(R.id.edtxtFlat);
-        Button bttnAdd = dialogView.findViewById(R.id.bttnAdd);
-        Button bttnCancel = dialogView.findViewById(R.id.bttnCancel);
+    protected int getLayoutCode() { return R.layout.kladr_new_address; }
 
+    @Override
+    protected void getDataViews() {
+        mEdtxtName = mDialogView.findViewById(R.id.edtxtName);
+        mSpnRegion = mDialogView.findViewById(R.id.spnRegion);
+        mSpnCity = mDialogView.findViewById(R.id.spnCity);
+        mSpnStreet = mDialogView.findViewById(R.id.spnStreet);
+        mEdtxtHome = mDialogView.findViewById(R.id.edtxtHome);
+        mEdtxtBuilding = mDialogView.findViewById(R.id.edtxtBuilding);
+        mEdtxtFlat = mDialogView.findViewById(R.id.edtxtFlat);
+    }
+
+    @Override
+    protected void setAdapters() {
         ArrayAdapter<Region> regionAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mRegions);
         ArrayAdapter<City> cityAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mCityes);
         ArrayAdapter<Street> streetAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mStreets);
@@ -100,51 +69,37 @@ public class NewAddressDialog extends DialogFragment implements View.OnClickList
         mSpnRegion.setAdapter(regionAdapter);
         mSpnCity.setAdapter(cityAdapter);
         mSpnStreet.setAdapter(streetAdapter);
-
-        mTxtError.setVisibility(View.INVISIBLE);
-        builder.setView(dialogView).setMessage("Add a new address");
-
-        bttnCancel.setOnClickListener(this);
-        bttnAdd.setOnClickListener(this);
-
-        return builder.create();
     }
 
     @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.bttnCancel) { dismiss(); }
-        else if (v.getId() == R.id.bttnAdd) {
-            // Создаём новый адрес
-            String name = mEdtxtName.getText().toString();
-            Region region = mRegions.get(mSpnRegion.getSelectedItemPosition());
-            City city = mCityes.get(mSpnCity.getSelectedItemPosition());
-            Street street = mStreets.get(mSpnStreet.getSelectedItemPosition());
-            String home = mEdtxtHome.getText().toString();
-            String building = mEdtxtBuilding.getText().toString();
-            String flatString = mEdtxtFlat.getText().toString();
+    protected String getDialogMessageText() { return "Add a new address"; }
 
-            if (name.isEmpty()) {
-                mTxtError.setText("Bad name");
-                mTxtError.startAnimation(mAnimError);
-            } else if (home.isEmpty()) {
-                mTxtError.setText("Bad home");
-                mTxtError.startAnimation(mAnimError);
-            }
-            else {
-                int flat;
-                if (flatString.isEmpty()) { flat = 0; }
-                else { flat = Integer.parseInt(flatString); }
-                Address newAddress = new Address(name, region, city, street, home, building, flat);
 
-                // Получаем ссылку на Fragment
-                AddressesFragment callingFragment = (AddressesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("addresses");
+    @Override
+    protected void setData() {
+        mName = mEdtxtName.getText().toString();
+        mRegion = mRegions.get(mSpnRegion.getSelectedItemPosition());
+        mCity = mCityes.get(mSpnCity.getSelectedItemPosition());
+        mStreet = mStreets.get(mSpnStreet.getSelectedItemPosition());
+        mHome = mEdtxtHome.getText().toString();
+        mBuilding = mEdtxtBuilding.getText().toString();
+        String flatString = mEdtxtFlat.getText().toString();
+        if (flatString.isEmpty()) { mFlat = 0; }
+        else { mFlat = Integer.parseInt(flatString); }
+    }
 
-                // Передаём newAddress обратно в Fragment
-                callingFragment.createNewAddress(newAddress);
+    @Override
+    protected String getErrorText() {
+        String error = "";
+        if (mName.isEmpty()) { error = "Bad name"; }
+        else if (mHome.isEmpty()) { error = "Bad home"; }
+        return error;
+    }
 
-                // Закрываем диалог
-                dismiss();
-            }
-        }
+    @Override
+    protected void createObject() {
+        Address newAddress = new Address(mName, mRegion, mCity, mStreet, mHome, mBuilding, mFlat);
+        AddressesFragment callingFragment = (AddressesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("addresses");
+        callingFragment.createNewAddress(newAddress);
     }
 }
