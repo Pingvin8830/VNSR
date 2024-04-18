@@ -1,4 +1,4 @@
-package ru.sknt.vlasovnetwork.vnsr.daos.car;
+package ru.sknt.vlasovnetwork.vnsr.car.daos;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,7 +7,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ru.sknt.vlasovnetwork.vnsr.models.car.FuelStation;
+import ru.sknt.vlasovnetwork.vnsr.car.models.FuelStation;
 
 @Dao
 public interface FuelStationDao {
@@ -19,6 +19,10 @@ public interface FuelStationDao {
 
     @Query("SELECT * FROM car_fuelstation WHERE id=:id")
     FuelStation find(int id);
+    @Query("SELECT * FROM car_fuelstation WHERE name=:name")
+    FuelStation find(String name);
+    @Query("SELECT count(id) FROM car_fuelstation")
+    int getCount();
 
     @Delete
     void delete(FuelStation fuelStation);

@@ -1,5 +1,6 @@
-package ru.sknt.vlasovnetwork.vnsr.models.car;
+package ru.sknt.vlasovnetwork.vnsr.car.models;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -34,5 +35,15 @@ public class Fuel {
     public Fuel(String name, int fuelStationId) {
         this.mName = name;
         this.mFuelStationId = fuelStationId;
+        this.setFuelStation();
     }
+    public Fuel(String name, FuelStation fuelStation) {
+        this.mName = name;
+        this.mFuelStation = fuelStation;
+        this.mFuelStationId = fuelStation.getId();
+    }
+
+    @NonNull
+    @Override
+    public String toString() { return this.mName; }
 }
