@@ -21,6 +21,8 @@ public interface AddressDao {
     Address find(int id);
     @Query("SELECT * FROM kladr_address WHERE name=:name")
     Address find(String name);
+    @Query("SELECT count(id) FROM kladr_address")
+    int getCount();
 
     @Delete
     void delete(Address address);
