@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import ru.sknt.vlasovnetwork.vnsr.car.CarActivity;
+import ru.sknt.vlasovnetwork.vnsr.car.daos.FuelStationDao;
+import ru.sknt.vlasovnetwork.vnsr.car.daos.FuelDao;
+import ru.sknt.vlasovnetwork.vnsr.car.daos.RefuelDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.KladrActivity;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.AddressDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityDao;
@@ -34,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static CityTypeDao CityTypeDao;
     public static StreetDao StreetDao;
     public static StreetTypeDao StreetTypeDao;
+    public static FuelStationDao FuelStationDao;
+    public static FuelDao FuelDao;
+    public static RefuelDao RefuelDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MainActivity.CityTypeDao = db.cityTypeDao();
         MainActivity.StreetDao = db.streetDao();
         MainActivity.StreetTypeDao = db.streetTypeDao();
+        MainActivity.FuelStationDao = db.fuelStationDao();
+        MainActivity.FuelDao = db.fuelDao();
+        MainActivity.RefuelDao = db.refuelDao();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
