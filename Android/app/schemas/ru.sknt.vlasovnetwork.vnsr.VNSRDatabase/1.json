@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "aee206d4eaa453ed32633ddf246fc189",
+    "identityHash": "6cd07f2c27a078317e299af02192ddfa",
     "entities": [
       {
         "tableName": "travels_travelstate",
@@ -372,7 +372,7 @@
       },
       {
         "tableName": "car_refuel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `fuel_station_id` INTEGER NOT NULL, `check_number` INTEGER NOT NULL, `datetime` INTEGER NOT NULL, `trk` INTEGER NOT NULL, `fuel_id` INTEGER NOT NULL, `count` REAL NOT NULL, `price` REAL NOT NULL, `cost` REAL NOT NULL, `distance_reserve` INTEGER NOT NULL, `fuel_consumption_avg` REAL NOT NULL, `odometer` INTEGER NOT NULL, `distance` REAL NOT NULL, `fuel_consumption` REAL NOT NULL, `timedelta` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `fuel_station_id` INTEGER NOT NULL, `check_number` INTEGER NOT NULL, `datetime` INTEGER, `trk` INTEGER NOT NULL, `fuel_id` INTEGER NOT NULL, `count` REAL NOT NULL, `price` REAL NOT NULL, `cost` REAL NOT NULL, `distance_reserve` INTEGER NOT NULL, `fuel_consumption_avg` REAL NOT NULL, `odometer` INTEGER NOT NULL, `distance` REAL NOT NULL, `fuel_consumption` REAL NOT NULL, `timedelta` TEXT)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -396,7 +396,7 @@
             "fieldPath": "mDateTime",
             "columnName": "datetime",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "mTrk",
@@ -798,7 +798,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aee206d4eaa453ed32633ddf246fc189')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6cd07f2c27a078317e299af02192ddfa')"
     ]
   }
 }
