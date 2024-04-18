@@ -7,7 +7,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ru.sknt.vlasovnetwork.vnsr.models.car.Refuel;
+import ru.sknt.vlasovnetwork.vnsr.car.models.Refuel;
 
 @Dao
 public interface RefuelDao {
