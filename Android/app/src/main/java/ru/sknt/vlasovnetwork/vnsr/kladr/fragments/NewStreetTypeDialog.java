@@ -43,7 +43,7 @@ public class NewStreetTypeDialog extends NewObjectDialog {
     @Override
     protected String getErrorText() {
         String error = "";
-        if ((mShort.length() > 3) || (mShort.isEmpty())) { error = "Bad short name"; }
+        if ((mShort.length() > 5) || (mShort.isEmpty())) { error = "Bad short name"; }
         else if (mName.isEmpty()) { error = "Bad name"; }
         return error;
     }
