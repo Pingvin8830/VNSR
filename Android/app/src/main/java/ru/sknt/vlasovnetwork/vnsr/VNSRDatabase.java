@@ -2,10 +2,11 @@ package ru.sknt.vlasovnetwork.vnsr;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
-import ru.sknt.vlasovnetwork.vnsr.daos.car.FuelDao;
-import ru.sknt.vlasovnetwork.vnsr.daos.car.FuelStationDao;
-import ru.sknt.vlasovnetwork.vnsr.daos.car.RefuelDao;
+import ru.sknt.vlasovnetwork.vnsr.car.daos.FuelDao;
+import ru.sknt.vlasovnetwork.vnsr.car.daos.FuelStationDao;
+import ru.sknt.vlasovnetwork.vnsr.car.daos.RefuelDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.AddressDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityTypeDao;
@@ -17,9 +18,9 @@ import ru.sknt.vlasovnetwork.vnsr.daos.travels.PointDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.ToolRoadDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.TravelDao;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.WayDao;
-import ru.sknt.vlasovnetwork.vnsr.models.car.Fuel;
-import ru.sknt.vlasovnetwork.vnsr.models.car.FuelStation;
-import ru.sknt.vlasovnetwork.vnsr.models.car.Refuel;
+import ru.sknt.vlasovnetwork.vnsr.car.models.Fuel;
+import ru.sknt.vlasovnetwork.vnsr.car.models.FuelStation;
+import ru.sknt.vlasovnetwork.vnsr.car.models.Refuel;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Address;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.City;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.CityType;
@@ -61,6 +62,7 @@ import ru.sknt.vlasovnetwork.vnsr.models.travels.Way;
 //                @AutoMigration(from = 5, to = 6)
 //        }
 )
+@TypeConverters({Converters.class})
 public abstract class VNSRDatabase extends RoomDatabase {
     //@RenameTable(fromTableName = "TravelState", toTableName = "travels_travelstate")
     //static class Migration3to4 implements AutoMigrationSpec { }
