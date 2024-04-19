@@ -24,7 +24,7 @@ public class NewStreetDialog extends NewObjectDialog {
     protected void setObjectsLists() {
         mStreets = MainActivity.StreetDao.getAll();
         mStreetTypes = MainActivity.StreetTypeDao.getAll();
-        for (Street street : mStreets) { street.setStreetType(); }
+//        for (Street street : mStreets) { street.setStreetType(); }
     }
 
     @Override
@@ -65,7 +65,7 @@ public class NewStreetDialog extends NewObjectDialog {
 
     @Override
     protected void createObject() {
-        Street street = new Street(mStreetType, mName);
+        Street street = new Street(mName, mStreetType);
         StreetsFragment callingFragment = (StreetsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("streets");
         callingFragment.createNewStreet(street);
     }
