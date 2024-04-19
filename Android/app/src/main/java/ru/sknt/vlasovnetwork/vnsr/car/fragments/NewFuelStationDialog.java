@@ -14,24 +14,17 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Address;
 
 public class NewFuelStationDialog extends NewObjectDialog {
     private EditText mEdtxtCompany;
-    private EditText mEdtxtName;
+    private EditText mEdtxtNumber;
     private EditText mEdtxtPhone;
     private Spinner mSpnAddress;
     private List<Address> mAddresses;
     private String mCompany;
-    private String mName;
+    private String mNumber;
     private String mPhone;
     private Address mAddress;
 
     @Override
-    protected void setObjectsLists() {
-        mAddresses = MainActivity.AddressDao.getAll();
-        for (Address address : mAddresses) {
-            address.setRegion();
-            address.setCity();
-            address.setStreet();
-        }
-    }
+    protected void setObjectsLists() { mAddresses = MainActivity.AddressDao.getAll(); }
 
     @Override
     protected int getLayoutCode() { return R.layout.car_new_fuel_station; }
@@ -39,7 +32,7 @@ public class NewFuelStationDialog extends NewObjectDialog {
     @Override
     protected void getDataViews() {
         mEdtxtCompany = mDialogView.findViewById(R.id.edtxtCompany);
-        mEdtxtName = mDialogView.findViewById(R.id.edtxtName);
+        mEdtxtNumber = mDialogView.findViewById(R.id.edtxtNumber);
         mEdtxtPhone = mDialogView.findViewById(R.id.edtxtPhone);
         mSpnAddress = mDialogView.findViewById(R.id.spnAddress);
     }
@@ -57,7 +50,7 @@ public class NewFuelStationDialog extends NewObjectDialog {
     @Override
     protected void setData() {
         mCompany = mEdtxtCompany.getText().toString();
-        mName = mEdtxtName.getText().toString();
+        mNumber = mEdtxtNumber.getText().toString();
         mPhone = mEdtxtPhone.getText().toString();
         mAddress = mAddresses.get(mSpnAddress.getSelectedItemPosition());
     }
@@ -66,13 +59,12 @@ public class NewFuelStationDialog extends NewObjectDialog {
     protected String getErrorText() {
         String error = "";
         if (mCompany.isEmpty()) { error = "Bad company"; }
-        else if (mName.isEmpty()) { error = "Bad name"; }
         return error;
     }
 
     @Override
     protected void createObject() {
-        FuelStation newFuelStation = new FuelStation(mCompany, mName, mPhone, mAddress);
+        FuelStation newFuelStation = new FuelStation(mCompany, mNumber, mPhone, mAddress);
         FuelStationsFragment callingFragment = (FuelStationsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("fuel_stations");
         callingFragment.createNewFuelStation(newFuelStation);
     }

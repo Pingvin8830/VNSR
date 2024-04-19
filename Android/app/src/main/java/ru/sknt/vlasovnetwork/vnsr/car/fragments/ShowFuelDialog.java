@@ -9,7 +9,6 @@ import ru.sknt.vlasovnetwork.vnsr.car.models.Fuel;
 public class ShowFuelDialog extends ShowObjectDialog {
     private final Fuel mFuel;
     private TextView mTxtName;
-    private TextView mTxtFuelStation;
 
     public ShowFuelDialog(Fuel fuel) {
         mFuel = fuel;
@@ -21,16 +20,10 @@ public class ShowFuelDialog extends ShowObjectDialog {
     }
 
     @Override
-    protected void getDataViews() {
-        mTxtName = mDialogView.findViewById(R.id.txtName);
-        mTxtFuelStation = mDialogView.findViewById(R.id.txtFuelStation);
-    }
+    protected void getDataViews() { mTxtName = mDialogView.findViewById(R.id.txtName); }
 
     @Override
-    protected void setData() {
-        mTxtName.setText(mFuel.getName());
-        mTxtFuelStation.setText(mFuel.getFuelStation().getName());
-    }
+    protected void setData() { mTxtName.setText(mFuel.getName()); }
 
     @Override
     protected String getDialogMessageText() {
