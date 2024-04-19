@@ -33,7 +33,12 @@ public class RefuelsAdapter extends RecyclerView.Adapter<RefuelsAdapter.ListItem
     @Override
     public void onBindViewHolder(@NonNull RefuelsAdapter.ListItemHolder holder, int position) {
         Refuel refuel = mRefuels.get(position);
-        holder.mTxtDate.setText(refuel.getDateTime().toString());
+        holder.mTxtDateTime.setText(refuel.getDateTime().toString());
+        holder.mTxtFuelStation.setText(refuel.getFuelStation().toString());
+        holder.mTxtCount.setText(String.valueOf(refuel.getCount()));
+        holder.mTxtFuel.setText(refuel.getFuel().getName());
+        holder.mTxtCost.setText(String.valueOf(refuel.getCost()));
+        holder.mTxtAddress.setText(refuel.getFuelStation().getAddress().getFull());
     }
 
     @Override
@@ -42,11 +47,21 @@ public class RefuelsAdapter extends RecyclerView.Adapter<RefuelsAdapter.ListItem
     }
 
     public class ListItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mTxtDate;
+        public TextView mTxtDateTime;
+        public TextView mTxtFuelStation;
+        public TextView mTxtCount;
+        public TextView mTxtFuel;
+        public TextView mTxtCost;
+        public TextView mTxtAddress;
 
         public ListItemHolder(View view) {
             super(view);
-            mTxtDate = view.findViewById(R.id.txtDate);
+            mTxtDateTime = view.findViewById(R.id.txtDateTime);
+            mTxtFuelStation = view.findViewById(R.id.txtFuelStation);
+            mTxtCount = view.findViewById(R.id.txtCount);
+            mTxtFuel = view.findViewById(R.id.txtFuel);
+            mTxtCost = view.findViewById(R.id.txtCost);
+            mTxtAddress = view.findViewById(R.id.txtAddress);
             view.setClickable(true);
             view.setOnClickListener(this);
         }
