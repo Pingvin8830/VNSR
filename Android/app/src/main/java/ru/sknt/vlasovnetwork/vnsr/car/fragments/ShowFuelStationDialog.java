@@ -9,7 +9,7 @@ import ru.sknt.vlasovnetwork.vnsr.car.models.FuelStation;
 public class ShowFuelStationDialog extends ShowObjectDialog {
     private final FuelStation mFuelStation;
     private TextView mTxtCompany;
-    private TextView mTxtName;
+    private TextView mTxtNumber;
     private TextView mTxtPhone;
     private TextView mTxtAddress;
 
@@ -26,7 +26,7 @@ public class ShowFuelStationDialog extends ShowObjectDialog {
     @Override
     protected void getDataViews() {
         mTxtCompany = mDialogView.findViewById(R.id.txtCompany);
-        mTxtName = mDialogView.findViewById(R.id.txtName);
+        mTxtNumber = mDialogView.findViewById(R.id.txtNumber);
         mTxtPhone = mDialogView.findViewById(R.id.txtPhone);
         mTxtAddress = mDialogView.findViewById(R.id.txtAddress);
     }
@@ -34,9 +34,9 @@ public class ShowFuelStationDialog extends ShowObjectDialog {
     @Override
     protected void setData() {
         mTxtCompany.setText(mFuelStation.getCompany());
-        mTxtName.setText(mFuelStation.getName());
+        mTxtNumber.setText(mFuelStation.getNumber());
         mTxtPhone.setText(mFuelStation.getPhone());
-        mTxtAddress.setText(mFuelStation.getAddress().toString());
+        mTxtAddress.setText(mFuelStation.getAddress().getFull());
     }
 
     @Override
