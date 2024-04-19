@@ -15,10 +15,7 @@ public class FuelStationsFragment extends ObjectsFragment {
     private FuelStationsAdapter mAdapter;
 
     @Override
-    protected void setObjectList() {
-        mFuelStations = MainActivity.FuelStationDao.getAll();
-        for (FuelStation fuelStation : mFuelStations) { fuelStation.setAddress(); }
-    }
+    protected void setObjectList() { mFuelStations = MainActivity.FuelStationDao.getAll(); }
 
     @Override
     protected void setRecyclerViewAdapter() {
@@ -55,8 +52,7 @@ public class FuelStationsFragment extends ObjectsFragment {
     @SuppressLint("NotifyDataSetChanged")
     public void createNewFuelStation(FuelStation fuelStation) {
         MainActivity.FuelStationDao.create(fuelStation);
-        fuelStation = MainActivity.FuelStationDao.find(fuelStation.getName()); // Получаем новый корректный Id
-        fuelStation.setAddress(); // Устанавливаем Foreign
+        fuelStation = MainActivity.FuelStationDao.find(fuelStation.getCompany(), fuelStation.getNumber());
         mFuelStations.add(fuelStation);
         mTxtError.setVisibility(View.INVISIBLE);
     }
