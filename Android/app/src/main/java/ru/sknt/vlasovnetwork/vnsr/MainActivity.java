@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if (v.getId() == R.id.bttnCar)      { startActivity(new Intent(this, CarActivity.class)); }
         else if (v.getId() == R.id.bttnTravels)  { startActivity(new Intent(this, TravelsActivity.class)); }
         else if (v.getId() == R.id.bttnKladr)    { startActivity(new Intent(this, KladrActivity.class)); }
+        else if (v.getId() == R.id.bttnTruncate) { truncateAll(); }
 //        else if (v.getId() == R.id.bttnSync)     { startActivity(new Intent(this, SyncActivity.class)); }
         else {
             Button bttn = (Button) v;
@@ -104,13 +105,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button bttnCar = findViewById(R.id.bttnCar);
         Button bttnTravels = findViewById(R.id.bttnTravels);
         Button bttnKladr = findViewById(R.id.bttnKladr);
-        Button bttnSync = findViewById(R.id.bttnSync);
+        //Button bttnSync = findViewById(R.id.bttnSync);
+        Button bttnTruncate = findViewById(R.id.bttnTruncate);
         Button bttnLogOut = findViewById(R.id.bttnLogOut);
 
         bttnCar.setOnClickListener(this);
         bttnTravels.setOnClickListener(this);
         bttnKladr.setOnClickListener(this);
-        bttnSync.setOnClickListener(this);
+        //bttnSync.setOnClickListener(this);
+        bttnTruncate.setOnClickListener(this);
         bttnLogOut.setOnClickListener(this);
+    }
+
+    private void truncateAll() {
+        MainActivity.RefuelDao.truncate();
+        MainActivity.FuelDao.truncate();
+        MainActivity.FuelStationDao.truncate();
+        MainActivity.AddressDao.truncate();
+        MainActivity.StreetDao.truncate();
+        MainActivity.StreetTypeDao.truncate();
+        MainActivity.CityDao.truncate();
+        MainActivity.CityTypeDao.truncate();
+        MainActivity.RegionDao.truncate();
+        Toast.makeText(getApplicationContext(), "Truncated", Toast.LENGTH_SHORT).show();
     }
 }
