@@ -37,22 +37,22 @@
 
         </TableRow>
         <TableRow
-            android:id="@+id/trName"
+            android:id="@+id/trNumber"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
             <TextView
-                android:id="@+id/txtName"
+                android:id="@+id/txtNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name" />
+                android:text="Number" />
 
             <EditText
-                android:id="@+id/edtxtName"
+                android:id="@+id/edtxtNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="number"
                 android:autofillHints=""
                 tools:ignore="LabelFor" />
 
