@@ -24,18 +24,21 @@ public class Address {
     private int mId;
     @ColumnInfo(name = "name")
     private final String mName;
+    //@ColumnInfo(name = "region_id")
+    //private final int mRegionId;
+    //@Ignore
     @ColumnInfo(name = "region_id")
-    private final int mRegionId;
-    @Ignore
-    private Region mRegion;
+    private final Region mRegion;
+    //@ColumnInfo(name = "city_id")
+    //private final int mCityId;
+    //@Ignore
     @ColumnInfo(name = "city_id")
-    private final int mCityId;
-    @Ignore
-    private City mCity;
+    private final City mCity;
+    //@ColumnInfo(name = "street_id")
+    //private final int mStreetId;
+    //@Ignore
     @ColumnInfo(name = "street_id")
-    private final int mStreetId;
-    @Ignore
-    private Street mStreet;
+    private final Street mStreet;
     @ColumnInfo(name = "house")
     private final String mHouse;
     @ColumnInfo(name = "building")
@@ -45,28 +48,34 @@ public class Address {
 
     public int getId() { return this.mId; }
     public String getName() { return this.mName; }
-    public int getRegionId() { return this.mRegionId; }
+    //public int getRegionId() { return this.mRegionId; }
     public Region getRegion() { return this.mRegion; }
-    public int getCityId() { return this.mCityId; }
+    //public int getCityId() { return this.mCityId; }
     public City getCity() { return mCity; }
-    public int getStreetId() { return this.mStreetId; }
+    //public int getStreetId() { return this.mStreetId; }
     public Street getStreet() { return this.mStreet; }
     public String getHouse() { return this.mHouse; }
     public String getBuilding() { return this.mBuilding; }
     public int getFlat() { return this.mFlat; }
+    public String getFull() {
+        String res = getCity() + ", " + getStreet() + ", д. " + getHouse();
+        if (!mBuilding.isEmpty()) { res += ", корп. " + getBuilding(); }
+        if (mFlat > 0) { res += ", кв. " + getFlat(); }
+        return res;
+    }
 
     public void setId(int id) { this.mId = id; }
-    public void setRegion() { this.mRegion = MainActivity.RegionDao.find(mRegionId); }
-    public void setCity() {
+    //public void setRegion() { this.mRegion = MainActivity.RegionDao.find(mRegionId); }
+    /*public void setCity() {
         this.mCity = MainActivity.CityDao.find(this.mCityId);
         this.mCity.setCityType();
-    }
-    public void setStreet() {
+    }*/
+    /*public void setStreet() {
         this.mStreet = MainActivity.StreetDao.find(this.mStreetId);
         this.mStreet.setStreetType();
-    }
+    }*/
 
-    public Address (String name, int regionId, int cityId, int streetId, String house, String building, int flat) {
+    /*public Address (String name, int regionId, int cityId, int streetId, String house, String building, int flat) {
         this.mName = name;
         this.mRegionId = regionId;
         this.mCityId = cityId;
@@ -74,8 +83,8 @@ public class Address {
         this.mHouse = house;
         this.mBuilding = building;
         this.mFlat = flat;
-    }
-    public Address (String name, Region region, City city, Street street, String house, String building, int flat) {
+    }*/
+    /*public Address (String name, Region region, City city, Street street, String house, String building, int flat) {
         this.mName = name;
         this.mRegion = region;
         this.mCity = city;
@@ -86,6 +95,15 @@ public class Address {
         this.mRegionId = region.getId();
         this.mCityId = city.getId();
         this.mStreetId = street.getId();
+    }*/
+    public Address (String name, Region region, City city, Street street, String house, String building, int flat) {
+        this.mName = name;
+        this.mRegion = region;
+        this.mCity = city;
+        this.mStreet = street;
+        this.mHouse = house;
+        this.mBuilding = building;
+        this.mFlat = flat;
     }
 
     @NonNull
