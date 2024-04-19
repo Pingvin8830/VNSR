@@ -22,29 +22,34 @@ public class Street {
     @ColumnInfo(name = "id")
     private int mId;
 
+    //@ColumnInfo(name = "type_id")
+    //private int mTypeId;
+    //@Ignore
     @ColumnInfo(name = "type_id")
-    private int mTypeId;
-    @Ignore
     private StreetType mStreetType;
     @ColumnInfo(name = "name")
     private final String mName;
 
     public int getId() { return this.mId; }
-    public int getTypeId() { return this.mTypeId; }
+    //public int getTypeId() { return this.mTypeId; }
     public String getName() { return this.mName; }
     public StreetType getStreetType() { return mStreetType; }
 
     public void setId(int id) { this.mId = id; }
-    public void setStreetType() { this.mStreetType = MainActivity.StreetTypeDao.find(mTypeId); }
+    //public void setStreetType() { this.mStreetType = MainActivity.StreetTypeDao.find(mTypeId); }
 
-    public Street (int typeId, String name) {
+    /*public Street (int typeId, String name) {
         this.mTypeId = typeId;
         this.mName = name;
-    }
-    public Street (StreetType type, String name) {
+    }*/
+    /*public Street (StreetType type, String name) {
         this.mStreetType = type;
         this.mTypeId = mStreetType.getId();
         this.mName = name;
+    }*/
+    public Street (String name, StreetType streetType) {
+        this.mName = name;
+        this.mStreetType = streetType;
     }
 
     @Override
