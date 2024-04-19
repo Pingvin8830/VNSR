@@ -17,7 +17,7 @@ public class StreetsFragment extends ObjectsFragment {
     @Override
     protected void setObjectList() {
         mStreets = MainActivity.StreetDao.getAll();
-        for (Street street : mStreets) { street.setStreetType(); }
+//        for (Street street : mStreets) { street.setStreetType(); }
     }
 
     @Override
@@ -60,7 +60,7 @@ public class StreetsFragment extends ObjectsFragment {
     public void createNewStreet(Street street) {
         MainActivity.StreetDao.create(street);
         street = MainActivity.StreetDao.find(street.getStreetType().getId(), street.getName()); // Получаем новый корректный Id
-        street.setStreetType(); // Устанавливаем Foreign
+  //      street.setStreetType(); // Устанавливаем Foreign
         mStreets.add(street);
         mTxtError.setVisibility(View.INVISIBLE);
     }
