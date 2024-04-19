@@ -34,19 +34,19 @@
 
         </TableRow>
         <TableRow
-            android:id="@+id/trName"
+            android:id="@+id/trNumber"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/txtNameLabel"
+                android:id="@+id/txtNumberLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Name" />
+                android:text="Number" />
 
             <TextView
-                android:id="@+id/txtName"
+                android:id="@+id/txtNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -93,6 +93,5 @@
                 android:text="Санкт-Петербург, Косыгина пр-кт, д. 2а, лит. А" />
 
         </TableRow>
-
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
