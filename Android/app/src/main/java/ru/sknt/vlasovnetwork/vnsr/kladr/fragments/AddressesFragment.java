@@ -15,14 +15,7 @@ public class AddressesFragment extends ObjectsFragment {
     private AddressesAdapter mAdapter;
 
     @Override
-    protected void setObjectList() {
-        mAddresses = MainActivity.AddressDao.getAll();
-        for (Address address : mAddresses) {
-            address.setRegion();
-            address.setCity();
-            address.setStreet();
-        }
-    }
+    protected void setObjectList() { mAddresses = MainActivity.AddressDao.getAll(); }
 
     @Override
     protected void setRecyclerViewAdapter() {
@@ -31,7 +24,7 @@ public class AddressesFragment extends ObjectsFragment {
     }
 
     @Override
-    protected boolean isObjectListEmpty() { return mAddresses.size() == 0; }
+    protected boolean isObjectListEmpty() { return mAddresses.isEmpty(); }
 
     @Override
     protected String getErrorEmptyObjectsText() { return "Addresses not found"; }
@@ -62,9 +55,6 @@ public class AddressesFragment extends ObjectsFragment {
     public void createNewAddress(Address address) {
         MainActivity.AddressDao.create(address);
         address = MainActivity.AddressDao.find(address.getName()); // Получаем новый корректный Id
-        address.setRegion(); // Устанавливаем Foreign
-        address.setCity(); // Устанавливаем Foreign
-        address.setStreet(); // Устанавливаем Foreign
         mAddresses.add(address);
         mTxtError.setVisibility(View.INVISIBLE);
     }
