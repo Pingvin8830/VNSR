@@ -2,24 +2,18 @@ package ru.sknt.vlasovnetwork.vnsr.kladr.fragments;
 
 import android.widget.EditText;
 
-import java.util.List;
-
-import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.NewObjectDialog;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 
 public class NewRegionDialog extends NewObjectDialog {
-    private List<Region> mRegions;
     private EditText mEdtxtName;
     private EditText mEdtxtCode;
     private String mCode;
     private String mName;
 
     @Override
-    protected void setObjectsLists() {
-        mRegions = MainActivity.RegionDao.getAll();
-    }
+    protected void setObjectsLists() {}
 
     @Override
     protected int getLayoutCode() {
