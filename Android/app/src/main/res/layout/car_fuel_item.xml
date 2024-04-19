@@ -29,12 +29,6 @@
                 android:gravity="center_vertical"
                 android:text="Автомобильный бензин АИ-95-К5" />
 
-            <TextView
-                android:id="@+id/txtFuelStation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Лукойл" />
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
