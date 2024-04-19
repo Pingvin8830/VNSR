@@ -52,7 +52,7 @@ public class ShowRefuelDialog extends ShowObjectDialog {
 
     @Override
     protected void setData() {
-        mTxtFuelStation.setText(mRefuel.getFuelStation().getName());
+        mTxtFuelStation.setText(mRefuel.getFuelStation().toString());
         mTxtCheckNumber.setText(String.valueOf(mRefuel.getCheckNumber()));
         mTxtDateTime.setText(String.valueOf(mRefuel.getDateTime()));
         mTxtTrk.setText(String.valueOf(mRefuel.getTrk()));
