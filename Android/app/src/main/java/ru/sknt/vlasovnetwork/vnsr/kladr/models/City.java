@@ -1,12 +1,10 @@
 package ru.sknt.vlasovnetwork.vnsr.kladr.models;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
-
-import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 
 @Entity(
         tableName = "kladr_city",
@@ -24,35 +22,21 @@ public class City {
 
     @ColumnInfo(name = "name")
     private final String mName;
-    //@ColumnInfo(name = "type_id")
-    //private int mTypeId;
-    //@Ignore
     @ColumnInfo(name = "type_id")
-    private CityType mCityType;
+    private final CityType mCityType;
 
     public int getId() { return this.mId; }
     public String getName() { return this.mName; }
-    //public int getTypeId() { return this.mTypeId; }
     public CityType getCityType() { return this.mCityType; }
 
     public void setId(int id) { this.mId = id; }
-    //public void setCityType() { this.mCityType = MainActivity.CityTypeDao.find(mTypeId); }
 
-
-    /*public City (String name, int typeId) {
-        this.mName = name;
-        this.mTypeId = typeId;
-    }*/
-    /*public City (String name, CityType type) {
-        this.mName = name;
-        this.mCityType = type;
-        this.mTypeId = type.getId();
-    }*/
     public City(String name, CityType cityType) {
         this.mName = name;
         this.mCityType = cityType;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return getCityType().getShort() + ". " + getName();
