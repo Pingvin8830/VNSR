@@ -24,28 +24,33 @@ public class City {
 
     @ColumnInfo(name = "name")
     private final String mName;
+    //@ColumnInfo(name = "type_id")
+    //private int mTypeId;
+    //@Ignore
     @ColumnInfo(name = "type_id")
-    private int mTypeId;
-    @Ignore
     private CityType mCityType;
 
     public int getId() { return this.mId; }
     public String getName() { return this.mName; }
-    public int getTypeId() { return this.mTypeId; }
+    //public int getTypeId() { return this.mTypeId; }
     public CityType getCityType() { return this.mCityType; }
 
     public void setId(int id) { this.mId = id; }
-    public void setCityType() { this.mCityType = MainActivity.CityTypeDao.find(mTypeId); }
+    //public void setCityType() { this.mCityType = MainActivity.CityTypeDao.find(mTypeId); }
 
 
-    public City (String name, int typeId) {
+    /*public City (String name, int typeId) {
         this.mName = name;
         this.mTypeId = typeId;
-    }
-    public City (String name, CityType type) {
+    }*/
+    /*public City (String name, CityType type) {
         this.mName = name;
         this.mCityType = type;
         this.mTypeId = type.getId();
+    }*/
+    public City(String name, CityType cityType) {
+        this.mName = name;
+        this.mCityType = cityType;
     }
 
     @Override
