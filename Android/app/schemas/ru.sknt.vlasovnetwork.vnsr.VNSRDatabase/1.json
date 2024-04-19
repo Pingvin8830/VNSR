@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6cd07f2c27a078317e299af02192ddfa",
+    "identityHash": "73239bc8cf97d772314eb825441028d8",
     "entities": [
       {
         "tableName": "travels_travelstate",
@@ -296,7 +296,7 @@
       },
       {
         "tableName": "car_fuelstation",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `company` TEXT, `name` TEXT, `phone` TEXT, `address_id` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `company` TEXT, `number` TEXT, `phone` TEXT, `address_id` INTEGER)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -311,8 +311,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "mName",
-            "columnName": "name",
+            "fieldPath": "mNumber",
+            "columnName": "number",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -323,10 +323,10 @@
             "notNull": false
           },
           {
-            "fieldPath": "mAddressId",
+            "fieldPath": "mAddress",
             "columnName": "address_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -335,12 +335,23 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_car_fuelstation_company_number",
+            "unique": true,
+            "columnNames": [
+              "company",
+              "number"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_car_fuelstation_company_number` ON `${TABLE_NAME}` (`company`, `number`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
         "tableName": "car_fuel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `fuel_station_id` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -353,12 +364,6 @@
             "columnName": "name",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "mFuelStationId",
-            "columnName": "fuel_station_id",
-            "affinity": "INTEGER",
-            "notNull": true
           }
         ],
         "primaryKey": {
@@ -367,7 +372,17 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_car_fuel_name",
+            "unique": true,
+            "columnNames": [
+              "name"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_car_fuel_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -588,7 +603,7 @@
       },
       {
         "tableName": "kladr_city",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `type_id` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `type_id` INTEGER)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -603,10 +618,10 @@
             "notNull": false
           },
           {
-            "fieldPath": "mTypeId",
+            "fieldPath": "mCityType",
             "columnName": "type_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -681,7 +696,7 @@
       },
       {
         "tableName": "kladr_street",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type_id` INTEGER NOT NULL, `name` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type_id` INTEGER, `name` TEXT)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -690,10 +705,10 @@
             "notNull": true
           },
           {
-            "fieldPath": "mTypeId",
+            "fieldPath": "mStreetType",
             "columnName": "type_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "mName",
@@ -724,7 +739,7 @@
       },
       {
         "tableName": "kladr_address",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `region_id` INTEGER NOT NULL, `city_id` INTEGER NOT NULL, `street_id` INTEGER NOT NULL, `house` TEXT, `building` TEXT, `flat` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `region_id` INTEGER, `city_id` INTEGER, `street_id` INTEGER, `house` TEXT, `building` TEXT, `flat` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -739,22 +754,22 @@
             "notNull": false
           },
           {
-            "fieldPath": "mRegionId",
+            "fieldPath": "mRegion",
             "columnName": "region_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
-            "fieldPath": "mCityId",
+            "fieldPath": "mCity",
             "columnName": "city_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
-            "fieldPath": "mStreetId",
+            "fieldPath": "mStreet",
             "columnName": "street_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "mHouse",
@@ -798,7 +813,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6cd07f2c27a078317e299af02192ddfa')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '73239bc8cf97d772314eb825441028d8')"
     ]
   }
 }
