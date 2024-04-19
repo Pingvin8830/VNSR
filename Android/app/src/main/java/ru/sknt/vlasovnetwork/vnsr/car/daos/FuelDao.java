@@ -19,8 +19,8 @@ public interface FuelDao {
 
     @Query("SELECT * FROM car_fuel WHERE id=:id")
     Fuel find(int id);
-    @Query("SELECT * FROM car_fuel WHERE name=:name AND fuel_station_id=:fuelStationId")
-    Fuel find(String name, int fuelStationId);
+    @Query("SELECT * FROM car_fuel WHERE name=:name")
+    Fuel find(String name);
     @Query("SELECT count(id) FROM car_fuel")
     int getCount();
 
