@@ -38,8 +38,8 @@ public class NewAddressDialog extends NewObjectDialog {
         mRegions = MainActivity.RegionDao.getAll();
         mCityes = MainActivity.CityDao.getAll();
         mStreets = MainActivity.StreetDao.getAll();
-        for (City city : mCityes) { city.setCityType(); }
-        for (Street street : mStreets) { street.setStreetType(); }
+//        for (City city : mCityes) { city.setCityType(); }
+//        for (Street street : mStreets) { street.setStreetType(); }
     }
 
     @Override
