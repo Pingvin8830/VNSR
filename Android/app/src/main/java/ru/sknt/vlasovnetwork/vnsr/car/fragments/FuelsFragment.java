@@ -15,10 +15,7 @@ public class FuelsFragment extends ObjectsFragment {
     private FuelsAdapter mAdapter;
 
     @Override
-    protected void setObjectList() {
-        mFuels = MainActivity.FuelDao.getAll();
-        for (Fuel fuel : mFuels) { fuel.setFuelStation(); }
-    }
+    protected void setObjectList() { mFuels = MainActivity.FuelDao.getAll(); }
 
     @Override
     protected void setRecyclerViewAdapter() {
@@ -33,11 +30,7 @@ public class FuelsFragment extends ObjectsFragment {
     protected String getErrorEmptyObjectsText() { return "Fuels not found"; }
 
     @Override
-    protected String getBeforeError() {
-        String error = "";
-        if      (MainActivity.FuelStationDao.getCount() < 1) { error = "Fuel stations not found"; }
-        return error;
-    }
+    protected String getBeforeError() { return ""; }
 
     @Override
     public void showObject(int position) {
@@ -55,8 +48,7 @@ public class FuelsFragment extends ObjectsFragment {
     @SuppressLint("NotifyDataSetChanged")
     public void createNewFuel(Fuel fuel) {
         MainActivity.FuelDao.create(fuel);
-        fuel = MainActivity.FuelDao.find(fuel.getName(), fuel.getFuelStationId()); // Получаем новый корректный Id
-        fuel.setFuelStation(); // Устанавливаем Foreign
+        fuel = MainActivity.FuelDao.find(fuel.getName()); // Получаем новый корректный Id
         mFuels.add(fuel);
         mTxtError.setVisibility(View.INVISIBLE);
     }
