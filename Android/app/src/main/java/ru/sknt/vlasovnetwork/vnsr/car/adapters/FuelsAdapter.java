@@ -34,7 +34,6 @@ public class FuelsAdapter extends RecyclerView.Adapter<FuelsAdapter.ListItemHold
     public void onBindViewHolder(@NonNull FuelsAdapter.ListItemHolder holder, int position) {
         Fuel fuel = mFuels.get(position);
         holder.mTxtName.setText(fuel.getName());
-        holder.mTxtFuelStation.setText(fuel.getFuelStation().getName());
     }
 
     @Override
