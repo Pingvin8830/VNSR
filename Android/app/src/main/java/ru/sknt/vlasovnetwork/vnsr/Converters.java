@@ -4,6 +4,8 @@ import androidx.room.TypeConverter;
 
 import java.util.Date;
 
+import ru.sknt.vlasovnetwork.vnsr.car.models.Fuel;
+import ru.sknt.vlasovnetwork.vnsr.car.models.FuelStation;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Address;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.City;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.CityType;
@@ -13,9 +15,7 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 
 public class Converters {
     @TypeConverter
-    public static FormatedDate timestampToDate(Long value) {
-        return value == null ? null : new FormatedDate(value);
-    }
+    public static FormatedDate timestampToDate(Long value) { return value == null ? null : new FormatedDate(value); }
     @TypeConverter
     public static Long dateToTimestamp(Date date) {
         return date == null ? null : date.getTime();
@@ -50,4 +50,14 @@ public class Converters {
     public static int streetTypeToInt(StreetType streetType) { return  streetType == null ? null : streetType.getId(); }
     @TypeConverter
     public static StreetType intToStreetType(int id) { return id == 0 ? null : MainActivity.StreetTypeDao.find(id); }
+
+    @TypeConverter
+    public static int fuelStationToInt(FuelStation fuelStation) { return fuelStation == null ? null : fuelStation.getId(); }
+    @TypeConverter
+    public static FuelStation intToFuelStation(int id) { return id == 0 ? null : MainActivity.FuelStationDao.find(id); }
+
+    @TypeConverter
+    public static int fuelToInt(Fuel fuel) { return fuel == null ? null : fuel.getId(); }
+    @TypeConverter
+    public static Fuel intToFuel(int id) { return id == 0 ? null : MainActivity.FuelDao.find(id); }
 }

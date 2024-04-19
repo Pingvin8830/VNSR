@@ -17,10 +17,6 @@ public class RefuelsFragment extends ObjectsFragment {
     @Override
     protected void setObjectList() {
         mRefuels = MainActivity.RefuelDao.getAll();
-        for (Refuel refuel : mRefuels) {
-            refuel.setFuelStation();
-            refuel.setFuel();
-        }
     }
 
     @Override
@@ -60,8 +56,6 @@ public class RefuelsFragment extends ObjectsFragment {
     public void createNewRefuel(Refuel refuel) {
         MainActivity.RefuelDao.create(refuel);
         refuel = MainActivity.RefuelDao.find(refuel.getDateTime()); // Получаем новый корректный Id
-        refuel.setFuelStation(); // Устанавливаем Foreign
-        refuel.setFuel(); // Устанавливаем Foreign
         mRefuels.add(refuel);
         mTxtError.setVisibility(View.INVISIBLE);
     }
