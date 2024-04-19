@@ -59,10 +59,16 @@
             android:text="Kladr" />
 
         <Button
+            android:id="@+id/bttnTruncate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TRUNCATE" />
+
+        <!--Button
             android:id="@+id/bttnSync"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sync" />
+            android:text="Sync" /-->
 
         <Button
             android:id="@+id/bttnLogOut"
