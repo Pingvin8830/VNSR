@@ -13,7 +13,6 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 
 public class NewStreetDialog extends NewObjectDialog {
-    private List<Street> mStreets;
     private List<StreetType> mStreetTypes;
     private EditText mEdtxtName;
     private Spinner mSpnStreetType;
@@ -21,11 +20,7 @@ public class NewStreetDialog extends NewObjectDialog {
     private StreetType mStreetType;
 
     @Override
-    protected void setObjectsLists() {
-        mStreets = MainActivity.StreetDao.getAll();
-        mStreetTypes = MainActivity.StreetTypeDao.getAll();
-//        for (Street street : mStreets) { street.setStreetType(); }
-    }
+    protected void setObjectsLists() { mStreetTypes = MainActivity.StreetTypeDao.getAll(); }
 
     @Override
     protected int getLayoutCode() {
