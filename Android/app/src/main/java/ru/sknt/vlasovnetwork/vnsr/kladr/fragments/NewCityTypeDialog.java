@@ -2,22 +2,18 @@ package ru.sknt.vlasovnetwork.vnsr.kladr.fragments;
 
 import android.widget.EditText;
 
-import java.util.List;
-
-import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.NewObjectDialog;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.CityType;
 
 public class NewCityTypeDialog extends NewObjectDialog {
-    private List<CityType> mCityTypes;
     private EditText mEdtxtName;
     private EditText mEdtxtShort;
     private String mName;
     private String mShort;
 
     @Override
-    protected void setObjectsLists() { mCityTypes = MainActivity.CityTypeDao.getAll(); }
+    protected void setObjectsLists() {}
 
     @Override
     protected int getLayoutCode() { return R.layout.kladr_new_city_type; }
