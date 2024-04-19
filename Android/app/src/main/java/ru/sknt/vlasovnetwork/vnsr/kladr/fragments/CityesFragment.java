@@ -15,10 +15,7 @@ public class CityesFragment extends ObjectsFragment {
     private CityesAdapter mAdapter;
 
     @Override
-    protected void setObjectList() {
-        mCityes = MainActivity.CityDao.getAll();
-        for (City city : mCityes) { city.setCityType(); }
-    }
+    protected void setObjectList() { mCityes = MainActivity.CityDao.getAll(); }
 
     @Override
     protected void setRecyclerViewAdapter() {
@@ -56,7 +53,6 @@ public class CityesFragment extends ObjectsFragment {
     public void createNewCity(City city) {
         MainActivity.CityDao.create(city);
         city = MainActivity.CityDao.find(city.getName()); // Получаем новый корректный Id
-        city.setCityType(); // Устанавливаем Foreign
         mCityes.add(city);
         mTxtError.setVisibility(View.INVISIBLE);
     }
