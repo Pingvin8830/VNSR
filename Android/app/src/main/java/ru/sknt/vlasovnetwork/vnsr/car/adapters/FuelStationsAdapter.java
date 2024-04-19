@@ -33,7 +33,10 @@ public class FuelStationsAdapter extends RecyclerView.Adapter<FuelStationsAdapte
     @Override
     public void onBindViewHolder(@NonNull FuelStationsAdapter.ListItemHolder holder, int position) {
         FuelStation fuelStation = mFuelStations.get(position);
-        holder.mTxtName.setText(fuelStation.getName());
+        holder.mTxtCompany.setText(fuelStation.getCompany());
+        holder.mTxtNumber.setText(fuelStation.getNumber());
+        holder.mTxtPhone.setText(fuelStation.getPhone());
+        holder.mTxtAddress.setText(fuelStation.getAddress().getFull());
     }
 
     @Override
@@ -42,11 +45,17 @@ public class FuelStationsAdapter extends RecyclerView.Adapter<FuelStationsAdapte
     }
 
     public class ListItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mTxtName;
+        public TextView mTxtCompany;
+        public TextView mTxtNumber;
+        public TextView mTxtPhone;
+        public TextView mTxtAddress;
 
         public ListItemHolder(View view) {
             super(view);
-            mTxtName = view.findViewById(R.id.txtName);
+            mTxtCompany = view.findViewById(R.id.txtCompany);
+            mTxtNumber = view.findViewById(R.id.txtNumber);
+            mTxtPhone = view.findViewById(R.id.txtPhone);
+            mTxtAddress = view.findViewById(R.id.txtAddress);
             view.setClickable(true);
             view.setOnClickListener(this);
         }
