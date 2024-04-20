@@ -33,9 +33,7 @@ public class ShowCityTypeDialog extends ShowObjectDialog {
     }
 
     @Override
-    protected String getDialogMessageText() {
-        return "Your city type";
-    }
+    protected String getDialogMessageText() { return getResources().getString(R.string.lbl_show_city_type); }
 
     @Override
     protected void deleteObject() {

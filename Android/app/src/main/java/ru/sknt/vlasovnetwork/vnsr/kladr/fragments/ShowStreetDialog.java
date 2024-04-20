@@ -32,7 +32,7 @@ public class ShowStreetDialog extends ShowObjectDialog {
 
     @Override
     protected String getDialogMessageText() {
-        return "Your street";
+        return getResources().getString(R.string.lbl_show_street);
     }
 
     @Override

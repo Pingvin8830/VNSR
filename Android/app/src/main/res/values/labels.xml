@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lbl_login">Login</string>
+    <string name="lbl_password">Password</string>
+    <string name="lbl_short">Short</string>
+    <string name="lbl_name">Name</string>
+    <string name="lbl_code">Code</string>
+    <string name="lbl_type">Type</string>
+    <string name="lbl_region">Region</string>
+    <string name="lbl_city">City</string>
+    <string name="lbl_street">Street</string>
+    <string name="lbl_home">Home</string>
+    <string name="lbl_building">Building</string>
+    <string name="lbl_flat">Flat</string>
+    <string name="lbl_company">Company</string>
+    <string name="lbl_number">Number</string>
+    <string name="lbl_phone">Phone</string>
+    <string name="lbl_address">Address</string>
+    <string name="lbl_date_time">Date and time</string>
+    <string name="lbl_fuel_station">Fuel station</string>
+    <string name="lbl_fuel">Fuel</string>
+    <string name="lbl_count">Count</string>
+    <string name="lbl_price">Price</string>
+    <string name="lbl_cost">Cost</string>
+    <string name="lbl_trk">Trk</string>
+    <string name="lbl_check_number">Check number</string>
+    <string name="lbl_distance_reserve">Distance reserve</string>
+    <string name="lbl_fuel_consumption_avg">Fuel consumption (avg)</string>
+    <string name="lbl_odometer">Odometer</string>
+    <string name="lbl_distance">Distance</string>
+    <string name="lbl_fuel_consumption">Fuel consumption</string>
+    <string name="lbl_time_delta">Time delta</string>
+    <string name="lbl_litr">lit</string>
+    <string name="lbl_valute">RuR</string>
+
+    <string name="lbl_new_city_type">Add a new city type</string>
+    <string name="lbl_new_street_type">Add a new street type</string>
+    <string name="lbl_new_region">Add a new region</string>
+    <string name="lbl_new_city">Add a new city</string>
+    <string name="lbl_new_street">Add a new street</string>
+    <string name="lbl_new_address">Add a new address</string>
+    <string name="lbl_new_fuel">Add a new fuel</string>
+    <string name="lbl_new_fuel_station">Add a new fuel station</string>
+    <string name="lbl_new_refuel">Add a new refuel</string>
+
+    <string name="lbl_show_city_type">Your city type</string>
+    <string name="lbl_show_street_type">Your street type"</string>
+    <string name="lbl_show_region">Your region</string>
+    <string name="lbl_show_city">Your city</string>
+    <string name="lbl_show_street">Your street</string>
+    <string name="lbl_show_address">Your address</string>
+    <string name="lbl_show_fuel">Your fuel</string>
+    <string name="lbl_show_fuel_station">Your fuel station</string>
+    <string name="lbl_show_refuel">Your refuel</string>
+</resources>

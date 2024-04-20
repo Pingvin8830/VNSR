@@ -30,9 +30,7 @@ public class NewRegionDialog extends NewObjectDialog {
     protected void setAdapters() {}
 
     @Override
-    protected String getDialogMessageText() {
-        return "Add a new region";
-    }
+    protected String getDialogMessageText() { return getResources().getString(R.string.lbl_new_region); }
 
     @Override
     protected void setData() {
@@ -43,8 +41,8 @@ public class NewRegionDialog extends NewObjectDialog {
     @Override
     protected String getErrorText() {
         String error = "";
-        if ((mCode.length() > 3) || (mCode.isEmpty())) { error = "Bad code"; }
-        else if (mName.isEmpty()) { error = "Bad name"; }
+        if ((mCode.length() > 3) || (mCode.isEmpty())) { error = getResources().getString(R.string.err_bad_code); }
+        else if (mName.isEmpty()) { error = getResources().getString(R.string.err_bad_name); }
         return error;
     }
 

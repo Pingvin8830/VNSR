@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Home"
+                    android:text="LAYOUT Company"
                     android:textAlignment="viewStart"
                     android:textStyle="bold" />
 
@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="2"
+                    android:text="LAYOUT Number"
                     android:textStyle="bold" />
 
                 <TextView
@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Unknown"
+                    android:text="LAYOUT Phone"
                     android:textAlignment="textEnd" />
             </LinearLayout>
 
@@ -64,7 +64,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="RodDom"
+                    android:text="LAYOUT Address"
                     android:textAlignment="viewStart"
                     android:textSize="12sp"
                     android:textStyle="italic" />

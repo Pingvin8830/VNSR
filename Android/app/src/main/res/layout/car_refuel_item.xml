@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="30-11-1988 20:00"
+                    android:text="LAYOUT Date and time"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Лукойл 78161"
+                    android:text="LAYOUT Fuel station"
                     android:textAlignment="textEnd"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="3.5"
+                    android:text="LAYOUT Count"
                     android:textSize="12sp" />
 
                 <TextView
@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="лит"
+                    android:text="@string/lbl_litr"
                     android:textSize="12sp"
                     android:textStyle="italic" />
 
@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Мясо"
+                    android:text="LAYOUT Fuel"
                     android:textAlignment="center"
                     android:textSize="12sp" />
 
@@ -85,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="100500"
+                    android:text="LAYOUT Cost"
                     android:textAlignment="textEnd"
                     android:textSize="12sp" />
 
@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="руб"
+                    android:text="@string/lbl_valute"
                     android:textAlignment="textEnd"
                     android:textSize="12sp"
                     android:textStyle="italic" />
@@ -110,7 +110,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Волхов, ул. Нахимова, д 5"
+                    android:text="LAYOUT Address"
                     android:textSize="10sp"
                     android:textStyle="italic"
                     tools:ignore="SmallSp" />

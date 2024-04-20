@@ -23,14 +23,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Company" />
+                android:text="@string/lbl_company" />
 
             <TextView
                 android:id="@+id/txtCompany"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="ООО ЛУКОЙЛ-Северо-Западнефтепродукт" />
+                android:text="LAYOUT Company" />
 
         </TableRow>
         <TableRow
@@ -43,14 +43,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Number" />
+                android:text="@string/lbl_number" />
 
             <TextView
                 android:id="@+id/txtNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="АЗС №78161 Косыгина" />
+                android:text="LAYOUT Number" />
         </TableRow>
 
         <TableRow
@@ -63,14 +63,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Phone" />
+                android:text="@string/lbl_phone" />
 
             <TextView
                 android:id="@+id/txtPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="8(800)100-09-11" />
+                android:text="LAYOUT Phone" />
 
         </TableRow>
         <TableRow
@@ -83,14 +83,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Address" />
+                android:text="@string/lbl_address" />
 
             <TextView
                 android:id="@+id/txtAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Санкт-Петербург, Косыгина пр-кт, д. 2а, лит. А" />
+                android:text="LAYOUT Address" />
 
         </TableRow>
     </TableLayout>

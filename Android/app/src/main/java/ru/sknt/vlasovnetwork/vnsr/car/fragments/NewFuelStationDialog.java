@@ -45,7 +45,7 @@ public class NewFuelStationDialog extends NewObjectDialog {
     }
 
     @Override
-    protected String getDialogMessageText() { return "Add a new fuel station"; }
+    protected String getDialogMessageText() { return getResources().getString(R.string.lbl_new_fuel_station); }
 
     @Override
     protected void setData() {
@@ -58,7 +58,7 @@ public class NewFuelStationDialog extends NewObjectDialog {
     @Override
     protected String getErrorText() {
         String error = "";
-        if (mCompany.isEmpty()) { error = "Bad company"; }
+        if (mCompany.isEmpty()) { error = getResources().getString(R.string.err_bad_company); }
         return error;
     }
 

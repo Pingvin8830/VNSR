@@ -6,14 +6,23 @@
     android:layout_height="match_parent"
     android:id="@+id/container">
 
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="500dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <!--LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"-->
+
     <TableLayout
         android:id="@+id/tblRefuel"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
         <TableRow
             android:id="@+id/trDateTime"
@@ -24,13 +33,13 @@
                 android:id="@+id/txtDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date and time" />
+                android:text="@string/lbl_date_time" />
 
             <Button
                 android:id="@+id/bttnDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Case date and time" />
+                android:text="@string/bttn_case_date_time" />
 
         </TableRow>
 
@@ -43,7 +52,7 @@
                 android:id="@+id/txtFuelStation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fuel station" />
+                android:text="@string/lbl_fuel_station" />
 
             <Spinner
                 android:id="@+id/spnFuelStation"
@@ -61,7 +70,7 @@
                 android:id="@+id/txtFuel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fuel" />
+                android:text="@string/lbl_fuel" />
 
             <Spinner
                 android:id="@+id/spnFuel"
@@ -84,15 +93,15 @@
                 android:id="@+id/txtCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Count" />
+                android:text="@string/lbl_count" />
 
             <EditText
                 android:id="@+id/edtxtCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="numberDecimal"
-                android:autofillHints=""
                 tools:ignore="LabelFor" />
 
         </TableRow>
@@ -106,15 +115,15 @@
                 android:id="@+id/txtPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Price" />
+                android:text="@string/lbl_price" />
 
             <EditText
                 android:id="@+id/edtxtPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="numberDecimal"
-                android:autofillHints=""
                 tools:ignore="LabelFor" />
 
         </TableRow>
@@ -128,15 +137,15 @@
                 android:id="@+id/txtCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cost" />
+                android:text="@string/lbl_cost" />
 
             <EditText
                 android:id="@+id/edtxtCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="numberDecimal"
-                android:autofillHints=""
                 tools:ignore="LabelFor" />
 
         </TableRow>
@@ -155,15 +164,15 @@
                 android:id="@+id/txtTrk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Trk" />
+                android:text="@string/lbl_trk" />
 
             <EditText
                 android:id="@+id/edtxtTrk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="number"
-                android:autofillHints=""
                 tools:ignore="LabelFor" />
 
         </TableRow>
@@ -177,15 +186,15 @@
                 android:id="@+id/txtCheckNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Check number" />
+                android:text="@string/lbl_check_number" />
 
             <EditText
                 android:id="@+id/edtxtCheckNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="number"
-                android:autofillHints=""
                 tools:ignore="LabelFor" />
 
         </TableRow>
@@ -204,15 +213,15 @@
                 android:id="@+id/txtDistanceReserve"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Distance reserve" />
+                android:text="@string/lbl_distance_reserve" />
 
             <EditText
                 android:id="@+id/edtxtDistanceReserve"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="number"
-                android:autofillHints=""
                 tools:ignore="LabelFor" />
 
         </TableRow>
@@ -226,15 +235,15 @@
                 android:id="@+id/txtFuelConsumptionAvg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fuel consumption (avg)" />
+                android:text="@string/lbl_fuel_consumption_avg" />
 
             <EditText
                 android:id="@+id/edtxtFuelConsumptionAvg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="numberDecimal"
-                android:autofillHints=""
                 tools:ignore="LabelFor" />
 
         </TableRow>
@@ -248,15 +257,15 @@
                 android:id="@+id/txtOdometer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Odometer" />
+                android:text="@string/lbl_odometer" />
 
             <EditText
                 android:id="@+id/edtxtOdometer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="number"
-                android:autofillHints=""
                 tools:ignore="LabelFor" />
 
         </TableRow>
@@ -275,15 +284,15 @@
                 android:id="@+id/txtDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Distance" />
+                android:text="@string/lbl_distance" />
 
             <EditText
                 android:id="@+id/edtxtDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="numberDecimal"
-                android:autofillHints=""
                 tools:ignore="LabelFor" />
 
         </TableRow>
@@ -297,15 +306,15 @@
                 android:id="@+id/txtFuelConsumption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fuel consumption" />
+                android:text="@string/lbl_fuel_consumption" />
 
             <EditText
                 android:id="@+id/edtxtFuelConsumption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="numberDecimal"
-                android:autofillHints=""
                 tools:ignore="LabelFor" />
 
         </TableRow>
@@ -319,17 +328,20 @@
                 android:id="@+id/txtTimeDelta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time delta" />
+                android:text="@string/lbl_time_delta" />
 
             <EditText
                 android:id="@+id/edtxtTimeDelta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="time"
-                android:autofillHints=""
                 tools:ignore="LabelFor" />
 
         </TableRow>
     </TableLayout>
+    <!--/LinearLayout-->
+</ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

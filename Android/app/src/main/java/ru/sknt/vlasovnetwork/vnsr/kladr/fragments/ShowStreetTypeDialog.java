@@ -31,9 +31,7 @@ public class ShowStreetTypeDialog extends ShowObjectDialog {
     }
 
     @Override
-    protected String getDialogMessageText() {
-        return "Your street type";
-    }
+    protected String getDialogMessageText() { return getResources().getString(R.string.lbl_show_street_type); }
 
     @Override
     protected void deleteObject() {

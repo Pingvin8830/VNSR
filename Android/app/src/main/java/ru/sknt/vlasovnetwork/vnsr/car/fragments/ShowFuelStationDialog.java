@@ -41,7 +41,7 @@ public class ShowFuelStationDialog extends ShowObjectDialog {
 
     @Override
     protected String getDialogMessageText() {
-        return "Your fuel station";
+        return getResources().getString(R.string.lbl_show_fuel_station);
     }
 
     @Override

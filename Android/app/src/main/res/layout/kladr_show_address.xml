@@ -23,14 +23,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Name" />
+                android:text="@string/lbl_name" />
 
             <TextView
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Дом" />
+                android:text="LAYOUT Name" />
         </TableRow>
 
         <TableRow
@@ -43,14 +43,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Region" />
+                android:text="@string/lbl_region" />
 
             <TextView
                 android:id="@+id/txtRegion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="78 - Saint-Petesburg" />
+                android:text="LAYOUT Region" />
         </TableRow>
 
         <TableRow
@@ -63,14 +63,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="City" />
+                android:text="@string/lbl_city" />
 
             <TextView
                 android:id="@+id/txtCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="г. Санкт-Петербург" />
+                android:text="LAYOUT City" />
         </TableRow>
 
         <TableRow
@@ -83,14 +83,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Street" />
+                android:text="@string/lbl_street" />
 
             <TextView
                 android:id="@+id/txtStreet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="ул. Отечественная" />
+                android:text="LAYOUT Street" />
         </TableRow>
 
         <TableRow
@@ -103,14 +103,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Home" />
+                android:text="@string/lbl_home" />
 
             <TextView
                 android:id="@+id/txtHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="2/11" />
+                android:text="LAYOUT Home" />
         </TableRow>
 
         <TableRow
@@ -123,14 +123,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Building" />
+                android:text="@string/lbl_building" />
 
             <TextView
                 android:id="@+id/txtBuilding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="А" />
+                android:text="LAYOUT Building" />
         </TableRow>
 
         <TableRow
@@ -143,14 +143,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Flat" />
+                android:text="@string/lbl_flat" />
 
             <TextView
                 android:id="@+id/txtFlat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="168" />
+                android:text="LAYOUT Flat" />
         </TableRow>
 
     </TableLayout>

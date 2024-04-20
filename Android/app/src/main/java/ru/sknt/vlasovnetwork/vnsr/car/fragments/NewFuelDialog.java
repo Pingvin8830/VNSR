@@ -23,7 +23,7 @@ public class NewFuelDialog extends NewObjectDialog {
     protected void setAdapters() {}
 
     @Override
-    protected String getDialogMessageText() { return "Add a new fuel"; }
+    protected String getDialogMessageText() { return getResources().getString(R.string.lbl_new_fuel); }
 
     @Override
     protected void setData() { mName = mEdtxtName.getText().toString(); }
@@ -31,7 +31,7 @@ public class NewFuelDialog extends NewObjectDialog {
     @Override
     protected String getErrorText() {
         String error = "";
-        if (mName.isEmpty()) { error = "Bad name"; }
+        if (mName.isEmpty()) { error = getResources().getString(R.string.err_bad_name); }
         return error;
     }
 

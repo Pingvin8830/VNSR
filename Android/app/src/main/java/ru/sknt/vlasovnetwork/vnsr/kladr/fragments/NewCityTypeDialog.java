@@ -28,7 +28,7 @@ public class NewCityTypeDialog extends NewObjectDialog {
     protected void setAdapters() {}
 
     @Override
-    protected String getDialogMessageText() { return "Add a new city type"; }
+    protected String getDialogMessageText() { return getResources().getString(R.string.lbl_new_city_type); }
 
     @Override
     protected void setData() {
@@ -39,11 +39,8 @@ public class NewCityTypeDialog extends NewObjectDialog {
     @Override
     protected String getErrorText() {
         String error = "";
-        if ((mShort.length() > 3) || (mShort.isEmpty())) {
-            error = "Bad short name";
-        } else if (mName.isEmpty()) {
-            error = "Bad name";
-        }
+        if ((mShort.length() > 3) || (mShort.isEmpty())) { error = getResources().getString(R.string.err_bad_short); }
+        else if (mName.isEmpty()) { error = getResources().getString(R.string.err_bad_name); }
         return error;
     }
 

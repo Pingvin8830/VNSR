@@ -31,9 +31,7 @@ public class ShowRegionDialog extends ShowObjectDialog {
     }
 
     @Override
-    protected String getDialogMessageText() {
-        return "Your region";
-    }
+    protected String getDialogMessageText() { return getResources().getString(R.string.lbl_show_region); }
 
     @Override
     protected void deleteObject() {

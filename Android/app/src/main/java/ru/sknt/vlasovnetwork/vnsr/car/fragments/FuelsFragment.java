@@ -7,6 +7,7 @@ import java.util.List;
 
 import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.ObjectsFragment;
+import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.car.adapters.FuelsAdapter;
 import ru.sknt.vlasovnetwork.vnsr.car.models.Fuel;
 
@@ -27,7 +28,7 @@ public class FuelsFragment extends ObjectsFragment {
     protected boolean isObjectListEmpty() { return mFuels.isEmpty(); }
 
     @Override
-    protected String getErrorEmptyObjectsText() { return "Fuels not found"; }
+    protected String getErrorEmptyObjectsText() { return getResources().getString(R.string.err_not_found_fuels); }
 
     @Override
     protected String getBeforeError() { return ""; }

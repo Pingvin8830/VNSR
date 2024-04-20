@@ -28,7 +28,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Дом" />
+                android:text="LAYOUT Name" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="г. Санкт-Петербург" />
+                    android:text="LAYOUT City" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -52,25 +52,25 @@
                         android:id="@+id/txtStreet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ул. Отечественная" />
+                        android:text="LAYOUT Street" />
 
                     <TextView
                         android:id="@+id/txtHome"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="д. 2/11" />
+                        android:text="LAYOUT Home" />
 
                     <TextView
                         android:id="@+id/txtBuilding"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="лит. А" />
+                        android:text="LAYOUT Building" />
 
                     <TextView
                         android:id="@+id/txtFlat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="кв. 168" />
+                        android:text="LAYOUT Flat" />
 
                 </LinearLayout>
 

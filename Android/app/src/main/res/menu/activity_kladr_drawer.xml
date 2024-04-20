@@ -7,32 +7,32 @@
         <item
             android:id="@+id/nav_kladr_home"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Kladr home" />
+            android:title="@string/menu_kladr_home" />
         <item
             android:id="@+id/nav_kladr_addresses"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Addresses" />
+            android:title="@string/menu_kladr_addresses" />
         <item
             android:id="@+id/nav_kladr_streets"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Streets" />
+            android:title="@string/menu_kladr_streets" />
         <item
             android:id="@+id/nav_kladr_cityes"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Cityes" />
+            android:title="@string/menu_kladr_cityes" />
         <item
             android:id="@+id/nav_kladr_regions"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Regions" />
+            android:title="@string/menu_kladr_regions" />
         <item
             android:id="@+id/nav_kladr_street_types"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Street types" />
+            android:title="@string/menu_kladr_street_types" />
         <item
             android:id="@+id/nav_kladr_city_types"
-            android:title="City types" />
+            android:title="@string/menu_kladr_city_types" />
         <item
             android:id="@+id/nav_back"
-            android:title="Back" />
+            android:title="@string/menu_back" />
     </group>
 </menu>

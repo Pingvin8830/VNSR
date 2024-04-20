@@ -34,7 +34,7 @@ public class ShowCityDialog extends ShowObjectDialog {
 
     @Override
     protected String getDialogMessageText() {
-        return "Your city";
+        return getResources().getString(R.string.lbl_show_city);
     }
 
     @Override

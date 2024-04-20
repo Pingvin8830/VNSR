@@ -24,7 +24,7 @@
                 android:id="@+id/txtCompany"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company" />
+                android:text="@string/lbl_company" />
 
             <EditText
                 android:id="@+id/edtxtCompany"
@@ -45,7 +45,7 @@
                 android:id="@+id/txtNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Number" />
+                android:text="@string/lbl_number" />
 
             <EditText
                 android:id="@+id/edtxtNumber"
@@ -66,7 +66,7 @@
                 android:id="@+id/txtPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone" />
+                android:text="@string/lbl_phone" />
 
             <EditText
                 android:id="@+id/edtxtPhone"
@@ -88,7 +88,7 @@
                 android:id="@+id/txtAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address" />
+                android:text="@string/lbl_address" />
 
             <Spinner
                 android:id="@+id/spnAddress"

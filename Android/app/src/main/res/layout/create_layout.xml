@@ -13,7 +13,7 @@
         android:layout_marginBottom="32dp"
         android:text="Error"
         android:textColor="#FFFF0000"
-        android:textSize="34sp"
+        android:textSize="14sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/containerContent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,32 +32,31 @@
         android:id="@+id/lineButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="32dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/containerContent">
 
         <Button
             android:id="@+id/bttnAdd"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:backgroundTint="#FF00FF00"
-            android:text="Add"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:text="@string/bttn_add" />
 
         <Button
             android:id="@+id/bttnCancel"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:backgroundTint="#FFFF0000"
-            android:text="Cancel"
-            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/bttn_cancel"
             tools:ignore="ButtonOrder" />
     </LinearLayout>
 

@@ -7,6 +7,7 @@ import java.util.List;
 
 import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.ObjectsFragment;
+import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.kladr.adapters.CityesAdapter;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.City;
 
@@ -27,12 +28,12 @@ public class CityesFragment extends ObjectsFragment {
     protected boolean isObjectListEmpty() { return mCityes.isEmpty(); }
 
     @Override
-    protected String getErrorEmptyObjectsText() { return "Cityes not found"; }
+    protected String getErrorEmptyObjectsText() { return getResources().getString(R.string.err_not_found_cityes); }
 
     @Override
     protected String getBeforeError() {
         String error = "";
-        if (MainActivity.CityTypeDao.getCount() < 1) { error = "City types not found"; }
+        if (MainActivity.CityTypeDao.getCount() < 1) { error = getResources().getString(R.string.err_not_found_city_types); }
         return error;
     }
 

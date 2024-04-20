@@ -24,7 +24,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/Theme.VNSR.PopupOverlay"
-                app:subtitle="Kladr" />
+                app:subtitle="@string/sub_app_kladr" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

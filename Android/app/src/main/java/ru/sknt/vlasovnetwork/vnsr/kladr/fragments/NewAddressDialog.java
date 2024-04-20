@@ -70,7 +70,7 @@ public class NewAddressDialog extends NewObjectDialog {
     }
 
     @Override
-    protected String getDialogMessageText() { return "Add a new address"; }
+    protected String getDialogMessageText() { return getResources().getString(R.string.lbl_new_address); }
 
 
     @Override
@@ -89,8 +89,8 @@ public class NewAddressDialog extends NewObjectDialog {
     @Override
     protected String getErrorText() {
         String error = "";
-        if (mName.isEmpty()) { error = "Bad name"; }
-        else if (mHome.isEmpty()) { error = "Bad home"; }
+        if (mName.isEmpty()) { error = getResources().getString(R.string.err_bad_name); }
+        else if (mHome.isEmpty()) { error = getResources().getString(R.string.err_bad_home); }
         return error;
     }
 

@@ -70,7 +70,7 @@ public class ShowRefuelDialog extends ShowObjectDialog {
 
     @Override
     protected String getDialogMessageText() {
-        return "Your refuel";
+        return getResources().getString(R.string.lbl_show_refuel);
     }
 
     @Override

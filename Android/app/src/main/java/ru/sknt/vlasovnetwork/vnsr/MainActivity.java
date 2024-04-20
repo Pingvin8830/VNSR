@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (login.equals("admin") && password.equals("admin")) {
                 startMainMenu();
             } else {
-                mTxtError.setText("Bad creds");
+                mTxtError.setText(R.string.err_bad_creds);
                 mTxtError.startAnimation(mAnimError);
             }
         } else if (v.getId() == R.id.bttnLogOut) { finish(); }

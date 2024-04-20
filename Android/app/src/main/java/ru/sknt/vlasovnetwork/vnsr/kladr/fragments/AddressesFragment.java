@@ -7,6 +7,7 @@ import java.util.List;
 
 import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.ObjectsFragment;
+import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.kladr.adapters.AddressesAdapter;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Address;
 
@@ -27,14 +28,14 @@ public class AddressesFragment extends ObjectsFragment {
     protected boolean isObjectListEmpty() { return mAddresses.isEmpty(); }
 
     @Override
-    protected String getErrorEmptyObjectsText() { return "Addresses not found"; }
+    protected String getErrorEmptyObjectsText() { return getResources().getString(R.string.err_not_found_addresses); }
 
     @Override
     protected String getBeforeError() {
         String error = "";
-        if      (MainActivity.RegionDao.getCount() < 1) { error = "Regions not found"; }
-        else if (MainActivity.CityDao.getCount()   < 1) { error = "Cityes not found"; }
-        else if (MainActivity.StreetDao.getCount() < 1) { error = "Streets not found"; }
+        if      (MainActivity.RegionDao.getCount() < 1) { error = getResources().getString(R.string.err_not_found_regions); }
+        else if (MainActivity.CityDao.getCount()   < 1) { error = getResources().getString(R.string.err_not_found_cityes); }
+        else if (MainActivity.StreetDao.getCount() < 1) { error = getResources().getString(R.string.err_not_found_streets); }
         return error;
     }
 

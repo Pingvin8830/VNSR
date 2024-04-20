@@ -7,21 +7,21 @@
         <item
             android:id="@+id/nav_car_home"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Car home" />
+            android:title="@string/menu_car_home" />
         <item
             android:id="@+id/nav_car_refuels"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Refuels" />
+            android:title="@string/menu_car_refuels" />
         <item
             android:id="@+id/nav_car_fuel_stations"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Fuel stations" />
+            android:title="@string/menu_car_fuel_stations" />
         <item
             android:id="@+id/nav_car_fuels"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Fuels" />
+            android:title="@string/menu_car_fuels" />
         <item
             android:id="@+id/nav_back"
-            android:title="Back" />
+            android:title="@string/menu_back" />
     </group>
 </menu>

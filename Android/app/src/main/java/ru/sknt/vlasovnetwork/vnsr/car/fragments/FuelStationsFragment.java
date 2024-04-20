@@ -7,6 +7,7 @@ import java.util.List;
 
 import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.ObjectsFragment;
+import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.car.adapters.FuelStationsAdapter;
 import ru.sknt.vlasovnetwork.vnsr.car.models.FuelStation;
 
@@ -27,12 +28,12 @@ public class FuelStationsFragment extends ObjectsFragment {
     protected boolean isObjectListEmpty() { return mFuelStations.isEmpty(); }
 
     @Override
-    protected String getErrorEmptyObjectsText() { return "Fuel stations not found"; }
+    protected String getErrorEmptyObjectsText() { return getResources().getString(R.string.err_not_found_fuel_stations); }
 
     @Override
     protected String getBeforeError() {
         String error = "";
-        if      (MainActivity.AddressDao.getCount() < 1) { error = "Addresses not found"; }
+        if      (MainActivity.AddressDao.getCount() < 1) { error = getResources().getString(R.string.err_not_found_addresses); }
         return error;
     }
 

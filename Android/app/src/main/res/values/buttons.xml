@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bttn_login">LogIn</string>
+    <string name="bttn_car">Car</string>
+    <string name="bttn_travels">Travels</string>
+    <string name="bttn_kladr">Kladr</string>
+    <string name="bttn_logout">Logout</string>
+    <string name="bttn_add">Add</string>
+    <string name="bttn_cancel">Cancel</string>
+    <string name="bttn_delete">Delete</string>
+    <string name="bttn_case_date_time">Case date and time</string>
+</resources>

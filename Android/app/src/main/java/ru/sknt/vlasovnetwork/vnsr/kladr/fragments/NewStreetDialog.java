@@ -42,7 +42,7 @@ public class NewStreetDialog extends NewObjectDialog {
 
     @Override
     protected String getDialogMessageText() {
-        return "Add a new street";
+        return getResources().getString(R.string.lbl_new_street);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class NewStreetDialog extends NewObjectDialog {
     @Override
     protected String getErrorText() {
         String error = "";
-        if (mName.isEmpty()) { error = "Bad name"; }
+        if (mName.isEmpty()) { error = getResources().getString(R.string.err_bad_name); }
         return error;
     }
 

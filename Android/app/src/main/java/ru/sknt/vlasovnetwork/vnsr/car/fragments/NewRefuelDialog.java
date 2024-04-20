@@ -1,5 +1,6 @@
 package ru.sknt.vlasovnetwork.vnsr.car.fragments;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -99,7 +100,7 @@ public class NewRefuelDialog extends NewObjectDialog {
     }
 
     @Override
-    protected String getDialogMessageText() { return "Add a new refuel"; }
+    protected String getDialogMessageText() { return getResources().getString(R.string.lbl_new_refuel); }
 
     @Override
     protected void setData() {
@@ -150,17 +151,17 @@ public class NewRefuelDialog extends NewObjectDialog {
     @Override
     protected String getErrorText() {
         String error = "";
-        //if (mDateTime.isEmpty()) { error = "Bad date or time"; }
-        if (mTrk < 1) { error = "Bad trk"; }
-        else if (mCount < 0.1f) { error = "Bad count"; }
-        else if (mPrice < 0.01f) { error = "Cad price"; }
-        else if ((mCost < (mCount * mPrice) - 1f) || (mCost > (mCount * mPrice) + 1f)) { error = "Bad cost"; }
-        else if (mDistance < 0.1f) { error = "Bad distance"; }
-        else if (mDistanceReserve < 1) { error = "Bad distance reserve"; }
-        else if (mFuelConsumption < 0.1f) { error = "Bad fuel consumption"; }
-        else if (mFuelConsumptionAvg < 0.1f) { error = "Bad fuel consumption (avg)"; }
-        else if (mOdometer < 1) { error = "Bad odometer"; }
-        else if (mTimeDelta.isEmpty()) { error = "Bad time delta"; }
+        if (mBttnDateTime.getText().toString().equals(getResources().getString(R.string.bttn_case_date_time))) { error = getResources().getString(R.string.err_bad_date_time); }
+        else if (mCount < 0.1f) { error = getResources().getString(R.string.err_bad_count); }
+        else if (mPrice < 0.01f) { error = getResources().getString(R.string.err_bad_price); }
+        else if ((mCost < (mCount * mPrice) - 1f) || (mCost > (mCount * mPrice) + 1f)) { error = getResources().getString(R.string.err_bad_cost); }
+        else if (mTrk < 1) { error = getResources().getString(R.string.err_bad_trk); }
+        else if (mDistanceReserve < 1) { error = getResources().getString(R.string.err_bad_distance_reserve); }
+        else if (mFuelConsumptionAvg < 0.1f) { error = getResources().getString(R.string.err_bad_fuel_consumption_avg); }
+        else if (mOdometer < 1) { error = getResources().getString(R.string.err_bad_odometer); }
+        else if (mDistance < 0.1f) { error = getResources().getString(R.string.err_bad_distance); }
+        else if (mFuelConsumption < 0.1f) { error = getResources().getString(R.string.err_bad_fuel_consumption); }
+        else if (mTimeDelta.isEmpty()) { error = getResources().getString(R.string.err_bad_time_delta); }
         return error;
     }
 

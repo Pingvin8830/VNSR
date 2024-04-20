@@ -49,7 +49,7 @@ public class ShowAddressDialog extends ShowObjectDialog {
 
     @Override
     protected String getDialogMessageText() {
-        return "Your address";
+        return getResources().getString(R.string.lbl_show_address);
     }
 
     @Override

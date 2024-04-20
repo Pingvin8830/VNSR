@@ -31,7 +31,7 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:backgroundTint="#FFFF0000"
-            android:text="Delete"
+            android:text="@string/bttn_delete"
             style="?android:attr/buttonBarButtonStyle" />
 
         <Button
@@ -41,7 +41,7 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:backgroundTint="#FF00FF00"
-            android:text="Cancel"
+            android:text="@string/bttn_cancel"
             style="?android:attr/buttonBarButtonStyle"
             tools:ignore="ButtonOrder" />
     </LinearLayout>

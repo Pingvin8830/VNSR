@@ -7,6 +7,7 @@ import java.util.List;
 
 import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.ObjectsFragment;
+import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.kladr.adapters.RegionsAdapter;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 
@@ -31,9 +32,7 @@ public class RegionsFragment extends ObjectsFragment {
     }
 
     @Override
-    protected String getErrorEmptyObjectsText() {
-        return "Regions not found";
-    }
+    protected String getErrorEmptyObjectsText() { return getResources().getString(R.string.err_not_found_regions); }
 
     @Override
     protected String getBeforeError() { return ""; }
@@ -69,5 +68,4 @@ public class RegionsFragment extends ObjectsFragment {
             mTxtError.setVisibility(View.VISIBLE);
         }
     }
-
 }
