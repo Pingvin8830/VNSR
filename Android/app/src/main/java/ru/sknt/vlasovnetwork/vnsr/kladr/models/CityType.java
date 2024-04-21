@@ -6,6 +6,9 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @Entity(
         tableName = "kladr_citytype",
         indices = {
@@ -43,4 +46,13 @@ public class CityType {
     @NonNull
     @Override
     public String toString() { return getName(); }
+    public JSONObject toJson() throws JSONException {
+        JSONObject res = new JSONObject();
+        res
+                .put("object", "CityType")
+                .put("id", this.getId())
+                .put("name", this.getName())
+                .put("short", this.getShort());
+        return res;
+    }
 }
