@@ -6,6 +6,9 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import ru.sknt.vlasovnetwork.vnsr.FormatedDate;
 
 @Entity(
@@ -99,5 +102,27 @@ public class Refuel {
         this.mDistance = distance;
         this.mFuelConsumption = fuelConsumption;
         this.mTimedelta = timedelta;
+    }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject res = new JSONObject();
+        res
+                .put("object", "Refuel")
+                .put("id",                   this.getId())
+                .put("check_number",         this.getCheckNumber())
+                .put("date_time",            this.getDateTime())
+                .put("price",                this.getPrice())
+                .put("count",                this.getCount())
+                .put("cost",                 this.getCost())
+                .put("distance",             this.getDistance())
+                .put("fuel_id",              this.getFuel().getId())
+                .put("distance_reserve",     this.getDistanceReserve())
+                .put("fuel_consumption",     this.getFuelConsumption())
+                .put("fuel_consumption_avg", this.getFuelConsumptionAvg())
+                .put("fuel_station_id",      this.getFuelStation().getId())
+                .put("odometer",             this.getOdometer())
+                .put("time_delta",           this.getTimedelta())
+                .put("trk",                  this.getTrk());
+        return res;
     }
 }
