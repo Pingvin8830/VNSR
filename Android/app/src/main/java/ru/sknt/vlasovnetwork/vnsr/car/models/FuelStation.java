@@ -6,6 +6,9 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Address;
 
 @Entity(
@@ -49,4 +52,15 @@ public class FuelStation {
     @NonNull
     @Override
     public String toString() { return this.mCompany + " " + this.mNumber; }
+    public JSONObject toJson() throws JSONException {
+        JSONObject res = new JSONObject();
+        res
+                .put("object", "FuelStation")
+                .put("id", this.getId())
+                .put("company", this.getCompany())
+                .put("number", this.getNumber())
+                .put("phone", this.getPhone())
+                .put("address_id", this.getAddress().getId());
+        return res;
+    }
 }
