@@ -3,6 +3,8 @@
 
     <string name="sub_app_kladr">Kladr</string>
     <string name="sub_app_car">Car</string>
+    <string name="sub_app_sync">Sync</string>
+
     <string name="title_activity_manual" translatable="false">ManualActivity</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
@@ -23,6 +25,10 @@
     <string name="menu_car_refuels">Refuels</string>
     <string name="menu_car_fuel_stations">Fuel stations</string>
     <string name="menu_car_fuels">Fuels</string>
+
+    <string name="menu_sync_home">Sync home</string>
+    <string name="menu_sync_to_server">Upload to server</string>
+    <string name="menu_sync_from_server">Download from server</string>
 
     <string name="menu_back">Back</string>
 </resources>

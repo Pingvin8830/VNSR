@@ -14,4 +14,8 @@
     <string name="menu_car_refuels">Дозаправки</string>
     <string name="menu_car_fuel_stations">АЗСы</string>
     <string name="menu_car_fuels">Топливо</string>
+    <string name="sub_app_sync">Синхронизация</string>
+    <string name="menu_sync_home">Синхронизация домашняя</string>
+    <string name="menu_sync_to_server">Выгрузка на сервер</string>
+    <string name="menu_sync_from_server">Загрузка с сервера</string>
 </resources>
