@@ -7,6 +7,7 @@ import java.util.List;
 
 import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.ObjectsFragment;
+import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.kladr.adapters.StreetTypesAdapter;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 
@@ -32,7 +33,7 @@ public class StreetTypesFragment extends ObjectsFragment {
 
     @Override
     protected String getErrorEmptyObjectsText() {
-        return "Street types not found";
+        return getResources().getString(R.string.err_not_found_street_types);
     }
 
     @Override
