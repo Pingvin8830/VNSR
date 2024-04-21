@@ -6,6 +6,9 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @Entity(
         tableName = "car_fuel",
         indices = {
@@ -32,4 +35,12 @@ public class Fuel {
     @NonNull
     @Override
     public String toString() { return this.mName; }
+    public JSONObject toJson() throws JSONException {
+        JSONObject res = new JSONObject();
+        res
+                .put("object", "Fuel")
+                .put("id", this.getId())
+                .put("name", this.getName());
+        return res;
+    }
 }
