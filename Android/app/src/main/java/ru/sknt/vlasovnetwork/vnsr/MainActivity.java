@@ -24,6 +24,7 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.RegionDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetTypeDao;
+import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
 import ru.sknt.vlasovnetwork.vnsr.travels.TravelsActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -90,10 +91,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         } else if (v.getId() == R.id.bttnLogOut) { finish(); }
         else if (v.getId() == R.id.bttnCar)      { startActivity(new Intent(this, CarActivity.class)); }
-        else if (v.getId() == R.id.bttnTravels)  { startActivity(new Intent(this, TravelsActivity.class)); }
+//        else if (v.getId() == R.id.bttnTravels)  { startActivity(new Intent(this, TravelsActivity.class)); }
         else if (v.getId() == R.id.bttnKladr)    { startActivity(new Intent(this, KladrActivity.class)); }
         else if (v.getId() == R.id.bttnTruncate) { truncateAll(); }
-//        else if (v.getId() == R.id.bttnSync)     { startActivity(new Intent(this, SyncActivity.class)); }
+        else if (v.getId() == R.id.bttnSync)     { startActivity(new Intent(this, SyncActivity.class)); }
         else {
             Button bttn = (Button) v;
             Toast.makeText(this, "Pressed button " + bttn.getText().toString(), Toast.LENGTH_LONG).show();
@@ -103,16 +104,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void startMainMenu() {
         setContentView(R.layout.main_menu);
         Button bttnCar = findViewById(R.id.bttnCar);
-        Button bttnTravels = findViewById(R.id.bttnTravels);
+//        Button bttnTravels = findViewById(R.id.bttnTravels);
         Button bttnKladr = findViewById(R.id.bttnKladr);
-        //Button bttnSync = findViewById(R.id.bttnSync);
+        Button bttnSync = findViewById(R.id.bttnSync);
         Button bttnTruncate = findViewById(R.id.bttnTruncate);
         Button bttnLogOut = findViewById(R.id.bttnLogOut);
 
         bttnCar.setOnClickListener(this);
-        bttnTravels.setOnClickListener(this);
+//        bttnTravels.setOnClickListener(this);
         bttnKladr.setOnClickListener(this);
-        //bttnSync.setOnClickListener(this);
+        bttnSync.setOnClickListener(this);
         bttnTruncate.setOnClickListener(this);
         bttnLogOut.setOnClickListener(this);
     }
