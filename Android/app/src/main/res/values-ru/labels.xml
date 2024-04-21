@@ -56,4 +56,5 @@
     <string name="lbl_street_type">Тип улицы</string>
     <string name="lbl_city_type">Тип города</string>
     <string name="lbl_refuel">Дозаправка</string>
+    <string name="lbl_settings">Настройки</string>
 </resources>
