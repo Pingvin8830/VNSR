@@ -32,6 +32,12 @@
     <string name="lbl_time_delta">Time delta</string>
     <string name="lbl_litr">lit</string>
     <string name="lbl_valute">RuR</string>
+    <string name="lbl_object">Object</string>
+    <string name="lbl_success">Success</string>
+    <string name="lbl_fail">Failure</string>
+    <string name="lbl_street_type">Street type</string>
+    <string name="lbl_city_type">City type</string>
+    <string name="lbl_refuel">Refuel</string>
 
     <string name="lbl_new_city_type">Add a new city type</string>
     <string name="lbl_new_street_type">Add a new street type</string>

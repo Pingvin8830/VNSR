@@ -50,4 +50,10 @@
     <string name="lbl_show_fuel">Топливо</string>
     <string name="lbl_show_fuel_station">АЗС</string>
     <string name="lbl_show_refuel">Дозаправка</string>
+    <string name="lbl_object">Объект</string>
+    <string name="lbl_success">Успешно</string>
+    <string name="lbl_fail">Ошибок</string>
+    <string name="lbl_street_type">Тип улицы</string>
+    <string name="lbl_city_type">Тип города</string>
+    <string name="lbl_refuel">Дозаправка</string>
 </resources>
