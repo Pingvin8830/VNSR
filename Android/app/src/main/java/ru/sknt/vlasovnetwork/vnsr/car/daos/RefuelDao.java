@@ -22,6 +22,8 @@ public interface RefuelDao {
     Refuel find(int id);
     @Query("SELECT * FROM car_refuel WHERE datetime=:datetime")
     Refuel find(Date datetime);
+    @Query("SELECT count(id) FROM car_refuel")
+    int getCount();
 
     @Delete
     void delete(Refuel refuel);
