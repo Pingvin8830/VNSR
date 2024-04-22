@@ -60,7 +60,7 @@ public class FuelStation {
                 .put("company", this.getCompany())
                 .put("number", this.getNumber())
                 .put("phone", this.getPhone())
-                .put("address_id", this.getAddress().getId());
+                .put("address_name", this.getAddress().getName());
         return res;
     }
 }
