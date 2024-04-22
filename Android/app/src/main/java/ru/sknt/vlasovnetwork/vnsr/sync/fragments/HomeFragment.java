@@ -15,14 +15,20 @@ import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
     private EditText mEdtxtServerUrl;
+    private SyncActivity mActivity;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mActivity = (SyncActivity) getActivity();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sync_home, container, false);
         mEdtxtServerUrl = view.findViewById(R.id.edtxtServerUrl);
         Button bttnChange = view.findViewById(R.id.bttnChange);
 
-        if (SyncActivity.getServerUrl() != null) { mEdtxtServerUrl.setText(SyncActivity.getServerUrl()); }
+        mEdtxtServerUrl.setText(mActivity.getServerUrl());
 
         bttnChange.setOnClickListener(this);
 
@@ -32,7 +38,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.bttnChange) {
-            SyncActivity.setServerUrl(mEdtxtServerUrl.getText().toString());
+            mActivity.setServerUrl(mEdtxtServerUrl.getText().toString());
             Toast.makeText(getContext(), "Settings changed", Toast.LENGTH_SHORT).show();
         }
     }

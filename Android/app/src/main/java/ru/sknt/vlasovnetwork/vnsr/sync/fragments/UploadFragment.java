@@ -47,11 +47,13 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
     public static int requestsCount = 0;
     private int mSyncCount = 0;
     private int mSendCount = 0;
+    private SyncActivity mActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mVolleyQueue = Volley.newRequestQueue(getContext());
+        mActivity = (SyncActivity) getActivity();
     }
 
     @Override
@@ -157,7 +159,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
         mSendCount = 0;
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                SyncActivity.getServerUrl() + "/sync/truncate",
+                mActivity.getServerUrl() + "/sync/truncate",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -206,7 +208,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
     private void send(JSONObject data) {
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                SyncActivity.getServerUrl() + "/sync/send",
+                mActivity.getServerUrl() + "/sync/send",
                 data,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -263,23 +265,24 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
     }
     private void addRequest(JsonObjectRequest request) {
         UploadFragment.requestsCount++;
-        mTxtError.setText("" + UploadFragment.requestsCount);
+        mTxtError.setText("Active requests: " + UploadFragment.requestsCount);
         mVolleyQueue.add(request);
     }
     private void closeRequest() {
         Log.i("VNSR DEBUG", "Close request");
         UploadFragment.requestsCount--;
-        mTxtError.setText("" + UploadFragment.requestsCount);
+        mTxtError.setText("Active requests: " + UploadFragment.requestsCount);
     }
     private void startSync() {
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                SyncActivity.getServerUrl() + "/sync/start",
+                mActivity.getServerUrl() + "/sync/start",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         closeRequest();
+                        mTxtError.setText("Sync successed");
                     }
                 },
                 this
