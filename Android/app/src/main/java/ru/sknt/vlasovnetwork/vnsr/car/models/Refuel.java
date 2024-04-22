@@ -110,18 +110,19 @@ public class Refuel {
                 .put("object", "Refuel")
                 .put("id",                   this.getId())
                 .put("check_number",         this.getCheckNumber())
-                .put("date_time",            this.getDateTime())
+                .put("datetime",             this.getDateTime())
                 .put("price",                this.getPrice())
                 .put("count",                this.getCount())
                 .put("cost",                 this.getCost())
                 .put("distance",             this.getDistance())
-                .put("fuel_id",              this.getFuel().getId())
+                .put("fuel_name",            this.getFuel().getName())
                 .put("distance_reserve",     this.getDistanceReserve())
                 .put("fuel_consumption",     this.getFuelConsumption())
                 .put("fuel_consumption_avg", this.getFuelConsumptionAvg())
-                .put("fuel_station_id",      this.getFuelStation().getId())
+                .put("fuel_station_company", this.getFuelStation().getCompany())
+                .put("fuel_station_number",  this.getFuelStation().getNumber())
                 .put("odometer",             this.getOdometer())
-                .put("time_delta",           this.getTimedelta())
+                .put("timedelta",            this.getTimedelta())
                 .put("trk",                  this.getTrk());
         return res;
     }
