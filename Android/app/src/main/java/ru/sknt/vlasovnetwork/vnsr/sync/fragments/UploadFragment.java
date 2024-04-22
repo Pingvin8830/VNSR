@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
@@ -37,13 +37,16 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
 
-public class UploadFragment extends Fragment implements View.OnClickListener, Response.Listener<JSONObject>, Response.ErrorListener {
+public class UploadFragment extends Fragment implements View.OnClickListener, Response.ErrorListener {
     private RequestQueue mVolleyQueue;
     private TextView mTxtError;
     protected Map<String, Map<String, TextView>> mViews;
     protected Map<String, Map<String, Integer>> mValues;
-    private String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel"};
-    private String[] mSyncValues = {"Count", "Success", "Fail"};
+    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel"};
+    private final String[] mSyncValues = {"Count", "Success", "Fail"};
+    public static int requestsCount = 0;
+    private int mSyncCount = 0;
+    private int mSendCount = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,7 +100,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
             }
             for (String syncValue : mSyncValues) {
                 int value = 0;
-                if (syncValue == "Count") {
+                if (syncValue.equals("Count")) {
                     switch (syncObject) {
                         case "StreetType":
                             value = MainActivity.StreetTypeDao.getCount();
@@ -136,48 +139,60 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
         }
         return mainView;
     }
+
     @Override
-    public void onClick(View view) {
-        for (String syncObject : mSyncObjects) {
-            for (String syncValue : mSyncValues) {
-                if (syncValue.equals("Count")) { continue; }
-                mValues.get(syncObject).put(syncValue, 0);
-                mViews.get(syncObject).get(syncValue).setText("0");
-            }
-        }
-        try {
-            uploadStreetTypes();
-            uploadCityTypes();
-            uploadRegions();
-            uploadStreets();
-            uploadCityes();
-            uploadAddresses();
-            uploadFuels();
-            uploadFuelStations();
-            uploadRefuels();
-        } catch (JSONException e) {
-            mTxtError.setText("Error create json data");
-        }
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        mSyncCount += MainActivity.StreetTypeDao.getCount()
+                + MainActivity.CityTypeDao.getCount()
+                + MainActivity.RegionDao.getCount()
+                + MainActivity.StreetDao.getCount()
+                + MainActivity.CityDao.getCount()
+                + MainActivity.AddressDao.getCount()
+                + MainActivity.FuelDao.getCount()
+                + MainActivity.FuelStationDao.getCount()
+                + MainActivity.RefuelDao.getCount();
     }
     @Override
-    public void onResponse(JSONObject response) {
-        try {
-            String syncObject = response.getString("object");
-            TextView successedView = mViews.get(syncObject).get("Success");
-            int successedValue = mValues.get(syncObject).get("Success");
-            Log.i("VNSR DEBUG", "successedValue: " + successedValue);
-            successedValue++;
-            mValues.get(syncObject).put("Success", successedValue);
-            successedView.setText(String.valueOf(successedValue));
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        mTxtError.setText("" + response);
+    public void onClick(View view) {
+        mSendCount = 0;
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                SyncActivity.getServerUrl() + "/sync/truncate",
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        closeRequest();
+                        for (String syncObject : mSyncObjects) {
+                            for (String syncValue : mSyncValues) {
+                                if (syncValue.equals("Count")) { continue; }
+                                mValues.get(syncObject).put(syncValue, 0);
+                                mViews.get(syncObject).get(syncValue).setText("0");
+                            }
+                        }
+                        try {
+                            uploadStreetTypes();
+                            uploadCityTypes();
+                            uploadRegions();
+                            uploadStreets();
+                            uploadCityes();
+                            uploadAddresses();
+                            uploadFuels();
+                            uploadFuelStations();
+                            uploadRefuels();
+                        } catch (JSONException e) {
+                            mTxtError.setText("Error create json data");
+                        }
+                    }
+                },
+                this
+        );
+        addRequest(request);
     }
     @Override
     public void onErrorResponse(VolleyError volleyError) {
-        Toast.makeText(getContext(), "error2: " + volleyError, Toast.LENGTH_SHORT).show();
-        Log.i("TESTS DEBUG", "error: " + volleyError);
+        closeRequest();
+        mTxtError.setText(volleyError.toString());
     }
 
     private Map<String, TextView> createMapViews(View view, int countId, int successId, int failId) {
@@ -191,14 +206,34 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
     private void send(JSONObject data) {
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                SyncActivity.getUrl(),
+                SyncActivity.getServerUrl() + "/sync/send",
                 data,
-                this,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        closeRequest();
+                        try {
+                            String syncObject = jsonObject.getString("object");
+                            TextView successedView = mViews.get(syncObject).get("Success");
+                            int successedValue = mValues.get(syncObject).get("Success");
+                            successedValue++;
+                            mValues.get(syncObject).put("Success", successedValue);
+                            successedView.setText(String.valueOf(successedValue));
+
+                            mSendCount++;
+
+                            if (mSendCount == mSyncCount) { startSync(); }
+
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
                 this
         );
-        mVolleyQueue.add(request);
-
+        addRequest(request);
     }
+
     private void uploadStreetTypes() throws JSONException {
         for (StreetType streetType : MainActivity.StreetTypeDao.getAll()) { send(streetType.toJson()); }
     }
@@ -225,5 +260,30 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
     }
     private void uploadRefuels() throws JSONException {
         for (Refuel refuel : MainActivity.RefuelDao.getAll()) { send(refuel.toJson()); }
+    }
+    private void addRequest(JsonObjectRequest request) {
+        UploadFragment.requestsCount++;
+        mTxtError.setText("" + UploadFragment.requestsCount);
+        mVolleyQueue.add(request);
+    }
+    private void closeRequest() {
+        Log.i("VNSR DEBUG", "Close request");
+        UploadFragment.requestsCount--;
+        mTxtError.setText("" + UploadFragment.requestsCount);
+    }
+    private void startSync() {
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                SyncActivity.getServerUrl() + "/sync/start",
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        closeRequest();
+                    }
+                },
+                this
+        );
+        addRequest(request);
     }
 }
