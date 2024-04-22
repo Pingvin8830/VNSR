@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bttn_login">Вход</string>
+    <string name="bttn_car">Автомобиль</string>
+    <string name="bttn_travels">Путешествия</string>
+    <string name="bttn_kladr">КЛАДР</string>
+    <string name="bttn_logout">Выход</string>
+    <string name="bttn_add">Добавить</string>
+    <string name="bttn_cancel">Отмена</string>
+    <string name="bttn_delete">Удалить</string>
+    <string name="bttn_case_date_time">Выберите дату и время</string>
+    <string name="bttn_start">Старт</string>
+    <string name="bttn_change">Изменить</string>
+</resources>

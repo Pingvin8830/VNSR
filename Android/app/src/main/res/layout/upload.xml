@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="LAYOUT Error"
+        android:textColor="#FFFF0000"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/bttnStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtError">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:id="@+id/trHeader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/txtObject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_object"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_count"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_success"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_fail"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trStreetTypes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/txtStreetTypes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_street_type" />
+
+                <TextView
+                    android:id="@+id/txtStreetTypesCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtStreetTypesSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtStreetTypesFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trCityTypes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/txtCityTypes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_city_type" />
+
+                <TextView
+                    android:id="@+id/txtCityTypesCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtCityTypesSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtCityTypesFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trRegions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/txtRegions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_region" />
+
+                <TextView
+                    android:id="@+id/txtRegionsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtRegionsSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtRegionsFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trStreets"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/txtStreets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_street" />
+
+                <TextView
+                    android:id="@+id/txtStreetsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtStreetsSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtStreetsFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trCityes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/txtCityes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_city" />
+
+                <TextView
+                    android:id="@+id/txtCityesCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtCityesSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtCityesFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trAddresses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/txtAddresses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_address" />
+
+                <TextView
+                    android:id="@+id/txtAddressesCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtAddressesSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtAddressesFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trFuels"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/txtFuels"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_fuel" />
+
+                <TextView
+                    android:id="@+id/txtFuelsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtFuelsSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtFuelsFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trFuelStations"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/txtFuelStationsTypes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_fuel_station" />
+
+                <TextView
+                    android:id="@+id/txtFuelStationsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtFuelStationsSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtFuelStationsFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trRefuels"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/txtRefuels"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_refuel" />
+
+                <TextView
+                    android:id="@+id/txtRefuelsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtRefuelsSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtRefuelsFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/bttnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="@string/bttn_start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

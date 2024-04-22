@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="err_bad_creds">Bad creds</string>
+    <string name="err_bad_short">Bad short</string>
+    <string name="err_bad_name">Bad name</string>
+    <string name="err_bad_code">Bad code</string>
+    <string name="err_bad_home">Bad home</string>
+    <string name="err_bad_company">Bad company</string>
+    <string name="err_bad_trk">Bad trk</string>
+    <string name="err_bad_count">Bad count</string>
+    <string name="err_bad_price">Bad price</string>
+    <string name="err_bad_cost">Bad cost</string>
+    <string name="err_bad_distance">Bad distance</string>
+    <string name="err_bad_distance_reserve">Bad distance reserve</string>
+    <string name="err_bad_fuel_consumption">Bad fuel consumption</string>
+    <string name="err_bad_fuel_consumption_avg">Bad fuel consumption (avg)</string>
+    <string name="err_bad_odometer">Bad odometer</string>
+    <string name="err_bad_time_delta">Bad time delta</string>
+    <string name="err_bad_date_time">Bad date or time</string>
+
+    <string name="err_not_found_regions">Regions not found</string>
+    <string name="err_not_found_cityes">Cityes not found</string>
+    <string name="err_not_found_city_types">City types not found</string>
+    <string name="err_not_found_streets">Streets not found</string>
+    <string name="err_not_found_street_types">Street types not fonud</string>
+    <string name="err_not_found_addresses">Addresses not found</string>
+    <string name="err_not_found_fuels">Fuels not found</string>
+    <string name="err_not_found_fuel_stations">Fuel stations not found</string>
+    <string name="err_not_found_refuels">Refuels not found</string>
+
+</resources>

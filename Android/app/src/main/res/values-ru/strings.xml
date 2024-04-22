@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sub_app_kladr">КЛАДР</string>
+    <string name="menu_kladr_home">КЛАДР домашняя</string>
+    <string name="menu_kladr_addresses">Адреса</string>
+    <string name="menu_kladr_streets">Улицы</string>
+    <string name="menu_kladr_cityes">Города</string>
+    <string name="menu_kladr_regions">Регионы</string>
+    <string name="menu_kladr_street_types">Типы улиц</string>
+    <string name="menu_kladr_city_types">Типы городов</string>
+    <string name="menu_back">Назад</string>
+    <string name="sub_app_car">Автомобиль</string>
+    <string name="menu_car_home">Автомобиль домашняя</string>
+    <string name="menu_car_refuels">Дозаправки</string>
+    <string name="menu_car_fuel_stations">АЗСы</string>
+    <string name="menu_car_fuels">Топливо</string>
+    <string name="sub_app_sync">Синхронизация</string>
+    <string name="menu_sync_home">Синхронизация домашняя</string>
+    <string name="menu_sync_to_server">Выгрузка на сервер</string>
+    <string name="menu_sync_from_server">Загрузка с сервера</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="err_bad_creds">Неверный логин или пароль</string>
+    <string name="err_bad_short">Неверное сокращение</string>
+    <string name="err_bad_name">Неверное наименование</string>
+    <string name="err_bad_code">Неверный код</string>
+    <string name="err_bad_date_time">Неверная дата или время</string>
+    <string name="err_not_found_regions">Регионы не найдены</string>
+    <string name="err_not_found_cityes">Города не найдены</string>
+    <string name="err_not_found_city_types">Типы городов не найдены</string>
+    <string name="err_not_found_streets">Улицы не найдены</string>
+    <string name="err_not_found_street_types">Типы улиц не найдены</string>
+    <string name="err_bad_home">Неверный номер дома</string>
+    <string name="err_not_found_addresses">Адреса не найдены</string>
+    <string name="err_bad_company">Неверная организация</string>
+    <string name="err_bad_trk">Неверный ТРК</string>
+    <string name="err_bad_count">Неверное количество</string>
+    <string name="err_bad_price">Неверная цена</string>
+    <string name="err_bad_cost">Неверная стоимость</string>
+    <string name="err_bad_distance">Неверное расстояние</string>
+    <string name="err_bad_distance_reserve">Неверный запас хода</string>
+    <string name="err_bad_fuel_consumption">Неверный расход топлива</string>
+    <string name="err_bad_fuel_consumption_avg">Неверный расход топлива (сред)</string>
+    <string name="err_bad_odometer">Неверный одометр</string>
+    <string name="err_bad_time_delta">Неверный временной интервал</string>
+    <string name="err_not_found_fuels">Топливо не найдено</string>
+    <string name="err_not_found_fuel_stations">АЗСы не найдены</string>
+    <string name="err_not_found_refuels">Дозаправки не найдены</string>
+</resources>

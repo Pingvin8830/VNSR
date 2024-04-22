@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name" translatable="false">VNSR</string>
+
+    <string name="sub_app_kladr">Kladr</string>
+    <string name="sub_app_car">Car</string>
+    <string name="sub_app_sync">Sync</string>
+
+    <string name="title_activity_manual" translatable="false">ManualActivity</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="action_settings" translatable="false">Settings</string>
+
+    <string name="menu_kladr_home">Kladr home</string>
+    <string name="menu_kladr_addresses">Addresses</string>
+    <string name="menu_kladr_streets">Streets</string>
+    <string name="menu_kladr_cityes">Cityes</string>
+    <string name="menu_kladr_regions">Regions</string>
+    <string name="menu_kladr_street_types">Street types</string>
+    <string name="menu_kladr_city_types">City types</string>
+
+    <string name="menu_car_home">Car home</string>
+    <string name="menu_car_refuels">Refuels</string>
+    <string name="menu_car_fuel_stations">Fuel stations</string>
+    <string name="menu_car_fuels">Fuels</string>
+
+    <string name="menu_sync_home">Sync home</string>
+    <string name="menu_sync_to_server">Upload to server</string>
+    <string name="menu_sync_from_server">Download from server</string>
+
+    <string name="menu_back">Back</string>
+</resources>
