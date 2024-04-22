@@ -13,6 +13,10 @@ class Region(models.Model):
   def __str__(self):
     return f'{self.code} - {self.name}'
 
+  def load(self, data):
+    self.code = data['code']
+    self.name = data['name']
+
 class CityType(models.Model):
   class Meta:
     verbose_name = 'Тип населённого пункта'
@@ -23,6 +27,10 @@ class CityType(models.Model):
 
   def __str__(self):
     return self.name
+
+  def load(self, data):
+    self.name = data['name']
+    self.short = data['short']
 
 class City(models.Model):
   class Meta:
@@ -35,6 +43,10 @@ class City(models.Model):
   def __str__(self):
     return f'{self.type.short} {self.name}'
 
+  def load(self, data):
+    self.name = data['name']
+    self.type = CityType.objects.get(name=data['type_name'])
+
 class StreetType(models.Model):
   class Meta:
     verbose_name = 'Тип улицы'
@@ -45,6 +57,10 @@ class StreetType(models.Model):
 
   def __str__(self):
     return self.name
+
+  def load(self, data):
+    self.name = data['name']
+    self.short = data['short']
 
 class Street(models.Model):
   class Meta:
@@ -57,6 +73,10 @@ class Street(models.Model):
 
   def __str__(self):
     return f'{self.type.short} {self.name}'
+
+  def load(self, data):
+    self.name = data['name']
+    self.type = StreetType.objects.get(name=data['type_name'])
 
 class Address(models.Model):
   class Meta:
@@ -79,3 +99,13 @@ class Address(models.Model):
     if self.building: ret += f'{self.building}'
     if self.flat: ret += f', {self.flat}'
     return ret
+
+  def load(self, data):
+    self.name = data['name']
+    self.region = Region.objects.get(code=data['region_code'])
+    self.city = City.objects.get(name=data['city_name'])
+    self.street = Street.objects.get(name=data['street_name'], type__name=data['street_type_name'])
+    self.house = data['house']
+    self.building = data['building']
+    self.flat = data['flat']
+
