@@ -48,7 +48,7 @@ public class Street {
         res
                 .put("object", "Street")
                 .put("id", this.getId())
-                .put("type_id", this.getStreetType().getId())
+                .put("type_name", this.getStreetType().getName())
                 .put("name", this.getName());
         return res;
     }
