@@ -13,16 +13,15 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationView;
 
 import ru.sknt.vlasovnetwork.vnsr.R;
-import ru.sknt.vlasovnetwork.vnsr.car.CarActivity;
 import ru.sknt.vlasovnetwork.vnsr.sync.fragments.HomeFragment;
 import ru.sknt.vlasovnetwork.vnsr.sync.fragments.UploadFragment;
 
 public class SyncActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout mDrawer;
-    private static String Url;
-    public static String getUrl() { return SyncActivity.Url; }
-    public static void setUrl(String url) {
-        SyncActivity.Url = url;
+    private static String mServerUrl;
+    public static String getServerUrl() { return SyncActivity.mServerUrl; }
+    public static void setServerUrl(String url) {
+        SyncActivity.mServerUrl = url;
     }
 
     @Override
