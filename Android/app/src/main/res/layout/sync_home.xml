@@ -33,24 +33,24 @@
         app:layout_constraintTop_toBottomOf="@+id/txtSettings">
 
         <TableRow
-            android:id="@+id/trUrl"
+            android:id="@+id/trServerUrl"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textUrl"
+                android:id="@+id/txtServerUrl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lbl_url" />
+                android:text="@string/lbl_server_url" />
 
             <EditText
-                android:id="@+id/edtxtUrl"
+                android:id="@+id/edtxtServerUrl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
-                android:text="LAYOUT url" />
-        </TableRow>
+                android:text="LAYOUT Server url" />
 
+        </TableRow>
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
