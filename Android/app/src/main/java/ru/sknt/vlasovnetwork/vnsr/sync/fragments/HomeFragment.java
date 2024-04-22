@@ -11,28 +11,29 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import ru.sknt.vlasovnetwork.vnsr.R;
-import ru.sknt.vlasovnetwork.vnsr.car.CarActivity;
 import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
-    private EditText mEdtxtUrl;
+    private EditText mEdtxtServerUrl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sync_home, container, false);
-        mEdtxtUrl = view.findViewById(R.id.edtxtUrl);
+        mEdtxtServerUrl = view.findViewById(R.id.edtxtServerUrl);
         Button bttnChange = view.findViewById(R.id.bttnChange);
 
-        if (SyncActivity.getUrl() != null) { mEdtxtUrl.setText(SyncActivity.getUrl()); }
+        if (SyncActivity.getServerUrl() != null) { mEdtxtServerUrl.setText(SyncActivity.getServerUrl()); }
+
         bttnChange.setOnClickListener(this);
+
         return view;
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.bttnChange) {
-            SyncActivity.setUrl(mEdtxtUrl.getText().toString());
-            Toast.makeText(getContext(), "Url changed", Toast.LENGTH_SHORT).show();
+            SyncActivity.setServerUrl(mEdtxtServerUrl.getText().toString());
+            Toast.makeText(getContext(), "Settings changed", Toast.LENGTH_SHORT).show();
         }
     }
 }
