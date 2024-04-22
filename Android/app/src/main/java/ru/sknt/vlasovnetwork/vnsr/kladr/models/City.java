@@ -49,7 +49,7 @@ public class City {
         res
                 .put("object", "City")
                 .put("id", this.getId())
-                .put("type_id", this.getCityType().getId())
+                .put("type_name", this.getCityType().getName())
                 .put("name", this.getName());
         return res;
     }
