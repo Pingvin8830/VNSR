@@ -71,9 +71,10 @@ public class Address {
         res
                 .put("object", "Address")
                 .put("id", this.getId())
-                .put("region_id", this.getRegion().getId())
-                .put("city_id", this.getCity().getId())
-                .put("street_id", this.getStreet().getId())
+                .put("region_code", this.getRegion().getCode())
+                .put("city_name", this.getCity().getName())
+                .put("street_name", this.getStreet().getName())
+                .put("street_type_name", this.getStreet().getStreetType().getName())
                 .put("house", this.getHouse())
                 .put("building", this.getBuilding())
                 .put("flat", this.getFlat())
