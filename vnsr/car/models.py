@@ -14,7 +14,7 @@ class FuelStation(models.Model):
   address = models.ForeignKey(Address, on_delete=models.PROTECT, verbose_name='Адрес')
 
   def __str__(self):
-    return f'{self.name} - {self.address.name}'
+    return f'{self.company} - {self.number}'
 
   def load(self, data):
     self.company = data['company']
