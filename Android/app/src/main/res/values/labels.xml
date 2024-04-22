@@ -39,7 +39,7 @@
     <string name="lbl_city_type">City type</string>
     <string name="lbl_refuel">Refuel</string>
     <string name="lbl_settings">Settings</string>
-    <string name="lbl_url" translatable="false">URL</string>
+    <string name="lbl_server_url">Server URL</string>
 
     <string name="lbl_new_city_type">Add a new city type</string>
     <string name="lbl_new_street_type">Add a new street type</string>

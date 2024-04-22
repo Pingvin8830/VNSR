@@ -57,4 +57,5 @@
     <string name="lbl_city_type">Тип города</string>
     <string name="lbl_refuel">Дозаправка</string>
     <string name="lbl_settings">Настройки</string>
+    <string name="lbl_server_url">URL сервера</string>
 </resources>
