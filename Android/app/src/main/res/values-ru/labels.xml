@@ -2,6 +2,7 @@
 <resources>
     <string name="lbl_login">Логин</string>
     <string name="lbl_password">Пароль</string>
+    <string name="lbl_registration">Регистрация</string>
     <string name="lbl_new_city_type">Добавление типа города</string>
     <string name="lbl_short">Сокр</string>
     <string name="lbl_name">Название</string>
