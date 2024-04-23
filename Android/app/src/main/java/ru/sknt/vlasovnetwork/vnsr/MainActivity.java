@@ -1,6 +1,7 @@
 package ru.sknt.vlasovnetwork.vnsr;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Animation mAnimError;
     private EditText mEdtxtLogin;
     private EditText mEdtxtPassword;
+    public static SharedPreferences mPrefs;
+    public static SharedPreferences.Editor mEditor;
     public static AddressDao AddressDao;
     public static RegionDao RegionDao;
     public static CityDao CityDao;
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         VNSRDatabase db = Room.databaseBuilder(getApplicationContext(), VNSRDatabase.class, "vnsr-database").allowMainThreadQueries().build();
         MainActivity.AddressDao = db.addressDao();
         MainActivity.RegionDao = db.regionDao();
@@ -55,8 +60,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MainActivity.FuelDao = db.fuelDao();
         MainActivity.RefuelDao = db.refuelDao();
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        MainActivity.mPrefs = getSharedPreferences("vnsr", MODE_PRIVATE);
+        MainActivity.mEditor = mPrefs.edit();
+
+        String login = mPrefs.getString("login", null);
+        String password = mPrefs.getString("password", null);
+
+        if ((login == null) || (password == null)) { setContentView(R.layout.registration); }
+        else { setContentView(R.layout.login); }
 
         mAnimError = AnimationUtils.loadAnimation(this,R.anim.error);
         mAnimError.setAnimationListener(
@@ -74,8 +85,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mEdtxtLogin = findViewById(R.id.edtxtLogin);
         mEdtxtPassword = findViewById(R.id.edtxtPassword);
 
-        Button bttnLogIn = findViewById(R.id.bttnLogin);
-        bttnLogIn.setOnClickListener(this);
+        Button bttnLoginRegistration;
+
+        if ((login == null) || (password == null)) { bttnLoginRegistration = findViewById(R.id.bttnRegistration); }
+        else { bttnLoginRegistration = findViewById(R.id.bttnLogin); }
+
+        bttnLoginRegistration.setOnClickListener(this);
     }
 
     @Override
@@ -83,13 +98,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.bttnLogin) {
             String login = mEdtxtLogin.getText().toString();
             String password = mEdtxtPassword.getText().toString();
-            if (login.equals("admin") && password.equals("admin")) {
+            String correctLogin = MainActivity.mPrefs.getString("login", null);
+            String correctPassword = MainActivity.mPrefs.getString("password", null);
+            if (login.equals(correctLogin) && password.equals(correctPassword)) {
                 startMainMenu();
             } else {
                 mTxtError.setText(R.string.err_bad_creds);
                 mTxtError.startAnimation(mAnimError);
             }
-        } else if (v.getId() == R.id.bttnLogOut) { finish(); }
+        } else if (v.getId() == R.id.bttnRegistration) {
+            String newLogin = mEdtxtLogin.getText().toString();
+            String newPassword = mEdtxtPassword.getText().toString();
+            if ((!newLogin.isEmpty()) && (!newPassword.isEmpty())) {
+                MainActivity.mEditor.putString("login", newLogin);
+                MainActivity.mEditor.putString("password", newPassword);
+                MainActivity.mEditor.commit();
+                startMainMenu();
+            } else {
+                mTxtError.setText(R.string.err_bad_creds);
+                mTxtError.startAnimation(mAnimError);
+            }
+        }
+        else if (v.getId() == R.id.bttnLogOut) { finish(); }
         else if (v.getId() == R.id.bttnCar)      { startActivity(new Intent(this, CarActivity.class)); }
 //        else if (v.getId() == R.id.bttnTravels)  { startActivity(new Intent(this, TravelsActivity.class)); }
         else if (v.getId() == R.id.bttnKladr)    { startActivity(new Intent(this, KladrActivity.class)); }

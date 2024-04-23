@@ -1,6 +1,5 @@
 package ru.sknt.vlasovnetwork.vnsr.sync;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -13,18 +12,17 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
 
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.sync.fragments.HomeFragment;
 import ru.sknt.vlasovnetwork.vnsr.sync.fragments.UploadFragment;
 
 public class SyncActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout mDrawer;
-    private SharedPreferences mPrefs;
-    private SharedPreferences.Editor mEditor;
-    public String getServerUrl() { return mPrefs.getString("server_url", "Server url no set"); }
+    public String getServerUrl() { return MainActivity.mPrefs.getString("server_url", "Server url no set"); }
     public void setServerUrl(String url) {
-        mEditor.putString("server_url", url);
-        mEditor.commit();
+        MainActivity.mEditor.putString("server_url", url);
+        MainActivity.mEditor.commit();
     }
 
 
@@ -33,8 +31,6 @@ public class SyncActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync);
 
-        mPrefs = getSharedPreferences("vnsr", MODE_PRIVATE);
-        mEditor = mPrefs.edit();
 
         mDrawer = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);

@@ -11,4 +11,5 @@
     <string name="bttn_case_date_time">Case date and time</string>
     <string name="bttn_start">Start</string>
     <string name="bttn_change">Change</string>
+    <string name="bttn_registration">Registration</string>
 </resources>
