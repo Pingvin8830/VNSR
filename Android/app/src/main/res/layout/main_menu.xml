@@ -68,7 +68,7 @@
             android:id="@+id/bttnSync"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sync" />
+            android:text="@string/bttn_sync" />
 
         <Button
             android:id="@+id/bttnLogOut"

@@ -39,7 +39,7 @@ public class NewFuelStationDialog extends NewObjectDialog {
 
     @Override
     protected void setAdapters() {
-        ArrayAdapter<Address> addressAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mAddresses);
+        ArrayAdapter<Address> addressAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mAddresses);
         addressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpnAddress.setAdapter(addressAdapter);
     }
@@ -65,7 +65,8 @@ public class NewFuelStationDialog extends NewObjectDialog {
     @Override
     protected void createObject() {
         FuelStation newFuelStation = new FuelStation(mCompany, mNumber, mPhone, mAddress);
-        FuelStationsFragment callingFragment = (FuelStationsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("fuel_stations");
+        FuelStationsFragment callingFragment = (FuelStationsFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("fuel_stations");
+        assert callingFragment != null;
         callingFragment.createNewFuelStation(newFuelStation);
     }
 }

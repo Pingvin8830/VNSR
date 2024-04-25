@@ -30,16 +30,17 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it.
-        return new DatePickerDialog(getContext(), this, year, month, day);
+        return new DatePickerDialog(requireContext(), this, year, month, day);
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date the user picks.
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
         switch (TAG) {
             case "new_refuel":
                 NewRefuelDialog callingFragment = (NewRefuelDialog) fragmentManager.findFragmentByTag("new_refuel");
+                assert callingFragment != null;
                 callingFragment.setYear(year);
                 callingFragment.setMonth(month);
                 callingFragment.setDay(day);

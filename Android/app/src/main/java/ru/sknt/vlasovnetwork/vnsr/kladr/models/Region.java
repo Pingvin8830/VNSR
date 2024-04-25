@@ -41,6 +41,10 @@ public class Region {
         this.mCode = code;
         this.mName = name;
     }
+    public Region (JSONObject data) throws JSONException {
+        this.mCode = data.getString("code");
+        this.mName = data.getString("name");
+    }
 
     @NonNull
     @Override

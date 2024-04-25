@@ -3,7 +3,6 @@ package ru.sknt.vlasovnetwork.vnsr.kladr.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;

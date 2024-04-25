@@ -1,6 +1,5 @@
 package ru.sknt.vlasovnetwork.vnsr.car.fragments;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -89,8 +88,8 @@ public class NewRefuelDialog extends NewObjectDialog {
 
     @Override
     protected void setAdapters() {
-        ArrayAdapter<Fuel> fuelAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mFuels);
-        ArrayAdapter<FuelStation> fuelStationAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mFuelStations);
+        ArrayAdapter<Fuel> fuelAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mFuels);
+        ArrayAdapter<FuelStation> fuelStationAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mFuelStations);
 
         fuelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fuelStationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -168,7 +167,8 @@ public class NewRefuelDialog extends NewObjectDialog {
     @Override
     protected void createObject() {
         Refuel newRefuel = new Refuel(mFuelStation, mCheckNumber, mDateTime, mTrk, mFuel, mCount, mPrice, mCost, mDistanceReserve, mFuelConsumptionAvg, mOdometer, mDistance, mFuelConsumption, mTimeDelta);
-        RefuelsFragment callingFragment = (RefuelsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("refuels");
+        RefuelsFragment callingFragment = (RefuelsFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("refuels");
+        assert callingFragment != null;
         callingFragment.createNewRefuel(newRefuel);
     }
 
@@ -176,7 +176,7 @@ public class NewRefuelDialog extends NewObjectDialog {
     public void onClick(View view) {
         super.onClick(view);
         if (view.getId() == R.id.bttnDateTime) {
-            new DatePickerFragment("new_refuel").show(getActivity().getSupportFragmentManager(), "datePicker");
+            new DatePickerFragment("new_refuel").show(requireActivity().getSupportFragmentManager(), "datePicker");
         }
     }
 }

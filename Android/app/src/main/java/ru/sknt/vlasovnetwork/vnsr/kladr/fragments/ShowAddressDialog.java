@@ -54,7 +54,8 @@ public class ShowAddressDialog extends ShowObjectDialog {
 
     @Override
     protected void deleteObject() {
-        AddressesFragment callingFragment = (AddressesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("addresses");
+        AddressesFragment callingFragment = (AddressesFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("addresses");
+        assert callingFragment != null;
         callingFragment.deleteAddress(mAddress);
     }
 }

@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Address;
 
 @Entity(
@@ -47,6 +48,12 @@ public class FuelStation {
         this.mNumber = number;
         this.mPhone = phone;
         this.mAddress = address;
+    }
+    public FuelStation (JSONObject data) throws JSONException {
+        this.mCompany = data.getString("company");
+        this.mNumber = data.getString("number");
+        this.mPhone = data.getString("phone");
+        this.mAddress = MainActivity.AddressDao.find(data.getString("address_name"));
     }
 
     @NonNull

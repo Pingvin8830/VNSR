@@ -32,6 +32,7 @@ public class Fuel {
     public void setId(int id) { this.mId = id; }
 
     public Fuel (String name) { this.mName = name; }
+    public Fuel (JSONObject data) throws JSONException { this.mName = data.getString("name"); }
     @NonNull
     @Override
     public String toString() { return this.mName; }

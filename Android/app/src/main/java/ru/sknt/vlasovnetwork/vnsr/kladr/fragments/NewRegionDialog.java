@@ -49,7 +49,8 @@ public class NewRegionDialog extends NewObjectDialog {
     @Override
     protected void createObject() {
         Region region = new Region(mCode, mName);
-        RegionsFragment callingFragment = (RegionsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("regions");
+        RegionsFragment callingFragment = (RegionsFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("regions");
+        assert callingFragment != null;
         callingFragment.createNewRegion(region);
     }
 }

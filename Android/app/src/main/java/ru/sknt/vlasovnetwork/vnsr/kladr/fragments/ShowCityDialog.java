@@ -39,7 +39,8 @@ public class ShowCityDialog extends ShowObjectDialog {
 
     @Override
     protected void deleteObject() {
-        CityesFragment callingFragment = (CityesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("cityes");
+        CityesFragment callingFragment = (CityesFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("cityes");
+        assert callingFragment != null;
         callingFragment.deleteCity(mCity);
     }
 }

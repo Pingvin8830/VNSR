@@ -12,4 +12,5 @@
     <string name="bttn_start">Старт</string>
     <string name="bttn_change">Изменить</string>
     <string name="bttn_registration">Зарегистрироваться</string>
+    <string name="bttn_sync">Синхронизация</string>
 </resources>

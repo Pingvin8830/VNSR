@@ -35,7 +35,7 @@ public class NewCityDialog extends NewObjectDialog {
 
     @Override
     protected void setAdapters() {
-        ArrayAdapter<CityType> cityTypeAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mCityTypes);
+        ArrayAdapter<CityType> cityTypeAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mCityTypes);
         cityTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpnCityType.setAdapter(cityTypeAdapter);
     }
@@ -59,7 +59,8 @@ public class NewCityDialog extends NewObjectDialog {
     @Override
     protected void createObject() {
         City newCity = new City(mName, mCityType);
-        CityesFragment callingFragment = (CityesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("cityes");
+        CityesFragment callingFragment = (CityesFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("cityes");
+        assert callingFragment != null;
         callingFragment.createNewCity(newCity);
     }
 }

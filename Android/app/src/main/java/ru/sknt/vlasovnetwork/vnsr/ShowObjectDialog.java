@@ -1,5 +1,6 @@
 package ru.sknt.vlasovnetwork.vnsr;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -20,16 +21,17 @@ public abstract class ShowObjectDialog extends DialogFragment implements View.On
     protected abstract String getDialogMessageText();
     protected abstract void deleteObject();
 
+    @SuppressLint("InflateParams")
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
         mDialogView = inflater.inflate(R.layout.detail_layout, null);
         ConstraintLayout containerView = mDialogView.findViewById(R.id.container);
         inflater.inflate(getLayoutCode(), containerView, true);
-        Button bttnCancel = (Button) mDialogView.findViewById(R.id.bttnCancel);
-        Button bttnDelete = (Button) mDialogView.findViewById(R.id.bttnDelete);
+        Button bttnCancel = mDialogView.findViewById(R.id.bttnCancel);
+        Button bttnDelete = mDialogView.findViewById(R.id.bttnDelete);
         getDataViews();
         setData();
         bttnCancel.setOnClickListener(this);

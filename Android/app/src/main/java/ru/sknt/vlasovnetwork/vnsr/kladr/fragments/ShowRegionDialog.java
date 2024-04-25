@@ -35,7 +35,8 @@ public class ShowRegionDialog extends ShowObjectDialog {
 
     @Override
     protected void deleteObject() {
-        RegionsFragment callingFragment = (RegionsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("regions");
+        RegionsFragment callingFragment = (RegionsFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("regions");
+        assert callingFragment != null;
         callingFragment.deleteRegion(mRegion);
     }
 }

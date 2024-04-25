@@ -42,6 +42,10 @@ public class CityType {
         this.mName = name;
         this.mShort = mShort;
     }
+    public CityType (JSONObject data) throws JSONException {
+        this.mName = data.getString("name");
+        this.mShort = data.getString("short");
+    }
 
     @NonNull
     @Override

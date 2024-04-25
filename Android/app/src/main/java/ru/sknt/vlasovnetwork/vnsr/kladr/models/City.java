@@ -9,6 +9,8 @@ import androidx.room.PrimaryKey;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
+
 @Entity(
         tableName = "kladr_city",
         indices = {
@@ -37,6 +39,10 @@ public class City {
     public City(String name, CityType cityType) {
         this.mName = name;
         this.mCityType = cityType;
+    }
+    public City (JSONObject data) throws JSONException {
+        this.mName = data.getString("name");
+        this.mCityType = MainActivity.CityTypeDao.find(data.getString("type_name"));
     }
 
     @NonNull

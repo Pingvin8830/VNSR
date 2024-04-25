@@ -36,10 +36,11 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // Do something with the time the user picks.
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         switch (TAG) {
             case "new_refuel":
                 NewRefuelDialog callingFragment = (NewRefuelDialog) fragmentManager.findFragmentByTag("new_refuel");
+                assert callingFragment != null;
                 callingFragment.setHour(hourOfDay);
                 callingFragment.setMinute(minute);
                 callingFragment.setDateTimeButtonText();

@@ -12,4 +12,5 @@
     <string name="bttn_start">Start</string>
     <string name="bttn_change">Change</string>
     <string name="bttn_registration">Registration</string>
+    <string name="bttn_sync">Syncronization</string>
 </resources>

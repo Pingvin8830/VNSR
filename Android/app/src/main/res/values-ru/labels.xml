@@ -59,4 +59,6 @@
     <string name="lbl_refuel">Дозаправка</string>
     <string name="lbl_settings">Настройки</string>
     <string name="lbl_server_url">URL сервера</string>
+    <string name="lbl_upload">Выгрузка</string>
+    <string name="lbl_download">Загрузка</string>
 </resources>

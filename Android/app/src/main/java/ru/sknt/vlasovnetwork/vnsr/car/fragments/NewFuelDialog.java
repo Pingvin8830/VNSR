@@ -2,6 +2,7 @@ package ru.sknt.vlasovnetwork.vnsr.car.fragments;
 
 import android.widget.EditText;
 
+
 import ru.sknt.vlasovnetwork.vnsr.NewObjectDialog;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.car.models.Fuel;
@@ -38,7 +39,8 @@ public class NewFuelDialog extends NewObjectDialog {
     @Override
     protected void createObject() {
         Fuel newFuel = new Fuel(mName);
-        FuelsFragment callingFragment = (FuelsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("fuels");
+        FuelsFragment callingFragment = (FuelsFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("fuels");
+        assert callingFragment != null;
         callingFragment.createNewFuel(newFuel);
     }
 }
