@@ -1,4 +1,4 @@
-package ru.sknt.vlasovnetwork.vnsr.models.travels;
+package ru.sknt.vlasovnetwork.vnsr.travels.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

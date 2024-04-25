@@ -61,4 +61,7 @@
     <string name="lbl_server_url">URL сервера</string>
     <string name="lbl_upload">Выгрузка</string>
     <string name="lbl_download">Загрузка</string>
+    <string name="lbl_show_travel_state">Состояние поездки</string>
+    <string name="lbl_new_travel_state">Добавление состояния поездки</string>
+    <string name="lbl_travel_state">Состояние поездки</string>
 </resources>

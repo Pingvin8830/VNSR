@@ -1,4 +1,4 @@
-package ru.sknt.vlasovnetwork.vnsr.daos.travels;
+package ru.sknt.vlasovnetwork.vnsr.travels.daos;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,7 +7,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ru.sknt.vlasovnetwork.vnsr.models.travels.TravelState;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
 
 @Dao
 public interface TravelStateDao {
@@ -21,6 +21,9 @@ public interface TravelStateDao {
     TravelState find(int id);
     @Query("SELECT * FROM travels_travelstate WHERE name=:name")
     TravelState find(String name);
+    @Query("SELECT count(id) FROM travels_travelstate")
+    int getCount();
+
     @Delete
     void delete(TravelState travelState);
 

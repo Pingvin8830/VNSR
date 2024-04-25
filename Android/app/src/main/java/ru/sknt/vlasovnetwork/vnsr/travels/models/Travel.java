@@ -1,4 +1,4 @@
-package ru.sknt.vlasovnetwork.vnsr.models.travels;
+package ru.sknt.vlasovnetwork.vnsr.travels.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -6,7 +6,8 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import ru.sknt.vlasovnetwork.vnsr.daos.travels.TravelStateDao;
+import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelStateDao;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
 
 @Entity(
         tableName = "travels_travel",

@@ -43,6 +43,7 @@
     <string name="lbl_registration">Registration</string>
     <string name="lbl_upload">Upload</string>
     <string name="lbl_download">Download</string>
+    <string name="lbl_travel_state">Travel state</string>
 
     <string name="lbl_new_city_type">Add a new city type</string>
     <string name="lbl_new_street_type">Add a new street type</string>
@@ -53,6 +54,7 @@
     <string name="lbl_new_fuel">Add a new fuel</string>
     <string name="lbl_new_fuel_station">Add a new fuel station</string>
     <string name="lbl_new_refuel">Add a new refuel</string>
+    <string name="lbl_new_travel_state">Add a new travel state</string>
 
     <string name="lbl_show_city_type">Your city type</string>
     <string name="lbl_show_street_type">Your street type"</string>
@@ -63,4 +65,5 @@
     <string name="lbl_show_fuel">Your fuel</string>
     <string name="lbl_show_fuel_station">Your fuel station</string>
     <string name="lbl_show_refuel">Your refuel</string>
+    <string name="lbl_show_travel_state">Your travel state</string>
 </resources>

@@ -1,9 +1,12 @@
-package ru.sknt.vlasovnetwork.vnsr.models.travels;
+package ru.sknt.vlasovnetwork.vnsr.travels.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
 
 @Entity(
         tableName = "travels_way"

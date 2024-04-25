@@ -27,5 +27,6 @@
     <string name="err_not_found_fuels">Fuels not found</string>
     <string name="err_not_found_fuel_stations">Fuel stations not found</string>
     <string name="err_not_found_refuels">Refuels not found</string>
+    <string name="err_not_found_travel_states">Travel states not found</string>
 
 </resources>

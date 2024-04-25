@@ -18,6 +18,7 @@ import ru.sknt.vlasovnetwork.vnsr.car.CarActivity;
 import ru.sknt.vlasovnetwork.vnsr.car.daos.FuelStationDao;
 import ru.sknt.vlasovnetwork.vnsr.car.daos.FuelDao;
 import ru.sknt.vlasovnetwork.vnsr.car.daos.RefuelDao;
+import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelStateDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.KladrActivity;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.AddressDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityDao;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static StreetTypeDao StreetTypeDao;
     public static FuelStationDao FuelStationDao;
     public static FuelDao FuelDao;
+    public static TravelStateDao TravelStateDao;
     public static RefuelDao RefuelDao;
     public static TaskDao TaskDao;
 
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MainActivity.FuelDao = db.fuelDao();
         MainActivity.RefuelDao = db.refuelDao();
         MainActivity.TaskDao = db.taskDao();
+        MainActivity.TravelStateDao = db.travelStateDao();
 
         MainActivity.mPrefs = getSharedPreferences("vnsr", MODE_PRIVATE);
         MainActivity.mEditor = mPrefs.edit();

@@ -1,6 +1,7 @@
 package ru.sknt.vlasovnetwork.vnsr.sync.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,13 +42,14 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
 import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
 
 public class DownloadFragment extends Fragment implements View.OnClickListener, Response.ErrorListener {
     private RequestQueue mVolleyQueue;
     private TextView mTxtError;
     protected Map<String, Map<String, TextView>> mViews;
     protected Map<String, Map<String, Integer>> mValues;
-    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel"};
+    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "TravelState"};
     private final String[] mSyncValues = {"Count", "Success", "Fail"};
     public int requestsCount = 0;
     protected int mSyncCount = -1;
@@ -107,6 +109,9 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                     break;
                 case "Refuel":
                     tmpViews = createMapViews(mainView, R.id.txtRefuelsCount, R.id.txtRefuelsSuccess, R.id.txtRefuelsFail);
+                    break;
+                case "TravelState":
+                    tmpViews = createMapViews(mainView, R.id.txtTravelStatesCount, R.id.txtTravelStatesSuccess, R.id.txtTravelStatesFail);
                     break;
             }
             for (String syncValue : mSyncValues) {
@@ -342,6 +347,11 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                         findDateTime.setSeconds(0);
                         Refuel findRefuel = MainActivity.RefuelDao.find(findDateTime);
                         if (findRefuel == null) { MainActivity.RefuelDao.create(refuel); }
+                        break;
+                    case "TravelState":
+                        TravelState travelState = new TravelState(target);
+                        TravelState findTravelState = MainActivity.TravelStateDao.find(target.getString("name"));
+                        if (findTravelState == null) { MainActivity.TravelStateDao.create(travelState); }
                         break;
                 }
             }
