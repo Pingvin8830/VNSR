@@ -14,6 +14,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.R;
+import ru.sknt.vlasovnetwork.vnsr.sync.fragments.DownloadFragment;
 import ru.sknt.vlasovnetwork.vnsr.sync.fragments.HomeFragment;
 import ru.sknt.vlasovnetwork.vnsr.sync.fragments.UploadFragment;
 
@@ -68,8 +69,9 @@ public class SyncActivity extends AppCompatActivity implements NavigationView.On
 
         int id = item.getItemId();
 
-        if      (id == R.id.nav_sync_home)      { transaction.replace(R.id.fragmentHolder, new HomeFragment(), "home"); }
-        else if (id == R.id.nav_sync_to_server) { transaction.replace(R.id.fragmentHolder, new UploadFragment(), "upload"); }
+        if      (id == R.id.nav_sync_home)        { transaction.replace(R.id.fragmentHolder, new HomeFragment(), "home"); }
+        else if (id == R.id.nav_sync_to_server)   { transaction.replace(R.id.fragmentHolder, new UploadFragment(), "upload"); }
+        else if (id == R.id.nav_sync_from_server) { transaction.replace(R.id.fragmentHolder, new DownloadFragment(), "download"); }
         else if (id == R.id.nav_back) { finish(); }
 
         // Просим Android запоминать, какие пункты меню выбрал пользователь
