@@ -25,7 +25,9 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.RegionDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetTypeDao;
+import ru.sknt.vlasovnetwork.vnsr.migrations.Migration_1_2;
 import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
+import ru.sknt.vlasovnetwork.vnsr.sync.daos.TaskDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.TravelsActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -44,12 +46,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static FuelStationDao FuelStationDao;
     public static FuelDao FuelDao;
     public static RefuelDao RefuelDao;
+    public static TaskDao TaskDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        VNSRDatabase db = createDatabase();
 
-        VNSRDatabase db = Room.databaseBuilder(getApplicationContext(), VNSRDatabase.class, "vnsr-database").allowMainThreadQueries().build();
         MainActivity.AddressDao = db.addressDao();
         MainActivity.RegionDao = db.regionDao();
         MainActivity.CityDao = db.cityDao();
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MainActivity.FuelStationDao = db.fuelStationDao();
         MainActivity.FuelDao = db.fuelDao();
         MainActivity.RefuelDao = db.refuelDao();
+        MainActivity.TaskDao = db.taskDao();
 
         MainActivity.mPrefs = getSharedPreferences("vnsr", MODE_PRIVATE);
         MainActivity.mEditor = mPrefs.edit();
@@ -131,6 +135,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private VNSRDatabase createDatabase() {
+        Migration_1_2 migration_1_2 = new Migration_1_2(1, 2);
+
+        return Room.databaseBuilder(getApplicationContext(), VNSRDatabase.class, "vnsr-database")
+                .addMigrations(migration_1_2)
+                .allowMainThreadQueries()
+                .build();
+    }
     private void startMainMenu() {
         setContentView(R.layout.main_menu);
         Button bttnCar = findViewById(R.id.bttnCar);
