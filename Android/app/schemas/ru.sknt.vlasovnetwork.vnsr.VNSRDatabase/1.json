@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "bb5946383884ebeda007d253ee24474f",
+    "identityHash": "e1a29f0dc8c6c9e94fba960b25d39729",
     "entities": [
       {
         "tableName": "travels_travelstate",
@@ -808,12 +808,68 @@
           }
         ],
         "foreignKeys": []
+      },
+      {
+        "tableName": "sync_task",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `object_name` TEXT, `object_id` INTEGER NOT NULL, `field` TEXT, `value` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "mId",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mObjectName",
+            "columnName": "object_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mObjectId",
+            "columnName": "object_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mField",
+            "columnName": "field",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mValue",
+            "columnName": "value",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_sync_task_object_name_object_id_field",
+            "unique": true,
+            "columnNames": [
+              "object_name",
+              "object_id",
+              "field"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_sync_task_object_name_object_id_field` ON `${TABLE_NAME}` (`object_name`, `object_id`, `field`)"
+          }
+        ],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bb5946383884ebeda007d253ee24474f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e1a29f0dc8c6c9e94fba960b25d39729')"
     ]
   }
 }
