@@ -3,6 +3,7 @@
 
     <string name="sub_app_kladr">Kladr</string>
     <string name="sub_app_car">Car</string>
+    <string name="sub_app_travels">Travels</string>
     <string name="sub_app_sync">Sync</string>
 
     <string name="title_activity_manual" translatable="false">ManualActivity</string>
@@ -25,6 +26,14 @@
     <string name="menu_car_refuels">Refuels</string>
     <string name="menu_car_fuel_stations">Fuel stations</string>
     <string name="menu_car_fuels">Fuels</string>
+
+    <string name="menu_travels_home">Travels home</string>
+    <string name="menu_travels_travels">Travels</string>
+    <string name="menu_travels_points">Points</string>
+    <string name="menu_travels_ways">Ways</string>
+    <string name="menu_travels_toolroads">Tool roads</string>
+    <string name="menu_travels_hotels">Hotels</string>
+    <string name="menu_travels_travel_states">Travel states</string>
 
     <string name="menu_sync_home">Sync home</string>
     <string name="menu_sync_to_server">Upload to server</string>
