@@ -1,6 +1,6 @@
 #from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 
 #from vnsr.settings import DEBUG
 from kladr.models import StreetType, CityType, Region, Street, City, Address
@@ -13,61 +13,7 @@ import json
 # Create your views here.
 @csrf_exempt
 def index(request):
-  if request.method != 'GET': return JsonResponse({'state': 'error'}, status=400)
-  response_json = {
-    'regions': [
-      {
-        'id': 1,
-        'code': '00',
-        'name': 'Test region 00'
-      },
-      {
-        'id': 2,
-        'code': '100',
-        'name': 'Test region 100'
-      }
-    ],
-    'city_types': [
-      {
-        'id': 1,
-        'short': 'tct',
-        'name': 'Test city type'
-      },
-    ],
-    'cityes': [
-      {
-        'id': 1,
-        'type': 1,
-        'name': 'Test city'
-      },
-    ],
-    'street_types': [
-      {
-        'id': 1,
-        'short': 'tst',
-        'name': 'Test street type'
-      },
-    ],
-    'streets': [
-      {
-        'id': 1,
-        'type': 1,
-        'name': 'Test street'
-      }
-    ],
-    'addresses': [
-      {
-        'id': 1,
-        'region': 1,
-        'city': 1,
-        'street': 1,
-        'house': '999',
-        'building': '',
-        'flat': 0
-      }
-    ]
-  }
-  return JsonResponse(data=response_json)
+  return Http404
 
 @csrf_exempt
 def send(request):
@@ -171,3 +117,52 @@ def start(request):
 
   return JsonResponse({'state': 'started'})
 
+@csrf_exempt
+def get(request):
+  if request.method != 'POST': return JsonResponse({'state': 'error'}, status=400)
+  request_data = json.loads(request.body.decode('utf8'))
+  value = None
+  match request_data.get('data'):
+    case 'Count':
+      match request_data.get('object_name'):
+        case 'all': value = StreetType.objects.count() + CityType.objects.count() + Region.objects.count() + Street.objects.count() + City.objects.count() + Address.objects.count() + Fuel.objects.count() + FuelStation.objects.count() + Refuel.objects.count()
+        case 'StreetType':  value = StreetType.objects.count()
+        case 'CityType':    value = CityType.objects.count()
+        case 'Street':      value = Street.objects.count()
+        case 'City':        value = City.objects.count()
+        case 'Region':      value = Region.objects.count()
+        case 'Address':     value = Address.objects.count()
+        case 'Fuel':        value = Fuel.objects.count()
+        case 'FuelStation': value = FuelStation.objects.count()
+        case 'Refuel':      value = Refuel.objects.count()
+    case 'all':
+      match request_data.get('object_name'):
+        case 'StreetType':
+          value = []
+          for street_type in StreetType.objects.all(): value.append(street_type.to_json())
+        case 'CityType':
+          value = []
+          for city_type in CityType.objects.all(): value.append(city_type.to_json())
+        case 'Street':
+          value = []
+          for street in Street.objects.all(): value.append(street.to_json())
+        case 'City':
+          value = []
+          for city in City.objects.all(): value.append(city.to_json())
+        case 'Region':
+          value = []
+          for region in Region.objects.all(): value.append(region.to_json())
+        case 'Address':
+          value = []
+          for address in Address.objects.all(): value.append(address.to_json())
+        case 'Fuel':
+          value = []
+          for fuel in Fuel.objects.all(): value.append(fuel.to_json())
+        case 'FuelStation':
+          value = []
+          for fuel_station in FuelStation.objects.all(): value.append(fuel_station.to_json())
+        case 'Refuel':
+          value = []
+          for refuel in Refuel.objects.all(): value.append(refuel.to_json())
+  response_data = {'object_name': request_data['object_name'], 'data': request_data['data'], 'value': value}
+  return JsonResponse(response_data)
