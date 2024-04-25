@@ -35,7 +35,7 @@ public class NewStreetDialog extends NewObjectDialog {
 
     @Override
     protected void setAdapters() {
-        ArrayAdapter<StreetType> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mStreetTypes);
+        ArrayAdapter<StreetType> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mStreetTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpnStreetType.setAdapter(adapter);
     }
@@ -61,7 +61,8 @@ public class NewStreetDialog extends NewObjectDialog {
     @Override
     protected void createObject() {
         Street street = new Street(mName, mStreetType);
-        StreetsFragment callingFragment = (StreetsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("streets");
+        StreetsFragment callingFragment = (StreetsFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("streets");
+        assert callingFragment != null;
         callingFragment.createNewStreet(street);
     }
 }

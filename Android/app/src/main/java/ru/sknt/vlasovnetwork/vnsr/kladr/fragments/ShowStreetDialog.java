@@ -37,7 +37,8 @@ public class ShowStreetDialog extends ShowObjectDialog {
 
     @Override
     protected void deleteObject() {
-        StreetsFragment callingFragment = (StreetsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("streets");
+        StreetsFragment callingFragment = (StreetsFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("streets");
+        assert callingFragment != null;
         callingFragment.deleteStreet(mStreet);
     }
 }

@@ -35,7 +35,8 @@ public class ShowStreetTypeDialog extends ShowObjectDialog {
 
     @Override
     protected void deleteObject() {
-        StreetTypesFragment callingFragment = (StreetTypesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("street_types");
+        StreetTypesFragment callingFragment = (StreetTypesFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("street_types");
+        assert callingFragment != null;
         callingFragment.deleteStreetType(mStreetType);
     }
 }

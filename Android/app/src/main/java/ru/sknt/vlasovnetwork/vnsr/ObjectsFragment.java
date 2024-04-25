@@ -34,7 +34,7 @@ public abstract class ObjectsFragment extends Fragment implements View.OnClickLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mFragmentManager = getActivity().getSupportFragmentManager();
+        mFragmentManager = requireActivity().getSupportFragmentManager();
         View view = inflater.inflate(R.layout.list_layout, container, false);
 
         // Get views

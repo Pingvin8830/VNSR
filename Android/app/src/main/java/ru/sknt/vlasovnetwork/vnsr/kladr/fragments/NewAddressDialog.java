@@ -56,9 +56,9 @@ public class NewAddressDialog extends NewObjectDialog {
 
     @Override
     protected void setAdapters() {
-        ArrayAdapter<Region> regionAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mRegions);
-        ArrayAdapter<City> cityAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mCityes);
-        ArrayAdapter<Street> streetAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mStreets);
+        ArrayAdapter<Region> regionAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mRegions);
+        ArrayAdapter<City> cityAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mCityes);
+        ArrayAdapter<Street> streetAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mStreets);
 
         regionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -97,7 +97,8 @@ public class NewAddressDialog extends NewObjectDialog {
     @Override
     protected void createObject() {
         Address newAddress = new Address(mName, mRegion, mCity, mStreet, mHome, mBuilding, mFlat);
-        AddressesFragment callingFragment = (AddressesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("addresses");
+        AddressesFragment callingFragment = (AddressesFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("addresses");
+        assert callingFragment != null;
         callingFragment.createNewAddress(newAddress);
     }
 }

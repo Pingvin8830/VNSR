@@ -32,7 +32,8 @@ public class ShowFuelDialog extends ShowObjectDialog {
 
     @Override
     protected void deleteObject() {
-        FuelsFragment callingFragment = (FuelsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("fuels");
+        FuelsFragment callingFragment = (FuelsFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("fuels");
+        assert callingFragment != null;
         callingFragment.deleteFuel(mFuel);
     }
 }

@@ -21,8 +21,6 @@ public interface RegionDao {
     Region find(int id);
     @Query("SELECT * FROM kladr_region WHERE code=:code")
     Region find(String code);
-    @Query("SELECT * FROM kladr_region WHERE name=:name")
-    Region findByName(String name);
     @Query("SELECT count(id) FROM kladr_region")
     int getCount();
 

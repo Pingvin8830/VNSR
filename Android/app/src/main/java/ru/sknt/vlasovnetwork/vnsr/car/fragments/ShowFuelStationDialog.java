@@ -46,7 +46,8 @@ public class ShowFuelStationDialog extends ShowObjectDialog {
 
     @Override
     protected void deleteObject() {
-        FuelStationsFragment callingFragment = (FuelStationsFragment) getActivity().getSupportFragmentManager().findFragmentByTag("fuel_stations");
+        FuelStationsFragment callingFragment = (FuelStationsFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("fuel_stations");
+        assert callingFragment != null;
         callingFragment.deleteFuelStation(mFuelStation);
     }
 }

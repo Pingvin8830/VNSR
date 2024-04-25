@@ -49,7 +49,8 @@ public class NewStreetTypeDialog extends NewObjectDialog {
     @Override
     protected void createObject() {
         StreetType streetType = new StreetType(mName, mShort);
-        StreetTypesFragment callingFragment = (StreetTypesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("street_types");
+        StreetTypesFragment callingFragment = (StreetTypesFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("street_types");
+        assert callingFragment != null;
         callingFragment.createNewStreetType(streetType);
     }
 }

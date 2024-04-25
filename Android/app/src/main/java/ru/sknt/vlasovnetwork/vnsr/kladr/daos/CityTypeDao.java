@@ -13,8 +13,6 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.CityType;
 public interface CityTypeDao {
     @Query("SELECT * FROM kladr_citytype ORDER BY name")
     List<CityType> getAll();
-    @Query("SELECT name FROM kladr_citytype ORDER BY name")
-    List<String> getAllNames();
 
     @Insert
     void create(CityType cityType);

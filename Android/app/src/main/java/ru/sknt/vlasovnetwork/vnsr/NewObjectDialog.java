@@ -1,5 +1,6 @@
 package ru.sknt.vlasovnetwork.vnsr;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public abstract class NewObjectDialog extends DialogFragment implements View.OnC
         setObjectsLists();
     }
 
+    @SuppressLint("InflateParams")
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public abstract class NewObjectDialog extends DialogFragment implements View.OnC
                 }
         );
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
         mDialogView = inflater.inflate(R.layout.create_layout, null);
         ConstraintLayout containerContent = mDialogView.findViewById(R.id.containerContent);
         inflater.inflate(getLayoutCode(), containerContent, true);

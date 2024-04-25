@@ -47,7 +47,8 @@ public class NewCityTypeDialog extends NewObjectDialog {
     @Override
     protected void createObject() {
         CityType newCityType = new CityType(mName, mShort);
-        CityTypesFragment callingFragment = (CityTypesFragment) getActivity().getSupportFragmentManager().findFragmentByTag("city_types");
+        CityTypesFragment callingFragment = (CityTypesFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("city_types");
+        assert callingFragment != null;
         callingFragment.createNewCityType(newCityType);
     }
 }
