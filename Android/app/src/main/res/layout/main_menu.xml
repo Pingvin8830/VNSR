@@ -46,23 +46,17 @@
             android:layout_height="wrap_content"
             android:text="@string/bttn_car" />
 
-        <!--Button
+        <Button
             android:id="@+id/bttnTravels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/bttn_travels" /-->
+            android:text="@string/bttn_travels" />
 
         <Button
             android:id="@+id/bttnKladr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/bttn_kladr" />
-
-        <Button
-            android:id="@+id/bttnTruncate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TRUNCATE" />
 
         <Button
             android:id="@+id/bttnSync"
