@@ -42,6 +42,10 @@ public class StreetType {
         this.mName = name;
         this.mShort = mShort;
     }
+    public StreetType (JSONObject data) throws JSONException {
+        this.mName = data.getString("name");
+        this.mShort = data.getString("short");
+    }
 
     @NonNull
     @Override

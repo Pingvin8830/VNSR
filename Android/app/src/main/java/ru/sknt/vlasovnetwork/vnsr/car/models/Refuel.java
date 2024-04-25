@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ru.sknt.vlasovnetwork.vnsr.FormatedDate;
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 
 @Entity(
         tableName = "car_refuel",
@@ -102,6 +103,28 @@ public class Refuel {
         this.mDistance = distance;
         this.mFuelConsumption = fuelConsumption;
         this.mTimedelta = timedelta;
+    }
+    public Refuel(JSONObject data) throws JSONException {
+        this.mFuelStation = MainActivity.FuelStationDao.find(data.getString("fuel_station_company"), data.getString("fuel_station_number"));
+        this.mCheckNumber = Integer.parseInt(data.getString("check_number"));
+        this.mDateTime = new FormatedDate(0L);
+        this.mDateTime.setYear(Integer.parseInt(data.getString("year")));
+        this.mDateTime.setMonth(Integer.parseInt(data.getString("month"))-1);
+        this.mDateTime.setDate(Integer.parseInt(data.getString("day")));
+        this.mDateTime.setHours(Integer.parseInt(data.getString("hour")));
+        this.mDateTime.setMinutes(Integer.parseInt(data.getString("minute")));
+        this.mDateTime.setSeconds(0);
+        this.mTrk = Integer.parseInt(data.getString("trk"));
+        this.mFuel = MainActivity.FuelDao.find(data.getString("fuel_name"));
+        this.mCount = Float.parseFloat(data.getString("count"));
+        this.mPrice = Float.parseFloat(data.getString("price"));
+        this.mCost = Float.parseFloat(data.getString("cost"));
+        this.mDistanceReserve = Integer.parseInt(data.getString("distance_reserve"));
+        this.mFuelConsumptionAvg = Float.parseFloat(data.getString("fuel_consumption_avg"));
+        this.mOdometer = Integer.parseInt(data.getString("odometer"));
+        this.mDistance = Float.parseFloat(data.getString("distance"));
+        this.mFuelConsumption = Float.parseFloat(data.getString("fuel_consumption"));
+        this.mTimedelta = data.getString("timedelta");
     }
 
     public JSONObject toJson() throws JSONException {
