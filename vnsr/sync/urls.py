@@ -7,5 +7,6 @@ urlpatterns = [
   path('truncate', views.truncate, name='truncate'),
   path('send',     views.send,     name='send'),
   path('start',    views.start,    name='start'),
+  path('get',      views.get,      name='get'),
   path('',         views.index,    name='index'),
 ]

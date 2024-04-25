@@ -2,6 +2,8 @@ from django.db import models
 
 from kladr.models import Address
 
+import datetime
+
 # Create your models here.
 class FuelStation(models.Model):
   class Meta:
@@ -22,6 +24,15 @@ class FuelStation(models.Model):
     self.phone = data['phone']
     self.address = Address.objects.get(name=data['address_name'])
 
+  def to_json(self):
+    return {
+      'id': self.id,
+      'company': self.company,
+      'number': self.number,
+      'phone': self.phone,
+      'address_name': self.address.name
+    }
+
 class Fuel(models.Model):
   class Meta:
     verbose_name = 'Топливо'
@@ -34,6 +45,12 @@ class Fuel(models.Model):
 
   def load(self, data):
     self.name = data['name']
+
+  def to_json(self):
+    return {
+      'id': self.id,
+      'name': self.name
+    }
 
 class Refuel(models.Model):
   class Meta:
@@ -74,4 +91,29 @@ class Refuel(models.Model):
     self.distance = data['distance']
     self.fuel_consumption = data['fuel_consumption']
     self.timedelta = data['timedelta']
+
+  def to_json(self):
+    correct_msk = self.datetime + datetime.timedelta(hours=3)
+    return {
+      'id': self.id,
+      'fuel_station_company': self.fuel_station.company,
+      'fuel_station_number': self.fuel_station.number,
+      'check_number': self.check_number,
+      'year': correct_msk.year,
+      'month': correct_msk.month,
+      'day': correct_msk.day,
+      'hour': correct_msk.hour,
+      'minute': correct_msk.minute,
+      'trk': self.trk,
+      'fuel_name': self.fuel.name,
+      'count': self.count,
+      'price': self.price,
+      'cost': self.cost,
+      'distance_reserve': self.distance_reserve,
+      'fuel_consumption_avg': self.fuel_consumption_avg,
+      'odometer': self.odometer,
+      'distance': self.distance,
+      'fuel_consumption': self.fuel_consumption,
+      'timedelta': self.timedelta
+    }
 

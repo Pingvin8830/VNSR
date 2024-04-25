@@ -17,6 +17,13 @@ class Region(models.Model):
     self.code = data['code']
     self.name = data['name']
 
+  def to_json(self):
+    return {
+      'id': self.id,
+      'code': self.code,
+      'name': self.name
+    }
+
 class CityType(models.Model):
   class Meta:
     verbose_name = 'Тип населённого пункта'
@@ -31,6 +38,13 @@ class CityType(models.Model):
   def load(self, data):
     self.name = data['name']
     self.short = data['short']
+
+  def to_json(self):
+    return {
+      'id': self.id,
+      'name': self.name,
+      'short': self.short
+    }
 
 class City(models.Model):
   class Meta:
@@ -47,6 +61,13 @@ class City(models.Model):
     self.name = data['name']
     self.type = CityType.objects.get(name=data['type_name'])
 
+  def to_json(self):
+    return {
+      'id': self.id,
+      'name': self.name,
+      'type_name': self.type.name
+    }
+
 class StreetType(models.Model):
   class Meta:
     verbose_name = 'Тип улицы'
@@ -61,6 +82,13 @@ class StreetType(models.Model):
   def load(self, data):
     self.name = data['name']
     self.short = data['short']
+
+  def to_json(self):
+    return {
+      'id': self.id,
+      'name': self.name,
+      'short': self.short
+    }
 
 class Street(models.Model):
   class Meta:
@@ -77,6 +105,13 @@ class Street(models.Model):
   def load(self, data):
     self.name = data['name']
     self.type = StreetType.objects.get(name=data['type_name'])
+
+  def to_json(self):
+    return {
+      'id': self.id,
+      'name': self.name,
+      'type_name': self.type.name
+    }
 
 class Address(models.Model):
   class Meta:
@@ -108,4 +143,17 @@ class Address(models.Model):
     self.house = data['house']
     self.building = data['building']
     self.flat = data['flat']
+
+  def to_json(self):
+    return {
+      'id': self.id,
+      'name': self.name,
+      'region_code': self.region.code,
+      'city_name': self.city.name,
+      'street_name': self.street.name,
+      'street_type_name': self.street.type.name,
+      'house': self.house,
+      'building': self.building,
+      'flat': self.flat
+    }
 
