@@ -1,5 +1,7 @@
 package ru.sknt.vlasovnetwork.vnsr.kladr.models;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -35,9 +37,9 @@ public class Address {
     @ColumnInfo(name = "house")
     private final String mHouse;
     @ColumnInfo(name = "building")
-    private final String mBuilding;
+    private String mBuilding;
     @ColumnInfo(name = "flat")
-    private final int mFlat;
+    private int mFlat;
 
     public int getId() { return this.mId; }
     public String getName() { return this.mName; }
@@ -71,7 +73,9 @@ public class Address {
         this.mStreet = MainActivity.StreetDao.find(data.getString("street_name"), data.getString("street_type_name"));
         this.mHouse = data.getString("house");
         this.mBuilding = data.getString("building");
-        this.mFlat = Integer.parseInt(data.getString("flat"));
+        if (this.mBuilding.equals("null")) { this.mBuilding = ""; };
+        try { this.mFlat = Integer.parseInt(data.getString("flat")); }
+        catch (NumberFormatException e) { this.mFlat = 0; }
     }
 
     @NonNull
