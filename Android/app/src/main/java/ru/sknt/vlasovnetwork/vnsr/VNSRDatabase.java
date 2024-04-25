@@ -34,9 +34,11 @@ import ru.sknt.vlasovnetwork.vnsr.models.travels.Travel;
 import ru.sknt.vlasovnetwork.vnsr.models.travels.TravelState;
 import ru.sknt.vlasovnetwork.vnsr.daos.travels.TravelStateDao;
 import ru.sknt.vlasovnetwork.vnsr.models.travels.Way;
+import ru.sknt.vlasovnetwork.vnsr.sync.daos.TaskDao;
+import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
 
 @Database(
-        version = 1,
+        version = 2,
         entities = {
                 TravelState.class,
                 Travel.class,
@@ -52,21 +54,12 @@ import ru.sknt.vlasovnetwork.vnsr.models.travels.Way;
                 City.class,
                 StreetType.class,
                 Street.class,
-                Address.class
+                Address.class,
+                Task.class
         }
-//        autoMigrations = {
-//                @AutoMigration(from = 1, to = 2),
-//                @AutoMigration(from = 2, to = 3),
-//                @AutoMigration(from = 3, to = 4, spec = VNSRDatabase.Migration3to4.class),
-//                @AutoMigration(from = 4, to = 5),
-//                @AutoMigration(from = 5, to = 6)
-//        }
 )
 @TypeConverters({Converters.class})
 public abstract class VNSRDatabase extends RoomDatabase {
-    //@RenameTable(fromTableName = "TravelState", toTableName = "travels_travelstate")
-    //static class Migration3to4 implements AutoMigrationSpec { }
-
     public abstract TravelStateDao travelStateDao();
     public abstract TravelDao travelDao();
     public abstract ToolRoadDao toolRoadDao();
@@ -82,4 +75,5 @@ public abstract class VNSRDatabase extends RoomDatabase {
     public abstract StreetTypeDao streetTypeDao();
     public abstract StreetDao streetDao();
     public abstract AddressDao addressDao();
+    public abstract TaskDao taskDao();
 }
