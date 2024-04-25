@@ -16,6 +16,15 @@ class TravelState(models.Model):
   def __str__(self):
     return self.name
 
+  def load(self, data):
+    self.name = data['name']
+
+  def to_json(self):
+    return {
+      'id': self.id,
+      'name': self.name
+    }
+
 class Travel(models.Model):
   class Meta:
     verbose_name = 'Путешествие'
