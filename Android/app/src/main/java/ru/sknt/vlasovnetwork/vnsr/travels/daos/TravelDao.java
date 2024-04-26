@@ -22,6 +22,8 @@ public interface TravelDao {
     Travel find(int id);
     @Query("SELECT * FROM travels_travel WHERE name=:name")
     Travel find(String name);
+    @Query("SELECT count(id) FROM travels_travel")
+    int getCount();
 
     @Delete
     void delete(Travel travel);

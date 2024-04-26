@@ -42,6 +42,7 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
 import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
 
 public class DownloadFragment extends Fragment implements View.OnClickListener, Response.ErrorListener {
@@ -49,7 +50,7 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
     private TextView mTxtError;
     protected Map<String, Map<String, TextView>> mViews;
     protected Map<String, Map<String, Integer>> mValues;
-    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "TravelState"};
+    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "TravelState", "Travel"};
     private final String[] mSyncValues = {"Count", "Success", "Fail"};
     public int requestsCount = 0;
     protected int mSyncCount = -1;
@@ -112,6 +113,9 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                     break;
                 case "TravelState":
                     tmpViews = createMapViews(mainView, R.id.txtTravelStatesCount, R.id.txtTravelStatesSuccess, R.id.txtTravelStatesFail);
+                    break;
+                case "Travel":
+                    tmpViews = createMapViews(mainView, R.id.txtTravelsCount, R.id.txtTravelsSuccess, R.id.txtTravelsFail);
                     break;
             }
             for (String syncValue : mSyncValues) {
@@ -352,6 +356,11 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                         TravelState travelState = new TravelState(target);
                         TravelState findTravelState = MainActivity.TravelStateDao.find(target.getString("name"));
                         if (findTravelState == null) { MainActivity.TravelStateDao.create(travelState); }
+                        break;
+                    case "Travel":
+                        Travel travel = new Travel(target);
+                        Travel findTravel = MainActivity.TravelDao.find(target.getString("name"));
+                        if (findTravel == null) { MainActivity.TravelDao.create(travel); }
                         break;
                 }
             }

@@ -6,6 +6,10 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelStateDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
 
@@ -27,9 +31,7 @@ public class Travel {
     @ColumnInfo(name = "participants")
     private final String mParticipants;
     @ColumnInfo(name = "state_id")
-    private int mStateId;
-    @Ignore
-    private TravelState mState;
+    private TravelState mTravelState;
     @ColumnInfo(name = "fuel_consumption")
     private float mFuelConsumption = 10f;
     @ColumnInfo(name = "fuel_price")
@@ -48,15 +50,12 @@ public class Travel {
     public String getParticipants() {
         return this.mParticipants;
     };
-    public int getStateId() {
-        return this.mStateId;
-    }
     public TravelState getState() {
-        return this.mState;
+        return this.mTravelState;
     };
-    public void setState(TravelStateDao travelStateDao) {
-        this.mState = travelStateDao.find(this.mStateId);
-    }
+    public TravelState getTravelState() {
+        return this.mTravelState;
+    };
     public float getFuelConsumption() {
         return this.mFuelConsumption;
     }
@@ -64,20 +63,31 @@ public class Travel {
        return this.mFuelPrice;
     };
 
-    public Travel(String name, String participants, int stateId, float fuelConsumption, float fuelPrice) {
+    public Travel(String name, String participants, TravelState travelState, float fuelConsumption, float fuelPrice) {
         this.mName = name;
         this.mParticipants = participants;
-        this.mStateId = stateId;
+        this.mTravelState = travelState;
         this.mFuelConsumption = fuelConsumption;
         this.mFuelPrice = fuelPrice;
     }
-}
+    public Travel(JSONObject data) throws JSONException {
+        this.mName = data.getString("name");
+        this.mParticipants = data.getString("participants");
+        this.mTravelState = MainActivity.TravelStateDao.find(data.getString("travel_state_name"));
+        this.mFuelConsumption = Float.parseFloat(data.getString("fuel_consumption"));
+        this.mFuelPrice = Float.parseFloat(data.getString("fuel_price"));
+    }
 
-//    CREATE TABLE "travels_travel" (
-//        "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-//        "name" varchar(255) NOT NULL UNIQUE,
-//        "participants" varchar(255) NOT NULL,
-//        "state_id" bigint NOT NULL REFERENCES "travels_travelstate" ("id") DEFERRABLE INITIALLY DEFERRED,
-//        "fuel_consumption" decimal NOT NULL,
-//        "fuel_price" decimal NOT NULL
-//        );
+    public JSONObject toJson() throws JSONException {
+        JSONObject res = new JSONObject();
+        res
+                .put("object", "Travel")
+                .put("id", this.getId())
+                .put("name", this.getName())
+                .put("participants", this.getParticipants())
+                .put("travel_state_name", this.getTravelState().getName())
+                .put("fuel_consumption", this.getFuelConsumption())
+                .put("fuel_price", this.getFuelPrice());
+        return res;
+    }
+}

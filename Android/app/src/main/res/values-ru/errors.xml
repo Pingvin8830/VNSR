@@ -27,4 +27,7 @@
     <string name="err_not_found_fuel_stations">АЗСы не найдены</string>
     <string name="err_not_found_refuels">Дозаправки не найдены</string>
     <string name="err_not_found_travel_states">Состояния поездок не найдены</string>
+    <string name="err_not_found_travels">Поездки не найдены</string>
+    <string name="err_bad_participants">Неверный состав участников</string>
+    <string name="err_bad_fuel_price">Неверная цена топлива</string>
 </resources>

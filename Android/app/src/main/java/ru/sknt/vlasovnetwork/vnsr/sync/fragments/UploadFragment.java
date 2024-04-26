@@ -36,6 +36,7 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
 
 public class UploadFragment extends Fragment implements View.OnClickListener, Response.ErrorListener {
@@ -43,7 +44,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
     private TextView mTxtError;
     protected Map<String, Map<String, TextView>> mViews;
     protected Map<String, Map<String, Integer>> mValues;
-    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "TravelState"};
+    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "TravelState", "Travel"};
     private final String[] mSyncValues = {"Count", "Success", "Fail"};
     public static int requestsCount = 0;
     private int mSyncCount = 0;
@@ -108,6 +109,9 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
                 case "TravelState":
                     tmpViews = createMapViews(mainView, R.id.txtTravelStatesCount, R.id.txtTravelStatesSuccess, R.id.txtTravelStatesFail);
                     break;
+                case "Travel":
+                    tmpViews = createMapViews(mainView, R.id.txtTravelsCount, R.id.txtTravelsSuccess, R.id.txtTravelsFail);
+                    break;
             }
             for (String syncValue : mSyncValues) {
                 int value = 0;
@@ -143,6 +147,9 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
                         case "TravelState":
                             value = MainActivity.TravelStateDao.getCount();
                             break;
+                        case "Travel":
+                            value = MainActivity.TravelDao.getCount();
+                            break;
                     }
                 }
                 tmpValues.put(syncValue, value);
@@ -165,7 +172,8 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
                 + MainActivity.FuelDao.getCount()
                 + MainActivity.FuelStationDao.getCount()
                 + MainActivity.RefuelDao.getCount()
-                + MainActivity.TravelStateDao.getCount();
+                + MainActivity.TravelStateDao.getCount()
+                + MainActivity.TravelDao.getCount();
     }
     @Override
     public void onClick(View view) {
@@ -194,6 +202,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
                         uploadFuelStations();
                         uploadRefuels();
                         uploadTravelStates();
+                        uploadTravels();
                     } catch (JSONException e) {
                         mTxtError.setText("Error create json data");
                     }
@@ -274,6 +283,9 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
     }
     private void uploadTravelStates() throws JSONException {
         for (TravelState travelState : MainActivity.TravelStateDao.getAll()) { send(travelState.toJson()); }
+    }
+    private void uploadTravels() throws JSONException {
+        for (Travel travel : MainActivity.TravelDao.getAll()) { send(travel.toJson()); }
     }
     private void addRequest(JsonObjectRequest request) {
         UploadFragment.requestsCount++;

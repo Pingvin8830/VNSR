@@ -1,5 +1,6 @@
 package ru.sknt.vlasovnetwork.vnsr;
 
+import androidx.room.AutoMigration;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
@@ -38,7 +39,7 @@ import ru.sknt.vlasovnetwork.vnsr.sync.daos.TaskDao;
 import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
 
 @Database(
-        version = 2,
+        version = 3,
         entities = {
                 TravelState.class,
                 Travel.class,
@@ -56,6 +57,9 @@ import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
                 Street.class,
                 Address.class,
                 Task.class
+        },
+        autoMigrations = {
+                @AutoMigration(from=2, to=3)
         }
 )
 @TypeConverters({Converters.class})

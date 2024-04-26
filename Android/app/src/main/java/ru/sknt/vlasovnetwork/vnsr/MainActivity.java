@@ -18,6 +18,8 @@ import ru.sknt.vlasovnetwork.vnsr.car.CarActivity;
 import ru.sknt.vlasovnetwork.vnsr.car.daos.FuelStationDao;
 import ru.sknt.vlasovnetwork.vnsr.car.daos.FuelDao;
 import ru.sknt.vlasovnetwork.vnsr.car.daos.RefuelDao;
+import ru.sknt.vlasovnetwork.vnsr.migrations.Migration_2_3;
+import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelStateDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.KladrActivity;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.AddressDao;
@@ -46,8 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static StreetTypeDao StreetTypeDao;
     public static FuelStationDao FuelStationDao;
     public static FuelDao FuelDao;
-    public static TravelStateDao TravelStateDao;
     public static RefuelDao RefuelDao;
+    public static TravelStateDao TravelStateDao;
+    public static TravelDao TravelDao;
     public static TaskDao TaskDao;
 
     @Override
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MainActivity.RefuelDao = db.refuelDao();
         MainActivity.TaskDao = db.taskDao();
         MainActivity.TravelStateDao = db.travelStateDao();
+        MainActivity.TravelDao = db.travelDao();
 
         MainActivity.mPrefs = getSharedPreferences("vnsr", MODE_PRIVATE);
         MainActivity.mEditor = mPrefs.edit();
@@ -139,9 +143,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private VNSRDatabase createDatabase() {
         Migration_1_2 migration_1_2 = new Migration_1_2(1, 2);
+        Migration_2_3 migration_2_3 = new Migration_2_3(2, 3);
 
         return Room.databaseBuilder(getApplicationContext(), VNSRDatabase.class, "vnsr-database")
                 .addMigrations(migration_1_2)
+                .addMigrations(migration_2_3)
                 .allowMainThreadQueries()
                 .build();
     }

@@ -1,5 +1,6 @@
 package ru.sknt.vlasovnetwork.vnsr.travels.models;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
@@ -37,6 +38,9 @@ public class TravelState {
     }
     public TravelState(JSONObject data) throws JSONException { this.mName = data.getString("name"); }
 
+    @NonNull
+    @Override
+    public String toString() { return this.mName; }
     public JSONObject toJson() throws JSONException {
         JSONObject res = new JSONObject();
         res

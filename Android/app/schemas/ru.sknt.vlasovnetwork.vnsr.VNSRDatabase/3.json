@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
+    "version": 3,
     "identityHash": "cb9150d52cd7a3b8928f9a31bffed9ca",
     "entities": [
       {
@@ -63,7 +63,7 @@
             "notNull": false
           },
           {
-            "fieldPath": "mState",
+            "fieldPath": "mTravelState",
             "columnName": "state_id",
             "affinity": "INTEGER",
             "notNull": false

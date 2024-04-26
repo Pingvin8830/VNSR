@@ -44,6 +44,28 @@
     <string name="lbl_upload">Upload</string>
     <string name="lbl_download">Download</string>
     <string name="lbl_travel_state">Travel state</string>
+    <string name="lbl_distance_metric">km</string>
+    <string name="lbl_fuel_metric">lit</string>
+    <string name="lbl_points_metric">Points</string>
+    <string name="lbl_participants">Participants</string>
+    <string name="lbl_points">Points</string>
+    <string name="lbl_doing">Doing</string>
+    <string name="lbl_fuel_consumption_metric">lit/100 km</string>
+    <string name="lbl_fuel_price_metric">RuR/lit</string>
+    <string name="lbl_start">Start</string>
+    <string name="lbl_target">Target</string>
+    <string name="lbl_summary">Summary</string>
+    <string name="lbl_tool_roads">Tool roads</string>
+    <string name="lbl_start_point">Start point</string>
+    <string name="lbl_end_point">End point</string>
+    <string name="lbl_hotels">Hotels</string>
+    <string name="lbl_arrival">Arrival</string>
+    <string name="lbl_departure">Departure</string>
+    <string name="lbl_state">State</string>
+    <string name="lbl_beginning">Beginning</string>
+    <string name="lbl_finishing">Finishing</string>
+    <string name="lbl_fuel_price">Fuel price</string>
+    <string name="lbl_travel">Travel</string>
 
     <string name="lbl_new_city_type">Add a new city type</string>
     <string name="lbl_new_street_type">Add a new street type</string>
@@ -55,6 +77,7 @@
     <string name="lbl_new_fuel_station">Add a new fuel station</string>
     <string name="lbl_new_refuel">Add a new refuel</string>
     <string name="lbl_new_travel_state">Add a new travel state</string>
+    <string name="lbl_new_travel">Add a new travel</string>
 
     <string name="lbl_show_city_type">Your city type</string>
     <string name="lbl_show_street_type">Your street type"</string>
@@ -66,4 +89,5 @@
     <string name="lbl_show_fuel_station">Your fuel station</string>
     <string name="lbl_show_refuel">Your refuel</string>
     <string name="lbl_show_travel_state">Your travel state</string>
+    <string name="lbl_show_travel">Your travel</string>
 </resources>
