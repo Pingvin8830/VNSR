@@ -1,6 +1,11 @@
 package ru.sknt.vlasovnetwork.vnsr.travels.fragments;
 
+import android.graphics.Color;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -79,19 +84,65 @@ public class ShowTravelDialog extends ShowObjectDialog {
 //        mTxtToolRoadsCostSum = mDialogView.findViewById(R.id.txtToolRoadCostSum);
 //        mTxtHotelsCostSum = mDialogView.findViewById(R.id.txtHotelCostSum);
 
-//        mTblPoints = mDialogView.findViewById(R.id.tblPoints);
-//        mTblWays = mDialogView.findViewById(R.id.tblWays);
-//        mTblToolRoads = mDialogView.findViewById(R.id.tblToolRoads);
-//        mTblHotels = mDialogView.findViewById(R.id.tblHotels);
-
 //        mTrPointsHeader = mDialogView.findViewById(R.id.trPointsHeader);
-//        mTrPointsSum = mDialogView.findViewById(R.id.trPointsSum);
+        mTrPointsSum = mDialogView.findViewById(R.id.trPointsSum);
 //        mTrWaysHeader = mDialogView.findViewById(R.id.trWaysHeader);
 //        mTrWaysSum = mDialogView.findViewById(R.id.trWaysSum);
 //        mTrToolRoadsHeader = mDialogView.findViewById(R.id.trToolRoadsHeader);
 //        mTrToolRoadsSum = mDialogView.findViewById(R.id.trToolRoadSum);
 //        mTrHotelsHeader = mDialogView.findViewById(R.id.trHotelsHeader);
 //        mTrHotelsSum = mDialogView.findViewById(R.id.trHotelSum);
+
+        mTblPoints = mDialogView.findViewById(R.id.tblPoints);
+        mTblPoints.removeView(mTrPointsSum);
+        TextView txtPointDateTime = mDialogView.findViewById(R.id.txtPointDateTimeLabel);
+        ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) txtPointDateTime.getLayoutParams();
+        int margin = marginLayoutParams.getMarginStart();
+        TableRow.LayoutParams layoutFirstParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        TableRow.LayoutParams layoutSecondParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutFirstParams.setMargins(margin, 0, margin, 0);
+        layoutSecondParams.setMargins(0, 0, margin, 0);
+
+        for (Point point : mPoints) {
+            TableRow tableRow = new TableRow(requireContext());
+
+            txtPointDateTime = new TextView(requireContext());
+            TextView txtPointCity = new TextView(requireContext());
+            TextView txtPointName = new TextView(requireContext());
+            TextView txtPointDoing = new TextView(requireContext());
+
+            txtPointDateTime.setText(point.getDateTime().toString());
+            txtPointCity.setText(point.getAddress().getCity().toString());
+            txtPointName.setText(point.getAddress().getName());
+            txtPointDoing.setText(point.getDoing());
+
+            txtPointDateTime.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            txtPointCity.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            txtPointName.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            txtPointDoing.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+
+            txtPointDateTime.setBackgroundColor(Color.WHITE);
+            txtPointCity.setBackgroundColor(Color.WHITE);
+            txtPointName.setBackgroundColor(Color.WHITE);
+            txtPointDoing.setBackgroundColor(Color.WHITE);
+
+            txtPointDateTime.setLayoutParams(layoutFirstParams);
+            txtPointCity.setLayoutParams(layoutSecondParams);
+            txtPointName.setLayoutParams(layoutSecondParams);
+            txtPointDoing.setLayoutParams(layoutSecondParams);
+
+            tableRow.addView(txtPointDateTime);
+            tableRow.addView(txtPointCity);
+            tableRow.addView(txtPointName);
+            tableRow.addView(txtPointDoing);
+
+            mTblPoints.addView(tableRow);
+        }
+        mTblPoints.addView(mTrPointsSum);
+//        mTblWays = mDialogView.findViewById(R.id.tblWays);
+//        mTblToolRoads = mDialogView.findViewById(R.id.tblToolRoads);
+//        mTblHotels = mDialogView.findViewById(R.id.tblHotels);
+
     }
 
     @Override

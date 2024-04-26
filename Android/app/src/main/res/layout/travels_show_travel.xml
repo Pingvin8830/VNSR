@@ -230,45 +230,6 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/trPointData"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/txtPointDateTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginEnd="1dp"
-                        android:background="#FFFFFFFF"
-                        android:text="LAYOUT Point date and time" />
-
-                    <TextView
-                        android:id="@+id/txtPointCity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="1dp"
-                        android:background="#FFFFFFFF"
-                        android:text="LAYOUT Point city" />
-
-                    <TextView
-                        android:id="@+id/txtPointName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="1dp"
-                        android:background="#FFFFFFFF"
-                        android:text="LAYOUT Point name" />
-
-                    <TextView
-                        android:id="@+id/txtPointDoing"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="1dp"
-                        android:background="#FFFFFFFF"
-                        android:text="LAYOUT Point doing" />
-                </TableRow>
-
-                <TableRow
                     android:id="@+id/trPointsSum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -382,7 +343,7 @@
                         android:id="@+id/txtWayStartLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="1dp"
+                        android:layout_marginStart="1sp"
                         android:layout_marginTop="1dp"
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="1dp"
