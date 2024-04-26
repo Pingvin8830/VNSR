@@ -27,6 +27,10 @@ public class ShowTravelDialog extends ShowObjectDialog {
     private TableLayout mTblPoints, mTblWays, mTblToolRoads, mTblHotels;
     private TableRow mTrPointsHeader, mTrPointsSum, mTrWaysHeader, mTrWaysSum, mTrToolRoadsHeader, mTrToolRoadsSum, mTrHotelsHeader, mTrHotelsSum;
     private List<Point> mPoints;
+    private final TableRow.LayoutParams mFirstLayoutParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    private final TableRow.LayoutParams mSecondLayoutParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    int mMargin;
+
     public ShowTravelDialog(Travel travel) {
         mTravel = travel;
         mPoints = MainActivity.PointDao.filter(travel.getId());
@@ -64,6 +68,12 @@ public class ShowTravelDialog extends ShowObjectDialog {
         mTrToolRoadsSum = mDialogView.findViewById(R.id.trToolRoadSum);
         mTrHotelsHeader = mDialogView.findViewById(R.id.trHotelsHeader);
         mTrHotelsSum = mDialogView.findViewById(R.id.trHotelSum);
+
+        TextView txtControl = mDialogView.findViewById(R.id.txtPointDateTimeLabel);
+        ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) txtControl.getLayoutParams();
+        mMargin = marginLayoutParams.getMarginStart();
+        mFirstLayoutParams.setMargins(mMargin, 0, mMargin, 0);
+        mSecondLayoutParams.setMargins(0, 0, mMargin, 0);
     }
 
     @Override
@@ -94,19 +104,32 @@ public class ShowTravelDialog extends ShowObjectDialog {
 //        mTrHotelsSum = mDialogView.findViewById(R.id.trHotelSum);
 
         mTblPoints = mDialogView.findViewById(R.id.tblPoints);
+//        mTblWays = mDialogView.findViewById(R.id.tblWays);
+//        mTblToolRoads = mDialogView.findViewById(R.id.tblToolRoads);
+//        mTblHotels = mDialogView.findViewById(R.id.tblHotels);
+
+        createPointsTable();
+    }
+
+    @Override
+    protected String getDialogMessageText() {
+        return getResources().getString(R.string.lbl_show_travel);
+    }
+
+    @Override
+    protected void deleteObject() {
+        TravelsFragment callingFragment = (TravelsFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("travels");
+        assert callingFragment != null;
+        callingFragment.deleteTravel(mTravel);
+    }
+
+    private void createPointsTable() {
         mTblPoints.removeView(mTrPointsSum);
-        TextView txtPointDateTime = mDialogView.findViewById(R.id.txtPointDateTimeLabel);
-        ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) txtPointDateTime.getLayoutParams();
-        int margin = marginLayoutParams.getMarginStart();
-        TableRow.LayoutParams layoutFirstParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        TableRow.LayoutParams layoutSecondParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutFirstParams.setMargins(margin, 0, margin, 0);
-        layoutSecondParams.setMargins(0, 0, margin, 0);
 
         for (Point point : mPoints) {
             TableRow tableRow = new TableRow(requireContext());
 
-            txtPointDateTime = new TextView(requireContext());
+            TextView txtPointDateTime = new TextView(requireContext());
             TextView txtPointCity = new TextView(requireContext());
             TextView txtPointName = new TextView(requireContext());
             TextView txtPointDoing = new TextView(requireContext());
@@ -126,10 +149,10 @@ public class ShowTravelDialog extends ShowObjectDialog {
             txtPointName.setBackgroundColor(Color.WHITE);
             txtPointDoing.setBackgroundColor(Color.WHITE);
 
-            txtPointDateTime.setLayoutParams(layoutFirstParams);
-            txtPointCity.setLayoutParams(layoutSecondParams);
-            txtPointName.setLayoutParams(layoutSecondParams);
-            txtPointDoing.setLayoutParams(layoutSecondParams);
+            txtPointDateTime.setLayoutParams(mFirstLayoutParams);
+            txtPointCity.setLayoutParams(mSecondLayoutParams);
+            txtPointName.setLayoutParams(mSecondLayoutParams);
+            txtPointDoing.setLayoutParams(mSecondLayoutParams);
 
             tableRow.addView(txtPointDateTime);
             tableRow.addView(txtPointCity);
@@ -139,21 +162,5 @@ public class ShowTravelDialog extends ShowObjectDialog {
             mTblPoints.addView(tableRow);
         }
         mTblPoints.addView(mTrPointsSum);
-//        mTblWays = mDialogView.findViewById(R.id.tblWays);
-//        mTblToolRoads = mDialogView.findViewById(R.id.tblToolRoads);
-//        mTblHotels = mDialogView.findViewById(R.id.tblHotels);
-
-    }
-
-    @Override
-    protected String getDialogMessageText() {
-        return getResources().getString(R.string.lbl_show_travel);
-    }
-
-    @Override
-    protected void deleteObject() {
-        TravelsFragment callingFragment = (TravelsFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("travels");
-        assert callingFragment != null;
-        callingFragment.deleteTravel(mTravel);
     }
 }
