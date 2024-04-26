@@ -40,8 +40,10 @@ class Travel(models.Model):
     return self.name
 
   def get_datetimes(self):
-    start = self.points.order_by('datetime')[0].datetime
-    end = self.points.order_by('-datetime')[0].datetime
+    try: start = self.points.order_by('datetime')[0].datetime
+    except IndexError: start = None
+    try: end = self.points.order_by('-datetime')[0].datetime
+    except IndexError: end = None
     return {'start': start, 'end': end}
 
   @admin.display(
@@ -91,6 +93,23 @@ class Travel(models.Model):
 
   def get_cost(self):
     return self.get_fuel_cost() + self.get_toll_road_cost() + self.get_hotel_cost()
+
+  def load(self, data):
+    self.name = data['name']
+    self.participants = data['participants']
+    self.state = TravelState.objects.get(name=data['travel_state_name'])
+    self.fuel_consumption = data['fuel_consumption']
+    self.fuel_price = data['fuel_price']
+
+  def to_json(self):
+    return {
+      'id': self.id,
+      'name': self.name,
+      'participants': self.participants,
+      'travel_state_name': self.state.name,
+      'fuel_consumption': self.fuel_consumption,
+      'fuel_price': self.fuel_price
+    }
 
 class Point(models.Model):
   class Meta:

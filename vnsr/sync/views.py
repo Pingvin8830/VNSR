@@ -5,7 +5,7 @@ from django.http import JsonResponse, Http404
 #from vnsr.settings import DEBUG
 from kladr.models import StreetType, CityType, Region, Street, City, Address
 from car.models import Fuel, FuelStation, Refuel
-from travels.models import TravelState
+from travels.models import TravelState, Travel
 
 from .models import Object
 
@@ -121,6 +121,12 @@ def start(request):
           try: find_object = TravelState.objects.get(name=target['name'])
           except TravelState.DoesNotExist: find_object = None
           if not find_object: travel_state.save()
+        case 'Travel':
+          travel = Travel()
+          travel.load(target)
+          try: find_object = Travel.objects.get(name=target['name'])
+          except Travel.DoesNotExist: find_object = None
+          if not find_object: travel.save()
 
   return JsonResponse({'state': 'started'})
 
@@ -132,7 +138,7 @@ def get(request):
   match request_data.get('data'):
     case 'Count':
       match request_data.get('object_name'):
-        case 'all': value = StreetType.objects.count() + CityType.objects.count() + Region.objects.count() + Street.objects.count() + City.objects.count() + Address.objects.count() + Fuel.objects.count() + FuelStation.objects.count() + Refuel.objects.count() + TravelState.objects.count()
+        case 'all': value = StreetType.objects.count() + CityType.objects.count() + Region.objects.count() + Street.objects.count() + City.objects.count() + Address.objects.count() + Fuel.objects.count() + FuelStation.objects.count() + Refuel.objects.count() + TravelState.objects.count() + Travel.objects.count()
         case 'StreetType':  value = StreetType.objects.count()
         case 'CityType':    value = CityType.objects.count()
         case 'Street':      value = Street.objects.count()
@@ -143,6 +149,7 @@ def get(request):
         case 'FuelStation': value = FuelStation.objects.count()
         case 'Refuel':      value = Refuel.objects.count()
         case 'TravelState': value = TravelState.objects.count()
+        case 'Travel':      value = Travel.objects.count()
     case 'all':
       match request_data.get('object_name'):
         case 'StreetType':
@@ -175,5 +182,8 @@ def get(request):
         case 'TravelState':
           value = []
           for travel_state in TravelState.objects.all(): value.append(travel_state.to_json())
+        case 'Travel':
+          value = []
+          for travel in Travel.objects.all(): value.append(travel.to_json())
   response_data = {'object_name': request_data['object_name'], 'data': request_data['data'], 'value': value}
   return JsonResponse(response_data)
