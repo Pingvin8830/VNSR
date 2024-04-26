@@ -34,8 +34,10 @@ public class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.ListItem
     public void onBindViewHolder(@NonNull TravelsAdapter.ListItemHolder holder, int position) {
         Travel travel = mTravels.get(position);
         holder.mTxtName.setText(travel.getName());
-//        holder.mTxtStart.setText(travel.getStart());
-//        holder.mTxtEnd.setText(travel.getEnd());
+        try { holder.mTxtStart.setText(travel.getStartDateTime().toString()); }
+        catch (NullPointerException e) { holder.mTxtStart.setText(R.string.lbl_unknown); }
+        try { holder.mTxtEnd.setText(travel.getEndDateTime().toString()); }
+        catch (NullPointerException e) { holder.mTxtEnd.setText(R.string.lbl_unknown); }
 //        holder.mTxtDistance.setText(travel.getDistance());
 //        holder.mTxtFuelCount.setText(travel.getFuelCount());
 //        holder.mTxtPoints.setText(travel.getPoints());

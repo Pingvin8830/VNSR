@@ -12,6 +12,7 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.CityType;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
 
 public class Converters {
@@ -66,5 +67,10 @@ public class Converters {
     public static int travelStateToInt(TravelState travelState) { return travelState == null ? null : travelState.getId(); }
     @TypeConverter
     public static TravelState intToTravelState(int id) { return id == 0 ? null : MainActivity.TravelStateDao.find(id); }
+
+    @TypeConverter
+    public static int travelToInt(Travel travel) { return travel == null ? null : travel.getId(); }
+    @TypeConverter
+    public static Travel intToTravel(int id) { return id == 0 ? null : MainActivity.TravelDao.find(id); }
 
 }

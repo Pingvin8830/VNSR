@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import java.util.Calendar;
 
 import ru.sknt.vlasovnetwork.vnsr.car.fragments.NewRefuelDialog;
+import ru.sknt.vlasovnetwork.vnsr.travels.fragments.NewPointDialog;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
     private final String TAG;
@@ -39,11 +40,18 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         switch (TAG) {
             case "new_refuel":
-                NewRefuelDialog callingFragment = (NewRefuelDialog) fragmentManager.findFragmentByTag("new_refuel");
-                assert callingFragment != null;
-                callingFragment.setHour(hourOfDay);
-                callingFragment.setMinute(minute);
-                callingFragment.setDateTimeButtonText();
+                NewRefuelDialog refuelDialog = (NewRefuelDialog) fragmentManager.findFragmentByTag(TAG);
+                assert refuelDialog != null;
+                refuelDialog.setHour(hourOfDay);
+                refuelDialog.setMinute(minute);
+                refuelDialog.setDateTimeButtonText();
+                break;
+            case "new_point":
+                NewPointDialog pointDialog = (NewPointDialog) fragmentManager.findFragmentByTag(TAG);
+                assert pointDialog != null;
+                pointDialog.setHour(hourOfDay);
+                pointDialog.setMinute(minute);
+                pointDialog.setDateTimeButtonText();
                 break;
         }
     }

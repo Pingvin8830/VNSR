@@ -42,6 +42,7 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
 import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
 
@@ -50,7 +51,7 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
     private TextView mTxtError;
     protected Map<String, Map<String, TextView>> mViews;
     protected Map<String, Map<String, Integer>> mValues;
-    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "TravelState", "Travel"};
+    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "TravelState", "Travel", "Point"};
     private final String[] mSyncValues = {"Count", "Success", "Fail"};
     public int requestsCount = 0;
     protected int mSyncCount = -1;
@@ -116,6 +117,9 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                     break;
                 case "Travel":
                     tmpViews = createMapViews(mainView, R.id.txtTravelsCount, R.id.txtTravelsSuccess, R.id.txtTravelsFail);
+                    break;
+                case "Point":
+                    tmpViews = createMapViews(mainView, R.id.txtPointsCount, R.id.txtPointsSuccess, R.id.txtPointsFail);
                     break;
             }
             for (String syncValue : mSyncValues) {
@@ -299,6 +303,7 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                 target.put("object_name", syncObject).put("object_id", id);
                 List<Task> tasks = MainActivity.TaskDao.filter(syncObject, id);
                 for (Task task : tasks) { target.put(task.getField(), task.getValue()); }
+                FormatedDate findDateTime = new FormatedDate(0L);
                 switch (syncObject) {
                     case "StreetType":
                         StreetType streetType = new StreetType(target);
@@ -342,7 +347,6 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                         break;
                     case "Refuel":
                         Refuel refuel = new Refuel(target);
-                        FormatedDate findDateTime = new FormatedDate(0L);
                         findDateTime.setYear(Integer.parseInt(target.getString("year")));
                         findDateTime.setMonth(Integer.parseInt(target.getString("month"))-1);
                         findDateTime.setDate(Integer.parseInt(target.getString("day")));
@@ -361,6 +365,17 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                         Travel travel = new Travel(target);
                         Travel findTravel = MainActivity.TravelDao.find(target.getString("name"));
                         if (findTravel == null) { MainActivity.TravelDao.create(travel); }
+                        break;
+                    case "Point":
+                        Point point = new Point(target);
+                        findDateTime.setYear(Integer.parseInt(target.getString("year")));
+                        findDateTime.setMonth(Integer.parseInt(target.getString("month"))-1);
+                        findDateTime.setDate(Integer.parseInt(target.getString("day")));
+                        findDateTime.setHours(Integer.parseInt(target.getString("hour")));
+                        findDateTime.setMinutes(Integer.parseInt(target.getString("minute")));
+                        findDateTime.setSeconds(0);
+                        Point findPoint = MainActivity.PointDao.find(findDateTime.getTime());
+                        if (findPoint == null) { MainActivity.PointDao.create(point); }
                         break;
                 }
             }

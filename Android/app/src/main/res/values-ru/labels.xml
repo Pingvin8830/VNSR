@@ -88,4 +88,8 @@
     <string name="lbl_show_travel">Поездка</string>
     <string name="lbl_fuel_price">Цена топлива</string>
     <string name="lbl_new_travel">Добавление поездки</string>
+    <string name="lbl_unknown">Неизвестно</string>
+    <string name="lbl_show_point">Путевая точка</string>
+    <string name="lbl_new_point">Добавление путевой точки</string>
+    <string name="lbl_point">Путевая точка</string>
 </resources>

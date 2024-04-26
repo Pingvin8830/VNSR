@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import java.util.Calendar;
 
 import ru.sknt.vlasovnetwork.vnsr.car.fragments.NewRefuelDialog;
+import ru.sknt.vlasovnetwork.vnsr.travels.fragments.NewPointDialog;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     private final String TAG;
@@ -39,11 +40,19 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
         switch (TAG) {
             case "new_refuel":
-                NewRefuelDialog callingFragment = (NewRefuelDialog) fragmentManager.findFragmentByTag("new_refuel");
-                assert callingFragment != null;
-                callingFragment.setYear(year);
-                callingFragment.setMonth(month);
-                callingFragment.setDay(day);
+                NewRefuelDialog refuelDialog = (NewRefuelDialog) fragmentManager.findFragmentByTag(TAG);
+                assert refuelDialog != null;
+                refuelDialog.setYear(year);
+                refuelDialog.setMonth(month);
+                refuelDialog.setDay(day);
+                new TimePickerFragment(TAG).show(fragmentManager, "timePicker");
+                break;
+            case "new_point":
+                NewPointDialog pointDialog = (NewPointDialog) fragmentManager.findFragmentByTag(TAG);
+                assert pointDialog != null;
+                pointDialog.setYear(year);
+                pointDialog.setMonth(month);
+                pointDialog.setDay(day);
                 new TimePickerFragment(TAG).show(fragmentManager, "timePicker");
                 break;
         }

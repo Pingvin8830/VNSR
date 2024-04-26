@@ -5,8 +5,12 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.List;
+
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.ShowObjectDialog;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
 
 public class ShowTravelDialog extends ShowObjectDialog {
@@ -17,7 +21,11 @@ public class ShowTravelDialog extends ShowObjectDialog {
     private TextView mTxtHotelsCostSum;
     private TableLayout mTblPoints, mTblWays, mTblToolRoads, mTblHotels;
     private TableRow mTrPointsHeader, mTrPointsSum, mTrWaysHeader, mTrWaysSum, mTrToolRoadsHeader, mTrToolRoadsSum, mTrHotelsHeader, mTrHotelsSum;
-    public ShowTravelDialog(Travel travel) { mTravel = travel; }
+    private List<Point> mPoints;
+    public ShowTravelDialog(Travel travel) {
+        mTravel = travel;
+        mPoints = MainActivity.PointDao.filter(travel.getId());
+    }
 
     @Override
     protected int getLayoutCode() { return R.layout.travels_show_travel; }
@@ -57,8 +65,10 @@ public class ShowTravelDialog extends ShowObjectDialog {
     protected void setData() {
         mTxtTravelName.setText(mTravel.getName());
         mTxtTravelState.setText(mTravel.getState().getName());
-//        mTxtBeginning = mDialogView.findViewById(R.id.txtBeginning);
-//        mTxtFinishing = mDialogView.findViewById(R.id.txtFinishing);
+        try { mTxtBeginning.setText(mTravel.getStartDateTime().toString()); }
+        catch (NullPointerException e) { mTxtBeginning.setText(R.string.lbl_unknown); }
+        try { mTxtFinishing.setText(mTravel.getEndDateTime().toString()); }
+        catch (NullPointerException e) { mTxtFinishing.setText(R.string.lbl_unknown); }
         mTxtParticipants.setText(mTravel.getParticipants());
 //        mTxtTravelCost = mDialogView.findViewById(R.id.txtTravelCost);
         mTxtFuelConsumption.setText(String.valueOf(mTravel.getFuelConsumption()));

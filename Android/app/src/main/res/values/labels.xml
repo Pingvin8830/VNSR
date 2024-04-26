@@ -66,6 +66,8 @@
     <string name="lbl_finishing">Finishing</string>
     <string name="lbl_fuel_price">Fuel price</string>
     <string name="lbl_travel">Travel</string>
+    <string name="lbl_unknown">Unknown</string>
+    <string name="lbl_point">Point</string>
 
     <string name="lbl_new_city_type">Add a new city type</string>
     <string name="lbl_new_street_type">Add a new street type</string>
@@ -78,6 +80,7 @@
     <string name="lbl_new_refuel">Add a new refuel</string>
     <string name="lbl_new_travel_state">Add a new travel state</string>
     <string name="lbl_new_travel">Add a new travel</string>
+    <string name="lbl_new_point">Add a new point</string>
 
     <string name="lbl_show_city_type">Your city type</string>
     <string name="lbl_show_street_type">Your street type"</string>
@@ -90,4 +93,5 @@
     <string name="lbl_show_refuel">Your refuel</string>
     <string name="lbl_show_travel_state">Your travel state</string>
     <string name="lbl_show_travel">Your travel</string>
+    <string name="lbl_show_point">Your point</string>
 </resources>

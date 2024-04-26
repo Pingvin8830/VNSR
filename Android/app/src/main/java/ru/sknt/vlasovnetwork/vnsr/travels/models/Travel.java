@@ -1,5 +1,6 @@
 package ru.sknt.vlasovnetwork.vnsr.travels.models;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -9,6 +10,9 @@ import androidx.room.PrimaryKey;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
+import ru.sknt.vlasovnetwork.vnsr.FormatedDate;
 import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelStateDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
@@ -62,6 +66,19 @@ public class Travel {
     public float getFuelPrice() {
        return this.mFuelPrice;
     };
+    public FormatedDate getStartDateTime() {
+        FormatedDate res;
+        try { res = MainActivity.PointDao.filter(this.mId).get(0).getDateTime(); }
+        catch (IndexOutOfBoundsException e) { res = null; }
+        return res;
+    }
+    public FormatedDate getEndDateTime() {
+        FormatedDate res;
+        List<Point> points = MainActivity.PointDao.filter(this.mId);
+        if (points.size() < 2) { res = null; }
+        else { res = points.get(points.size()-1).getDateTime(); }
+        return res;
+    }
 
     public Travel(String name, String participants, TravelState travelState, float fuelConsumption, float fuelPrice) {
         this.mName = name;
@@ -78,6 +95,9 @@ public class Travel {
         this.mFuelPrice = Float.parseFloat(data.getString("fuel_price"));
     }
 
+    @NonNull
+    @Override
+    public String toString() { return this.mName; }
     public JSONObject toJson() throws JSONException {
         JSONObject res = new JSONObject();
         res

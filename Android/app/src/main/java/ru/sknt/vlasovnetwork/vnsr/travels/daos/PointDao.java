@@ -13,12 +13,18 @@ import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
 public interface PointDao {
     @Query("SELECT * FROM travels_point")
     List<Point> getAll();
+    @Query("SELECT count(id) FROM travels_point")
+    int getCount();
 
     @Insert
     void create(Point point);
 
     @Query("SELECT * FROM travels_point WHERE id=:id")
     Point find(int id);
+    @Query("SELECT * FROM travels_point WHERE datetime=:datetime")
+    Point find(long datetime);
+    @Query("SELECT * FROM travels_point WHERE travel_id=:travelId")
+    List<Point> filter(int travelId);
 
     @Delete
     void delete(Point point);

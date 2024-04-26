@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "ee83d274f322535cb6261b550bea3344",
+    "version": 5,
+    "identityHash": "ea4e59689ec461ae629b38764e099998",
     "entities": [
       {
         "tableName": "travels_travelstate",
@@ -252,7 +252,7 @@
       },
       {
         "tableName": "travels_point",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `travel_id` INTEGER NOT NULL, `place_id` INTEGER NOT NULL, `datetime` INTEGER, `doing` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `travel_id` INTEGER, `address_id` INTEGER, `datetime` INTEGER, `doing` TEXT, `odometer` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -261,16 +261,16 @@
             "notNull": true
           },
           {
-            "fieldPath": "mTravelId",
+            "fieldPath": "mTravel",
             "columnName": "travel_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
-            "fieldPath": "mPlaceId",
-            "columnName": "place_id",
+            "fieldPath": "mAddress",
+            "columnName": "address_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "mDatetime",
@@ -283,6 +283,12 @@
             "columnName": "doing",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "mOdometer",
+            "columnName": "odometer",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -291,7 +297,17 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_travels_point_datetime",
+            "unique": true,
+            "columnNames": [
+              "datetime"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_travels_point_datetime` ON `${TABLE_NAME}` (`datetime`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -869,7 +885,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ee83d274f322535cb6261b550bea3344')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ea4e59689ec461ae629b38764e099998')"
     ]
   }
 }

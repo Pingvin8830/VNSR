@@ -30,4 +30,6 @@
     <string name="err_not_found_travels">Поездки не найдены</string>
     <string name="err_bad_participants">Неверный состав участников</string>
     <string name="err_bad_fuel_price">Неверная цена топлива</string>
+    <string name="err_not_found_points">Путевые точки не найдены</string>
+    <string name="err_bad_doing">Неверное действие</string>
 </resources>
