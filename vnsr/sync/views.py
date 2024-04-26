@@ -5,7 +5,7 @@ from django.http import JsonResponse, Http404
 #from vnsr.settings import DEBUG
 from kladr.models import StreetType, CityType, Region, Street, City, Address
 from car.models import Fuel, FuelStation, Refuel
-from travels.models import TravelState, Travel
+from travels.models import TravelState, Travel, Point
 
 from .models import Object
 
@@ -63,70 +63,66 @@ def start(request):
           street_type = StreetType()
           street_type.load(target)
           try: find_object = StreetType.objects.get(name=target['name'])
-          except StreetType.DoesNotExist: find_object = None;
-          if not find_object: street_type.save()
+          except StreetType.DoesNotExist: street_type.save()
         case 'CityType':
           city_type = CityType()
           city_type.load(target)
           try: find_object = CityType.objects.get(name=target['name'])
-          except CityType.DoesNotExist: find_object = None;
-          if not find_object: city_type.save()
+          except CityType.DoesNotExist: city_type.save()
         case 'Region':
           region = Region()
           region.load(target)
           try: find_object = Region.objects.get(code=target['code'])
-          except Region.DoesNotExist: find_object = None;
-          if not find_object: region.save()
+          except Region.DoesNotExist: region.save()
         case 'Street':
           street = Street()
           street.load(target)
           try: find_object = Street.objects.get(name=target['name'], type__name=target['type_name'])
-          except Street.DoesNotExist: find_object = None;
-          if not find_object: street.save()
+          except Street.DoesNotExist: street.save()
         case 'City':
           city = City()
           city.load(target)
           try: find_object = City.objects.get(name=target['name'])
-          except City.DoesNotExist: find_object = None;
-          if not find_object: city.save()
+          except City.DoesNotExist: city.save()
         case 'Address':
           address = Address()
           address.load(target)
           try: find_object = Address.objects.get(name=target['name'])
-          except Address.DoesNotExist: find_object = None;
-          if not find_object: address.save()
+          except Address.DoesNotExist: address.save()
         case 'Fuel':
           fuel = Fuel()
           fuel.load(target)
           try: find_object = Fuel.objects.get(name=target['name'])
-          except Fuel.DoesNotExist: find_object = None;
-          if not find_object: fuel.save()
+          except Fuel.DoesNotExist: fuel.save()
         case 'FuelStation':
           fuel_station = FuelStation()
           fuel_station.load(target)
           try: find_object = FuelStation.objects.get(company=target['company'], number=target['number'])
-          except FuelStation.DoesNotExist: find_object = None;
-          if not find_object: fuel_station.save()
+          except FuelStation.DoesNotExist: fuel_station.save()
         case 'Refuel':
           refuel = Refuel()
           refuel.load(target)
           try:
             correct_datetime = target['datetime'][6:10] + '-' + target['datetime'][3:5] + '-' + target['datetime'][:2] + ' ' + target['datetime'][11:16]
             find_object = Refuel.objects.get(datetime=correct_datetime)
-          except Refuel.DoesNotExist: find_object = None;
-          if not find_object: refuel.save()
+          except Refuel.DoesNotExist: refuel.save()
         case 'TravelState':
           travel_state = TravelState()
           travel_state.load(target)
           try: find_object = TravelState.objects.get(name=target['name'])
-          except TravelState.DoesNotExist: find_object = None
-          if not find_object: travel_state.save()
+          except TravelState.DoesNotExist: travel_state.save()
         case 'Travel':
           travel = Travel()
           travel.load(target)
           try: find_object = Travel.objects.get(name=target['name'])
-          except Travel.DoesNotExist: find_object = None
-          if not find_object: travel.save()
+          except Travel.DoesNotExist: travel.save()
+        case 'Point':
+          point = Point()
+          point.load(target)
+          try:
+            correct_datetime = target['datetime'][6:10] + '-' + target['datetime'][3:5] + '-' + target['datetime'][:2] + ' ' + target['datetime'][11:16]
+            find_object = Point.objects.get(datetime=correct_datetime)
+          except Point.DoesNotExist: point.save()
 
   return JsonResponse({'state': 'started'})
 
@@ -138,7 +134,7 @@ def get(request):
   match request_data.get('data'):
     case 'Count':
       match request_data.get('object_name'):
-        case 'all': value = StreetType.objects.count() + CityType.objects.count() + Region.objects.count() + Street.objects.count() + City.objects.count() + Address.objects.count() + Fuel.objects.count() + FuelStation.objects.count() + Refuel.objects.count() + TravelState.objects.count() + Travel.objects.count()
+        case 'all': value = StreetType.objects.count() + CityType.objects.count() + Region.objects.count() + Street.objects.count() + City.objects.count() + Address.objects.count() + Fuel.objects.count() + FuelStation.objects.count() + Refuel.objects.count() + TravelState.objects.count() + Travel.objects.count() + Point.objects.count()
         case 'StreetType':  value = StreetType.objects.count()
         case 'CityType':    value = CityType.objects.count()
         case 'Street':      value = Street.objects.count()
@@ -150,6 +146,7 @@ def get(request):
         case 'Refuel':      value = Refuel.objects.count()
         case 'TravelState': value = TravelState.objects.count()
         case 'Travel':      value = Travel.objects.count()
+        case 'Point':       value = Point.objects.count()
     case 'all':
       match request_data.get('object_name'):
         case 'StreetType':
@@ -185,5 +182,8 @@ def get(request):
         case 'Travel':
           value = []
           for travel in Travel.objects.all(): value.append(travel.to_json())
+        case 'Point':
+          value = []
+          for point in Point.objects.all(): value.append(point.to_json())
   response_data = {'object_name': request_data['object_name'], 'data': request_data['data'], 'value': value}
   return JsonResponse(response_data)

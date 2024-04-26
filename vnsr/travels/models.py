@@ -4,6 +4,8 @@ from django.contrib import admin
 
 from kladr.models import Address
 
+import datetime
+
 # Create your models here.
 class TravelState(models.Model):
   class Meta:
@@ -118,12 +120,36 @@ class Point(models.Model):
     verbose_name_plural = 'Путевые точки'
 
   travel   = models.ForeignKey(Travel, on_delete=models.PROTECT, related_name='points', verbose_name='Путешествие')
-  place    = models.ForeignKey(Address, on_delete=models.PROTECT, verbose_name='Место')
+  address  = models.ForeignKey(Address, on_delete=models.PROTECT, verbose_name='Место')
   datetime = models.DateTimeField(verbose_name='Дата и время')
   doing    = models.CharField(max_length=10, db_index=True, verbose_name='Действие')
+  odometer = models.PositiveIntegerField()
 
   def __str__(self):
-    return f'{self.travel.name}, {self.place.name}, {self.doing}'
+    return f'{self.travel.name}, {self.address.name}, {self.doing}'
+
+  def load(self, data):
+    correct_datetime = data['datetime'][6:10] + '-' + data['datetime'][3:5] + '-' + data['datetime'][:2] + ' ' + data['datetime'][11:16]
+    self.travel = Travel.objects.get(name=data['travel_name'])
+    self.address = Address.objects.get(name=data['address_name'])
+    self.datetime = correct_datetime
+    self.doing = data['doing']
+    self.odometer = data['odometer']
+
+  def to_json(self):
+    correct_msk = self.datetime + datetime.timedelta(hours=3)
+    return {
+      'id': self.id,
+      'travel_name': self.travel.name,
+      'address_name': self.address.name,
+      'year': correct_msk.year,
+      'month': correct_msk.month,
+      'day': correct_msk.day,
+      'hour': correct_msk.hour,
+      'minute': correct_msk.minute,
+      'doing': self.doing,
+      'odometer': self.odometer
+    }
 
 class Way(models.Model):
   class Meta:
