@@ -1,12 +1,12 @@
 package ru.sknt.vlasovnetwork.vnsr.travels.fragments;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.sknt.vlasovnetwork.vnsr.DatePickerFragment;
@@ -16,39 +16,32 @@ import ru.sknt.vlasovnetwork.vnsr.NewObjectDialog;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Address;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
-import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
 
 public class NewPointDialog extends NewObjectDialog {
-    private Spinner mSpnTravel;
-    private Button mBttnDateTime;
     private Spinner mSpnAddress;
-    private EditText mEdtxtDoing;
+    private Button mBttnArrivalDateTime;
+    private Button mBttnDepartureDateTime;
+    private Spinner mSpnDoing;
     private EditText mEdtxtOdometer;
-    private List<Travel> mTravels;
     private List<Address> mAddresses;
-    private Travel mTravel;
-    private final FormatedDate mDateTime = new FormatedDate(0L);
+    private List<String> mDoings;
+    private List<String> mDoingCodes;
     private Address mAddress;
+    private FormatedDate mArrivalDateTime;
+    private FormatedDate mDepartureDateTime;
     private String mDoing;
     private int mOdometer;
 
-    public void setYear(int year) {
-
-        Log.i("VNSR DEBUG", "year: " + year);
-
-        mDateTime.setYear(year); }
-    public void setMonth(int month) { mDateTime.setMonth(month); }
-    public void setDay(int day) { mDateTime.setDate(day); }
-    public void setHour(int hour) { mDateTime.setHours(hour); }
-    public void setMinute(int minute) { mDateTime.setMinutes(minute); mDateTime.setSeconds(0); }
-    public void setDateTimeButtonText() {
-        mBttnDateTime.setText(mDateTime.toString());
-    }
-
     @Override
     protected void setObjectsLists() {
-        mTravels = MainActivity.TravelDao.getAll();
         mAddresses = MainActivity.AddressDao.getAll();
+        mDoingCodes = new ArrayList<>();
+        mDoings = new ArrayList<>();
+        for (String[] doingsList : Point.DOINGS) {
+            if (doingsList[0].equals("U")) { continue; }
+            mDoingCodes.add(doingsList[0]);
+            mDoings.add(doingsList[1]);
+        }
     }
 
     @Override
@@ -56,24 +49,26 @@ public class NewPointDialog extends NewObjectDialog {
 
     @Override
     protected void getDataViews() {
-        mSpnTravel = mDialogView.findViewById(R.id.spnTravel);
-        mBttnDateTime = mDialogView.findViewById(R.id.bttnDateTime);
         mSpnAddress = mDialogView.findViewById(R.id.spnAddress);
-        mEdtxtDoing = mDialogView.findViewById(R.id.edtxtDoing);
+        mBttnArrivalDateTime = mDialogView.findViewById(R.id.bttnArrivalDateTime);
+        mBttnDepartureDateTime = mDialogView.findViewById(R.id.bttnDepartureDateTime);
+        mSpnDoing = mDialogView.findViewById(R.id.spnDoing);
         mEdtxtOdometer = mDialogView.findViewById(R.id.edtxtOdometer);
-        mBttnDateTime.setOnClickListener(this);
+
+        mBttnArrivalDateTime.setOnClickListener(this);
+        mBttnDepartureDateTime.setOnClickListener(this);
     }
 
     @Override
     protected void setAdapters() {
-        ArrayAdapter<Travel> travelAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mTravels);
         ArrayAdapter<Address> addressAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mAddresses);
+        ArrayAdapter<String> doingAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mDoings);
 
-        travelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         addressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        doingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        mSpnTravel.setAdapter(travelAdapter);
         mSpnAddress.setAdapter(addressAdapter);
+        mSpnDoing.setAdapter(doingAdapter);
     }
 
     @Override
@@ -81,9 +76,8 @@ public class NewPointDialog extends NewObjectDialog {
 
     @Override
     protected void setData() {
-        mTravel = mTravels.get(mSpnTravel.getSelectedItemPosition());
         mAddress = mAddresses.get(mSpnAddress.getSelectedItemPosition());
-        mDoing = mEdtxtDoing.getText().toString();
+        mDoing = mDoingCodes.get(mSpnDoing.getSelectedItemPosition());
         try { mOdometer = Integer.parseInt(mEdtxtOdometer.getText().toString()); }
         catch (NumberFormatException e) { mOdometer = 0; }
     }
@@ -91,15 +85,14 @@ public class NewPointDialog extends NewObjectDialog {
     @Override
     protected String getErrorText() {
         String error = "";
-        if      (mBttnDateTime.getText().toString().equals(getResources().getString(R.string.bttn_case_date_time))) { error = getResources().getString(R.string.err_bad_date_time); }
-        else if (mDoing.isEmpty()) { error = getResources().getString(R.string.err_bad_doing); }
+        if      (mArrivalDateTime == null && mDepartureDateTime == null) { error = getResources().getString(R.string.err_bad_date_time); }
         else if (mOdometer < 1) { error = getResources().getString(R.string.err_bad_odometer); }
         return error;
     }
 
     @Override
     protected void createObject() {
-        Point newPoint = new Point(mTravel, mAddress, mDateTime, mDoing, mOdometer);
+        Point newPoint = new Point(mAddress, mArrivalDateTime, mDepartureDateTime, mDoing, mOdometer);
         PointsFragment callingFragment = (PointsFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("points");
         assert callingFragment != null;
         callingFragment.createNewPoint(newPoint);
@@ -108,9 +101,19 @@ public class NewPointDialog extends NewObjectDialog {
     @Override
     public void onClick(View view) {
         super.onClick(view);
-        if (view.getId() == R.id.bttnDateTime) {
-            new DatePickerFragment("new_point").show(requireActivity().getSupportFragmentManager(), "datePicker");
+        if (view.getId() == R.id.bttnArrivalDateTime) {
+            new DatePickerFragment("new_point_arrival").show(requireActivity().getSupportFragmentManager(), "datePicker");
+        } else if (view.getId() == R.id.bttnDepartureDateTime) {
+            new DatePickerFragment("new_point_departure").show(requireActivity().getSupportFragmentManager(), "datePicker");
         }
     }
 
+    public void setArrivalDateTime(FormatedDate arrivalDateTime) {
+        mArrivalDateTime = arrivalDateTime;
+        mBttnArrivalDateTime.setText(mArrivalDateTime.toString());
+    }
+    public void setDepartureDateTime(FormatedDate departureDateTime) {
+        mDepartureDateTime = departureDateTime;
+        mBttnDepartureDateTime.setText(mDepartureDateTime.toString());
+    }
 }
