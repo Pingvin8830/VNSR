@@ -20,9 +20,10 @@ import ru.sknt.vlasovnetwork.vnsr.car.daos.FuelDao;
 import ru.sknt.vlasovnetwork.vnsr.car.daos.RefuelDao;
 import ru.sknt.vlasovnetwork.vnsr.migrations.Migration_2_3;
 import ru.sknt.vlasovnetwork.vnsr.migrations.Migration_3_4;
+import ru.sknt.vlasovnetwork.vnsr.migrations.Migration_4_5;
 import ru.sknt.vlasovnetwork.vnsr.travels.daos.PointDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelDao;
-import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelStateDao;
+import ru.sknt.vlasovnetwork.vnsr.travels.daos.WayDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.KladrActivity;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.AddressDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityDao;
@@ -51,9 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static FuelStationDao FuelStationDao;
     public static FuelDao FuelDao;
     public static RefuelDao RefuelDao;
-    public static TravelStateDao TravelStateDao;
     public static TravelDao TravelDao;
     public static PointDao PointDao;
+    public static WayDao WayDao;
     public static TaskDao TaskDao;
 
     @Override
@@ -71,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MainActivity.FuelDao = db.fuelDao();
         MainActivity.RefuelDao = db.refuelDao();
         MainActivity.TaskDao = db.taskDao();
-        MainActivity.TravelStateDao = db.travelStateDao();
         MainActivity.TravelDao = db.travelDao();
         MainActivity.PointDao = db.pointDao();
+        MainActivity.WayDao = db.wayDao();
 
         MainActivity.mPrefs = getSharedPreferences("vnsr", MODE_PRIVATE);
         MainActivity.mEditor = mPrefs.edit();
@@ -149,11 +150,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Migration_1_2 migration_1_2 = new Migration_1_2(1, 2);
         Migration_2_3 migration_2_3 = new Migration_2_3(2, 3);
         Migration_3_4 migration_3_4 = new Migration_3_4(3, 4);
+        Migration_4_5 migration_4_5 = new Migration_4_5(4, 5);
 
         return Room.databaseBuilder(getApplicationContext(), VNSRDatabase.class, "vnsr-database")
                 .addMigrations(migration_1_2)
                 .addMigrations(migration_2_3)
                 .addMigrations(migration_3_4)
+                .addMigrations(migration_4_5)
                 .allowMainThreadQueries()
                 .build();
     }

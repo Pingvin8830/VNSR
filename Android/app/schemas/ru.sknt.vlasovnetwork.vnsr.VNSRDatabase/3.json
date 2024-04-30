@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "ee83d274f322535cb6261b550bea3344",
+    "identityHash": "65cfb4c2f092b4a4f0eed17295b6726f",
     "entities": [
       {
         "tableName": "travels_travelstate",
@@ -42,7 +42,7 @@
       },
       {
         "tableName": "travels_travel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `participants` TEXT, `state_id` INTEGER, `fuel_consumption` REAL NOT NULL, `fuel_price` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `participants` TEXT, `state` TEXT, `fuel_consumption` REAL NOT NULL, `fuel_price` REAL NOT NULL, `start_datetime` INTEGER, `end_datetime` INTEGER)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -63,9 +63,9 @@
             "notNull": false
           },
           {
-            "fieldPath": "mTravelState",
-            "columnName": "state_id",
-            "affinity": "INTEGER",
+            "fieldPath": "mState",
+            "columnName": "state",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
@@ -79,6 +79,18 @@
             "columnName": "fuel_price",
             "affinity": "REAL",
             "notNull": true
+          },
+          {
+            "fieldPath": "mStartDateTime",
+            "columnName": "start_datetime",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mEndDateTime",
+            "columnName": "end_datetime",
+            "affinity": "INTEGER",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -152,7 +164,7 @@
       },
       {
         "tableName": "travels_way",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `travel_id` INTEGER NOT NULL, `start_point_id` INTEGER NOT NULL, `target_point_id` INTEGER NOT NULL, `distance` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `travel_id` INTEGER, `start_point_id` INTEGER, `target_point_id` INTEGER, `distance` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -161,22 +173,22 @@
             "notNull": true
           },
           {
-            "fieldPath": "mTravelId",
+            "fieldPath": "mTravel",
             "columnName": "travel_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
-            "fieldPath": "mStartPointId",
+            "fieldPath": "mStartPoint",
             "columnName": "start_point_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
-            "fieldPath": "mTargetPointId",
+            "fieldPath": "mTargetPoint",
             "columnName": "target_point_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "mDistance",
@@ -191,7 +203,19 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_travels_way_travel_id_start_point_id_target_point_id",
+            "unique": true,
+            "columnNames": [
+              "travel_id",
+              "start_point_id",
+              "target_point_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_travels_way_travel_id_start_point_id_target_point_id` ON `${TABLE_NAME}` (`travel_id`, `start_point_id`, `target_point_id`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -252,7 +276,7 @@
       },
       {
         "tableName": "travels_point",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `travel_id` INTEGER NOT NULL, `place_id` INTEGER NOT NULL, `datetime` INTEGER, `doing` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `address_id` INTEGER, `arrival_datetime` INTEGER, `departure_datetime` INTEGER, `doing` TEXT, `odometer` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -261,20 +285,20 @@
             "notNull": true
           },
           {
-            "fieldPath": "mTravelId",
-            "columnName": "travel_id",
+            "fieldPath": "mAddress",
+            "columnName": "address_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
-            "fieldPath": "mPlaceId",
-            "columnName": "place_id",
+            "fieldPath": "mArrivalDateTime",
+            "columnName": "arrival_datetime",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
-            "fieldPath": "mDatetime",
-            "columnName": "datetime",
+            "fieldPath": "mDepartureDateTime",
+            "columnName": "departure_datetime",
             "affinity": "INTEGER",
             "notNull": false
           },
@@ -283,6 +307,12 @@
             "columnName": "doing",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "mOdometer",
+            "columnName": "odometer",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -291,7 +321,18 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_travels_point_arrival_datetime_departure_datetime",
+            "unique": true,
+            "columnNames": [
+              "arrival_datetime",
+              "departure_datetime"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_travels_point_arrival_datetime_departure_datetime` ON `${TABLE_NAME}` (`arrival_datetime`, `departure_datetime`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -537,15 +578,6 @@
             ],
             "orders": [],
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_kladr_region_code` ON `${TABLE_NAME}` (`code`)"
-          },
-          {
-            "name": "index_kladr_region_name",
-            "unique": true,
-            "columnNames": [
-              "name"
-            ],
-            "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_kladr_region_name` ON `${TABLE_NAME}` (`name`)"
           }
         ],
         "foreignKeys": []
@@ -580,15 +612,6 @@
           ]
         },
         "indices": [
-          {
-            "name": "index_kladr_citytype_short",
-            "unique": true,
-            "columnNames": [
-              "short"
-            ],
-            "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_kladr_citytype_short` ON `${TABLE_NAME}` (`short`)"
-          },
           {
             "name": "index_kladr_citytype_name",
             "unique": true,
@@ -681,15 +704,6 @@
             ],
             "orders": [],
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_kladr_streettype_name` ON `${TABLE_NAME}` (`name`)"
-          },
-          {
-            "name": "index_kladr_streettype_short",
-            "unique": true,
-            "columnNames": [
-              "short"
-            ],
-            "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_kladr_streettype_short` ON `${TABLE_NAME}` (`short`)"
           }
         ],
         "foreignKeys": []
@@ -869,7 +883,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ee83d274f322535cb6261b550bea3344')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '65cfb4c2f092b4a4f0eed17295b6726f')"
     ]
   }
 }

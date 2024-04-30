@@ -16,7 +16,7 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.daos.HotelDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.daos.PointDao;
-import ru.sknt.vlasovnetwork.vnsr.travels.daos.ToolRoadDao;
+import ru.sknt.vlasovnetwork.vnsr.travels.daos.TollRoadDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.daos.WayDao;
 import ru.sknt.vlasovnetwork.vnsr.car.models.Fuel;
@@ -30,20 +30,17 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Hotel;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
-import ru.sknt.vlasovnetwork.vnsr.travels.models.ToolRoad;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.TollRoad;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
-import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
-import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelStateDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Way;
 import ru.sknt.vlasovnetwork.vnsr.sync.daos.TaskDao;
 import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
 
 @Database(
-        version = 4,
+        version = 5,
         entities = {
-                TravelState.class,
                 Travel.class,
-                ToolRoad.class,
+                TollRoad.class,
                 Way.class,
                 Hotel.class,
                 Point.class,
@@ -57,16 +54,15 @@ import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
                 Street.class,
                 Address.class,
                 Task.class
-        },
-        autoMigrations = {
-                @AutoMigration(from=4, to=5)
-        }
+        }//,
+        //autoMigrations = {
+        //        @AutoMigration(from=4, to=5)
+        //}
 )
 @TypeConverters({Converters.class})
 public abstract class VNSRDatabase extends RoomDatabase {
-    public abstract TravelStateDao travelStateDao();
     public abstract TravelDao travelDao();
-    public abstract ToolRoadDao toolRoadDao();
+    public abstract TollRoadDao toolRoadDao();
     public abstract WayDao wayDao();
     public abstract HotelDao hotelDao();
     public abstract PointDao pointDao();
