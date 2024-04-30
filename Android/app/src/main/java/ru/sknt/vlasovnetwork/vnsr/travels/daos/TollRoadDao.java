@@ -7,21 +7,21 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ru.sknt.vlasovnetwork.vnsr.travels.models.ToolRoad;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.TollRoad;
 
 @Dao
-public interface ToolRoadDao {
+public interface TollRoadDao {
     @Query("SELECT * FROM travels_tollroad")
-    List<ToolRoad> getAll();
+    List<TollRoad> getAll();
 
     @Insert
-    void create(ToolRoad toolRoad);
+    void create(TollRoad tollRoad);
 
     @Query("SELECT * FROM travels_tollroad WHERE id=:id")
-    ToolRoad find(int id);
+    TollRoad find(int id);
 
     @Delete
-    void delete(ToolRoad toolRoad);
+    void delete(TollRoad tollRoad);
     @Query("DELETE FROM travels_tollroad")
     void truncate();
 }
