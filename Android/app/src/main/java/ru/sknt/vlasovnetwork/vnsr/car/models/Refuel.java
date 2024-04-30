@@ -105,23 +105,24 @@ public class Refuel {
         this.mTimedelta = timedelta;
     }
     public Refuel(JSONObject data) throws JSONException {
-        this.mFuelStation = MainActivity.FuelStationDao.find(data.getString("fuel_station_company"), data.getString("fuel_station_number"));
+        JSONObject fuelStationJson = new JSONObject(data.getString("fuel_station"));
+        JSONObject dateTimeJson = new JSONObject(data.getString("datetime"));
+        JSONObject fuelJson = new JSONObject(data.getString("fuel"));
+
+        this.mFuelStation = MainActivity.FuelStationDao.find(
+                fuelStationJson.getString("company"),
+                fuelStationJson.getString("number")
+        );
         this.mCheckNumber = Integer.parseInt(data.getString("check_number"));
-        this.mDateTime = new FormatedDate(0L);
-        this.mDateTime.setYear(Integer.parseInt(data.getString("year")));
-        this.mDateTime.setMonth(Integer.parseInt(data.getString("month"))-1);
-        this.mDateTime.setDate(Integer.parseInt(data.getString("day")));
-        this.mDateTime.setHours(Integer.parseInt(data.getString("hour")));
-        this.mDateTime.setMinutes(Integer.parseInt(data.getString("minute")));
-        this.mDateTime.setSeconds(0);
-        this.mTrk = Integer.parseInt(data.getString("trk"));
-        this.mFuel = MainActivity.FuelDao.find(data.getString("fuel_name"));
+        this.mDateTime = new FormatedDate(dateTimeJson);
+        this.mTrk = data.getInt("trk");
+        this.mFuel = MainActivity.FuelDao.find(fuelJson.getString("name"));
         this.mCount = Float.parseFloat(data.getString("count"));
         this.mPrice = Float.parseFloat(data.getString("price"));
         this.mCost = Float.parseFloat(data.getString("cost"));
-        this.mDistanceReserve = Integer.parseInt(data.getString("distance_reserve"));
+        this.mDistanceReserve = data.getInt("distance_reserve");
         this.mFuelConsumptionAvg = Float.parseFloat(data.getString("fuel_consumption_avg"));
-        this.mOdometer = Integer.parseInt(data.getString("odometer"));
+        this.mOdometer = data.getInt("odometer");
         this.mDistance = Float.parseFloat(data.getString("distance"));
         this.mFuelConsumption = Float.parseFloat(data.getString("fuel_consumption"));
         this.mTimedelta = data.getString("timedelta");
@@ -129,21 +130,33 @@ public class Refuel {
 
     public JSONObject toJson() throws JSONException {
         JSONObject res = new JSONObject();
+        JSONObject dateTimeJson = new JSONObject();
+        JSONObject fuelJson = new JSONObject();
+        JSONObject fuelStationJson = new JSONObject();
+        dateTimeJson
+                .put("year", this.getDateTime().getYear())
+                .put("month", this.getDateTime().getMonth()+1)
+                .put("day", this.getDateTime().getDate())
+                .put("hour", this.getDateTime().getHours())
+                .put("minute", this.getDateTime().getMinutes());
+        fuelJson.put("name", this.getFuel().getName());
+        fuelStationJson
+                .put("company", this.getFuelStation().getCompany())
+                .put("number", this.getFuelStation().getNumber());
         res
                 .put("object", "Refuel")
                 .put("id",                   this.getId())
                 .put("check_number",         this.getCheckNumber())
-                .put("datetime",             this.getDateTime())
+                .put("datetime",             dateTimeJson)
                 .put("price",                this.getPrice())
                 .put("count",                this.getCount())
                 .put("cost",                 this.getCost())
                 .put("distance",             this.getDistance())
-                .put("fuel_name",            this.getFuel().getName())
+                .put("fuel",                 fuelJson)
                 .put("distance_reserve",     this.getDistanceReserve())
                 .put("fuel_consumption",     this.getFuelConsumption())
                 .put("fuel_consumption_avg", this.getFuelConsumptionAvg())
-                .put("fuel_station_company", this.getFuelStation().getCompany())
-                .put("fuel_station_number",  this.getFuelStation().getNumber())
+                .put("fuel_station",         fuelStationJson)
                 .put("odometer",             this.getOdometer())
                 .put("timedelta",            this.getTimedelta())
                 .put("trk",                  this.getTrk());
