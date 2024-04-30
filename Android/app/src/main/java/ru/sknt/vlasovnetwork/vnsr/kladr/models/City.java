@@ -41,8 +41,9 @@ public class City {
         this.mCityType = cityType;
     }
     public City (JSONObject data) throws JSONException {
+        JSONObject cityTypeJson = new JSONObject(data.getString("city_type"));
         this.mName = data.getString("name");
-        this.mCityType = MainActivity.CityTypeDao.find(data.getString("type_name"));
+        this.mCityType = MainActivity.CityTypeDao.find(cityTypeJson.getString("name"));
     }
 
     @NonNull
@@ -52,10 +53,12 @@ public class City {
     }
     public JSONObject toJson() throws JSONException {
         JSONObject res = new JSONObject();
+        JSONObject cityTypeJson = new JSONObject();
+        cityTypeJson.put("name", this.getCityType().getName());
         res
                 .put("object", "City")
                 .put("id", this.getId())
-                .put("type_name", this.getCityType().getName())
+                .put("city_type", cityTypeJson)
                 .put("name", this.getName());
         return res;
     }
