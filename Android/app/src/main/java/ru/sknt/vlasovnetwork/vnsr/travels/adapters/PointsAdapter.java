@@ -33,9 +33,13 @@ public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.ListItemHo
     @Override
     public void onBindViewHolder(@NonNull PointsAdapter.ListItemHolder holder, int position) {
         Point point = mPoints.get(position);
-        holder.mTxtDateTime.setText(point.getDateTime().toString());
-        holder.mTxtOdometer.setText(String.valueOf(point.getOdometer()));
+        if (point.getArrivalDateTime() != null) { holder.mTxtArrivalDateTime.setText("-> " + point.getArrivalDateTime().toString()); }
+        else { holder.mTxtArrivalDateTime.setVisibility(View.INVISIBLE); }
+        if (point.getDepartureDateTime() != null) { holder.mTxtDepartureDateTime.setText(point.getDepartureDateTime().toString() + " ->"); }
+        else { holder.mTxtDepartureDateTime.setVisibility(View.INVISIBLE); }
         holder.mTxtAddress.setText(point.getAddress().getName());
+        holder.mTxtDoing.setText(point.getDoingText());
+        holder.mTxtOdometer.setText(String.valueOf(point.getOdometer()));
     }
 
     @Override
@@ -44,15 +48,19 @@ public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.ListItemHo
     }
 
     public class ListItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mTxtDateTime;
+        public TextView mTxtArrivalDateTime;
+        public TextView mTxtDepartureDateTime;
         public TextView mTxtOdometer;
         public TextView mTxtAddress;
+        public TextView mTxtDoing;
 
         public ListItemHolder(View view) {
             super(view);
-            mTxtDateTime = view.findViewById(R.id.txtDateTime);
+            mTxtArrivalDateTime = view.findViewById(R.id.txtArrivalDateTime);
+            mTxtDepartureDateTime = view.findViewById(R.id.txtDepartureDateTime);
             mTxtOdometer = view.findViewById(R.id.txtOdometer);
             mTxtAddress = view.findViewById(R.id.txtAddress);
+            mTxtDoing = view.findViewById(R.id.txtDoing);
             view.setClickable(true);
             view.setOnClickListener(this);
         }
