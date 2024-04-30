@@ -39,7 +39,7 @@ public class NewCityTypeDialog extends NewObjectDialog {
     @Override
     protected String getErrorText() {
         String error = "";
-        if ((mShort.length() > 3) || (mShort.isEmpty())) { error = getResources().getString(R.string.err_bad_short); }
+        if ((mShort.length() > 5) || (mShort.isEmpty())) { error = getResources().getString(R.string.err_bad_short); }
         else if (mName.isEmpty()) { error = getResources().getString(R.string.err_bad_name); }
         return error;
     }
