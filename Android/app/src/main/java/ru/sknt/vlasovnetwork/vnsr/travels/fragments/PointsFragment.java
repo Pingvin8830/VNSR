@@ -35,8 +35,7 @@ public class PointsFragment extends ObjectsFragment {
     @Override
     protected String getBeforeError() {
         String error = "";
-        if      (MainActivity.TravelDao.getCount() < 1)  { error = getResources().getString(R.string.err_not_found_travels); }
-        else if (MainActivity.AddressDao.getCount() < 1) { error = getResources().getString(R.string.err_not_found_addresses); }
+        if (MainActivity.AddressDao.getCount() < 1) { error = getResources().getString(R.string.err_not_found_addresses); }
         return error;
     }
 
@@ -56,7 +55,7 @@ public class PointsFragment extends ObjectsFragment {
     @SuppressLint("NotifyDataSetChanged")
     public void createNewPoint(Point point) {
         MainActivity.PointDao.create(point);
-        point = MainActivity.PointDao.find(point.getDateTime().getTime()); // Получаем новый корректный Id
+        point = MainActivity.PointDao.find(point.getArrivalDateTime().getTime(), point.getDepartureDateTime().getTime()); // Получаем новый корректный Id
         mPoints.add(point);
         mTxtError.setVisibility(View.INVISIBLE);
     }
