@@ -8,9 +8,9 @@ import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
 
 public class ShowPointDialog extends ShowObjectDialog {
     private final Point mPoint;
-    private TextView mTxtTravel;
     private TextView mTxtAddress;
-    private TextView mTxtDateTime;
+    private TextView mTxtArrivalDateTime;
+    private TextView mTxtDepartureDateTime;
     private TextView mTxtDoing;
     private TextView mTxtOdometer;
 
@@ -23,19 +23,21 @@ public class ShowPointDialog extends ShowObjectDialog {
 
     @Override
     protected void getDataViews() {
-        mTxtTravel = mDialogView.findViewById(R.id.txtTravel);
         mTxtAddress = mDialogView.findViewById(R.id.txtAddress);
-        mTxtDateTime = mDialogView.findViewById(R.id.txtDateTime);
+        mTxtArrivalDateTime = mDialogView.findViewById(R.id.txtArrivalDateTime);
+        mTxtDepartureDateTime = mDialogView.findViewById(R.id.txtDepartureDateTime);
         mTxtDoing = mDialogView.findViewById(R.id.txtDoing);
         mTxtOdometer = mDialogView.findViewById(R.id.txtOdometer);
     }
 
     @Override
     protected void setData() {
-        mTxtTravel.setText(mPoint.getTravel().getName());
         mTxtAddress.setText(mPoint.getAddress().getName());
-        mTxtDateTime.setText(mPoint.getDateTime().toString());
-        mTxtDoing.setText(mPoint.getDoing());
+        if (mPoint.getArrivalDateTime() != null) { mTxtArrivalDateTime.setText(mPoint.getArrivalDateTime().toString()); }
+        else { mTxtArrivalDateTime.setText("-"); }
+        if (mPoint.getDepartureDateTime() != null) { mTxtDepartureDateTime.setText(mPoint.getDepartureDateTime().toString()); }
+        else { mTxtDepartureDateTime.setText("-"); }
+        mTxtDoing.setText(mPoint.getDoingText());
         mTxtOdometer.setText(String.valueOf(mPoint.getOdometer()));
     }
 
