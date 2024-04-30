@@ -1,7 +1,6 @@
 package ru.sknt.vlasovnetwork.vnsr.sync.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,14 +43,14 @@ import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
 import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
-import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Way;
 
 public class DownloadFragment extends Fragment implements View.OnClickListener, Response.ErrorListener {
     private RequestQueue mVolleyQueue;
     private TextView mTxtError;
     protected Map<String, Map<String, TextView>> mViews;
     protected Map<String, Map<String, Integer>> mValues;
-    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "TravelState", "Travel", "Point"};
+    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "Travel", "Point"};
     private final String[] mSyncValues = {"Count", "Success", "Fail"};
     public int requestsCount = 0;
     protected int mSyncCount = -1;
@@ -111,9 +110,6 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                     break;
                 case "Refuel":
                     tmpViews = createMapViews(mainView, R.id.txtRefuelsCount, R.id.txtRefuelsSuccess, R.id.txtRefuelsFail);
-                    break;
-                case "TravelState":
-                    tmpViews = createMapViews(mainView, R.id.txtTravelStatesCount, R.id.txtTravelStatesSuccess, R.id.txtTravelStatesFail);
                     break;
                 case "Travel":
                     tmpViews = createMapViews(mainView, R.id.txtTravelsCount, R.id.txtTravelsSuccess, R.id.txtTravelsFail);
@@ -303,7 +299,8 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                 target.put("object_name", syncObject).put("object_id", id);
                 List<Task> tasks = MainActivity.TaskDao.filter(syncObject, id);
                 for (Task task : tasks) { target.put(task.getField(), task.getValue()); }
-                FormatedDate findDateTime = new FormatedDate(0L);
+                JSONObject findDateTimeJson;
+                FormatedDate findDateTime;
                 switch (syncObject) {
                     case "StreetType":
                         StreetType streetType = new StreetType(target);
@@ -322,7 +319,8 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                         break;
                     case "Street":
                         Street street = new Street(target);
-                        Street findStreet = MainActivity.StreetDao.find(target.getString("name"), target.getString("type_name"));
+                        JSONObject findStreetTypeJson = new JSONObject(target.getString("street_type"));
+                        Street findStreet = MainActivity.StreetDao.find(target.getString("name"), findStreetTypeJson.getString("name"));
                         if (findStreet == null) { MainActivity.StreetDao.create(street); }
                         break;
                     case "City":
@@ -347,19 +345,10 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                         break;
                     case "Refuel":
                         Refuel refuel = new Refuel(target);
-                        findDateTime.setYear(Integer.parseInt(target.getString("year")));
-                        findDateTime.setMonth(Integer.parseInt(target.getString("month"))-1);
-                        findDateTime.setDate(Integer.parseInt(target.getString("day")));
-                        findDateTime.setHours(Integer.parseInt(target.getString("hour")));
-                        findDateTime.setMinutes(Integer.parseInt(target.getString("minute")));
-                        findDateTime.setSeconds(0);
+                        findDateTimeJson = new JSONObject(target.getString("datetime"));
+                        findDateTime = new FormatedDate(findDateTimeJson);
                         Refuel findRefuel = MainActivity.RefuelDao.find(findDateTime);
                         if (findRefuel == null) { MainActivity.RefuelDao.create(refuel); }
-                        break;
-                    case "TravelState":
-                        TravelState travelState = new TravelState(target);
-                        TravelState findTravelState = MainActivity.TravelStateDao.find(target.getString("name"));
-                        if (findTravelState == null) { MainActivity.TravelStateDao.create(travelState); }
                         break;
                     case "Travel":
                         Travel travel = new Travel(target);
@@ -368,13 +357,23 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                         break;
                     case "Point":
                         Point point = new Point(target);
-                        findDateTime.setYear(Integer.parseInt(target.getString("year")));
-                        findDateTime.setMonth(Integer.parseInt(target.getString("month"))-1);
-                        findDateTime.setDate(Integer.parseInt(target.getString("day")));
-                        findDateTime.setHours(Integer.parseInt(target.getString("hour")));
-                        findDateTime.setMinutes(Integer.parseInt(target.getString("minute")));
-                        findDateTime.setSeconds(0);
-                        Point findPoint = MainActivity.PointDao.find(findDateTime.getTime());
+
+                        JSONObject findArrivalDateTimeJson;
+                        JSONObject findDepartureDateTimeJson;
+                        FormatedDate findArrivalDateTime;
+                        FormatedDate findDepartureDateTime;
+
+                        try { findArrivalDateTimeJson = new JSONObject(target.getString("arrival_datetime")); }
+                        catch (JSONException e) { findArrivalDateTimeJson = null; }
+                        try { findDepartureDateTimeJson = new JSONObject(target.getString("departure_datetime")); }
+                        catch (JSONException e) { findDepartureDateTimeJson = null; }
+
+                        if (findArrivalDateTimeJson == null) { findArrivalDateTime = new FormatedDate(0L); }
+                        else { findArrivalDateTime = new FormatedDate(findArrivalDateTimeJson); }
+                        if (findDepartureDateTimeJson == null) { findDepartureDateTime = new FormatedDate(0L); }
+                        else { findDepartureDateTime = new FormatedDate(findDepartureDateTimeJson); }
+
+                        Point findPoint = MainActivity.PointDao.find(findArrivalDateTime.getTime(), findDepartureDateTime.getTime());
                         if (findPoint == null) { MainActivity.PointDao.create(point); }
                         break;
                 }
