@@ -38,22 +38,18 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         // Do something with the date the user picks.
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
+        FormatedDate res = new FormatedDate(0L);
+        res.setYear(year);
+        res.setMonth(month);
+        res.setDate(day);
+
         switch (TAG) {
             case "new_refuel":
-                NewRefuelDialog refuelDialog = (NewRefuelDialog) fragmentManager.findFragmentByTag(TAG);
-                assert refuelDialog != null;
-                refuelDialog.setYear(year);
-                refuelDialog.setMonth(month);
-                refuelDialog.setDay(day);
-                new TimePickerFragment(TAG).show(fragmentManager, "timePicker");
-                break;
-            case "new_point":
-                NewPointDialog pointDialog = (NewPointDialog) fragmentManager.findFragmentByTag(TAG);
-                assert pointDialog != null;
-                pointDialog.setYear(year);
-                pointDialog.setMonth(month);
-                pointDialog.setDay(day);
-                new TimePickerFragment(TAG).show(fragmentManager, "timePicker");
+            case "new_point_arrival":
+            case "new_travel_start":
+            case "new_travel_end":
+            case "new_point_departure":
+                new TimePickerFragment(TAG, res).show(fragmentManager, "timePicker");
                 break;
         }
     }
