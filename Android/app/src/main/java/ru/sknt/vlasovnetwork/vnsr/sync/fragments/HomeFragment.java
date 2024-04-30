@@ -45,16 +45,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getContext(), "Settings changed", Toast.LENGTH_SHORT).show();
         }
         else if (view.getId() == R.id.bttnTruncate) {
-                MainActivity.RefuelDao.truncate();
-                MainActivity.FuelDao.truncate();
-                MainActivity.FuelStationDao.truncate();
-                MainActivity.AddressDao.truncate();
-                MainActivity.StreetDao.truncate();
-                MainActivity.StreetTypeDao.truncate();
-                MainActivity.CityDao.truncate();
-                MainActivity.CityTypeDao.truncate();
-                MainActivity.RegionDao.truncate();
-                Toast.makeText(requireContext(), "Truncated", Toast.LENGTH_SHORT).show();
+            MainActivity.TaskDao.truncate();
+            MainActivity.TravelDao.truncate();
+            MainActivity.PointDao.truncate();
+            MainActivity.RefuelDao.truncate();
+            MainActivity.FuelDao.truncate();
+            MainActivity.FuelStationDao.truncate();
+            MainActivity.AddressDao.truncate();
+            MainActivity.StreetDao.truncate();
+            MainActivity.StreetTypeDao.truncate();
+            MainActivity.CityDao.truncate();
+            MainActivity.CityTypeDao.truncate();
+            MainActivity.RegionDao.truncate();
+            Toast.makeText(requireContext(), "Truncated", Toast.LENGTH_SHORT).show();
         }
     }
 }
