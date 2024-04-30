@@ -38,14 +38,14 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
-import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Way;
 
 public class UploadFragment extends Fragment implements View.OnClickListener, Response.ErrorListener {
     private RequestQueue mVolleyQueue;
     private TextView mTxtError;
     protected Map<String, Map<String, TextView>> mViews;
     protected Map<String, Map<String, Integer>> mValues;
-    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "TravelState", "Travel", "Point"};
+    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "Travel", "Point"};
     private final String[] mSyncValues = {"Count", "Success", "Fail"};
     public static int requestsCount = 0;
     private int mSyncCount = 0;
@@ -107,9 +107,6 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
                 case "Refuel":
                     tmpViews = createMapViews(mainView, R.id.txtRefuelsCount, R.id.txtRefuelsSuccess, R.id.txtRefuelsFail);
                     break;
-                case "TravelState":
-                    tmpViews = createMapViews(mainView, R.id.txtTravelStatesCount, R.id.txtTravelStatesSuccess, R.id.txtTravelStatesFail);
-                    break;
                 case "Travel":
                     tmpViews = createMapViews(mainView, R.id.txtTravelsCount, R.id.txtTravelsSuccess, R.id.txtTravelsFail);
                     break;
@@ -148,9 +145,6 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
                         case "Refuel":
                             value = MainActivity.RefuelDao.getCount();
                             break;
-                        case "TravelState":
-                            value = MainActivity.TravelStateDao.getCount();
-                            break;
                         case "Travel":
                             value = MainActivity.TravelDao.getCount();
                             break;
@@ -179,7 +173,6 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
                 + MainActivity.FuelDao.getCount()
                 + MainActivity.FuelStationDao.getCount()
                 + MainActivity.RefuelDao.getCount()
-                + MainActivity.TravelStateDao.getCount()
                 + MainActivity.TravelDao.getCount()
                 + MainActivity.PointDao.getCount();
     }
@@ -209,7 +202,6 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
                         uploadFuels();
                         uploadFuelStations();
                         uploadRefuels();
-                        uploadTravelStates();
                         uploadTravels();
                         uploadPoints();
                     } catch (JSONException e) {
@@ -290,15 +282,13 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
     private void uploadRefuels() throws JSONException {
         for (Refuel refuel : MainActivity.RefuelDao.getAll()) { send(refuel.toJson()); }
     }
-    private void uploadTravelStates() throws JSONException {
-        for (TravelState travelState : MainActivity.TravelStateDao.getAll()) { send(travelState.toJson()); }
-    }
     private void uploadTravels() throws JSONException {
         for (Travel travel : MainActivity.TravelDao.getAll()) { send(travel.toJson()); }
     }
     private void uploadPoints() throws JSONException {
         for (Point point : MainActivity.PointDao.getAll()) { send(point.toJson()); }
     }
+
     private void addRequest(JsonObjectRequest request) {
         UploadFragment.requestsCount++;
         mTxtError.setText("Active requests: " + UploadFragment.requestsCount);
