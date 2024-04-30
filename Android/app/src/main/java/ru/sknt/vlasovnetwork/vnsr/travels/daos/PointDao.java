@@ -21,10 +21,17 @@ public interface PointDao {
 
     @Query("SELECT * FROM travels_point WHERE id=:id")
     Point find(int id);
-    @Query("SELECT * FROM travels_point WHERE datetime=:datetime")
-    Point find(long datetime);
-    @Query("SELECT * FROM travels_point WHERE travel_id=:travelId")
-    List<Point> filter(int travelId);
+    @Query("SELECT * FROM travels_point WHERE arrival_datetime=:arrivalDateTime AND departure_datetime=:departureDateTime")
+    Point find(long arrivalDateTime, long departureDateTime);
+
+    @Query(
+            "SELECT * " +
+                    "FROM travels_point " +
+                    "WHERE (departure_datetime>=:travelStartDateTime AND arrival_datetime<=:travelEndDateTime) " +
+                    "OR (departure_datetime>=:travelStartDateTime AND arrival_datetime IS NULL)" +
+                    "OR (departure_datetime IS NULL ANd arrival_datetime<=:travelEndDateTime)"
+    )
+    public List<Point> getTravelPoints(long travelStartDateTime, long travelEndDateTime);
 
     @Delete
     void delete(Point point);
