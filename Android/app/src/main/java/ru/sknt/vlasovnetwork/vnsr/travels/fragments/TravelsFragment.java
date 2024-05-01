@@ -33,11 +33,7 @@ public class TravelsFragment extends ObjectsFragment {
     protected String getErrorEmptyObjectsText() { return getResources().getString(R.string.err_not_found_travels); }
 
     @Override
-    protected String getBeforeError() {
-        String error = "";
-        if      (MainActivity.TravelStateDao.getCount() < 1) { error = getResources().getString(R.string.err_not_found_travel_states); }
-        return error;
-    }
+    protected String getBeforeError() { return ""; }
 
     @Override
     public void showObject(int position) {
