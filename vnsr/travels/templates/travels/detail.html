@@ -18,17 +18,25 @@
       <h3>Путевыве точки</h3>
     </caption>
     <tr>
-      <th>Дата и время</th>
       <th>Город</th>
       <th>Название</th>
-      <th>Действие</th>
+      <th>Заезд</th>
+      <th>Отъезд</th>
     </tr>
-    {% for point in travel.points.all %}
+    {% for point in travel.get_points %}
       <tr>
-        <td class="text bl">{{ point.datetime }}</td>
-        <td class="text bl">{{ point.place.city }}</td>
-        <td class="text bl">{{ point.place.name }}</td>
-        <td class="text bl br">{{ point.doing }}</td>
+        <td class="text bl">{{ point.address.city }}</td>
+        <td class="text bl">{{ point.address.name }}</td>
+        <td class="text bl">
+          {% if point.arrival_datetime %}
+            {{ point.arrival_datetime }}
+          {% endif %}
+        </td>
+        <td class="text bl br">
+          {% if point.departure_datetime %}
+            {{ point.departure_datetime }}
+          {% endif %}
+        </td>
       </tr>
     {% endfor %}
     <tr>
@@ -65,11 +73,11 @@
     </tr>
     {% for way in travel.get_ways %}
       <tr>
-        <td class="text bl">{{ way.start_point.place.city }}</td>
-        <td class="text bl">{{ way.target_point.place.city }}</td>
+        <td class="text bl">{{ way.start }}</td>
+        <td class="text bl">{{ way.target }}</td>
         <td class="numeric bl">{{ way.distance }}</td>
-        <td class="numeric bl">{{ way.get_fuel_count }}</td>
-        <td class="numeric bl br">{{ way.get_fuel_cost }}</td>
+        <td class="numeric bl">{{ way.fuel_count }}</td>
+        <td class="numeric bl br">{{ way.fuel_cost }}</td>
       </tr>
     {% endfor %}
     <tr>
