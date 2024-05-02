@@ -16,43 +16,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
-            android:id="@+id/trTravel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/txtTravel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lbl_travel" />
-
-            <Spinner
-                android:id="@+id/spnTravel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/trDateTime"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/txtDateTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lbl_date_time" />
-
-            <Button
-                android:id="@+id/bttnDateTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bttn_case_date_time" />
-
-        </TableRow>
-
-        <TableRow
             android:id="@+id/trAddress"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -71,6 +34,44 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/trArrivalDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtArrivalDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_arrival" />
+
+            <Button
+                android:id="@+id/bttnArrivalDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bttn_case_date_time" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trDepartureDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtDepartureDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_departure" />
+
+            <Button
+                android:id="@+id/bttnDepartureDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bttn_case_date_time" />
+
+        </TableRow>
+
+        <TableRow
             android:id="@+id/trDoing"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -81,14 +82,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/lbl_doing" />
 
-            <EditText
-                android:id="@+id/edtxtDoing"
+            <Spinner
+                android:id="@+id/spnDoing"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
-                android:inputType="text"
-                tools:ignore="LabelFor" />
+                android:layout_height="wrap_content" />
 
         </TableRow>
 
@@ -113,6 +110,5 @@
                 tools:ignore="LabelFor" />
 
         </TableRow>
-
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
