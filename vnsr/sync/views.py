@@ -5,7 +5,8 @@ from django.http import JsonResponse, Http404
 #from vnsr.settings import DEBUG
 from kladr.models import StreetType, CityType, Region, Street, City, Address
 from car.models import Fuel, FuelStation, Refuel
-from travels.models import TravelState, Travel, Point
+#from travels.models import TravelState, Travel, Point, Way
+from travels.models import Travel, Point
 
 from .models import Object
 
@@ -56,8 +57,9 @@ def start(request):
     for id in objects[object]:
       target = {'object_name': object, 'object_id': id}
       tasks = Object.objects.filter(name=object).filter(object_id=id)
-      for task in tasks: target[task.field] = task.value
-
+      for task in tasks:
+        try: target[task.field] = json.loads(task.value.replace("'", '"'))
+        except json.decoder.JSONDecodeError: target[task.field] = task.value
       match object:
         case 'StreetType':
           street_type = StreetType()
@@ -77,7 +79,7 @@ def start(request):
         case 'Street':
           street = Street()
           street.load(target)
-          try: find_object = Street.objects.get(name=target['name'], type__name=target['type_name'])
+          try: find_object = Street.objects.get(name=target['name'], type__name=target['street_type']['name'])
           except Street.DoesNotExist: street.save()
         case 'City':
           city = City()
@@ -103,14 +105,9 @@ def start(request):
           refuel = Refuel()
           refuel.load(target)
           try:
-            correct_datetime = target['datetime'][6:10] + '-' + target['datetime'][3:5] + '-' + target['datetime'][:2] + ' ' + target['datetime'][11:16]
+            correct_datetime = f"{target['datetime']['year']}-{target['datetime']['month']}-{target['datetime']['day']} {target['datetime']['hour']}:{target['datetime']['minute']}:00"
             find_object = Refuel.objects.get(datetime=correct_datetime)
           except Refuel.DoesNotExist: refuel.save()
-        case 'TravelState':
-          travel_state = TravelState()
-          travel_state.load(target)
-          try: find_object = TravelState.objects.get(name=target['name'])
-          except TravelState.DoesNotExist: travel_state.save()
         case 'Travel':
           travel = Travel()
           travel.load(target)
@@ -120,8 +117,11 @@ def start(request):
           point = Point()
           point.load(target)
           try:
-            correct_datetime = target['datetime'][6:10] + '-' + target['datetime'][3:5] + '-' + target['datetime'][:2] + ' ' + target['datetime'][11:16]
-            find_object = Point.objects.get(datetime=correct_datetime)
+            try: correct_arrival_datetime = f"{target['arrival_datetime']['year']}-{target['arrival_datetime']['month']}-{target['arrival_datetime']['day']} {target['arrival_datetime']['hour']}:{target['arrival_datetime']['minute']}:00"
+            except KeyError: correct_arrival_datetime = None
+            try: correct_departure_datetime = f"{target['departure_datetime']['year']}-{target['departure_datetime']['month']}-{target['departure_datetime']['day']} {target['departure_datetime']['hour']}:{target['departure_datetime']['minute']}:00"
+            except KeyError: correct_departure_datetime = None
+            find_object = Point.objects.get(arrival_datetime=correct_arrival_datetime, departure_datetime=correct_departure_datetime)
           except Point.DoesNotExist: point.save()
 
   return JsonResponse({'state': 'started'})
@@ -134,7 +134,7 @@ def get(request):
   match request_data.get('data'):
     case 'Count':
       match request_data.get('object_name'):
-        case 'all': value = StreetType.objects.count() + CityType.objects.count() + Region.objects.count() + Street.objects.count() + City.objects.count() + Address.objects.count() + Fuel.objects.count() + FuelStation.objects.count() + Refuel.objects.count() + TravelState.objects.count() + Travel.objects.count() + Point.objects.count()
+        case 'all': value = StreetType.objects.count() + CityType.objects.count() + Region.objects.count() + Street.objects.count() + City.objects.count() + Address.objects.count() + Fuel.objects.count() + FuelStation.objects.count() + Refuel.objects.count() + Travel.objects.count() + Point.objects.count()
         case 'StreetType':  value = StreetType.objects.count()
         case 'CityType':    value = CityType.objects.count()
         case 'Street':      value = Street.objects.count()
@@ -144,7 +144,6 @@ def get(request):
         case 'Fuel':        value = Fuel.objects.count()
         case 'FuelStation': value = FuelStation.objects.count()
         case 'Refuel':      value = Refuel.objects.count()
-        case 'TravelState': value = TravelState.objects.count()
         case 'Travel':      value = Travel.objects.count()
         case 'Point':       value = Point.objects.count()
     case 'all':
@@ -176,9 +175,6 @@ def get(request):
         case 'Refuel':
           value = []
           for refuel in Refuel.objects.all(): value.append(refuel.to_json())
-        case 'TravelState':
-          value = []
-          for travel_state in TravelState.objects.all(): value.append(travel_state.to_json())
         case 'Travel':
           value = []
           for travel in Travel.objects.all(): value.append(travel.to_json())
