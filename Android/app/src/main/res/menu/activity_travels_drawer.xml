@@ -28,10 +28,6 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_travels_hotels" />
         <item
-            android:id="@+id/nav_travels_travel_states"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_travels_travel_states" />
-        <item
             android:id="@+id/nav_back"
             android:title="@string/menu_back" />
     </group>
