@@ -7,26 +7,6 @@ from kladr.models import Address
 import datetime
 
 # Create your models here.
-#class TravelState(models.Model):
-#  class Meta:
-#    ordering = ['name']
-#    verbose_name = 'Состояние поездки'
-#    verbose_name_plural = 'Состояния поездки'
-#
-#  name = models.CharField(max_length=20, unique=True, verbose_name='Название')
-#
-#  def __str__(self):
-#    return self.name
-#
-#  def load(self, data):
-#    self.name = data['name']
-#
-#  def to_json(self):
-#    return {
-#      'id': self.id,
-#      'name': self.name
-#    }
-
 class Travel(models.Model):
   STATES = (
     ('U', 'Неизвестно'),
@@ -42,7 +22,6 @@ class Travel(models.Model):
 
   name             = models.CharField(max_length=255, unique=True, verbose_name='Название')
   participants     = models.CharField(max_length=255, verbose_name='Участники')
-#  state            = models.ForeignKey(TravelState, on_delete=models.PROTECT, verbose_name='Состояние')
   state            = models.CharField(max_length=1, choices=STATES, default='U', verbose_name='Состояние')
   fuel_consumption = models.DecimalField(default=10, max_digits=3, decimal_places=1, verbose_name='Расход топлива')
   fuel_price       = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Цена топлива')
@@ -52,45 +31,37 @@ class Travel(models.Model):
   def __str__(self):
     return self.name
 
-#  def get_datetimes(self):
-#    try: start = self.points.order_by('datetime')[0].datetime
-#    except IndexError: start = None
-#    try: end = self.points.order_by('-datetime')[0].datetime
-#    except IndexError: end = None
-#    return {'start': start, 'end': end}
+  def get_points(self):
+    return Point.objects.filter(departure_datetime__range=(self.start_datetime, self.end_datetime)) | Point.objects.filter(arrival_datetime__range=(self.start_datetime, self.end_datetime))
 
-#  @admin.display(
-#    description='Начало',
-#  )
-#  def get_datetime_start(self):
-#    return self.get_datetimes()['start']
-
-#  @admin.display(
-#    description='Окончание',
-#  )
-#  def get_datetime_end(self):
-#    return self.get_datetimes()['end']
-
-#  def get_ways(self):
-#    return Way.objects.filter(start_point__travel__pk=self.pk)
+  def get_ways(self):
+    res = []
+    points = self.get_points()
+    for i in range(points.count()-1):
+      current_point = points[i]
+      next_point = points[i+1]
+      distance = next_point.odometer - current_point.odometer
+      fuel_count = distance / 100 * self.fuel_consumption
+      res.append(
+        {
+          'start': current_point.address.city.name,
+          'target': next_point.address.city.name,
+          'distance': distance,
+          'fuel_count': fuel_count,
+          'fuel_cost': fuel_count * self.fuel_price
+        }
+      )
+    return res
 
   def get_distance(self):
-    distance = 0
-#    for way in self.get_ways():
-#      distance += way.distance
-    return distance
+    points = self.get_points()
+    return points[points.count()-1].odometer - points[0].odometer
 
   def get_fuel_count(self):
-    count = 0
-#    for way in self.get_ways():
-#      count += way.get_fuel_count()
-    return count
+    return self.get_distance() / 100 * self.fuel_consumption
 
   def get_fuel_cost(self):
-    cost = 0
-#    for way in self.get_ways():
-#      cost += way.get_fuel_cost()
-    return cost
+    return self.get_fuel_count() * self.fuel_price
 
   def get_toll_road_cost(self):
     cost = 0
@@ -131,6 +102,8 @@ class Travel(models.Model):
     )
 
   def to_json(self):
+    correct_start_msk = self.start_datetime + datetime.timedelta(hours=3)
+    correct_end_msk = self.end_datetime + datetime.timedelta(hours=3)
     return {
       'object': 'Travel',
       'id': self.id,
@@ -140,18 +113,18 @@ class Travel(models.Model):
       'fuel_consumption': self.fuel_consumption,
       'fuel_price': self.fuel_price,
       'start_datetime': {
-        'year': self.start_datetime.year,
-        'month': self.start_datetime.month,
-        'day': self.start_datetime.day,
-        'hour': self.start_datetime.hour,
-        'minute': self.start_datetime.minute
+        'year': correct_start_msk.year,
+        'month': correct_start_msk.month,
+        'day': correct_start_msk.day,
+        'hour': correct_start_msk.hour,
+        'minute': correct_start_msk.minute
       },
       'end_datetime': {
-        'year': self.end_datetime.year,
-        'month': self.end_datetime.month,
-        'day': self.end_datetime.day,
-        'hour': self.end_datetime.hour,
-        'minute': self.end_datetime.minute
+        'year': correct_end_msk.year,
+        'month': correct_end_msk.month,
+        'day': correct_end_msk.day,
+        'hour': correct_end_msk.hour,
+        'minute': correct_end_msk.minute
       }
     }
 
@@ -164,28 +137,22 @@ class Point(models.Model):
   )
 
   class Meta:
-#    ordering = ['datetime']
+    ordering = ['odometer']
     verbose_name = 'Путевая точка'
     verbose_name_plural = 'Путевые точки'
     unique_together = ['arrival_datetime', 'departure_datetime']
 
-#  travel   = models.ForeignKey(Travel, on_delete=models.PROTECT, related_name='points', verbose_name='Путешествие')
   address  = models.ForeignKey(Address, on_delete=models.PROTECT, verbose_name='Место')
-#  datetime = models.DateTimeField(verbose_name='Дата и время')
-#  doing    = models.CharField(max_length=10, db_index=True, verbose_name='Действие')
   arrival_datetime = models.DateTimeField(null=True, blank=True, verbose_name='Дата и время прибытия')
   departure_datetime = models.DateTimeField(null=True, blank=True, verbose_name='Дата и время отъезда')
   doing    = models.CharField(max_length=1, choices=DOINGS, default='U', verbose_name='Действие')
-  odometer = models.PositiveIntegerField()
+  odometer = models.DecimalField(decimal_places=2, max_digits=10)
 
   def __str__(self):
-    return f'{self.travel.name}, {self.address.name}, {self.doing}'
+    return f'{self.address.name}, {self.doing}, {self.arrival_datetime} - {self.departure_datetime}'
 
   def load(self, data):
-#    correct_datetime = data['datetime'][6:10] + '-' + data['datetime'][3:5] + '-' + data['datetime'][:2] + ' ' + data['datetime'][11:16]
-#    self.travel = Travel.objects.get(name=data['travel']['name'])
     self.address = Address.objects.get(name=data['address']['name'])
-#    self.datetime = correct_datetime
     try:
       self.arrival_datetime = datetime.datetime(
         data['arrival_datetime']['year'],
@@ -248,19 +215,12 @@ class Way(models.Model):
     verbose_name = 'Отрезок пути'
     verbose_name_plural = 'Отрезки пути'
 
-#  travel       = models.ForeignKey(Travel, on_delete=models.PROTECT, related_name='ways', verbose_name='Расстояние')
-  start_point  = models.ForeignKey(Point, on_delete=models.PROTECT, related_name='start_points', verbose_name='Старт')
-  target_point = models.ForeignKey(Point, on_delete=models.PROTECT, related_name='target_points', verbose_name='Цель')
-  distance     = models.DecimalField(max_digits=5, decimal_places=1, verbose_name='Расстояние')
+  start_address  = models.ForeignKey(Address, on_delete=models.PROTECT, related_name='start_address',  verbose_name='Старт')
+  target_address = models.ForeignKey(Address, on_delete=models.PROTECT, related_name='target_address', verbose_name='Цель')
+  distance       = models.DecimalField(max_digits=5, decimal_places=1, verbose_name='Расстояние')
 
   def __str__(self):
-    return f'{self.start_point.place.name} - {self.target_point.place.name}'
-
-  def get_fuel_count(self):
-    return self.distance / 100 * self.start_point.travel.fuel_consumption
-
-  def get_fuel_cost(self):
-    return self.get_fuel_count() * self.start_point.travel.fuel_price
+    return f'{self.start_address.name} - {self.target_address.name}'
 
   def load(self, data):
     self.travel = Travel.objects.get(name=data['travel']['name'])
