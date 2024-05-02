@@ -253,7 +253,7 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                             }
                     }
                     assert fragment != null;
-                    if (fragment.mGetCount == fragment.mSyncCount) {
+                    if ((fragment.mGetCount == fragment.mSyncCount) && fragment.mGetCount > 0) {
                         try {
                             startSync();
                             fragment.mTxtError.setText("Sync successed");
