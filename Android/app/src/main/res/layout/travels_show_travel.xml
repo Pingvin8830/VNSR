@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -181,23 +180,10 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/txtPointDateTimeLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="1dp"
-                        android:background="#FFFFFFFF"
-                        android:text="@string/lbl_date_time"
-                        android:textAlignment="center"
-                        android:textAllCaps="false"
-                        android:textStyle="bold" />
-
-                    <TextView
                         android:id="@+id/txtPointCityLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="1dp"
-                        android:layout_marginBottom="1dp"
+                        android:layout_margin="1dp"
                         android:background="#FFFFFFFF"
                         android:text="@string/lbl_city"
                         android:textAlignment="center"
@@ -217,14 +203,26 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txtPointDoingLabel"
+                        android:id="@+id/txtPointArrivalLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="1dp"
                         android:background="#FFFFFFFF"
-                        android:text="@string/lbl_doing"
+                        android:text="@string/lbl_arrival"
+                        android:textAlignment="center"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtPointDepartureLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:background="#FFFFFFFF"
+                        android:text="@string/lbl_departure"
                         android:textAlignment="center"
                         android:textStyle="bold" />
                 </TableRow>
@@ -350,6 +348,7 @@
                         android:background="#FFFFFFFF"
                         android:text="@string/lbl_start"
                         android:textAlignment="center"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -362,6 +361,7 @@
                         android:background="#FFFFFFFF"
                         android:text="@string/lbl_target"
                         android:textAlignment="center"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -374,6 +374,7 @@
                         android:background="#FFFFFFFF"
                         android:text="@string/lbl_distance"
                         android:textAlignment="center"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -386,6 +387,7 @@
                         android:background="#FFFFFFFF"
                         android:text="@string/lbl_fuel"
                         android:textAlignment="center"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -398,55 +400,8 @@
                         android:background="#FFFFFFFF"
                         android:text="@string/lbl_cost"
                         android:textAlignment="center"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
-
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/trWaysData"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/txtWayStart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginEnd="1dp"
-                        android:background="#FFFFFFFF"
-                        android:text="LAYOUT Way city" />
-
-                    <TextView
-                        android:id="@+id/txtWayTarget"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="1dp"
-                        android:background="#FFFFFFFF"
-                        android:text="LAYOUT Way target" />
-
-                    <TextView
-                        android:id="@+id/txtWayDistance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="1dp"
-                        android:background="#FFFFFFFF"
-                        android:text="LAYOUT Way distance" />
-
-                    <TextView
-                        android:id="@+id/txtWayFuel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="1dp"
-                        android:background="#FFFFFFFF"
-                        android:text="LAYOUT Way fuel count" />
-
-                    <TextView
-                        android:id="@+id/txtWayFuelCost"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="1dp"
-                        android:background="#FFFFFFFF"
-                        android:text="LAYOUT Way cost" />
 
                 </TableRow>
 
@@ -458,7 +413,8 @@
                     <TextView
                         android:layout_marginStart="1dp"
                         android:layout_marginTop="1dp"
-                        android:background="#FFFFFFFF" />
+                        android:background="#FFFFFFFF"
+                        android:textSize="10sp" />
 
                     <TextView
                         android:id="@+id/txtWaySum"
@@ -470,6 +426,7 @@
                         android:background="#FFFFFFFF"
                         android:text="@string/lbl_summary"
                         android:textAlignment="center"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -480,7 +437,9 @@
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="1dp"
                         android:background="#FFFFFFFF"
-                        android:text="LAYOUT Way distance sum" />
+                        android:text="LAYOUT Way distance sum"
+                        android:textAlignment="textEnd"
+                        android:textSize="10sp" />
 
                     <TextView
                         android:id="@+id/txtWayFuelSum"
@@ -490,7 +449,9 @@
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="1dp"
                         android:background="#FFFFFFFF"
-                        android:text="LAYOUT Way fuel count sum" />
+                        android:text="LAYOUT Way fuel count sum"
+                        android:textAlignment="textEnd"
+                        android:textSize="10sp" />
 
                     <TextView
                         android:id="@+id/txtWayFuelCostSum"
@@ -500,7 +461,9 @@
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="1dp"
                         android:background="#FFFFFFFF"
-                        android:text="LAYOUT Way cost sum" />
+                        android:text="LAYOUT Way cost sum"
+                        android:textAlignment="textEnd"
+                        android:textSize="10sp" />
 
                 </TableRow>
             </TableLayout>
