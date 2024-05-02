@@ -1,5 +1,7 @@
 from django.db import models
 
+import json
+
 # Create your models here.
 class Region(models.Model):
   class Meta:
@@ -19,6 +21,7 @@ class Region(models.Model):
 
   def to_json(self):
     return {
+      'object': 'Region',
       'id': self.id,
       'code': self.code,
       'name': self.name
@@ -41,6 +44,7 @@ class CityType(models.Model):
 
   def to_json(self):
     return {
+      'object': 'CityType',
       'id': self.id,
       'name': self.name,
       'short': self.short
@@ -59,13 +63,16 @@ class City(models.Model):
 
   def load(self, data):
     self.name = data['name']
-    self.type = CityType.objects.get(name=data['type_name'])
+    self.type = CityType.objects.get(name=data['city_type']['name'])
 
   def to_json(self):
     return {
+      'object': 'City',
       'id': self.id,
       'name': self.name,
-      'type_name': self.type.name
+      'city_type': {
+        'name': self.type.name
+      }
     }
 
 class StreetType(models.Model):
@@ -85,6 +92,7 @@ class StreetType(models.Model):
 
   def to_json(self):
     return {
+      'object': 'StreetType',
       'id': self.id,
       'name': self.name,
       'short': self.short
@@ -104,13 +112,16 @@ class Street(models.Model):
 
   def load(self, data):
     self.name = data['name']
-    self.type = StreetType.objects.get(name=data['type_name'])
+    self.type = StreetType.objects.get(name=data['street_type']['name'])
 
   def to_json(self):
     return {
+      'object': 'Street',
       'id': self.id,
       'name': self.name,
-      'type_name': self.type.name
+      'street_type': {
+        'name': self.type.name
+      }
     }
 
 class Address(models.Model):
@@ -118,7 +129,7 @@ class Address(models.Model):
     verbose_name = 'Адрес'
     verbose_name_plural = 'Адреса'
 
-  name     = models.CharField(max_length=20, verbose_name='Название')
+  name     = models.CharField(max_length=20, unique=True, verbose_name='Название')
   region   = models.ForeignKey(Region, on_delete=models.PROTECT, related_name='addresses', verbose_name='Регион')
   city     = models.ForeignKey(City, on_delete=models.PROTECT, related_name='addresses', verbose_name='Населённый пункт')
   street   = models.ForeignKey(Street, on_delete=models.PROTECT, related_name='addresses', verbose_name='Улица')
@@ -137,21 +148,30 @@ class Address(models.Model):
 
   def load(self, data):
     self.name = data['name']
-    self.region = Region.objects.get(code=data['region_code'])
-    self.city = City.objects.get(name=data['city_name'])
-    self.street = Street.objects.get(name=data['street_name'], type__name=data['street_type_name'])
+    self.region = Region.objects.get(code=data['region']['code'])
+    self.city = City.objects.get(name=data['city']['name'])
+    self.street = Street.objects.get(name=data['street']['name'], type__name=data['street']['street_type']['name'])
     self.house = data['house']
     self.building = data['building']
     self.flat = data['flat']
 
   def to_json(self):
     return {
+      'object': 'Address',
       'id': self.id,
       'name': self.name,
-      'region_code': self.region.code,
-      'city_name': self.city.name,
-      'street_name': self.street.name,
-      'street_type_name': self.street.type.name,
+      'region': {
+        'code': self.region.code,
+      },
+      'city': {
+        'name': self.city.name,
+      },
+      'street': {
+        'name': self.street.name,
+        'street_type': {
+          'name': self.street.type.name,
+        },
+      },
       'house': self.house,
       'building': self.building,
       'flat': self.flat
