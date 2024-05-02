@@ -1,9 +1,16 @@
 package ru.sknt.vlasovnetwork.vnsr.travels.models;
 
+import android.util.Log;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 
 @Entity (
         tableName = "travels_tollroad"
@@ -13,8 +20,6 @@ public class TollRoad {
     @ColumnInfo(name = "id")
     private int mId;
     @ColumnInfo(name = "travel_id")
-    private int mTravelId;
-    @Ignore
     private Travel mTravel;
     @ColumnInfo(name = "name")
     private final String mName;
@@ -26,7 +31,7 @@ public class TollRoad {
     private float mPrice;
 
     public int getId() { return this.mId; }
-    public int getTravelId() { return this.mTravelId; }
+    public Travel getTravel() { return this.mTravel; }
     public String getName() { return this.mName; }
     public String getStart() { return this.mStart; }
     public String getEnd() { return this.mEnd; }
@@ -34,11 +39,37 @@ public class TollRoad {
 
     public void setId(int id) { this.mId = id; }
 
-    public TollRoad(int travelId, String name, String start, String end, float price) {
-        this.mTravelId = travelId;
+    public TollRoad(Travel travel, String name, String start, String end, float price) {
+        this.mTravel = travel;
         this.mName = name;
         this.mStart = start;
         this.mEnd = end;
         this.mPrice = price;
+    }
+    public TollRoad(JSONObject data) throws JSONException {
+        JSONObject travelJson = new JSONObject(data.getString("travel"));
+
+        this.mTravel = MainActivity.TravelDao.find(travelJson.getString("name"));
+        this.mName = data.getString("name");
+        this.mStart = data.getString("start");
+        this.mEnd = data.getString("end");
+        this.mPrice = Float.parseFloat(data.getString("price"));
+    }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject res = new JSONObject();
+        JSONObject travelJson = new JSONObject();
+
+        travelJson.put("name", this.getTravel().getName());
+
+        res
+                .put("object", "TollRoad")
+                .put("id", this.getId())
+                .put("travel", travelJson)
+                .put("name", this.getName())
+                .put("start", this.getStart())
+                .put("end", this.getEnd())
+                .put("price", this.getPrice());
+        return res;
     }
 }

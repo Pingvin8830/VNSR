@@ -37,7 +37,7 @@ import ru.sknt.vlasovnetwork.vnsr.sync.daos.TaskDao;
 import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
 
 @Database(
-        version = 5,
+        version = 6,
         entities = {
                 Travel.class,
                 TollRoad.class,
@@ -56,7 +56,7 @@ import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
                 Task.class
         }//,
         //autoMigrations = {
-        //        @AutoMigration(from=4, to=5)
+        //        @AutoMigration(from=5, to=6)
         //}
 )
 @TypeConverters({Converters.class})

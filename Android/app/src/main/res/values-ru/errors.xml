@@ -37,4 +37,7 @@
     <string name="err_bad_state">Неверное состояние</string>
     <string name="err_bad_start_date_time">Неверная дата или время начала</string>
     <string name="err_bad_end_date_time">Неверная дата или время окончания</string>
+    <string name="err_not_found_toll_roads">Платные дороги не найдены</string>
+    <string name="err_bad_start">Неверное начало</string>
+    <string name="err_bad_end">Неверное окончание</string>
 </resources>

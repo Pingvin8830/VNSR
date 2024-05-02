@@ -87,6 +87,12 @@ public class Travel {
         return points.get(points.size()-1).getOdometer() - points.get(0).getOdometer();
     }
     public float getFuelCount() { return this.getDistance() / 100f * this.getFuelConsumption(); }
+    public List<TollRoad> getTollRoads() { return MainActivity.TollRoadDao.filter(this.getId()); }
+    public float getTollRoadsCost() {
+        float res = 0f;
+        for (TollRoad tollRoad : this.getTollRoads()) { res += tollRoad.getPrice(); }
+        return res;
+    }
 
     public Travel(String name, String participants, String state, float fuelConsumption, float fuelPrice, FormatedDate startDateTime, FormatedDate endDateTime) {
         this.mName = name;

@@ -15,7 +15,7 @@ import com.google.android.material.navigation.NavigationView;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.travels.fragments.HotelsFragment;
 import ru.sknt.vlasovnetwork.vnsr.travels.fragments.PointsFragment;
-import ru.sknt.vlasovnetwork.vnsr.travels.fragments.TollroadsFragment;
+import ru.sknt.vlasovnetwork.vnsr.travels.fragments.TollRoadsFragment;
 import ru.sknt.vlasovnetwork.vnsr.travels.fragments.TravelsFragment;
 import ru.sknt.vlasovnetwork.vnsr.travels.fragments.WaysFragment;
 
@@ -62,7 +62,7 @@ public class TravelsActivity extends AppCompatActivity implements NavigationView
         if      (id == R.id.nav_travels_travels)       { transaction.replace(R.id.fragmentHolder, new TravelsFragment(),      "travels"); }
         else if (id == R.id.nav_travels_points)        { transaction.replace(R.id.fragmentHolder, new PointsFragment(),       "points" ); }
         else if (id == R.id.nav_travels_ways)          { transaction.replace(R.id.fragmentHolder, new WaysFragment(),         "ways"); }
-        else if (id == R.id.nav_travels_toolroads)     { transaction.replace(R.id.fragmentHolder, new TollroadsFragment(),    "toolroads"); }
+        else if (id == R.id.nav_travels_toolroads)     { transaction.replace(R.id.fragmentHolder, new TollRoadsFragment(),    "toll_roads"); }
         else if (id == R.id.nav_travels_hotels)        { transaction.replace(R.id.fragmentHolder, new HotelsFragment(),       "hotels"); }
         else if (id == R.id.nav_back) { finish(); }
 

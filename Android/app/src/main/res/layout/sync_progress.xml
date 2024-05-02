@@ -405,6 +405,36 @@
                     android:text="LAYOUT Failure" />
 
             </TableRow>
+            <TableRow
+                android:id="@+id/trTollRoads"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txtTollRoads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_toll_road" />
+
+                <TextView
+                    android:id="@+id/txtTollRoadsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtTollRoadsSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtTollRoadsFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
         </TableLayout>
     </ScrollView>
 

@@ -97,4 +97,8 @@
     <string name="lbl_new_way">Добавление отрезка пути</string>
     <string name="lbl_way">Отрезок пути</string>
     <string name="lbl_end">Окончание</string>
+    <string name="lbl_show_toll_road">Платная дорога</string>
+    <string name="lbl_new_toll_road">Добавление платной дороги</string>
+    <string name="lbl_toll_road">Платная дорога</string>
+    <string name="lbl_toll_roads">Платные дороги</string>
 </resources>

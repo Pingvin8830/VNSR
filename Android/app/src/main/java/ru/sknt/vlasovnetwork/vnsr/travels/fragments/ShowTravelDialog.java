@@ -17,6 +17,7 @@ import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.ShowObjectDialog;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.TollRoad;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
 
 public class ShowTravelDialog extends ShowObjectDialog {
@@ -53,12 +54,12 @@ public class ShowTravelDialog extends ShowObjectDialog {
         mTxtWayDistanceSum = mDialogView.findViewById(R.id.txtWayDistanceSum);
         mTxtWayFuelSum = mDialogView.findViewById(R.id.txtWayFuelSum);
         mTxtWayFuelCostSum = mDialogView.findViewById(R.id.txtWayFuelCostSum);
-//        mTxtTollRoadsCostSum = mDialogView.findViewById(R.id.txtToolRoadCostSum);
+        mTxtTollRoadsCostSum = mDialogView.findViewById(R.id.txtTollRoadCostSum);
 //        mTxtHotelsCostSum = mDialogView.findViewById(R.id.txtHotelCostSum);
 
         mTblPoints = mDialogView.findViewById(R.id.tblPoints);
         mTblWays = mDialogView.findViewById(R.id.tblWays);
-//        mTblTollRoads = mDialogView.findViewById(R.id.tblToolRoads);
+        mTblTollRoads = mDialogView.findViewById(R.id.tblTollRoads);
 //        mTblHotels = mDialogView.findViewById(R.id.tblHotels);
 
 //        mTrPointsHeader = mDialogView.findViewById(R.id.trPointsHeader);
@@ -66,7 +67,7 @@ public class ShowTravelDialog extends ShowObjectDialog {
 //        mTrWaysHeader = mDialogView.findViewById(R.id.trWaysHeader);
         mTrWaysSum = mDialogView.findViewById(R.id.trWaysSum);
 //        mTrTollRoadsHeader = mDialogView.findViewById(R.id.trTollRoadsHeader);
-//        mTrTollRoadsSum = mDialogView.findViewById(R.id.trTollRoadSum);
+        mTrTollRoadsSum = mDialogView.findViewById(R.id.trTollRoadSum);
 //        mTrHotelsHeader = mDialogView.findViewById(R.id.trHotelsHeader);
 //        mTrHotelsSum = mDialogView.findViewById(R.id.trHotelSum);
 
@@ -92,11 +93,12 @@ public class ShowTravelDialog extends ShowObjectDialog {
         mTxtWayDistanceSum.setText(String.valueOf(mTravel.getDistance()));
         mTxtWayFuelSum.setText(String.valueOf(mTravel.getFuelCount()));
         mTxtWayFuelCostSum.setText(String.valueOf(mTravel.getFuelCount() * mTravel.getFuelPrice()));
-//        mTxtTollRoadsCostSum = mDialogView.findViewById(R.id.txtTollRoadCostSum);
+        mTxtTollRoadsCostSum.setText(String.valueOf(mTravel.getTollRoadsCost()));
 //        mTxtHotelsCostSum = mDialogView.findViewById(R.id.txtHotelCostSum);
 
         createPointsTable();
         createWaysTable();
+        createTollRoadsTable();
     }
 
     @Override
@@ -206,5 +208,47 @@ public class ShowTravelDialog extends ShowObjectDialog {
             mTblWays.addView(tableRow);
         }
         mTblWays.addView(mTrWaysSum);
+    }
+    private void createTollRoadsTable() {
+        mTblTollRoads.removeView(mTrTollRoadsSum);
+
+        for (TollRoad tollRoad : mTravel.getTollRoads()) {
+            TableRow tableRow = new TableRow(requireContext());
+
+            TextView txtName = new TextView(requireContext());
+            TextView txtStart = new TextView(requireContext());
+            TextView txtEnd = new TextView(requireContext());
+            TextView txtPrice = new TextView(requireContext());
+
+            txtName.setText(tollRoad.getName());
+            txtStart.setText(tollRoad.getStart());
+            txtEnd.setText(tollRoad.getEnd());
+            txtPrice.setText(String.valueOf(tollRoad.getPrice()));
+
+            txtName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+            txtStart.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+            txtEnd.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+            txtPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+
+            txtPrice.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+
+            txtName.setBackgroundColor(Color.WHITE);
+            txtStart.setBackgroundColor(Color.WHITE);
+            txtEnd.setBackgroundColor(Color.WHITE);
+            txtPrice.setBackgroundColor(Color.WHITE);
+
+            txtName.setLayoutParams(mFirstLayoutParams);
+            txtStart.setLayoutParams(mSecondLayoutParams);
+            txtEnd.setLayoutParams(mSecondLayoutParams);
+            txtPrice.setLayoutParams(mSecondLayoutParams);
+
+            tableRow.addView(txtName);
+            tableRow.addView(txtStart);
+            tableRow.addView(txtEnd);
+            tableRow.addView(txtPrice);
+
+            mTblTollRoads.addView(tableRow);
+        }
+        mTblTollRoads.addView(mTrTollRoadsSum);
     }
 }

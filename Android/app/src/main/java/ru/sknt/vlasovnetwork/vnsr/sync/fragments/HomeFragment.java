@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
         else if (view.getId() == R.id.bttnTruncate) {
             MainActivity.TaskDao.truncate();
+            MainActivity.TollRoadDao.truncate();
             MainActivity.TravelDao.truncate();
             MainActivity.PointDao.truncate();
             MainActivity.RefuelDao.truncate();

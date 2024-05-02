@@ -24,6 +24,8 @@
     <string name="err_bad_state">Bad state</string>
     <string name="err_bad_start_date_time">Bad start date or time</string>
     <string name="err_bad_end_date_time">Bad end date or time</string>
+    <string name="err_bad_start">Bad start</string>
+    <string name="err_bad_end">Bad end</string>
 
     <string name="err_not_found_regions">Regions not found</string>
     <string name="err_not_found_cityes">Cityes not found</string>
@@ -38,5 +40,6 @@
     <string name="err_not_found_travels">Travels not found</string>
     <string name="err_not_found_points">Points not found</string>
     <string name="err_not_found_ways">Ways not found</string>
+    <string name="err_not_found_toll_roads">Toll roads not found</string>
 
 </resources>
