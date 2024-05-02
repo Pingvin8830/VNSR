@@ -8,8 +8,8 @@
 
 {% block content %}
   <h1>Путешествие "{{ travel.name }}"</h1>
-  <h3>Состояние: {{ travel.state }}</h3>
-  <h3>Начало: {{ travel.get_datetimes.start }}, окончание: {{ travel.get_datetimes.end }}</h3>
+  <h3>Состояние: {{ travel.get_state_display }}</h3>
+  <h3>Начало: {{ travel.start_datetime }}, окончание: {{ travel.end_datetime }}</h3>
   <h3>Участники: {{ travel.participants }}</h3>
   <h3>Стоимость: {{ travel.get_cost }}</h3>
 
