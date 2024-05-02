@@ -38,10 +38,10 @@ public class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.ListItem
         catch (NullPointerException e) { holder.mTxtStart.setText(R.string.lbl_unknown); }
         try { holder.mTxtEnd.setText(travel.getEndDateTime().toString()); }
         catch (NullPointerException e) { holder.mTxtEnd.setText(R.string.lbl_unknown); }
-//        holder.mTxtDistance.setText(travel.getDistance());
-//        holder.mTxtFuelCount.setText(travel.getFuelCount());
-//        holder.mTxtPoints.setText(travel.getPoints());
-//        holder.mTxtFuelConsumption.setText(travel.getFuelConsumption());
+        holder.mTxtDistance.setText(String.valueOf(travel.getDistance()));
+        holder.mTxtFuelCount.setText(String.valueOf(travel.getFuelCount()));
+        holder.mTxtPoints.setText(String.valueOf(travel.getPoints().size()));
+        holder.mTxtFuelConsumption.setText(String.valueOf(travel.getFuelConsumption()));
     }
 
     @Override
