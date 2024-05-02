@@ -9,6 +9,7 @@ class FuelStation(models.Model):
   class Meta:
     verbose_name = 'АЗС'
     verbose_name_plural = 'АЗСы'
+    unique_together = ['company', 'number']
 
   company = models.CharField(max_length=255, verbose_name='Организация')
   number  = models.IntegerField(verbose_name='Номер')
@@ -22,15 +23,18 @@ class FuelStation(models.Model):
     self.company = data['company']
     self.number = data['number']
     self.phone = data['phone']
-    self.address = Address.objects.get(name=data['address_name'])
+    self.address = Address.objects.get(name=data['address']['name'])
 
   def to_json(self):
     return {
+      'object': 'FuelStation',
       'id': self.id,
       'company': self.company,
       'number': self.number,
       'phone': self.phone,
-      'address_name': self.address.name
+      'address': {
+        'name': self.address.name,
+      },
     }
 
 class Fuel(models.Model):
@@ -38,7 +42,7 @@ class Fuel(models.Model):
     verbose_name = 'Топливо'
     verbose_name_plural = 'Топливо'
 
-  name = models.CharField(max_length=50, verbose_name='Название')
+  name = models.CharField(max_length=50, unique=True, verbose_name='Название')
 
   def __str__(self):
     return f'{self.name}'
@@ -48,6 +52,7 @@ class Fuel(models.Model):
 
   def to_json(self):
     return {
+      'object': 'Fuel',
       'id': self.id,
       'name': self.name
     }
@@ -59,7 +64,7 @@ class Refuel(models.Model):
 
   fuel_station         = models.ForeignKey(FuelStation, on_delete=models.PROTECT, related_name='refuels', verbose_name='АЗС')
   check_number         = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name='Номер чека')
-  datetime             = models.DateTimeField(verbose_name='Дата и время')
+  datetime             = models.DateTimeField(unique=True, verbose_name='Дата и время')
   trk                  = models.PositiveSmallIntegerField(default=3, verbose_name='ТРК №')
   fuel                 = models.ForeignKey(Fuel, on_delete=models.PROTECT, verbose_name='Топливо')
   count                = models.DecimalField(max_digits=4, decimal_places=2, verbose_name='Количество')
@@ -76,12 +81,20 @@ class Refuel(models.Model):
     return str(self.datetime)
 
   def load(self, data):
-    correct_datetime = data['datetime'][6:10] + '-' + data['datetime'][3:5] + '-' + data['datetime'][:2] + ' ' + data['datetime'][11:16]
-    self.fuel_station = FuelStation.objects.get(company=data['fuel_station_company'], number=data['fuel_station_number'])
+#    correct_datetime = data['datetime'][6:10] + '-' + data['datetime'][3:5] + '-' + data['datetime'][:2] + ' ' + data['datetime'][11:16]
+    self.fuel_station = FuelStation.objects.get(company=data['fuel_station']['company'], number=data['fuel_station']['number'])
     self.check_number = data['check_number']
-    self.datetime = correct_datetime #data['datetime']
+#    self.datetime = correct_datetime #data['datetime']
+    self.datetime = datetime.datetime(
+      data['datetime']['year'],
+      data['datetime']['month'],
+      data['datetime']['day'],
+      data['datetime']['hour'],
+      data['datetime']['minute'],
+      0
+    )
     self.trk = data['trk']
-    self.fuel = Fuel.objects.get(name=data['fuel_name'])
+    self.fuel = Fuel.objects.get(name=data['fuel']['name'])
     self.count = data['count']
     self.price = data['price']
     self.cost = data['cost']
@@ -95,17 +108,24 @@ class Refuel(models.Model):
   def to_json(self):
     correct_msk = self.datetime + datetime.timedelta(hours=3)
     return {
+      'object': 'Refuel',
       'id': self.id,
-      'fuel_station_company': self.fuel_station.company,
-      'fuel_station_number': self.fuel_station.number,
+      'fuel_station': {
+        'company': self.fuel_station.company,
+        'number': self.fuel_station.number,
+      },
       'check_number': self.check_number,
-      'year': correct_msk.year,
-      'month': correct_msk.month,
-      'day': correct_msk.day,
-      'hour': correct_msk.hour,
-      'minute': correct_msk.minute,
+      'datetime': {
+        'year': correct_msk.year,
+        'month': correct_msk.month,
+        'day': correct_msk.day,
+        'hour': correct_msk.hour,
+        'minute': correct_msk.minute,
+      },
       'trk': self.trk,
-      'fuel_name': self.fuel.name,
+      'fuel': {
+        'name': self.fuel.name,
+      },
       'count': self.count,
       'price': self.price,
       'cost': self.cost,
