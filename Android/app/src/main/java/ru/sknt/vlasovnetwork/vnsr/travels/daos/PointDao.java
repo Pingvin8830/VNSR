@@ -27,9 +27,9 @@ public interface PointDao {
     @Query(
             "SELECT * " +
                     "FROM travels_point " +
-                    "WHERE (departure_datetime>=:travelStartDateTime AND arrival_datetime<=:travelEndDateTime) " +
-                    "OR (departure_datetime>=:travelStartDateTime AND arrival_datetime IS NULL)" +
-                    "OR (departure_datetime IS NULL ANd arrival_datetime<=:travelEndDateTime)"
+                    "WHERE (departure_datetime BETWEEN :travelStartDateTime AND :travelEndDateTime) " +
+                    "OR (arrival_datetime BETWEEN :travelStartDateTime AND :travelEndDateTime)" +
+                    "ORDER BY odometer"
     )
     public List<Point> getTravelPoints(long travelStartDateTime, long travelEndDateTime);
 
