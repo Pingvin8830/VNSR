@@ -43,13 +43,13 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/txtTravelState"
+                android:id="@+id/txtState"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lbl_travel_state" />
 
             <Spinner
-                android:id="@+id/spnTravelState"
+                android:id="@+id/spnState"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -119,6 +119,41 @@
                 android:inputType="numberDecimal"
                 tools:ignore="LabelFor" />
 
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trStartDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/txtStartDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_start" />
+
+            <Button
+                android:id="@+id/bttnStartDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bttn_case_date_time" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/trEndDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/txtEndDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_end" />
+
+            <Button
+                android:id="@+id/bttnEndDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bttn_case_date_time" />
         </TableRow>
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
