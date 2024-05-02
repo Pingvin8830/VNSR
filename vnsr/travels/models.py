@@ -262,6 +262,26 @@ class TollRoad(models.Model):
   def __str__(self):
     return f'{self.start} - {self.end}'
 
+  def load(self, data):
+    self.travel = Travel.objects.get(name=data['travel']['name'])
+    self.name = data['name']
+    self.start = data['start']
+    self.end = data['end']
+    self.price = data['price']
+
+  def to_json(self):
+    return {
+      'object': 'TollRoad',
+      'id': self.id,
+      'travel': {
+        'name': self.travel.name,
+      },
+      'name': self.name,
+      'start': self.start,
+      'end': self.end,
+      'price': self.price,
+    }
+
 class Hotel(models.Model):
   class Meta:
     verbose_name = 'Гостиница'

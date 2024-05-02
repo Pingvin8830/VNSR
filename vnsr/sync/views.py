@@ -6,7 +6,7 @@ from django.http import JsonResponse, Http404
 from kladr.models import StreetType, CityType, Region, Street, City, Address
 from car.models import Fuel, FuelStation, Refuel
 #from travels.models import TravelState, Travel, Point, Way
-from travels.models import Travel, Point
+from travels.models import Travel, Point, TollRoad
 
 from .models import Object
 
@@ -123,6 +123,11 @@ def start(request):
             except KeyError: correct_departure_datetime = None
             find_object = Point.objects.get(arrival_datetime=correct_arrival_datetime, departure_datetime=correct_departure_datetime)
           except Point.DoesNotExist: point.save()
+        case 'TollRoad':
+          toll_road = TollRoad()
+          toll_road.load(target)
+          try: find_object = TollRoad.objects.get(travel__name=target['travel']['name'], start=target['start'], end=target['end'])
+          except TollRoad.DoesNotExist: toll_road.save()
 
   return JsonResponse({'state': 'started'})
 
@@ -134,7 +139,7 @@ def get(request):
   match request_data.get('data'):
     case 'Count':
       match request_data.get('object_name'):
-        case 'all': value = StreetType.objects.count() + CityType.objects.count() + Region.objects.count() + Street.objects.count() + City.objects.count() + Address.objects.count() + Fuel.objects.count() + FuelStation.objects.count() + Refuel.objects.count() + Travel.objects.count() + Point.objects.count()
+        case 'all': value = StreetType.objects.count() + CityType.objects.count() + Region.objects.count() + Street.objects.count() + City.objects.count() + Address.objects.count() + Fuel.objects.count() + FuelStation.objects.count() + Refuel.objects.count() + Travel.objects.count() + Point.objects.count() + TollRoad.objects.count()
         case 'StreetType':  value = StreetType.objects.count()
         case 'CityType':    value = CityType.objects.count()
         case 'Street':      value = Street.objects.count()
@@ -146,6 +151,7 @@ def get(request):
         case 'Refuel':      value = Refuel.objects.count()
         case 'Travel':      value = Travel.objects.count()
         case 'Point':       value = Point.objects.count()
+        case 'TollRoad':    value = TollRoad.objects.count()
     case 'all':
       match request_data.get('object_name'):
         case 'StreetType':
@@ -181,5 +187,9 @@ def get(request):
         case 'Point':
           value = []
           for point in Point.objects.all(): value.append(point.to_json())
+        case 'TollRoad':
+          value = []
+          for toll_road in TollRoad.objects.all(): value.append(toll_road.to_json())
+
   response_data = {'object_name': request_data['object_name'], 'data': request_data['data'], 'value': value}
   return JsonResponse(response_data)
