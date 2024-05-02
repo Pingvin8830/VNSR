@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity (
         tableName = "travels_tollroad"
 )
-public class ToolRoad {
+public class TollRoad {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int mId;
@@ -34,7 +34,7 @@ public class ToolRoad {
 
     public void setId(int id) { this.mId = id; }
 
-    public ToolRoad (int travelId, String name, String start, String end, float price) {
+    public TollRoad(int travelId, String name, String start, String end, float price) {
         this.mTravelId = travelId;
         this.mName = name;
         this.mStart = start;
