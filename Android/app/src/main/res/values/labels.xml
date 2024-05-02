@@ -68,6 +68,9 @@
     <string name="lbl_travel">Travel</string>
     <string name="lbl_unknown">Unknown</string>
     <string name="lbl_point">Point</string>
+    <string name="lbl_target_point">Target point</string>
+    <string name="lbl_way">Way</string>
+    <string name="lbl_end">End</string>
 
     <string name="lbl_new_city_type">Add a new city type</string>
     <string name="lbl_new_street_type">Add a new street type</string>
@@ -81,6 +84,7 @@
     <string name="lbl_new_travel_state">Add a new travel state</string>
     <string name="lbl_new_travel">Add a new travel</string>
     <string name="lbl_new_point">Add a new point</string>
+    <string name="lbl_new_way">Add a new way</string>
 
     <string name="lbl_show_city_type">Your city type</string>
     <string name="lbl_show_street_type">Your street type"</string>
@@ -94,4 +98,5 @@
     <string name="lbl_show_travel_state">Your travel state</string>
     <string name="lbl_show_travel">Your travel</string>
     <string name="lbl_show_point">Your point</string>
+    <string name="lbl_show_way">Your way</string>
 </resources>

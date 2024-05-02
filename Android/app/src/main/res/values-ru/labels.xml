@@ -77,7 +77,7 @@
     <string name="lbl_target">Цель</string>
     <string name="lbl_summary">Итого</string>
     <string name="lbl_tool_roads">Платные дороги</string>
-    <string name="lbl_start_point">Заезд</string>
+    <string name="lbl_start_point">Отправление</string>
     <string name="lbl_end_point">Выезд</string>
     <string name="lbl_hotels">Гостиницы</string>
     <string name="lbl_arrival">Заезд</string>
@@ -92,4 +92,9 @@
     <string name="lbl_show_point">Путевая точка</string>
     <string name="lbl_new_point">Добавление путевой точки</string>
     <string name="lbl_point">Путевая точка</string>
+    <string name="lbl_target_point">Цель</string>
+    <string name="lbl_show_way">Отрезок пути</string>
+    <string name="lbl_new_way">Добавление отрезка пути</string>
+    <string name="lbl_way">Отрезок пути</string>
+    <string name="lbl_end">Окончание</string>
 </resources>
