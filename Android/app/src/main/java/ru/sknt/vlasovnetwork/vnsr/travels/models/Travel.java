@@ -82,6 +82,11 @@ public class Travel {
     public FormatedDate getStartDateTime() { return this.mStartDateTime; }
     public FormatedDate getEndDateTime() { return this.mEndDateTime; }
     public List<Point> getPoints() { return MainActivity.PointDao.getTravelPoints(this.getStartDateTime().getTime(), this.getEndDateTime().getTime()); }
+    public float getDistance() {
+        List<Point> points = this.getPoints();
+        return points.get(points.size()-1).getOdometer() - points.get(0).getOdometer();
+    }
+    public float getFuelCount() { return this.getDistance() / 100f * this.getFuelConsumption(); }
 
     public Travel(String name, String participants, String state, float fuelConsumption, float fuelPrice, FormatedDate startDateTime, FormatedDate endDateTime) {
         this.mName = name;
