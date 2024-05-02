@@ -1,5 +1,6 @@
 package ru.sknt.vlasovnetwork.vnsr.travels.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +34,9 @@ public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.ListItemHo
     @Override
     public void onBindViewHolder(@NonNull PointsAdapter.ListItemHolder holder, int position) {
         Point point = mPoints.get(position);
-        if (point.getArrivalDateTime() != null) { holder.mTxtArrivalDateTime.setText("-> " + point.getArrivalDateTime().toString()); }
+        if (point.getArrivalDateTime().getTime() != 0) { holder.mTxtArrivalDateTime.setText("-> " + point.getArrivalDateTime().toString()); }
         else { holder.mTxtArrivalDateTime.setVisibility(View.INVISIBLE); }
-        if (point.getDepartureDateTime() != null) { holder.mTxtDepartureDateTime.setText(point.getDepartureDateTime().toString() + " ->"); }
+        if (point.getDepartureDateTime().getTime() != 0) { holder.mTxtDepartureDateTime.setText(point.getDepartureDateTime().toString() + " ->"); }
         else { holder.mTxtDepartureDateTime.setVisibility(View.INVISIBLE); }
         holder.mTxtAddress.setText(point.getAddress().getName());
         holder.mTxtDoing.setText(point.getDoingText());
