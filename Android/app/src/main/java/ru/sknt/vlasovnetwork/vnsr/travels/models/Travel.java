@@ -14,8 +14,6 @@ import java.util.List;
 
 import ru.sknt.vlasovnetwork.vnsr.FormatedDate;
 import ru.sknt.vlasovnetwork.vnsr.MainActivity;
-import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelStateDao;
-import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
 
 @Entity(
         tableName = "travels_travel",
@@ -27,6 +25,14 @@ import ru.sknt.vlasovnetwork.vnsr.travels.models.TravelState;
         }
 )
 public class Travel {
+    @Ignore
+    public static final String[][] STATES = {
+            {"U", "Неизвестно"},
+            {"P", "Планирование"},
+            {"R", "Выполнение"},
+            {"S", "Завершена"},
+            {"C", "Отменена"}
+    };
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int mId;
@@ -34,12 +40,16 @@ public class Travel {
     private final String mName;
     @ColumnInfo(name = "participants")
     private final String mParticipants;
-    @ColumnInfo(name = "state_id")
-    private TravelState mTravelState;
+    @ColumnInfo(name = "state")
+    private String mState;
     @ColumnInfo(name = "fuel_consumption")
     private float mFuelConsumption = 10f;
     @ColumnInfo(name = "fuel_price")
     private float mFuelPrice;
+    @ColumnInfo(name = "start_datetime")
+    private FormatedDate mStartDateTime;
+    @ColumnInfo(name="end_datetime")
+    private FormatedDate mEndDateTime;
 
     public int getId() {
         return this.mId;
@@ -54,45 +64,45 @@ public class Travel {
     public String getParticipants() {
         return this.mParticipants;
     };
-    public TravelState getState() {
-        return this.mTravelState;
+    public String getState() {
+        return this.mState;
     };
-    public TravelState getTravelState() {
-        return this.mTravelState;
-    };
+    public String getStateText() {
+        for (String[] stateList : Travel.STATES) {
+            if (this.mState.equals(stateList[0])) { return stateList[1]; }
+        }
+        return "";
+    }
     public float getFuelConsumption() {
         return this.mFuelConsumption;
     }
     public float getFuelPrice() {
        return this.mFuelPrice;
     };
-    public FormatedDate getStartDateTime() {
-        FormatedDate res;
-        try { res = MainActivity.PointDao.filter(this.mId).get(0).getDateTime(); }
-        catch (IndexOutOfBoundsException e) { res = null; }
-        return res;
-    }
-    public FormatedDate getEndDateTime() {
-        FormatedDate res;
-        List<Point> points = MainActivity.PointDao.filter(this.mId);
-        if (points.size() < 2) { res = null; }
-        else { res = points.get(points.size()-1).getDateTime(); }
-        return res;
-    }
+    public FormatedDate getStartDateTime() { return this.mStartDateTime; }
+    public FormatedDate getEndDateTime() { return this.mEndDateTime; }
+    public List<Point> getPoints() { return MainActivity.PointDao.getTravelPoints(this.getStartDateTime().getTime(), this.getEndDateTime().getTime()); }
 
-    public Travel(String name, String participants, TravelState travelState, float fuelConsumption, float fuelPrice) {
+    public Travel(String name, String participants, String state, float fuelConsumption, float fuelPrice, FormatedDate startDateTime, FormatedDate endDateTime) {
         this.mName = name;
         this.mParticipants = participants;
-        this.mTravelState = travelState;
+        this.mState = state;
         this.mFuelConsumption = fuelConsumption;
         this.mFuelPrice = fuelPrice;
+        this.mStartDateTime = startDateTime;
+        this.mEndDateTime = endDateTime;
     }
     public Travel(JSONObject data) throws JSONException {
+        JSONObject startDateTimeJson = new JSONObject(data.getString("start_datetime"));
+        JSONObject endDateTimeJson = new JSONObject(data.getString("end_datetime"));
+
         this.mName = data.getString("name");
         this.mParticipants = data.getString("participants");
-        this.mTravelState = MainActivity.TravelStateDao.find(data.getString("travel_state_name"));
+        this.mState = data.getString("travel_state_code");
         this.mFuelConsumption = Float.parseFloat(data.getString("fuel_consumption"));
         this.mFuelPrice = Float.parseFloat(data.getString("fuel_price"));
+        this.mStartDateTime = new FormatedDate(startDateTimeJson);
+        this.mEndDateTime = new FormatedDate(endDateTimeJson);
     }
 
     @NonNull
@@ -100,14 +110,30 @@ public class Travel {
     public String toString() { return this.mName; }
     public JSONObject toJson() throws JSONException {
         JSONObject res = new JSONObject();
+        JSONObject startDateTimeJson = new JSONObject();
+        JSONObject endDateTimeJson = new JSONObject();
+        startDateTimeJson
+                .put("year", this.getStartDateTime().getYear())
+                .put("month", this.getStartDateTime().getMonth()+1)
+                .put("day", this.getStartDateTime().getDate())
+                .put("hour", this.getStartDateTime().getHours())
+                .put("minute", this.getStartDateTime().getMinutes());
+        endDateTimeJson
+                .put("year", this.getEndDateTime().getYear())
+                .put("month", this.getEndDateTime().getMonth()+1)
+                .put("day", this.getEndDateTime().getDate())
+                .put("hour", this.getEndDateTime().getHours())
+                .put("minute", this.getEndDateTime().getMinutes());
         res
                 .put("object", "Travel")
-                .put("id", this.getId())
-                .put("name", this.getName())
-                .put("participants", this.getParticipants())
-                .put("travel_state_name", this.getTravelState().getName())
-                .put("fuel_consumption", this.getFuelConsumption())
-                .put("fuel_price", this.getFuelPrice());
+                .put("id",                this.getId())
+                .put("name",              this.getName())
+                .put("participants",      this.getParticipants())
+                .put("travel_state_code", this.getState())
+                .put("fuel_consumption",  this.getFuelConsumption())
+                .put("fuel_price",        this.getFuelPrice())
+                .put("start_datetime",    startDateTimeJson)
+                .put("end_datetime",      endDateTimeJson);
         return res;
     }
 }
