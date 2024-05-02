@@ -19,42 +19,6 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:id="@+id/txtTravelLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lbl_travel" />
-
-            <TextView
-                android:id="@+id/txtTravel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LAYOUT Travel" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/trDateTime"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:id="@+id/txtDateTimeLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lbl_date_time" />
-
-            <TextView
-                android:id="@+id/txtDateTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LAYOUT Date and time" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/trAddress"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
                 android:id="@+id/txtAddressLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,7 +28,43 @@
                 android:id="@+id/txtAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LAYOUT Address name" />
+                android:text="LAYOUT Address" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trArrivalDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/txtArrivalDateTimeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_arrival" />
+
+            <TextView
+                android:id="@+id/txtArrivalDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LAYOUT Date and time" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trDepartureDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/txtDepartureDateTimeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_departure" />
+
+            <TextView
+                android:id="@+id/txtDepartureDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LAYOUT Date and time" />
         </TableRow>
 
         <TableRow
