@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:id="@+id/tblWay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:id="@+id/trTravel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/txtTravelLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_travel" />
+
+            <TextView
+                android:id="@+id/txtTravel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LAYOUT Travel" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trStartPoint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/txtStartPointLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_start_point" />
+
+            <TextView
+                android:id="@+id/txtStartPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LAYOUT Start point" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trTargetPoint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/txtTargetPointLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_target_point" />
+
+            <TextView
+                android:id="@+id/txtTargetPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LAYOUT Target point" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trDistance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/txtDistanceLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_distance" />
+
+            <TextView
+                android:id="@+id/txtDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LAYOUT Distance" />
+        </TableRow>
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

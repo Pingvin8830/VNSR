@@ -30,7 +30,9 @@
                 android:id="@+id/edtxtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="text"
+                android:autofillHints=""
+                tools:ignore="LabelFor" />
         </TableRow>
 
         <TableRow
@@ -104,7 +106,9 @@
                 android:id="@+id/edtxtCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:autofillHints=""
+                tools:ignore="LabelFor" />
 
         </TableRow>
 

@@ -2,7 +2,6 @@ package ru.sknt.vlasovnetwork.vnsr.travels.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 

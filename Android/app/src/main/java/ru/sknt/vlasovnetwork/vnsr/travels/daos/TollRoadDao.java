@@ -21,8 +21,7 @@ public interface TollRoadDao {
 
     @Query("SELECT * FROM travels_tollroad WHERE id=:id")
     TollRoad find(int id);
-    @Query("" +
-            "SELECT r.* " +
+    @Query("SELECT r.* " +
             "FROM travels_tollroad r " +
             "JOIN travels_travel t ON r.travel_id=t.id " +
             "WHERE t.name=:travel_name " +

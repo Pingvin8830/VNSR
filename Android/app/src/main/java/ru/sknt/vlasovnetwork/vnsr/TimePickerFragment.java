@@ -19,12 +19,8 @@ import ru.sknt.vlasovnetwork.vnsr.travels.fragments.NewTravelDialog;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
     private final String TAG;
-    private FormatedDate mRes;
+    private final FormatedDate mRes;
 
-    public TimePickerFragment (String tag) {
-        super();
-        TAG = tag;
-    }
     public TimePickerFragment(String tag, FormatedDate res) {
         super();
         TAG = tag;

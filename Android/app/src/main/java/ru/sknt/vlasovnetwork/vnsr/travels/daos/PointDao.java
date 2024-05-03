@@ -31,7 +31,7 @@ public interface PointDao {
                     "OR (arrival_datetime BETWEEN :travelStartDateTime AND :travelEndDateTime)" +
                     "ORDER BY odometer"
     )
-    public List<Point> getTravelPoints(long travelStartDateTime, long travelEndDateTime);
+    List<Point> getTravelPoints(long travelStartDateTime, long travelEndDateTime);
 
     @Delete
     void delete(Point point);

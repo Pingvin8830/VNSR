@@ -27,14 +27,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ул" />
+                android:text="LAYOUT Short" />
 
             <TextView
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="улица" />
+                android:text="LAYOUT Name" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

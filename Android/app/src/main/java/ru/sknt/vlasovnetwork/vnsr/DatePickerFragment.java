@@ -11,9 +11,6 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.Calendar;
 
-import ru.sknt.vlasovnetwork.vnsr.car.fragments.NewRefuelDialog;
-import ru.sknt.vlasovnetwork.vnsr.travels.fragments.NewPointDialog;
-
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     private final String TAG;
     public DatePickerFragment(String tag) {

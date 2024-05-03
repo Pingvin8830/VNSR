@@ -1,19 +1,15 @@
 package ru.sknt.vlasovnetwork.vnsr.travels.fragments;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.List;
 
-import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.ShowObjectDialog;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Hotel;
@@ -23,7 +19,7 @@ import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
 
 public class ShowTravelDialog extends ShowObjectDialog {
     private final Travel mTravel;
-    private List<Point> mPoints;
+    private final List<Point> mPoints;
     private TextView mTxtTravelName, mTxtTravelState, mTxtBeginning, mTxtFinishing, mTxtParticipants, mTxtTravelCost, mTxtFuelConsumption, mTxtFuelPrice;
     private TextView mTxtWayDistanceSum, mTxtWayFuelSum, mTxtWayFuelCostSum;
     private TextView mTxtTollRoadsCostSum;

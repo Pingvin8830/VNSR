@@ -7,7 +7,7 @@
     android:id="@+id/container">
 
     <TableLayout
-        android:id="@+id/tblTollRoad"
+        android:id="@+id/tblWay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,86 +34,59 @@
         </TableRow>
 
         <TableRow
-            android:id="@+id/trName"
+            android:id="@+id/trStartPoint"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/txtName"
+                android:id="@+id/txtStartPoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lbl_name" />
+                android:text="@string/lbl_start_point" />
 
-            <EditText
-                android:id="@+id/edtxtName"
+            <Spinner
+                android:id="@+id/spnStartPoint"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:autofillHints=""
-                tools:ignore="LabelFor" />
+                android:layout_height="wrap_content" />
 
         </TableRow>
 
         <TableRow
-            android:id="@+id/trStart"
+            android:id="@+id/trTargetPoint"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/txtStart"
+                android:id="@+id/txtTargetPoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lbl_start" />
+                android:text="@string/lbl_target_point" />
 
-            <EditText
-                android:id="@+id/edtxtStart"
+            <Spinner
+                android:id="@+id/spnTargetPoint"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:autofillHints=""
-                tools:ignore="LabelFor" />
+                android:layout_height="wrap_content" />
 
         </TableRow>
 
         <TableRow
-            android:id="@+id/trEnd"
+            android:id="@+id/trDistance"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/txtEnd"
+                android:id="@+id/txtDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lbl_end" />
+                android:text="@string/lbl_distance" />
 
             <EditText
-                android:id="@+id/edtxtEnd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:autofillHints=""
-                tools:ignore="LabelFor" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/trPrice"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/txtPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lbl_price" />
-
-            <EditText
-                android:id="@+id/edtxtPrice"
+                android:id="@+id/edtxtDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:ems="10"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 tools:ignore="LabelFor" />
 
         </TableRow>

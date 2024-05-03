@@ -26,7 +26,8 @@
         <TableRow
             android:id="@+id/trServerUrl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
 
             <TextView
                 android:id="@+id/txtServerUrl"
@@ -39,8 +40,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text"
-                android:text="LAYOUT Server url" />
+                android:inputType="textUri"
+                android:text="LAYOUT Server url"
+                android:autofillHints=""
+                tools:ignore="LabelFor" />
 
         </TableRow>
     </TableLayout>

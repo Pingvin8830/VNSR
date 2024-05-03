@@ -43,7 +43,7 @@ public class Travel {
     @ColumnInfo(name = "state")
     private String mState;
     @ColumnInfo(name = "fuel_consumption")
-    private float mFuelConsumption = 10f;
+    private float mFuelConsumption;
     @ColumnInfo(name = "fuel_price")
     private float mFuelPrice;
     @ColumnInfo(name = "start_datetime")
@@ -60,13 +60,13 @@ public class Travel {
 
     public String getName() {
         return this.mName;
-    };
+    }
     public String getParticipants() {
         return this.mParticipants;
-    };
+    }
     public String getState() {
         return this.mState;
-    };
+    }
     public String getStateText() {
         for (String[] stateList : Travel.STATES) {
             if (this.mState.equals(stateList[0])) { return stateList[1]; }
@@ -78,7 +78,7 @@ public class Travel {
     }
     public float getFuelPrice() {
        return this.mFuelPrice;
-    };
+    }
     public FormatedDate getStartDateTime() { return this.mStartDateTime; }
     public FormatedDate getEndDateTime() { return this.mEndDateTime; }
     public List<Point> getPoints() { return MainActivity.PointDao.getTravelPoints(this.getStartDateTime().getTime(), this.getEndDateTime().getTime()); }

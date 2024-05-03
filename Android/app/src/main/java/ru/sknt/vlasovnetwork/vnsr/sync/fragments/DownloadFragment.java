@@ -291,6 +291,7 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
 
             List<Integer> ids = distinctObjects.get(task.getObjectName());
             try {
+                assert ids != null;
                 if (!ids.contains(objectId)) { ids.add(objectId); } }
             catch (NullPointerException e) {
                 ids = new ArrayList<>();

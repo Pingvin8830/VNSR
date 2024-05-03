@@ -10,12 +10,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\vlaso\.android\avd\Samsung_Galaxy_A51_Emulator_API_33.avd" />
+                  <value value="C:\Users\vlaso\.android\avd\Automotive_1080p_landscape_API_33.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-27T19:23:02.377307100Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-05-03T12:59:26.684299600Z" />
         </State>
       </entry>
     </value>

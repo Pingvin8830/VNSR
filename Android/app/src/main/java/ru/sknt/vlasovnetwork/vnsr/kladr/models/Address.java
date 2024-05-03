@@ -1,7 +1,5 @@
 package ru.sknt.vlasovnetwork.vnsr.kladr.models;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -81,7 +79,7 @@ public class Address {
         );
         this.mHouse = data.getString("house");
         this.mBuilding = data.getString("building");
-        if (this.mBuilding.equals("null")) { this.mBuilding = ""; };
+        if (this.mBuilding.equals("null")) { this.mBuilding = ""; }
         try { this.mFlat = Integer.parseInt(data.getString("flat")); }
         catch (NumberFormatException e) { this.mFlat = 0; }
     }

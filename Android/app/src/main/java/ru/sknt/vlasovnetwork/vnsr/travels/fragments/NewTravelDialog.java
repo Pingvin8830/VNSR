@@ -1,6 +1,5 @@
 package ru.sknt.vlasovnetwork.vnsr.travels.fragments;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -39,7 +38,7 @@ public class NewTravelDialog extends NewObjectDialog {
         mStates = new ArrayList<>();
         mStateCodes = new ArrayList<>();
         for (String[] stateList : Travel.STATES) {
-            if (stateList[0] == "U") { continue; }
+            if (stateList[0].equals("U")) { continue; }
             mStateCodes.add(stateList[0]);
             mStates.add(stateList[1]);
         }
@@ -87,7 +86,7 @@ public class NewTravelDialog extends NewObjectDialog {
     protected String getErrorText() {
         String error = "";
         if (mName.isEmpty()) { error = getResources().getString(R.string.err_bad_name); }
-        else if (mState == "U") { error = getResources().getString(R.string.err_bad_state); }
+        else if (mState.equals("U")) { error = getResources().getString(R.string.err_bad_state); }
         else if (mParticipants.isEmpty()) { error = getResources().getString(R.string.err_bad_participants); }
         else if (mFuelConsumption < 0.1) { error = getResources().getString(R.string.err_bad_fuel_consumption); }
         else if (mFuelPrice < 0.01) { error = getResources().getString(R.string.err_bad_fuel_price); }
