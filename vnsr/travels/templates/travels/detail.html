@@ -127,7 +127,7 @@
       <th>Стоимость</th>
       <th>Статус</th>
     </tr>
-    {% for hotel in travel.hotels.all %}
+    {% for hotel in travel.get_hotels %}
       <tr>
         <td class="text bl">{{ hotel.address.name }}</td>
         <td class="text bl">{{ hotel.address.city }}</td>

@@ -53,6 +53,9 @@ class Travel(models.Model):
       )
     return res
 
+  def get_hotels(self):
+    return Hotel.objects.filter(arrival__range=(self.start_datetime, self.end_datetime)) | Hotel.objects.filter(departure__range=(self.start_datetime, self.end_datetime))
+
   def get_distance(self):
     points = self.get_points()
     return points[points.count()-1].odometer - points[0].odometer
@@ -71,7 +74,7 @@ class Travel(models.Model):
 
   def get_hotel_cost(self):
     cost = 0
-    for hotel in self.hotels.all():
+    for hotel in self.get_hotels():
       cost += hotel.cost
     return cost
 
@@ -286,8 +289,9 @@ class Hotel(models.Model):
   class Meta:
     verbose_name = 'Гостиница'
     verbose_name_plural = 'Гостиницы'
+    unique_together = ['arrival', 'departure']
 
-  travel    = models.ForeignKey(Travel, on_delete=models.PROTECT, related_name='hotels', verbose_name='Путешествие')
+  name      = models.CharField(max_length=50, verbose_name='Название')
   address   = models.ForeignKey(Address, on_delete=models.PROTECT, verbose_name='Адрес')
   arrival   = models.DateTimeField(verbose_name='Заезд')
   departure = models.DateTimeField(verbose_name='Отъезд')
@@ -296,4 +300,54 @@ class Hotel(models.Model):
 
   def __str__(self):
     return f'{self.address.city} - {self.address.name}'
+
+  def load(self, data):
+    self.name = data['name']
+    self.address = Address.objects.get(name=data['address']['name'])
+    self.arrival = datetime.datetime(
+      data['arrival']['year'],
+      data['arrival']['month'],
+      data['arrival']['day'],
+      data['arrival']['hour'],
+      data['arrival']['minute'],
+      0
+    )
+    self.departure = datetime.datetime(
+      data['departure']['year'],
+      data['departure']['month'],
+      data['departure']['day'],
+      data['departure']['hour'],
+      data['departure']['minute'],
+      0
+    )
+    self.cost = data['cost']
+    self.state = data['state']
+
+  def to_json(self):
+    correct_arrival_msk = self.arrival + datetime.timedelta(hours=3)
+    correct_departure_msk = self.departure + datetime.timedelta(hours=3)
+    return {
+      'object': 'Hotel',
+      'id': self.id,
+      'name': self.name,
+      'address': {
+        'name': self.address.name,
+      },
+      'arrival': {
+        'year': correct_arrival_msk.year,
+        'month': correct_arrival_msk.month,
+        'day': correct_arrival_msk.day,
+        'hour': correct_arrival_msk.hour,
+        'minute': correct_arrival_msk.minute
+      },
+      'departure': {
+        'year': correct_departure_msk.year,
+        'month': correct_departure_msk.month,
+        'day': correct_departure_msk.day,
+        'hour': correct_departure_msk.hour,
+        'minute': correct_departure_msk.minute
+      },
+      'cost': self.cost,
+      'state': self.state
+    }
 

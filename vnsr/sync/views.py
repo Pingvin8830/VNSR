@@ -6,7 +6,7 @@ from django.http import JsonResponse, Http404
 from kladr.models import StreetType, CityType, Region, Street, City, Address
 from car.models import Fuel, FuelStation, Refuel
 #from travels.models import TravelState, Travel, Point, Way
-from travels.models import Travel, Point, TollRoad
+from travels.models import Travel, Point, TollRoad, Hotel
 
 from .models import Object
 
@@ -128,7 +128,14 @@ def start(request):
           toll_road.load(target)
           try: find_object = TollRoad.objects.get(travel__name=target['travel']['name'], start=target['start'], end=target['end'])
           except TollRoad.DoesNotExist: toll_road.save()
-
+        case 'Hotel':
+          hotel = Hotel()
+          hotel.load(target)
+          correct_arrival = f"{target['arrival']['year']}-{target['arrival']['month']}-{target['arrival']['day']} {target['arrival']['hour']}:{target['arrival']['minute']}:00"
+          correct_departure = f"{target['departure']['year']}-{target['departure']['month']}-{target['departure']['day']} {target['departure']['hour']}:{target['departure']['minute']}:00"
+          try: find_object = Hotel.objects.get(arrival=correct_arrival, departure=correct_departure)
+          except Hotel.DoesNotExist: hotel.save()
+          
   return JsonResponse({'state': 'started'})
 
 @csrf_exempt
@@ -139,7 +146,7 @@ def get(request):
   match request_data.get('data'):
     case 'Count':
       match request_data.get('object_name'):
-        case 'all': value = StreetType.objects.count() + CityType.objects.count() + Region.objects.count() + Street.objects.count() + City.objects.count() + Address.objects.count() + Fuel.objects.count() + FuelStation.objects.count() + Refuel.objects.count() + Travel.objects.count() + Point.objects.count() + TollRoad.objects.count()
+        case 'all': value = StreetType.objects.count() + CityType.objects.count() + Region.objects.count() + Street.objects.count() + City.objects.count() + Address.objects.count() + Fuel.objects.count() + FuelStation.objects.count() + Refuel.objects.count() + Travel.objects.count() + Point.objects.count() + TollRoad.objects.count() + Hotel.objects.count()
         case 'StreetType':  value = StreetType.objects.count()
         case 'CityType':    value = CityType.objects.count()
         case 'Street':      value = Street.objects.count()
@@ -152,6 +159,7 @@ def get(request):
         case 'Travel':      value = Travel.objects.count()
         case 'Point':       value = Point.objects.count()
         case 'TollRoad':    value = TollRoad.objects.count()
+        case 'Hotel':       value = Hotel.objects.count()
     case 'all':
       match request_data.get('object_name'):
         case 'StreetType':
@@ -190,6 +198,9 @@ def get(request):
         case 'TollRoad':
           value = []
           for toll_road in TollRoad.objects.all(): value.append(toll_road.to_json())
+        case 'Hotel':
+          value = []
+          for hotel in Hotel.objects.all(): value.append(hotel.to_json())
 
   response_data = {'object_name': request_data['object_name'], 'data': request_data['data'], 'value': value}
   return JsonResponse(response_data)
