@@ -12,7 +12,8 @@
           <td>
             <a href='{% url 'travels:detail' travel.id %}'>{{ travel.name }}</a>
           </td>
-          <td>{{ travel.get_datetime_start }} - {{ travel.get_datetime_end }}</td>
+          <!--td>{{ travel.get_datetime_start }} - {{ travel.get_datetime_end }}</td-->
+          <td>{{ travel.start_datetime }} - {{ travel.end_datetime }}</td>
         </tr>
       {% endfor %}
     </table>
