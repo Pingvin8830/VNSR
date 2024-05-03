@@ -16,6 +16,7 @@ import java.util.List;
 import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.ShowObjectDialog;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Hotel;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.TollRoad;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
@@ -28,7 +29,7 @@ public class ShowTravelDialog extends ShowObjectDialog {
     private TextView mTxtTollRoadsCostSum;
     private TextView mTxtHotelsCostSum;
     private TableLayout mTblPoints, mTblWays, mTblTollRoads, mTblHotels;
-    private TableRow mTrPointsHeader, mTrPointsSum, mTrWaysHeader, mTrWaysSum, mTrTollRoadsHeader, mTrTollRoadsSum, mTrHotelsHeader, mTrHotelsSum;
+    private TableRow mTrPointsSum, mTrWaysSum, mTrTollRoadsSum, mTrHotelsSum;
     private final TableRow.LayoutParams mFirstLayoutParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     private final TableRow.LayoutParams mSecondLayoutParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     int mMargin;
@@ -48,28 +49,24 @@ public class ShowTravelDialog extends ShowObjectDialog {
         mTxtBeginning = mDialogView.findViewById(R.id.txtBeginning);
         mTxtFinishing = mDialogView.findViewById(R.id.txtFinishing);
         mTxtParticipants = mDialogView.findViewById(R.id.txtParticipants);
-//        mTxtTravelCost = mDialogView.findViewById(R.id.txtTravelCost);
+        mTxtTravelCost = mDialogView.findViewById(R.id.txtTravelCost);
         mTxtFuelConsumption = mDialogView.findViewById(R.id.txtFuelConsumption);
         mTxtFuelPrice = mDialogView.findViewById(R.id.txtFuelPrice);
         mTxtWayDistanceSum = mDialogView.findViewById(R.id.txtWayDistanceSum);
         mTxtWayFuelSum = mDialogView.findViewById(R.id.txtWayFuelSum);
         mTxtWayFuelCostSum = mDialogView.findViewById(R.id.txtWayFuelCostSum);
         mTxtTollRoadsCostSum = mDialogView.findViewById(R.id.txtTollRoadCostSum);
-//        mTxtHotelsCostSum = mDialogView.findViewById(R.id.txtHotelCostSum);
+        mTxtHotelsCostSum = mDialogView.findViewById(R.id.txtHotelCostSum);
 
         mTblPoints = mDialogView.findViewById(R.id.tblPoints);
         mTblWays = mDialogView.findViewById(R.id.tblWays);
         mTblTollRoads = mDialogView.findViewById(R.id.tblTollRoads);
-//        mTblHotels = mDialogView.findViewById(R.id.tblHotels);
+        mTblHotels = mDialogView.findViewById(R.id.tblHotels);
 
-//        mTrPointsHeader = mDialogView.findViewById(R.id.trPointsHeader);
         mTrPointsSum = mDialogView.findViewById(R.id.trPointsSum);
-//        mTrWaysHeader = mDialogView.findViewById(R.id.trWaysHeader);
         mTrWaysSum = mDialogView.findViewById(R.id.trWaysSum);
-//        mTrTollRoadsHeader = mDialogView.findViewById(R.id.trTollRoadsHeader);
         mTrTollRoadsSum = mDialogView.findViewById(R.id.trTollRoadSum);
-//        mTrHotelsHeader = mDialogView.findViewById(R.id.trHotelsHeader);
-//        mTrHotelsSum = mDialogView.findViewById(R.id.trHotelSum);
+        mTrHotelsSum = mDialogView.findViewById(R.id.trHotelSum);
 
         TextView txtControl = mDialogView.findViewById(R.id.txtPointCityLabel);
         ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) txtControl.getLayoutParams();
@@ -87,18 +84,19 @@ public class ShowTravelDialog extends ShowObjectDialog {
         try { mTxtFinishing.setText(mTravel.getEndDateTime().toString()); }
         catch (NullPointerException e) { mTxtFinishing.setText(R.string.lbl_unknown); }
         mTxtParticipants.setText(mTravel.getParticipants());
-//        mTxtTravelCost = mDialogView.findViewById(R.id.txtTravelCost);
+        mTxtTravelCost.setText(String.valueOf(mTravel.getCost()));
         mTxtFuelConsumption.setText(String.valueOf(mTravel.getFuelConsumption()));
         mTxtFuelPrice.setText(String.valueOf(mTravel.getFuelPrice()));
         mTxtWayDistanceSum.setText(String.valueOf(mTravel.getDistance()));
         mTxtWayFuelSum.setText(String.valueOf(mTravel.getFuelCount()));
-        mTxtWayFuelCostSum.setText(String.valueOf(mTravel.getFuelCount() * mTravel.getFuelPrice()));
+        mTxtWayFuelCostSum.setText(String.valueOf(mTravel.getFuelCost()));
         mTxtTollRoadsCostSum.setText(String.valueOf(mTravel.getTollRoadsCost()));
-//        mTxtHotelsCostSum = mDialogView.findViewById(R.id.txtHotelCostSum);
+        mTxtHotelsCostSum.setText(String.valueOf(mTravel.getHotelsCost()));
 
         createPointsTable();
         createWaysTable();
         createTollRoadsTable();
+        createHotelsTable();
     }
 
     @Override
@@ -250,5 +248,47 @@ public class ShowTravelDialog extends ShowObjectDialog {
             mTblTollRoads.addView(tableRow);
         }
         mTblTollRoads.addView(mTrTollRoadsSum);
+    }
+    private void createHotelsTable() {
+        mTblHotels.removeView(mTrHotelsSum);
+
+        for (Hotel hotel : mTravel.getHotels()) {
+            TableRow tableRow = new TableRow(requireContext());
+
+            TextView txtName = new TextView(requireContext());
+            TextView txtCity = new TextView(requireContext());
+            TextView txtCost = new TextView(requireContext());
+            TextView txtState = new TextView(requireContext());
+
+            txtName.setText(hotel.getName());
+            txtCity.setText(hotel.getAddress().getCity().toString());
+            txtCost.setText(String.valueOf(hotel.getCost()));
+            txtState.setText(hotel.getState());
+
+            txtName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+            txtCity.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+            txtCost.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+            txtState.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+
+            txtCost.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+
+            txtName.setBackgroundColor(Color.WHITE);
+            txtCity.setBackgroundColor(Color.WHITE);
+            txtCost.setBackgroundColor(Color.WHITE);
+            txtState.setBackgroundColor(Color.WHITE);
+
+            txtName.setLayoutParams(mFirstLayoutParams);
+            txtCity.setLayoutParams(mSecondLayoutParams);
+            txtCost.setLayoutParams(mSecondLayoutParams);
+            txtState.setLayoutParams(mSecondLayoutParams);
+
+            tableRow.addView(txtName);
+            tableRow.addView(txtCity);
+            tableRow.addView(txtCost);
+            tableRow.addView(txtState);
+
+            mTblHotels.addView(tableRow);
+        }
+        mTblHotels.addView(mTrHotelsSum);
     }
 }

@@ -87,11 +87,21 @@ public class Travel {
         return points.get(points.size()-1).getOdometer() - points.get(0).getOdometer();
     }
     public float getFuelCount() { return this.getDistance() / 100f * this.getFuelConsumption(); }
+    public float getFuelCost() { return this.getFuelCount() * this.getFuelPrice(); }
     public List<TollRoad> getTollRoads() { return MainActivity.TollRoadDao.filter(this.getId()); }
+    public List<Hotel> getHotels() { return MainActivity.HotelDao.filter(this.getStartDateTime().getTime(), this.getEndDateTime().getTime()); }
     public float getTollRoadsCost() {
         float res = 0f;
         for (TollRoad tollRoad : this.getTollRoads()) { res += tollRoad.getPrice(); }
         return res;
+    }
+    public float getHotelsCost() {
+        float res = 0;
+        for (Hotel hotel : this.getHotels()) { res += hotel.getCost(); }
+        return res;
+    }
+    public float getCost() {
+        return this.getFuelCost() + this.getTollRoadsCost() + this.getHotelsCost();
     }
 
     public Travel(String name, String participants, String state, float fuelConsumption, float fuelPrice, FormatedDate startDateTime, FormatedDate endDateTime) {

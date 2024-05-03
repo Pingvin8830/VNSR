@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import java.util.Calendar;
 
 import ru.sknt.vlasovnetwork.vnsr.car.fragments.NewRefuelDialog;
+import ru.sknt.vlasovnetwork.vnsr.travels.fragments.NewHotelDialog;
 import ru.sknt.vlasovnetwork.vnsr.travels.fragments.NewPointDialog;
 import ru.sknt.vlasovnetwork.vnsr.travels.fragments.NewTravelDialog;
 
@@ -73,6 +74,16 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
                 NewTravelDialog travelDialog1 = (NewTravelDialog) fragmentManager.findFragmentByTag("new_travel");
                 assert travelDialog1 != null;
                 travelDialog1.setEndDateTime(mRes);
+                break;
+            case "new_hotel_arrival":
+                NewHotelDialog hotelDialog = (NewHotelDialog) fragmentManager.findFragmentByTag("new_hotel");
+                assert hotelDialog != null;
+                hotelDialog.setArrivalDateTime(mRes);
+                break;
+            case "new_hotel_departure":
+                NewHotelDialog hotelDialog1 = (NewHotelDialog) fragmentManager.findFragmentByTag("new_hotel");
+                assert hotelDialog1 != null;
+                hotelDialog1.setDepartureDateTime(mRes);
                 break;
         }
     }

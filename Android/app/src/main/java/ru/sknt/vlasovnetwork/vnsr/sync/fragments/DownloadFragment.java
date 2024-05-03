@@ -41,6 +41,7 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
 import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Hotel;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.TollRoad;
 import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
@@ -51,7 +52,7 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
     private TextView mTxtError;
     protected Map<String, Map<String, TextView>> mViews;
     protected Map<String, Map<String, Integer>> mValues;
-    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "Travel", "Point", "TollRoad"};
+    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "Travel", "Point", "TollRoad", "Hotel"};
     private final String[] mSyncValues = {"Count", "Success", "Fail"};
     public int requestsCount = 0;
     protected int mSyncCount = -1;
@@ -120,6 +121,9 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                     break;
                 case "TollRoad":
                     tmpViews = createMapViews(mainView, R.id.txtTollRoadsCount, R.id.txtTollRoadsSuccess, R.id.txtTollRoadsFail);
+                    break;
+                case "Hotel":
+                    tmpViews = createMapViews(mainView, R.id.txtHotelsCount, R.id.txtHotelsSuccess, R.id.txtHotelsFail);
                     break;
             }
             for (String syncValue : mSyncValues) {
@@ -385,6 +389,18 @@ public class DownloadFragment extends Fragment implements View.OnClickListener, 
                         JSONObject findTravelJson = new JSONObject(target.getString("travel"));
                         TollRoad findTollRoad = MainActivity.TollRoadDao.find(findTravelJson.getString("name"), target.getString("start"), target.getString("end"));
                         if (findTollRoad == null) { MainActivity.TollRoadDao.create(tollRoad); }
+                        break;
+                    case "Hotel":
+                        Hotel hotel = new Hotel(target);
+
+                        JSONObject findArrivalJson = new JSONObject(target.getString("arrival"));
+                        JSONObject findDepartureJson = new JSONObject(target.getString("departure"));
+
+                        FormatedDate findArrival = new FormatedDate(findArrivalJson);
+                        FormatedDate findDeparture = new FormatedDate(findDepartureJson);
+
+                        Hotel findHotel = MainActivity.HotelDao.find(findArrival.getTime(), findDeparture.getTime());
+                        if (findHotel == null) { MainActivity.HotelDao.create(hotel); }
                         break;
                 }
             }

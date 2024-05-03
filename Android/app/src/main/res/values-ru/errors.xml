@@ -40,4 +40,5 @@
     <string name="err_not_found_toll_roads">Платные дороги не найдены</string>
     <string name="err_bad_start">Неверное начало</string>
     <string name="err_bad_end">Неверное окончание</string>
+    <string name="err_not_found_hotels">Отели не найдены</string>
 </resources>

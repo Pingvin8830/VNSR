@@ -22,6 +22,8 @@ import ru.sknt.vlasovnetwork.vnsr.migrations.Migration_2_3;
 import ru.sknt.vlasovnetwork.vnsr.migrations.Migration_3_4;
 import ru.sknt.vlasovnetwork.vnsr.migrations.Migration_4_5;
 import ru.sknt.vlasovnetwork.vnsr.migrations.Migration_5_6;
+import ru.sknt.vlasovnetwork.vnsr.migrations.Migration_6_7;
+import ru.sknt.vlasovnetwork.vnsr.travels.daos.HotelDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.daos.PointDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.daos.TollRoadDao;
 import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelDao;
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static PointDao PointDao;
     public static WayDao WayDao;
     public static TollRoadDao TollRoadDao;
+    public static HotelDao HotelDao;
     public static TaskDao TaskDao;
 
     @Override
@@ -79,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MainActivity.PointDao = db.pointDao();
         MainActivity.WayDao = db.wayDao();
         MainActivity.TollRoadDao = db.toolRoadDao();
+        MainActivity.HotelDao = db.hotelDao();
 
         MainActivity.mPrefs = getSharedPreferences("vnsr", MODE_PRIVATE);
         MainActivity.mEditor = mPrefs.edit();
@@ -156,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Migration_3_4 migration_3_4 = new Migration_3_4(3, 4);
         Migration_4_5 migration_4_5 = new Migration_4_5(4, 5);
         Migration_5_6 migration_5_6 = new Migration_5_6(5, 6);
+        Migration_6_7 migration_6_7 = new Migration_6_7(6, 7);
 
         return Room.databaseBuilder(getApplicationContext(), VNSRDatabase.class, "vnsr-database")
                 .addMigrations(migration_1_2)
@@ -163,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addMigrations(migration_3_4)
                 .addMigrations(migration_4_5)
                 .addMigrations(migration_5_6)
+                .addMigrations(migration_6_7)
                 .allowMainThreadQueries()
                 .build();
     }

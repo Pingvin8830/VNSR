@@ -49,6 +49,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             case "new_travel_start":
             case "new_travel_end":
             case "new_point_departure":
+            case "new_hotel_arrival":
+            case "new_hotel_departure":
                 new TimePickerFragment(TAG, res).show(fragmentManager, "timePicker");
                 break;
         }

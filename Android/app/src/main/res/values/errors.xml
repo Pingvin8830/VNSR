@@ -41,5 +41,6 @@
     <string name="err_not_found_points">Points not found</string>
     <string name="err_not_found_ways">Ways not found</string>
     <string name="err_not_found_toll_roads">Toll roads not found</string>
+    <string name="err_not_found_hotels">Hotels not found</string>
 
 </resources>

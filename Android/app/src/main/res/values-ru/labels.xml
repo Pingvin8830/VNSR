@@ -101,4 +101,7 @@
     <string name="lbl_new_toll_road">Добавление платной дороги</string>
     <string name="lbl_toll_road">Платная дорога</string>
     <string name="lbl_toll_roads">Платные дороги</string>
+    <string name="lbl_show_hotel">Отель</string>
+    <string name="lbl_new_hotel">Добавление отеля</string>
+    <string name="lbl_hotel">Отель</string>
 </resources>

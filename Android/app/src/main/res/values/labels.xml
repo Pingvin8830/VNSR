@@ -73,6 +73,7 @@
     <string name="lbl_end">End</string>
     <string name="lbl_toll_road">Toll road</string>
     <string name="lbl_toll_roads">Toll roads</string>
+    <string name="lbl_hotel">Hotel</string>
 
     <string name="lbl_new_city_type">Add a new city type</string>
     <string name="lbl_new_street_type">Add a new street type</string>
@@ -88,6 +89,7 @@
     <string name="lbl_new_point">Add a new point</string>
     <string name="lbl_new_way">Add a new way</string>
     <string name="lbl_new_toll_road">Add a new toll road</string>
+    <string name="lbl_new_hotel">Add a new hotel</string>
 
     <string name="lbl_show_city_type">Your city type</string>
     <string name="lbl_show_street_type">Your street type"</string>
@@ -103,4 +105,5 @@
     <string name="lbl_show_point">Your point</string>
     <string name="lbl_show_way">Your way</string>
     <string name="lbl_show_toll_road">Your toll road</string>
+    <string name="lbl_show_hotel">Your hotel</string>
 </resources>
