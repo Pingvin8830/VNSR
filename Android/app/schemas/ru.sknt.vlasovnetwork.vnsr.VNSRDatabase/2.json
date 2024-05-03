@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "e1a29f0dc8c6c9e94fba960b25d39729",
+    "identityHash": "cb9150d52cd7a3b8928f9a31bffed9ca",
     "entities": [
       {
         "tableName": "travels_travelstate",
@@ -42,7 +42,7 @@
       },
       {
         "tableName": "travels_travel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `participants` TEXT, `state_id` INTEGER NOT NULL, `fuel_consumption` REAL NOT NULL, `fuel_price` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `participants` TEXT, `state_id` INTEGER, `fuel_consumption` REAL NOT NULL, `fuel_price` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -63,10 +63,10 @@
             "notNull": false
           },
           {
-            "fieldPath": "mStateId",
+            "fieldPath": "mState",
             "columnName": "state_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "mFuelConsumption",
@@ -869,7 +869,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e1a29f0dc8c6c9e94fba960b25d39729')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cb9150d52cd7a3b8928f9a31bffed9ca')"
     ]
   }
 }

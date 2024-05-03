@@ -50,10 +50,11 @@ public class FuelStation {
         this.mAddress = address;
     }
     public FuelStation (JSONObject data) throws JSONException {
+        JSONObject addressJson = new JSONObject(data.getString("address"));
         this.mCompany = data.getString("company");
         this.mNumber = data.getString("number");
         this.mPhone = data.getString("phone");
-        this.mAddress = MainActivity.AddressDao.find(data.getString("address_name"));
+        this.mAddress = MainActivity.AddressDao.find(addressJson.getString("name"));
     }
 
     @NonNull
@@ -61,13 +62,15 @@ public class FuelStation {
     public String toString() { return this.mCompany + " " + this.mNumber; }
     public JSONObject toJson() throws JSONException {
         JSONObject res = new JSONObject();
+        JSONObject addressJson = new JSONObject();
+        addressJson.put("name", this.getAddress().getName());
         res
                 .put("object", "FuelStation")
                 .put("id", this.getId())
                 .put("company", this.getCompany())
                 .put("number", this.getNumber())
                 .put("phone", this.getPhone())
-                .put("address_name", this.getAddress().getName());
+                .put("address", addressJson);
         return res;
     }
 }

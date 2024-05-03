@@ -7,32 +7,28 @@
         <item
             android:id="@+id/nav_travels_home"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Travels home" />
+            android:title="@string/menu_travels_home" />
         <item
             android:id="@+id/nav_travels_travels"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Travels" />
+            android:title="@string/menu_travels_travels" />
         <item
             android:id="@+id/nav_travels_points"
-            android:title="Points" />
+            android:title="@string/menu_travels_points" />
         <item
             android:id="@+id/nav_travels_ways"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Ways" />
+            android:title="@string/menu_travels_ways" />
         <item
             android:id="@+id/nav_travels_toolroads"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Toolroads" />
+            android:title="@string/menu_travels_toolroads" />
         <item
             android:id="@+id/nav_travels_hotels"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Hotels" />
-        <item
-            android:id="@+id/nav_travels_travel_states"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Travel states" />
+            android:title="@string/menu_travels_hotels" />
         <item
             android:id="@+id/nav_back"
-            android:title="Back" />
+            android:title="@string/menu_back" />
     </group>
 </menu>

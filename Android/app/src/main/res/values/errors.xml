@@ -17,6 +17,15 @@
     <string name="err_bad_odometer">Bad odometer</string>
     <string name="err_bad_time_delta">Bad time delta</string>
     <string name="err_bad_date_time">Bad date or time</string>
+    <string name="err_bad_participants">Bad participants</string>
+    <string name="err_bad_fuel_price">Bad fuel price</string>
+    <string name="err_bad_doing">Bad doing</string>
+    <string name="err_bad_points">Bad points</string>
+    <string name="err_bad_state">Bad state</string>
+    <string name="err_bad_start_date_time">Bad start date or time</string>
+    <string name="err_bad_end_date_time">Bad end date or time</string>
+    <string name="err_bad_start">Bad start</string>
+    <string name="err_bad_end">Bad end</string>
 
     <string name="err_not_found_regions">Regions not found</string>
     <string name="err_not_found_cityes">Cityes not found</string>
@@ -27,5 +36,11 @@
     <string name="err_not_found_fuels">Fuels not found</string>
     <string name="err_not_found_fuel_stations">Fuel stations not found</string>
     <string name="err_not_found_refuels">Refuels not found</string>
+    <string name="err_not_found_travel_states">Travel states not found</string>
+    <string name="err_not_found_travels">Travels not found</string>
+    <string name="err_not_found_points">Points not found</string>
+    <string name="err_not_found_ways">Ways not found</string>
+    <string name="err_not_found_toll_roads">Toll roads not found</string>
+    <string name="err_not_found_hotels">Hotels not found</string>
 
 </resources>

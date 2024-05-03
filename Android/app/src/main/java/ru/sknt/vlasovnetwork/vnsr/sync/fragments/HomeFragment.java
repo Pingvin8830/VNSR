@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import ru.sknt.vlasovnetwork.vnsr.MainActivity;
 import ru.sknt.vlasovnetwork.vnsr.R;
 import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
 
@@ -27,10 +28,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.sync_home, container, false);
         mEdtxtServerUrl = view.findViewById(R.id.edtxtServerUrl);
         Button bttnChange = view.findViewById(R.id.bttnChange);
+        Button bttnTruncate = view.findViewById(R.id.bttnTruncate);
 
         mEdtxtServerUrl.setText(mActivity.getServerUrl());
 
         bttnChange.setOnClickListener(this);
+        bttnTruncate.setOnClickListener(this);
 
         return view;
     }
@@ -40,6 +43,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (view.getId() == R.id.bttnChange) {
             mActivity.setServerUrl(mEdtxtServerUrl.getText().toString());
             Toast.makeText(getContext(), "Settings changed", Toast.LENGTH_SHORT).show();
+        }
+        else if (view.getId() == R.id.bttnTruncate) {
+            MainActivity.TaskDao.truncate();
+            MainActivity.HotelDao.truncate();
+            MainActivity.TollRoadDao.truncate();
+            MainActivity.TravelDao.truncate();
+            MainActivity.PointDao.truncate();
+            MainActivity.RefuelDao.truncate();
+            MainActivity.FuelDao.truncate();
+            MainActivity.FuelStationDao.truncate();
+            MainActivity.AddressDao.truncate();
+            MainActivity.StreetDao.truncate();
+            MainActivity.StreetTypeDao.truncate();
+            MainActivity.CityDao.truncate();
+            MainActivity.CityTypeDao.truncate();
+            MainActivity.RegionDao.truncate();
+            Toast.makeText(requireContext(), "Truncated", Toast.LENGTH_SHORT).show();
         }
     }
 }

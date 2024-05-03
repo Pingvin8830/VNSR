@@ -67,10 +67,18 @@ public class Address {
         this.mFlat = flat;
     }
     public Address (JSONObject data) throws JSONException {
+        JSONObject regionJson = new JSONObject(data.getString("region"));
+        JSONObject cityJson = new JSONObject(data.getString("city"));
+        JSONObject streetJson = new JSONObject(data.getString("street"));
+        JSONObject streetTypeJson = new JSONObject(streetJson.getString("street_type"));
+
         this.mName = data.getString("name");
-        this.mRegion = MainActivity.RegionDao.find(data.getString("region_code"));
-        this.mCity = MainActivity.CityDao.find(data.getString("city_name"));
-        this.mStreet = MainActivity.StreetDao.find(data.getString("street_name"), data.getString("street_type_name"));
+        this.mRegion = MainActivity.RegionDao.find(regionJson.getString("code"));
+        this.mCity = MainActivity.CityDao.find(cityJson.getString("name"));
+        this.mStreet = MainActivity.StreetDao.find(
+                streetJson.getString("name"),
+                streetTypeJson.getString("name")
+        );
         this.mHouse = data.getString("house");
         this.mBuilding = data.getString("building");
         if (this.mBuilding.equals("null")) { this.mBuilding = ""; };
@@ -83,13 +91,21 @@ public class Address {
     public String toString() { return getName(); }
     public JSONObject toJson() throws JSONException {
         JSONObject res = new JSONObject();
+        JSONObject regionJson = new JSONObject();
+        JSONObject cityJson = new JSONObject();
+        JSONObject streetJson = new JSONObject();
+        JSONObject streetTypeJson = new JSONObject();
+        regionJson.put("code", this.getRegion().getCode());
+        cityJson.put("name", this.getCity().getName());
+        streetTypeJson.put("name", this.getStreet().getStreetType().getName());
+        streetJson.put("name", this.getStreet().getName());
+        streetJson.put("street_type", streetTypeJson);
         res
                 .put("object", "Address")
                 .put("id", this.getId())
-                .put("region_code", this.getRegion().getCode())
-                .put("city_name", this.getCity().getName())
-                .put("street_name", this.getStreet().getName())
-                .put("street_type_name", this.getStreet().getStreetType().getName())
+                .put("region", regionJson)
+                .put("city", cityJson)
+                .put("street", streetJson)
                 .put("house", this.getHouse())
                 .put("building", this.getBuilding())
                 .put("flat", this.getFlat())

@@ -344,6 +344,127 @@
                     android:text="LAYOUT Failure" />
 
             </TableRow>
+
+            <TableRow
+                android:id="@+id/trTravels"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txtTravels"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_travel" />
+
+                <TextView
+                    android:id="@+id/txtTravelsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtTravelsSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtTravelsFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
+            <TableRow
+                android:id="@+id/trPoints"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txtPoints"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_point" />
+
+                <TextView
+                    android:id="@+id/txtPointsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtPointsSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtPointsFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
+            <TableRow
+                android:id="@+id/trTollRoads"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txtTollRoads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_toll_road" />
+
+                <TextView
+                    android:id="@+id/txtTollRoadsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtTollRoadsSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtTollRoadsFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
+            <TableRow
+                android:id="@+id/trHotels"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txtHotels"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_hotel" />
+
+                <TextView
+                    android:id="@+id/txtHotelsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Count" />
+
+                <TextView
+                    android:id="@+id/txtHotelsSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Success" />
+
+                <TextView
+                    android:id="@+id/txtHotelsFail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAYOUT Failure" />
+
+            </TableRow>
         </TableLayout>
     </ScrollView>
 

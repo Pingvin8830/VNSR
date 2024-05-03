@@ -1,5 +1,6 @@
 package ru.sknt.vlasovnetwork.vnsr;
 
+import androidx.room.AutoMigration;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
@@ -13,11 +14,11 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.daos.CityTypeDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.RegionDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetDao;
 import ru.sknt.vlasovnetwork.vnsr.kladr.daos.StreetTypeDao;
-import ru.sknt.vlasovnetwork.vnsr.daos.travels.HotelDao;
-import ru.sknt.vlasovnetwork.vnsr.daos.travels.PointDao;
-import ru.sknt.vlasovnetwork.vnsr.daos.travels.ToolRoadDao;
-import ru.sknt.vlasovnetwork.vnsr.daos.travels.TravelDao;
-import ru.sknt.vlasovnetwork.vnsr.daos.travels.WayDao;
+import ru.sknt.vlasovnetwork.vnsr.travels.daos.HotelDao;
+import ru.sknt.vlasovnetwork.vnsr.travels.daos.PointDao;
+import ru.sknt.vlasovnetwork.vnsr.travels.daos.TollRoadDao;
+import ru.sknt.vlasovnetwork.vnsr.travels.daos.TravelDao;
+import ru.sknt.vlasovnetwork.vnsr.travels.daos.WayDao;
 import ru.sknt.vlasovnetwork.vnsr.car.models.Fuel;
 import ru.sknt.vlasovnetwork.vnsr.car.models.FuelStation;
 import ru.sknt.vlasovnetwork.vnsr.car.models.Refuel;
@@ -27,22 +28,19 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.CityType;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
-import ru.sknt.vlasovnetwork.vnsr.models.travels.Hotel;
-import ru.sknt.vlasovnetwork.vnsr.models.travels.Point;
-import ru.sknt.vlasovnetwork.vnsr.models.travels.ToolRoad;
-import ru.sknt.vlasovnetwork.vnsr.models.travels.Travel;
-import ru.sknt.vlasovnetwork.vnsr.models.travels.TravelState;
-import ru.sknt.vlasovnetwork.vnsr.daos.travels.TravelStateDao;
-import ru.sknt.vlasovnetwork.vnsr.models.travels.Way;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Hotel;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.TollRoad;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Way;
 import ru.sknt.vlasovnetwork.vnsr.sync.daos.TaskDao;
 import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
 
 @Database(
-        version = 2,
+        version = 7,
         entities = {
-                TravelState.class,
                 Travel.class,
-                ToolRoad.class,
+                TollRoad.class,
                 Way.class,
                 Hotel.class,
                 Point.class,
@@ -56,13 +54,15 @@ import ru.sknt.vlasovnetwork.vnsr.sync.models.Task;
                 Street.class,
                 Address.class,
                 Task.class
-        }
+        }//,
+        //autoMigrations = {
+        //        @AutoMigration(from=6, to=7)
+        //}
 )
 @TypeConverters({Converters.class})
 public abstract class VNSRDatabase extends RoomDatabase {
-    public abstract TravelStateDao travelStateDao();
     public abstract TravelDao travelDao();
-    public abstract ToolRoadDao toolRoadDao();
+    public abstract TollRoadDao toolRoadDao();
     public abstract WayDao wayDao();
     public abstract HotelDao hotelDao();
     public abstract PointDao pointDao();

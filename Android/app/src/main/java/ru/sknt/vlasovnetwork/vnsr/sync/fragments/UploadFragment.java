@@ -36,13 +36,18 @@ import ru.sknt.vlasovnetwork.vnsr.kladr.models.Region;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.Street;
 import ru.sknt.vlasovnetwork.vnsr.kladr.models.StreetType;
 import ru.sknt.vlasovnetwork.vnsr.sync.SyncActivity;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Hotel;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Point;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.TollRoad;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Travel;
+import ru.sknt.vlasovnetwork.vnsr.travels.models.Way;
 
 public class UploadFragment extends Fragment implements View.OnClickListener, Response.ErrorListener {
     private RequestQueue mVolleyQueue;
     private TextView mTxtError;
     protected Map<String, Map<String, TextView>> mViews;
     protected Map<String, Map<String, Integer>> mValues;
-    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel"};
+    private final String[] mSyncObjects = {"StreetType", "CityType", "Street", "City", "Region", "Address", "Fuel", "FuelStation", "Refuel", "Travel", "Point", "TollRoad", "Hotel"};
     private final String[] mSyncValues = {"Count", "Success", "Fail"};
     public static int requestsCount = 0;
     private int mSyncCount = 0;
@@ -104,6 +109,18 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
                 case "Refuel":
                     tmpViews = createMapViews(mainView, R.id.txtRefuelsCount, R.id.txtRefuelsSuccess, R.id.txtRefuelsFail);
                     break;
+                case "Travel":
+                    tmpViews = createMapViews(mainView, R.id.txtTravelsCount, R.id.txtTravelsSuccess, R.id.txtTravelsFail);
+                    break;
+                case "Point":
+                    tmpViews = createMapViews(mainView, R.id.txtPointsCount, R.id.txtPointsSuccess, R.id.txtPointsFail);
+                    break;
+                case "TollRoad":
+                    tmpViews = createMapViews(mainView, R.id.txtTollRoadsCount, R.id.txtTollRoadsSuccess, R.id.txtTollRoadsFail);
+                    break;
+                case "Hotel":
+                    tmpViews = createMapViews(mainView, R.id.txtHotelsCount, R.id.txtHotelsSuccess, R.id.txtHotelsFail);
+                    break;
             }
             for (String syncValue : mSyncValues) {
                 int value = 0;
@@ -136,6 +153,18 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
                         case "Refuel":
                             value = MainActivity.RefuelDao.getCount();
                             break;
+                        case "Travel":
+                            value = MainActivity.TravelDao.getCount();
+                            break;
+                        case "Point":
+                            value = MainActivity.PointDao.getCount();
+                            break;
+                        case "TollRoad":
+                            value = MainActivity.TollRoadDao.getCount();
+                            break;
+                        case "Hotel":
+                            value = MainActivity.HotelDao.getCount();
+                            break;
                     }
                 }
                 tmpValues.put(syncValue, value);
@@ -157,7 +186,11 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
                 + MainActivity.AddressDao.getCount()
                 + MainActivity.FuelDao.getCount()
                 + MainActivity.FuelStationDao.getCount()
-                + MainActivity.RefuelDao.getCount();
+                + MainActivity.RefuelDao.getCount()
+                + MainActivity.TravelDao.getCount()
+                + MainActivity.PointDao.getCount()
+                + MainActivity.TollRoadDao.getCount()
+                + MainActivity.HotelDao.getCount();
     }
     @Override
     public void onClick(View view) {
@@ -185,6 +218,10 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
                         uploadFuels();
                         uploadFuelStations();
                         uploadRefuels();
+                        uploadTravels();
+                        uploadPoints();
+                        uploadTollRoads();
+                        uploadHotels();
                     } catch (JSONException e) {
                         mTxtError.setText("Error create json data");
                     }
@@ -263,6 +300,19 @@ public class UploadFragment extends Fragment implements View.OnClickListener, Re
     private void uploadRefuels() throws JSONException {
         for (Refuel refuel : MainActivity.RefuelDao.getAll()) { send(refuel.toJson()); }
     }
+    private void uploadTravels() throws JSONException {
+        for (Travel travel : MainActivity.TravelDao.getAll()) { send(travel.toJson()); }
+    }
+    private void uploadPoints() throws JSONException {
+        for (Point point : MainActivity.PointDao.getAll()) { send(point.toJson()); }
+    }
+    private void uploadTollRoads() throws JSONException {
+        for (TollRoad tollRoad : MainActivity.TollRoadDao.getAll()) { send(tollRoad.toJson()); }
+    }
+    private void uploadHotels() throws JSONException {
+        for (Hotel hotel : MainActivity.HotelDao.getAll()) { send(hotel.toJson()); }
+    }
+
     private void addRequest(JsonObjectRequest request) {
         UploadFragment.requestsCount++;
         mTxtError.setText("Active requests: " + UploadFragment.requestsCount);

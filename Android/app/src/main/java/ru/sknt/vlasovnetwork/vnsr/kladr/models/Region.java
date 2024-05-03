@@ -15,10 +15,6 @@ import org.json.JSONObject;
                 @Index(
                         value = {"code"},
                         unique = true
-                ),
-                @Index(
-                        value = {"name"},
-                        unique = true
                 )
         }
 )

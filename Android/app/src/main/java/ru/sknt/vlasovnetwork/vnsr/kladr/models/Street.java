@@ -26,7 +26,7 @@ public class Street {
     private int mId;
 
     @ColumnInfo(name = "type_id")
-    private final  StreetType mStreetType;
+    private final StreetType mStreetType;
     @ColumnInfo(name = "name")
     private final String mName;
 
@@ -40,8 +40,9 @@ public class Street {
         this.mStreetType = streetType;
     }
     public Street (JSONObject data) throws JSONException {
+        JSONObject streetTypeJson = new JSONObject(data.getString("street_type"));
         this.mName = data.getString("name");
-        this.mStreetType = MainActivity.StreetTypeDao.find(data.getString("type_name"));
+        this.mStreetType = MainActivity.StreetTypeDao.find(streetTypeJson.getString("name"));
     }
 
     @NonNull
@@ -51,10 +52,12 @@ public class Street {
     }
     public JSONObject toJson() throws JSONException {
         JSONObject res = new JSONObject();
+        JSONObject streetTypeJson = new JSONObject();
+        streetTypeJson.put("name", this.getStreetType().getName());
         res
                 .put("object", "Street")
                 .put("id", this.getId())
-                .put("type_name", this.getStreetType().getName())
+                .put("street_type", streetTypeJson)
                 .put("name", this.getName());
         return res;
     }

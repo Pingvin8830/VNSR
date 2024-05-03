@@ -14,8 +14,16 @@
     <string name="menu_car_refuels">Дозаправки</string>
     <string name="menu_car_fuel_stations">АЗСы</string>
     <string name="menu_car_fuels">Топливо</string>
+    <string name="sub_app_travels">Путешествия</string>
     <string name="sub_app_sync">Синхронизация</string>
     <string name="menu_sync_home">Синхронизация домашняя</string>
     <string name="menu_sync_to_server">Выгрузка на сервер</string>
     <string name="menu_sync_from_server">Загрузка с сервера</string>
+    <string name="menu_travels_home">Путешествия домашняя</string>
+    <string name="menu_travels_travels">Путешествия</string>
+    <string name="menu_travels_points">Путевые точки</string>
+    <string name="menu_travels_ways">Отрезки пути</string>
+    <string name="menu_travels_toolroads">Платные дороги</string>
+    <string name="menu_travels_hotels">Отели</string>
+    <string name="menu_travels_travel_states">Состояния поездок</string>
 </resources>

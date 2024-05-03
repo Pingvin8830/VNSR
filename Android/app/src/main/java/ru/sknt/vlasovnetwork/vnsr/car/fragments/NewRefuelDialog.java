@@ -35,7 +35,7 @@ public class NewRefuelDialog extends NewObjectDialog {
     private List<Fuel> mFuels;
     private List<FuelStation> mFuelStations;
     private int mCheckNumber;
-    private final FormatedDate mDateTime = new FormatedDate(0L);
+    private FormatedDate mDateTime;
     private int mTrk;
     private float mCount;
     private float mPrice;
@@ -49,15 +49,6 @@ public class NewRefuelDialog extends NewObjectDialog {
     private int mOdometer;
     private String mTimeDelta;
 
-    public void setYear(int year) { mDateTime.setYear(year); }
-    public void setMonth(int month) { mDateTime.setMonth(month); }
-    public void setDay(int day) { mDateTime.setDate(day); }
-    public void setHour(int hour) { mDateTime.setHours(hour); }
-    public void setMinute(int minute) { mDateTime.setMinutes(minute); mDateTime.setSeconds(0); }
-
-    public void setDateTimeButtonText() {
-        mBttnDateTime.setText(mDateTime.toString());
-    }
     @Override
     protected void setObjectsLists() {
         mFuels = MainActivity.FuelDao.getAll();
@@ -150,7 +141,7 @@ public class NewRefuelDialog extends NewObjectDialog {
     @Override
     protected String getErrorText() {
         String error = "";
-        if (mBttnDateTime.getText().toString().equals(getResources().getString(R.string.bttn_case_date_time))) { error = getResources().getString(R.string.err_bad_date_time); }
+        if (mDateTime == null) { error = getResources().getString(R.string.err_bad_date_time); }
         else if (mCount < 0.1f) { error = getResources().getString(R.string.err_bad_count); }
         else if (mPrice < 0.01f) { error = getResources().getString(R.string.err_bad_price); }
         else if ((mCost < (mCount * mPrice) - 1f) || (mCost > (mCount * mPrice) + 1f)) { error = getResources().getString(R.string.err_bad_cost); }
@@ -178,5 +169,10 @@ public class NewRefuelDialog extends NewObjectDialog {
         if (view.getId() == R.id.bttnDateTime) {
             new DatePickerFragment("new_refuel").show(requireActivity().getSupportFragmentManager(), "datePicker");
         }
+    }
+
+    public void setDateTime(FormatedDate dateTime) {
+        mDateTime = dateTime;
+        mBttnDateTime.setText(mDateTime.toString());
     }
 }

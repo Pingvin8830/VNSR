@@ -13,10 +13,6 @@ import org.json.JSONObject;
         tableName = "kladr_citytype",
         indices = {
                 @Index(
-                        value = {"short"},
-                        unique = true
-                ),
-                @Index(
                         value = {"name"},
                         unique = true
                 )

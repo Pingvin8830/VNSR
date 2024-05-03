@@ -26,4 +26,19 @@
     <string name="err_not_found_fuels">Топливо не найдено</string>
     <string name="err_not_found_fuel_stations">АЗСы не найдены</string>
     <string name="err_not_found_refuels">Дозаправки не найдены</string>
+    <string name="err_not_found_travel_states">Состояния поездок не найдены</string>
+    <string name="err_not_found_travels">Поездки не найдены</string>
+    <string name="err_bad_participants">Неверный состав участников</string>
+    <string name="err_bad_fuel_price">Неверная цена топлива</string>
+    <string name="err_not_found_points">Путевые точки не найдены</string>
+    <string name="err_bad_doing">Неверное действие</string>
+    <string name="err_not_found_ways">Отрезки пути не найдены</string>
+    <string name="err_bad_points">Неверные точки маршрута</string>
+    <string name="err_bad_state">Неверное состояние</string>
+    <string name="err_bad_start_date_time">Неверная дата или время начала</string>
+    <string name="err_bad_end_date_time">Неверная дата или время окончания</string>
+    <string name="err_not_found_toll_roads">Платные дороги не найдены</string>
+    <string name="err_bad_start">Неверное начало</string>
+    <string name="err_bad_end">Неверное окончание</string>
+    <string name="err_not_found_hotels">Отели не найдены</string>
 </resources>
